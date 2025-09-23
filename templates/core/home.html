@@ -1,0 +1,366 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Shirsti Printing Company - Professional Printing Services{% endblock %}
+
+{% block content %}
+<!-- Hero Section with Slider -->
+<section class="relative overflow-hidden">
+    <div class="slider-container h-96 md:h-[500px]" id="heroSlider">
+        {% for slide in slides %}
+        <div class="slide absolute inset-0 transition-opacity duration-1000 {% if forloop.first %}opacity-100{% else %}opacity-0{% endif %}" 
+             style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('{{ slide.image.url }}') center/cover;">
+            <div class="flex items-center justify-center h-full">
+                <div class="text-center text-white max-w-4xl mx-auto px-4">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-4 hero-animation">{{ slide.title }}</h1>
+                    <p class="text-xl md:text-2xl mb-8 hero-animation" style="animation-delay: 0.2s;">{{ slide.description }}</p>
+                    {% if slide.cta_text and slide.cta_url %}
+                    <a href="{{ slide.cta_url }}" 
+                       class="inline-block bg-purple-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-purple-700 transition duration-300 hero-animation"
+                       style="animation-delay: 0.4s;">
+                        {{ slide.cta_text }}
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <!-- Default hero section if no slides -->
+        <div class="slide absolute inset-0 gradient-bg">
+            <div class="flex items-center justify-center h-full">
+                <div class="text-center text-white max-w-4xl mx-auto px-4">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-4 hero-animation">Professional Printing Services</h1>
+                    <p class="text-xl md:text-2xl mb-8 hero-animation" style="animation-delay: 0.2s;">From business cards to large format printing - we bring your ideas to life with quality and precision</p>
+                    <a href="{% url 'services:list' %}" 
+                       class="inline-block bg-white text-purple-600 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-gray-100 transition duration-300 hero-animation"
+                       style="animation-delay: 0.4s;">
+                        Explore Services
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <!-- Slider Navigation -->
+    {% if slides|length > 1 %}
+    <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+        {% for slide in slides %}
+        <button class="slider-dot w-3 h-3 rounded-full bg-white bg-opacity-50 hover:bg-opacity-100 transition duration-300 {% if forloop.first %}bg-opacity-100{% endif %}"
+                onclick="showSlide({{ forloop.counter0 }})"></button>
+        {% endfor %}
+    </div>
+    
+    <!-- Previous/Next buttons -->
+    <button class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 transition duration-300"
+            onclick="previousSlide()">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+    </button>
+    <button class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 transition duration-300"
+            onclick="nextSlide()">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+    </button>
+    {% endif %}
+</section>
+
+<!-- Features Section -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Why Choose Shirsti Printing?</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">We combine cutting-edge technology with traditional craftsmanship to deliver exceptional printing solutions.</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center">
+                <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Online Design Tool</h3>
+                <p class="text-gray-600">Create custom designs with our intuitive online design tool. No software needed!</p>
+            </div>
+            
+            <div class="text-center">
+                <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Fast Turnaround</h3>
+                <p class="text-gray-600">Quick processing and delivery times without compromising on quality.</p>
+            </div>
+            
+            <div class="text-center">
+                <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Premium Quality</h3>
+                <p class="text-gray-600">High-quality materials and state-of-the-art printing technology for professional results.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Services Section -->
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Our Popular Services</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">Explore our most requested printing services with custom design capabilities.</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {% for service in featured_services %}
+            <div class="service-card bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="h-48 bg-gradient-to-br from-purple-400 to-blue-500 flex items-center justify-center">
+                    {% if service.image %}
+                        <img src="{{ service.image.url }}" alt="{{ service.name }}" class="w-full h-full object-cover">
+                    {% else %}
+                        <div class="text-white text-4xl">
+                            {{ service.get_icon_html|safe }}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ service.name }}</h3>
+                    <p class="text-gray-600 text-sm mb-4">{{ service.description|truncatewords:15 }}</p>
+                    {% if service.has_design_tool %}
+                        <div class="flex items-center text-sm text-purple-600 mb-3">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"></path>
+                            </svg>
+                            Design Tool Available
+                        </div>
+                    {% endif %}
+                    <div class="flex justify-between items-center">
+                        <span class="text-lg font-bold text-gray-900">₹{{ service.starting_price }}</span>
+                        <a href="{% url 'services:product_detail' service.slug %}" 
+                           class="bg-purple-600 text-white px-4 py-2 rounded text-sm hover:bg-purple-700 transition duration-300">
+                            Start Design
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <!-- Default services if none in database -->
+            <div class="service-card bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="h-48 bg-gradient-to-br from-purple-400 to-blue-500 flex items-center justify-center text-white text-4xl">
+                    📄
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Business Cards</h3>
+                    <p class="text-gray-600 text-sm mb-4">Professional business cards with custom designs and premium finishes.</p>
+                    <div class="flex items-center text-sm text-purple-600 mb-3">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"></path>
+                        </svg>
+                        Design Tool Available
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-lg font-bold text-gray-900">₹299</span>
+                        <a href="{% url 'services:list' %}" 
+                           class="bg-purple-600 text-white px-4 py-2 rounded text-sm hover:bg-purple-700 transition duration-300">
+                            Start Design
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="service-card bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="h-48 bg-gradient-to-br from-green-400 to-teal-500 flex items-center justify-center text-white text-4xl">
+                    📋
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Brochures</h3>
+                    <p class="text-gray-600 text-sm mb-4">Eye-catching brochures for marketing campaigns and business promotion.</p>
+                    <div class="flex items-center text-sm text-purple-600 mb-3">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"></path>
+                        </svg>
+                        Design Tool Available
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-lg font-bold text-gray-900">₹199</span>
+                        <a href="{% url 'services:list' %}" 
+                           class="bg-purple-600 text-white px-4 py-2 rounded text-sm hover:bg-purple-700 transition duration-300">
+                            Start Design
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="service-card bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="h-48 bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center text-white text-4xl">
+                    🏷️
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Stickers</h3>
+                    <p class="text-gray-600 text-sm mb-4">Custom stickers in various shapes, sizes and materials for any purpose.</p>
+                    <div class="flex items-center text-sm text-purple-600 mb-3">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"></path>
+                        </svg>
+                        Design Tool Available
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-lg font-bold text-gray-900">₹99</span>
+                        <a href="{% url 'services:list' %}" 
+                           class="bg-purple-600 text-white px-4 py-2 rounded text-sm hover:bg-purple-700 transition duration-300">
+                            Start Design
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="service-card bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="h-48 bg-gradient-to-br from-red-400 to-pink-500 flex items-center justify-center text-white text-4xl">
+                    📄
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Flyers</h3>
+                    <p class="text-gray-600 text-sm mb-4">Promotional flyers that grab attention and drive customer engagement.</p>
+                    <div class="flex items-center text-sm text-purple-600 mb-3">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"></path>
+                        </svg>
+                        Design Tool Available
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-lg font-bold text-gray-900">₹149</span>
+                        <a href="{% url 'services:list' %}" 
+                           class="bg-purple-600 text-white px-4 py-2 rounded text-sm hover:bg-purple-700 transition duration-300">
+                            Start Design
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-12">
+            <a href="{% url 'services:list' %}" 
+               class="inline-block bg-purple-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-purple-700 transition duration-300">
+                View All Services
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Process Section -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">How It Works</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">Simple steps to get your printing project completed professionally.</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="text-center">
+                <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span class="text-2xl font-bold text-purple-600">1</span>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Choose Service</h3>
+                <p class="text-gray-600">Select from our wide range of printing services and products.</p>
+            </div>
+            
+            <div class="text-center">
+                <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span class="text-2xl font-bold text-purple-600">2</span>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Design</h3>
+                <p class="text-gray-600">Use our online design tool or upload your own artwork.</p>
+            </div>
+            
+            <div class="text-center">
+                <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span class="text-2xl font-bold text-purple-600">3</span>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Order</h3>
+                <p class="text-gray-600">Review your design, select quantity and place your order.</p>
+            </div>
+            
+            <div class="text-center">
+                <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span class="text-2xl font-bold text-purple-600">4</span>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Receive</h3>
+                <p class="text-gray-600">Get your high-quality printed materials delivered.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-16 gradient-bg">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Ready to Start Your Project?</h2>
+        <p class="text-xl text-white mb-8 opacity-90">Join thousands of satisfied customers who trust us with their printing needs.</p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="{% url 'services:list' %}" 
+               class="inline-block bg-white text-purple-600 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-gray-100 transition duration-300">
+                Browse Services
+            </a>
+            <a href="{% url 'core:contact' %}" 
+               class="inline-block border-2 border-white text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-white hover:text-purple-600 transition duration-300">
+                Get Quote
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Slider functionality
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.slider-dot');
+    const totalSlides = slides.length;
+    
+    function showSlide(index) {
+        // Hide all slides
+        slides.forEach(slide => slide.classList.remove('opacity-100'));
+        slides.forEach(slide => slide.classList.add('opacity-0'));
+        
+        // Show current slide
+        if (slides[index]) {
+            slides[index].classList.remove('opacity-0');
+            slides[index].classList.add('opacity-100');
+        }
+        
+        // Update dots
+        dots.forEach(dot => dot.classList.remove('bg-opacity-100'));
+        dots.forEach(dot => dot.classList.add('bg-opacity-50'));
+        if (dots[index]) {
+            dots[index].classList.remove('bg-opacity-50');
+            dots[index].classList.add('bg-opacity-100');
+        }
+        
+        currentSlide = index;
+    }
+    
+    function nextSlide() {
+        const nextIndex = (currentSlide + 1) % totalSlides;
+        showSlide(nextIndex);
+    }
+    
+    function previousSlide() {
+        const prevIndex = (currentSlide - 1 + totalSlides) % totalSlides;
+        showSlide(prevIndex);
+    }
+    
+    // Auto-advance slides
+    if (totalSlides > 1) {
+        setInterval(nextSlide, 5000); // Change slide every 5 seconds
+    }
+</script>
+{% endblock %}

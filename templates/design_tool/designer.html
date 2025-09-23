@@ -1,0 +1,4416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Studio - Professional NBDesigner Style</title>
+
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        :root {
+            --primary-color: #ff5722;
+            --secondary-color: #2196f3;
+            --dark-bg: #2c3e50;
+            --sidebar-bg: #34495e;
+            --hover-bg: #455a72;
+            --text-light: #ecf0f1;
+            --border-color: #516179;
+            --canvas-bg: #d5d5d5;
+            --tool-bg: #fff;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            --bleed-color: #ff0000;
+            --safe-zone-color: #00ff00;
+        }
+
+        body {
+            overflow: hidden;
+            background: var(--canvas-bg);
+            font-size: 14px;
+        }
+
+        /* Main Layout */
+        .designer-container {
+            display: flex;
+            height: 100vh;
+            position: relative;
+        }
+
+        /* Left Sidebar - Tools */
+        .tools-sidebar {
+            width: 80px;
+            background: var(--dark-bg);
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .tool-item {
+            width: 80px;
+            height: 70px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .tool-item:hover {
+            background: var(--hover-bg);
+        }
+
+        .tool-item.active {
+            background: var(--primary-color);
+        }
+
+        .tool-item.active::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 10px solid var(--tool-bg);
+        }
+
+        .tool-item i {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .tool-item span {
+            font-size: 11px;
+            text-align: center;
+        }
+
+        /* Options Panel */
+        .options-panel {
+            width: 320px;
+            background: var(--tool-bg);
+            border-right: 1px solid #ddd;
+            overflow-y: auto;
+            display: none;
+            box-shadow: var(--shadow);
+        }
+
+        .options-panel.active {
+            display: block;
+        }
+
+        .panel-header {
+            background: linear-gradient(135deg, var(--primary-color), #ff7043);
+            color: white;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .panel-close {
+            cursor: pointer;
+            font-size: 20px;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .panel-close:hover {
+            opacity: 1;
+        }
+
+        .panel-content {
+            padding: 20px;
+        }
+
+        /* Canvas Area */
+        .canvas-area {
+            flex: 1;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            background: var(--canvas-bg);
+        }
+
+        /* Top Toolbar */
+        .top-toolbar {
+            height: 55px;
+            background: var(--tool-bg);
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Context Toolbar - Shows when object is selected */
+        .context-toolbar {
+            height: 60px;
+            background: #f8f8f8;
+            border-bottom: 1px solid #ddd;
+            padding: 0 20px;
+            display: none;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .context-toolbar.active {
+            display: flex;
+        }
+
+        .context-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0 10px;
+            border-right: 1px solid #ddd;
+        }
+
+        .context-group:last-child {
+            border-right: none;
+        }
+
+        .context-label {
+            font-size: 11px;
+            color: #666;
+            text-transform: uppercase;
+            margin-right: 5px;
+        }
+
+        .context-input {
+            padding: 5px 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            width: 60px;
+        }
+
+        .context-button {
+            padding: 6px 10px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .context-button:hover {
+            background: #f0f0f0;
+        }
+
+        .context-button.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .toolbar-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toolbar-btn {
+            padding: 8px 15px;
+            background: var(--tool-bg);
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .toolbar-btn:hover {
+            background: #f5f5f5;
+            border-color: var(--primary-color);
+        }
+
+        .toolbar-btn.primary {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .toolbar-btn.primary:hover {
+            background: #ff7043;
+        }
+
+        /* Canvas Container with Rulers */
+        .canvas-container {
+            flex: 1;
+            position: relative;
+            overflow: auto;
+            background: var(--canvas-bg);
+        }
+
+        .canvas-workspace {
+            position: relative;
+            padding: 50px;
+            min-width: 100%;
+            min-height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Rulers */
+        .ruler-horizontal {
+            position: absolute;
+            top: 0;
+            left: 50px;
+            right: 0;
+            height: 30px;
+            background: #f0f0f0;
+            border-bottom: 1px solid #ccc;
+            display: flex;
+            align-items: flex-end;
+            font-size: 10px;
+            color: #666;
+            z-index: 10;
+        }
+
+        .ruler-vertical {
+            position: absolute;
+            top: 30px;
+            left: 0;
+            bottom: 0;
+            width: 30px;
+            background: #f0f0f0;
+            border-right: 1px solid #ccc;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            font-size: 10px;
+            color: #666;
+            z-index: 10;
+        }
+
+        .ruler-corner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 30px;
+            height: 30px;
+            background: #e0e0e0;
+            border-right: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            z-index: 11;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #666;
+        }
+
+        .ruler-mark {
+            position: absolute;
+            border-left: 1px solid #999;
+            height: 5px;
+        }
+
+        .ruler-mark.major {
+            height: 10px;
+            border-color: #666;
+        }
+
+        .ruler-label {
+            position: absolute;
+            font-size: 9px;
+            color: #666;
+        }
+
+        .canvas-wrapper {
+            background: white;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            border: 1px solid #999;
+            margin: 30px;
+        }
+
+        /* Guide Overlay System */
+        .guide-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            /* Allow clicks to pass through */
+            z-index: 10;
+            opacity: 1;
+        }
+
+        /* Canvas Controls */
+        .canvas-controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .zoom-control {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 10px;
+            background: #f5f5f5;
+            border-radius: 4px;
+        }
+
+        .zoom-btn {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .zoom-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* Search Results Grid */
+        .search-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .search-item {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid #e0e0e0;
+        }
+
+        .search-item:hover {
+            transform: scale(1.05);
+            border-color: var(--primary-color);
+        }
+
+        .search-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Color Palette */
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 8px;
+        }
+
+        .color-swatch {
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .color-swatch:hover {
+            transform: scale(1.1);
+            border-color: #333;
+        }
+
+        .color-swatch.active {
+            border-color: var(--primary-color);
+        }
+
+        /* Properties */
+        .properties-group {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .properties-title {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #333;
+            text-transform: uppercase;
+        }
+
+        .property-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .property-label {
+            flex: 0 0 80px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .property-input {
+            flex: 1;
+            padding: 6px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        /* Loading */
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #999;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .page-btn {
+            padding: 5px 10px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .page-btn:hover:not(:disabled) {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Layer Items */
+        .layer-item:hover {
+            background: #f5f5f5 !important;
+            border-color: #ccc !important;
+        }
+
+        .layer-item button:hover {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 3px;
+        }
+
+        /* Context Menu */
+        .context-menu {
+            position: fixed;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 10000;
+            min-width: 180px;
+            padding: 8px 0;
+            display: none;
+        }
+
+        .context-menu-item {
+            padding: 10px 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: #333;
+            transition: background-color 0.2s;
+        }
+
+        .context-menu-item:hover {
+            background-color: #f5f5f5;
+        }
+
+        .context-menu-item.disabled {
+            color: #999;
+            cursor: not-allowed;
+        }
+
+        .context-menu-item.disabled:hover {
+            background-color: transparent;
+        }
+
+        .context-menu-separator {
+            height: 1px;
+            background-color: #eee;
+            margin: 4px 0;
+        }
+
+        .context-menu-item i {
+            width: 16px;
+            text-align: center;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="designer-container">
+        <!-- Left Tools Sidebar -->
+        <div class="tools-sidebar">
+            <div class="tool-item active" data-tool="design" onclick="switchTool('design')">
+                <i class="fas fa-paint-brush"></i>
+                <span>Design</span>
+            </div>
+            <div class="tool-item" data-tool="text" onclick="switchTool('text')">
+                <i class="fas fa-font"></i>
+                <span>Text</span>
+            </div>
+            <div class="tool-item" data-tool="clipart" onclick="switchTool('clipart')">
+                <i class="fas fa-shapes"></i>
+                <span>Clipart</span>
+            </div>
+            <div class="tool-item" data-tool="image" onclick="switchTool('image')">
+                <i class="fas fa-image"></i>
+                <span>Image</span>
+            </div>
+            <div class="tool-item" data-tool="upload" onclick="switchTool('upload')">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <span>Upload</span>
+            </div>
+            <div class="tool-item" data-tool="layers" onclick="switchTool('layers')">
+                <i class="fas fa-layer-group"></i>
+                <span>Layers</span>
+            </div>
+            <div class="tool-item" data-tool="qrcode" onclick="switchTool('qrcode')">
+                <i class="fas fa-qrcode"></i>
+                <span>QR Code</span>
+            </div>
+            <div class="tool-item" data-tool="vcard" onclick="switchTool('vcard')">
+                <i class="fas fa-address-card"></i>
+                <span>vCard</span>
+            </div>
+        </div>
+
+        <!-- Options Panel -->
+        <div id="optionsPanel" class="options-panel active">
+            <!-- Design Panel -->
+            <div id="designPanel" class="panel-section active">
+                <div class="panel-header">
+                    <span><i class="fas fa-paint-brush"></i> Design Options</span>
+                    <span class="panel-close" onclick="closePanel()">×</span>
+                </div>
+                <div class="panel-content">
+                    <!-- Templates Section -->
+                    <div class="properties-group">
+                        <div class="properties-title">Templates</div>
+                        <div id="templateCategories" style="margin-bottom: 10px;">
+                            <select id="categorySelect" class="property-input" style="width: 100%;"
+                                onchange="loadTemplatesByCategory()">
+                                <option value="">All Categories</option>
+                            </select>
+                        </div>
+                        <div id="templatesLoading" class="loading" style="display: none;">
+                            <div class="spinner"></div>
+                            Loading templates...
+                        </div>
+                        <div id="templatesList" class="search-grid" style="max-height: 300px; overflow-y: auto;">
+                            <!-- Templates will be loaded here -->
+                        </div>
+                        <div id="templatesPagination" class="pagination" style="display: none; margin-top: 10px;">
+                            <button class="page-btn" id="templatesPrev"
+                                onclick="changeTemplatePage(-1)">Previous</button>
+                            <span id="templatesPageInfo"></span>
+                            <button class="page-btn" id="templatesNext" onclick="changeTemplatePage(1)">Next</button>
+                        </div>
+                    </div>
+
+                    <div class="properties-group">
+                        <div class="properties-title">Canvas Settings</div>
+                        <div class="property-row">
+                            <span class="property-label">Product:</span>
+                            <select id="productSelect" class="property-input" onchange="loadProductSettings()">
+                                <option value="">Select Product</option>
+                            </select>
+                        </div>
+                        <div class="property-row">
+                            <span class="property-label">Width (mm):</span>
+                            <input type="number" class="property-input" id="canvasWidthMM" value="90"
+                                onchange="updateCanvasFromMM()">
+                        </div>
+                        <div class="property-row">
+                            <span class="property-label">Height (mm):</span>
+                            <input type="number" class="property-input" id="canvasHeightMM" value="54"
+                                onchange="updateCanvasFromMM()">
+                        </div>
+                        <div class="property-row">
+                            <span class="property-label">Bleed (mm):</span>
+                            <input type="number" class="property-input" id="bleedSize" value="3"
+                                onchange="updateBleedLines()">
+                        </div>
+                        <div class="property-row">
+                            <span class="property-label">Safe Zone (mm):</span>
+                            <input type="number" class="property-input" id="safeZoneSize" value="5"
+                                onchange="updateSafeZone()">
+                        </div>
+                        <div class="property-row">
+                            <label style="display: flex; align-items: center; gap: 10px;">
+                                <input type="checkbox" id="showBleed" checked onchange="toggleBleedLines()">
+                                <span style="font-size: 12px;">Show Bleed Lines</span>
+                            </label>
+                        </div>
+                        <div class="property-row">
+                            <label style="display: flex; align-items: center; gap: 10px;">
+                                <input type="checkbox" id="showSafeZone" checked onchange="toggleSafeZone()">
+                                <span style="font-size: 12px;">Show Safe Zone</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="properties-group">
+                        <div class="properties-title">Background Color</div>
+                        <div class="color-palette">
+                            <div class="color-swatch active" style="background: #ffffff"
+                                onclick="selectColor(this, '#ffffff')"></div>
+                            <div class="color-swatch" style="background: #f44336"
+                                onclick="selectColor(this, '#f44336')"></div>
+                            <div class="color-swatch" style="background: #e91e63"
+                                onclick="selectColor(this, '#e91e63')"></div>
+                            <div class="color-swatch" style="background: #9c27b0"
+                                onclick="selectColor(this, '#9c27b0')"></div>
+                            <div class="color-swatch" style="background: #673ab7"
+                                onclick="selectColor(this, '#673ab7')"></div>
+                            <div class="color-swatch" style="background: #3f51b5"
+                                onclick="selectColor(this, '#3f51b5')"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Text Panel -->
+            <div id="textPanel" class="panel-section" style="display: none;">
+                <div class="panel-header">
+                    <span><i class="fas fa-font"></i> Add Text</span>
+                    <span class="panel-close" onclick="closePanel()">×</span>
+                </div>
+                <div class="panel-content">
+                    <button class="toolbar-btn primary" style="width: 100%; margin-bottom: 10px;"
+                        onclick="addText('heading')">
+                        <i class="fas fa-heading"></i> Add Heading
+                    </button>
+                    <button class="toolbar-btn primary" style="width: 100%; margin-bottom: 10px;"
+                        onclick="addText('subheading')">
+                        <i class="fas fa-text-height"></i> Add Subheading
+                    </button>
+                    <button class="toolbar-btn primary" style="width: 100%;" onclick="addText('body')">
+                        <i class="fas fa-paragraph"></i> Add Body Text
+                    </button>
+                </div>
+            </div>
+
+            <!-- Clipart Panel -->
+            <div id="clipartPanel" class="panel-section" style="display: none;">
+                <div class="panel-header">
+                    <span><i class="fas fa-shapes"></i> Cliparts & Shapes</span>
+                    <span class="panel-close" onclick="closePanel()">×</span>
+                </div>
+                <div class="panel-content">
+                    <!-- Basic Shapes Section -->
+                    <div class="properties-group">
+                        <div class="properties-title">Basic Shapes</div>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                            <button class="toolbar-btn" onclick="addShape('rect')">
+                                <i class="fas fa-square"></i> Rectangle
+                            </button>
+                            <button class="toolbar-btn" onclick="addShape('circle')">
+                                <i class="fas fa-circle"></i> Circle
+                            </button>
+                            <button class="toolbar-btn" onclick="addShape('triangle')">
+                                <i class="fas fa-play"></i> Triangle
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Clipart Search Section -->
+                    <div class="properties-group">
+                        <div class="properties-title">Clipart Library</div>
+                        <input type="text" id="clipartSearch" class="property-input" placeholder="Search cliparts..." 
+                               style="width: 100%; margin-bottom: 10px;" onkeypress="handleClipartSearch(event)">
+                        <button class="toolbar-btn primary" style="width: 100%; margin-bottom: 10px;" onclick="searchCliparts()">
+                            <i class="fas fa-search"></i> Search Cliparts
+                        </button>
+                        
+                        <!-- Loading indicator -->
+                        <div id="clipartLoading" class="loading" style="display: none;">
+                            <div class="spinner"></div>
+                            Loading cliparts...
+                        </div>
+                        
+                        <!-- Clipart results grid -->
+                        <div id="clipartResults" class="search-grid" style="max-height: 400px; overflow-y: auto;">
+                            <!-- Default cliparts will be loaded here -->
+                        </div>
+                        
+                        <!-- Pagination -->
+                        <div id="clipartPagination" class="pagination" style="display: none; margin-top: 10px;">
+                            <button class="page-btn" id="clipartPrev" onclick="changeClipartPage(-1)">Previous</button>
+                            <span id="clipartPageInfo"></span>
+                            <button class="page-btn" id="clipartNext" onclick="changeClipartPage(1)">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Image Panel -->
+            <div id="imagePanel" class="panel-section" style="display: none;">
+                <div class="panel-header">
+                    <span><i class="fas fa-image"></i> Stock Images</span>
+                    <span class="panel-close" onclick="closePanel()">×</span>
+                </div>
+                <div class="panel-content">
+                    <input type="text" id="pixabaySearch" class="property-input" placeholder="Search images..."
+                        style="width: 100%; margin-bottom: 10px;">
+                    <button class="toolbar-btn primary" style="width: 100%;" onclick="searchPixabayImages()">
+                        Search Images
+                    </button>
+                    <div id="pixabayLoading" class="loading" style="display: none;">
+                        <div class="spinner"></div>
+                        Searching...
+                    </div>
+                    <div id="pixabayResults" class="search-grid"></div>
+                    <div id="pixabayPagination" class="pagination" style="display: none;">
+                        <button class="page-btn" id="pixabayPrev" onclick="changePixabayPage(-1)">Previous</button>
+                        <span id="pixabayPageInfo"></span>
+                        <button class="page-btn" id="pixabayNext" onclick="changePixabayPage(1)">Next</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upload Panel -->
+            <div id="uploadPanel" class="panel-section" style="display: none;">
+                <div class="panel-header">
+                    <span><i class="fas fa-cloud-upload-alt"></i> Upload</span>
+                    <span class="panel-close" onclick="closePanel()">×</span>
+                </div>
+                <div class="panel-content">
+                    <input type="file" id="fileInput" accept="image/*" multiple style="display: none;"
+                        onchange="handleFileUpload(event)">
+                    <button class="toolbar-btn primary" style="width: 100%; height: 100px;"
+                        onclick="document.getElementById('fileInput').click()">
+                        <div>
+                            <i class="fas fa-cloud-upload-alt" style="font-size: 24px;"></i>
+                            <div>Click to Upload</div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Layers Panel -->
+            <div id="layersPanel" class="panel-section" style="display: none;">
+                <div class="panel-header">
+                    <span><i class="fas fa-layer-group"></i> Layers</span>
+                    <span class="panel-close" onclick="closePanel()">×</span>
+                </div>
+                <div class="panel-content">
+                    <div id="layersList"></div>
+                </div>
+            </div>
+
+            <!-- QR Code Panel -->
+            <div id="qrcodePanel" class="panel-section" style="display: none;">
+                <div class="panel-header">
+                    <span><i class="fas fa-qrcode"></i> QR Code</span>
+                    <span class="panel-close" onclick="closePanel()">×</span>
+                </div>
+                <div class="panel-content">
+                    <input type="text" id="qrContent" class="property-input" placeholder="Enter URL or text..."
+                        style="width: 100%; margin-bottom: 10px;">
+                    <button class="toolbar-btn primary" style="width: 100%;" onclick="generateQRCode()">
+                        Generate QR Code
+                    </button>
+                </div>
+            </div>
+
+            <!-- vCard Panel -->
+            <div id="vcardPanel" class="panel-section" style="display: none;">
+                <div class="panel-header">
+                    <span><i class="fas fa-address-card"></i> vCard QR Code</span>
+                    <span class="panel-close" onclick="closePanel()">×</span>
+                </div>
+                <div class="panel-content">
+                    <div class="property-row">
+                        <span class="property-label">Name:</span>
+                        <input type="text" id="vcardName" class="property-input" placeholder="Full Name"
+                            style="flex: 1;">
+                    </div>
+                    <div class="property-row">
+                        <span class="property-label">Phone:</span>
+                        <input type="tel" id="vcardPhone" class="property-input" placeholder="+1234567890"
+                            style="flex: 1;">
+                    </div>
+                    <div class="property-row">
+                        <span class="property-label">Email:</span>
+                        <input type="email" id="vcardEmail" class="property-input" placeholder="email@example.com"
+                            style="flex: 1;">
+                    </div>
+                    <div class="property-row">
+                        <span class="property-label">Company:</span>
+                        <input type="text" id="vcardCompany" class="property-input" placeholder="Company Name"
+                            style="flex: 1;">
+                    </div>
+                    <div class="property-row">
+                        <span class="property-label">Website:</span>
+                        <input type="url" id="vcardWebsite" class="property-input" placeholder="https://example.com"
+                            style="flex: 1;">
+                    </div>
+                    <div class="property-row">
+                        <span class="property-label">Address:</span>
+                        <input type="text" id="vcardAddress" class="property-input"
+                            placeholder="123 Main St, City, State, ZIP" style="flex: 1;">
+                    </div>
+                    <button class="toolbar-btn primary" style="width: 100%; margin-top: 10px;"
+                        onclick="generateVCard()">
+                        <i class="fas fa-qrcode"></i> Generate vCard QR Code
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Canvas Area -->
+        <div class="canvas-area">
+            <!-- Top Toolbar -->
+            <div class="top-toolbar">
+                <div class="toolbar-group">
+                    <button class="toolbar-btn" onclick="undo()">
+                        <i class="fas fa-undo"></i> Undo
+                    </button>
+                    <button class="toolbar-btn" onclick="redo()">
+                        <i class="fas fa-redo"></i> Redo
+                    </button>
+                </div>
+
+                <!-- Color Picker in Navbar -->
+                <div class="toolbar-group">
+                    <span style="font-size: 12px; margin-right: 8px;">Color:</span>
+                    <input type="color" id="navColorPicker" onchange="applyColorToSelected(this.value)"
+                        title="Change color of selected elements"
+                        style="width: 40px; height: 30px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; transition: all 0.3s;">
+                    <!-- Dynamic Design Colors -->
+                    <div id="designColors" style="display: flex; gap: 4px; margin-left: 8px; max-width: 200px; overflow-x: auto;">
+                        <!-- Colors from design will be populated here -->
+                    </div>
+                    <!-- Color Replacement Tool -->
+                    <button id="colorReplaceBtn" class="toolbar-btn" onclick="toggleColorReplace()" title="Replace colors in design" style="margin-left: 8px; display: none;">
+                        <i class="fas fa-palette"></i>
+                    </button>
+                </div>
+
+                <!-- Background Color -->
+                <div class="toolbar-group">
+                    <span style="font-size: 12px; margin-right: 8px;">BG:</span>
+                    <input type="color" id="bgColorPicker" value="#ffffff" onchange="changeCanvasBackground(this.value)"
+                        title="Change canvas background color"
+                        style="width: 40px; height: 30px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; transition: all 0.3s;">
+                </div>
+
+                <div class="toolbar-group">
+                    <button class="toolbar-btn primary" onclick="saveDesign()">
+                        <i class="fas fa-save"></i> Save
+                    </button>
+                    <button class="toolbar-btn primary" onclick="downloadDesign()">
+                        <i class="fas fa-download"></i> Export
+                    </button>
+                </div>
+            </div>
+
+            <!-- Context Toolbar (Shows when object selected) -->
+            <div id="contextToolbar" class="context-toolbar">
+                <!-- Text Options -->
+                <div id="textOptions" style="display: none; flex: 1;">
+                    <div class="context-group">
+                        <span class="context-label">Font:</span>
+                        <select id="ctxFontFamily" class="context-input" style="width: 100px;"
+                            onchange="updateTextProperty('fontFamily', this.value)">
+                            <option value="Arial">Arial</option>
+                            <option value="Helvetica">Helvetica</option>
+                            <option value="Times New Roman">Times</option>
+                            <option value="Georgia">Georgia</option>
+                            <option value="Verdana">Verdana</option>
+                        </select>
+                    </div>
+                    <div class="context-group">
+                        <span class="context-label">Size:</span>
+                        <input type="number" id="ctxFontSize" class="context-input" value="16"
+                            onchange="updateTextProperty('fontSize', this.value)">
+                    </div>
+                    <div class="context-group">
+                        <span class="context-label">Spacing:</span>
+                        <input type="number" id="ctxLetterSpacing" class="context-input" value="0" min="-50" max="200"
+                            onchange="updateTextProperty('charSpacing', this.value * 10)">
+                    </div>
+                    <div class="context-group">
+                        <button class="context-button" id="ctxBold" onclick="toggleTextStyle('bold')">
+                            <i class="fas fa-bold"></i>
+                        </button>
+                        <button class="context-button" id="ctxItalic" onclick="toggleTextStyle('italic')">
+                            <i class="fas fa-italic"></i>
+                        </button>
+                        <button class="context-button" id="ctxUnderline" onclick="toggleTextStyle('underline')">
+                            <i class="fas fa-underline"></i>
+                        </button>
+                    </div>
+                    <div class="context-group">
+                        <span class="context-label">Color:</span>
+                        <input type="color" id="ctxTextColor" onchange="updateTextProperty('fill', this.value)">
+                    </div>
+                </div>
+
+                <!-- Shape/Image Options -->
+                <div id="shapeOptions" style="display: none; flex: 1;">
+                    <div class="context-group">
+                        <span class="context-label">X:</span>
+                        <input type="number" id="ctxX" class="context-input" onchange="updatePosition()">
+                    </div>
+                    <div class="context-group">
+                        <span class="context-label">Y:</span>
+                        <input type="number" id="ctxY" class="context-input" onchange="updatePosition()">
+                    </div>
+                    <div class="context-group">
+                        <span class="context-label">Width:</span>
+                        <input type="number" id="ctxWidth" class="context-input" onchange="updateSize()">
+                    </div>
+                    <div class="context-group">
+                        <span class="context-label">Height:</span>
+                        <input type="number" id="ctxHeight" class="context-input" onchange="updateSize()">
+                    </div>
+                    <div class="context-group">
+                        <span class="context-label">Angle:</span>
+                        <input type="number" id="ctxRotation" class="context-input" min="0" max="360"
+                            onchange="updateRotation()">
+                    </div>
+                    <div class="context-group">
+                        <span class="context-label">Opacity:</span>
+                        <input type="range" id="ctxOpacity" min="0" max="100" value="100" onchange="updateOpacity()"
+                            style="width: 80px;">
+                        <span id="opacityValue">100%</span>
+                    </div>
+                    <div class="context-group">
+                        <button class="context-button" onclick="bringForward()">
+                            <i class="fas fa-level-up-alt"></i>
+                        </button>
+                        <button class="context-button" onclick="sendBackward()">
+                            <i class="fas fa-level-down-alt"></i>
+                        </button>
+                        <button class="context-button" onclick="bringToFront()">
+                            <i class="fas fa-arrow-up"></i>
+                        </button>
+                        <button class="context-button" onclick="sendToBack()">
+                            <i class="fas fa-arrow-down"></i>
+                        </button>
+                    </div>
+                    <div class="context-group">
+                        <button class="context-button" onclick="deleteSelected()">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Canvas Container -->
+            <div class="canvas-container">
+                <div class="ruler-corner">mm</div>
+                <div class="ruler-horizontal" id="rulerH"></div>
+                <div class="ruler-vertical" id="rulerV"></div>
+
+                <div class="canvas-workspace">
+                    <div class="canvas-wrapper">
+                        <canvas id="fabricCanvas"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Canvas Controls -->
+            <div class="canvas-controls">
+                <div class="zoom-control">
+                    <button class="zoom-btn" onclick="zoomOut()">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <span id="zoomLevel" style="padding: 0 15px; font-size: 13px;">100%</span>
+                    <button class="zoom-btn" onclick="zoomIn()">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <button class="toolbar-btn" onclick="resetZoom()">
+                    <i class="fas fa-expand"></i> Fit
+                </button>
+                <button class="toolbar-btn" onclick="toggleGrid()">
+                    <i class="fas fa-th"></i> Grid
+                </button>
+                <button class="toolbar-btn" onclick="toggleRulers()">
+                    <i class="fas fa-ruler"></i> Rulers
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Context Menu -->
+    <div id="contextMenu" class="context-menu">
+        <div class="context-menu-item" onclick="editElement()">
+            <i class="fas fa-edit"></i>
+            <span>Edit</span>
+        </div>
+        <div class="context-menu-item" onclick="duplicateElement()">
+            <i class="fas fa-copy"></i>
+            <span>Duplicate</span>
+        </div>
+        <div class="context-menu-separator"></div>
+        <div class="context-menu-item" onclick="changeElementColor()">
+            <i class="fas fa-palette"></i>
+            <span>Change Color</span>
+        </div>
+        <div class="context-menu-item" onclick="showElementProperties()">
+            <i class="fas fa-cog"></i>
+            <span>Properties</span>
+        </div>
+        <div class="context-menu-separator"></div>
+        <div class="context-menu-item" onclick="bringToFront()">
+            <i class="fas fa-arrow-up"></i>
+            <span>Bring to Front</span>
+        </div>
+        <div class="context-menu-item" onclick="sendToBack()">
+            <i class="fas fa-arrow-down"></i>
+            <span>Send to Back</span>
+        </div>
+        <div class="context-menu-separator"></div>
+        <div class="context-menu-item" onclick="deleteSelected()" style="color: #f44336;">
+            <i class="fas fa-trash"></i>
+            <span>Delete</span>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>""
+
+    <script>
+        // Global variables
+        let canvas;
+        let currentTool = 'design';
+        let history = [];
+        let historyStep = -1;
+        let currentZoom = 1;
+        let gridVisible = false;
+        let rulersVisible = true;
+        let bleedLinesVisible = true;
+        let safeZoneVisible = true;
+
+        // Canvas configuration (business card default)
+        let canvasConfig = {
+            widthMM: 90,
+            heightMM: 54,
+            dpi: 300,
+            bleedMM: 3,
+            safeZoneMM: 5,
+            productId: null,
+            templateId: null
+        };
+
+        // Pixabay API configuration
+        let pixabayConfig = {
+            currentPage: 1,
+            totalHits: 0,
+            perPage: 12
+        };
+
+        // Templates configuration
+        let templatesConfig = {
+            currentPage: 1,
+            totalHits: 0,
+            perPage: 8,
+            currentCategory: ''
+        };
+
+        // Products and categories cache
+        let productsCache = [];
+        let categoriesCache = [];
+
+        // Guide Overlay Manager Class
+        class GuideOverlayManager {
+            constructor(mainCanvas) {
+                this.mainCanvas = mainCanvas;
+                this.overlayCanvas = null;
+                this.overlayContext = null;
+                this.bleedLines = [];
+                this.safeZoneLines = [];
+                this.isVisible = true;
+                this.createOverlay();
+            }
+
+            createOverlay() {
+                // Create overlay canvas element
+                this.overlayCanvas = document.createElement('canvas');
+                this.overlayCanvas.className = 'guide-overlay';
+                this.overlayCanvas.id = 'guide-overlay';
+
+                // Get the canvas wrapper and add overlay
+                const canvasWrapper = document.querySelector('.canvas-wrapper');
+                if (canvasWrapper) {
+                    canvasWrapper.appendChild(this.overlayCanvas);
+                    this.overlayContext = this.overlayCanvas.getContext('2d');
+                    this.syncWithMainCanvas();
+                }
+            }
+
+            syncWithMainCanvas() {
+                if (!this.overlayCanvas || !this.mainCanvas) return;
+
+                // Match dimensions
+                this.overlayCanvas.width = this.mainCanvas.width;
+                this.overlayCanvas.height = this.mainCanvas.height;
+
+                // Match CSS dimensions and transformations
+                const mainCanvasElement = this.mainCanvas.getElement();
+                this.overlayCanvas.style.width = mainCanvasElement.style.width;
+                this.overlayCanvas.style.height = mainCanvasElement.style.height;
+
+                // Match zoom and pan transformations
+                const zoom = this.mainCanvas.getZoom();
+                const vpt = this.mainCanvas.viewportTransform;
+
+                if (vpt) {
+                    // Apply the same transformation matrix to overlay
+                    this.overlayCanvas.style.transform = `matrix(${vpt[0]}, ${vpt[1]}, ${vpt[2]}, ${vpt[3]}, ${vpt[4]}, ${vpt[5]})`;
+                    this.overlayCanvas.style.transformOrigin = '0 0';
+                }
+
+                // Update overlay content
+                this.updateOverlay();
+            }
+
+            drawBleedLines(bleedConfig) {
+                if (!this.overlayContext || !bleedLinesVisible) return;
+
+                const bleedPx = mmToPx(bleedConfig.bleedMM);
+                const ctx = this.overlayContext;
+
+                // Set line style
+                ctx.strokeStyle = '#ff0000';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([8, 4]);
+                ctx.globalAlpha = 1;
+
+                // Draw inner bleed rectangle (cut line)
+                ctx.strokeRect(
+                    bleedPx,
+                    bleedPx,
+                    this.overlayCanvas.width - (bleedPx * 2),
+                    this.overlayCanvas.height - (bleedPx * 2)
+                );
+
+                // Draw corner marks
+                const markLength = 20;
+                ctx.setLineDash([]);
+                ctx.beginPath();
+
+                // Top-left marks
+                ctx.moveTo(bleedPx, 0);
+                ctx.lineTo(bleedPx, markLength);
+                ctx.moveTo(0, bleedPx);
+                ctx.lineTo(markLength, bleedPx);
+
+                // Top-right marks
+                ctx.moveTo(this.overlayCanvas.width - bleedPx, 0);
+                ctx.lineTo(this.overlayCanvas.width - bleedPx, markLength);
+                ctx.moveTo(this.overlayCanvas.width - markLength, bleedPx);
+                ctx.lineTo(this.overlayCanvas.width, bleedPx);
+
+                // Bottom-left marks
+                ctx.moveTo(bleedPx, this.overlayCanvas.height - markLength);
+                ctx.lineTo(bleedPx, this.overlayCanvas.height);
+                ctx.moveTo(0, this.overlayCanvas.height - bleedPx);
+                ctx.lineTo(markLength, this.overlayCanvas.height - bleedPx);
+
+                // Bottom-right marks
+                ctx.moveTo(this.overlayCanvas.width - bleedPx, this.overlayCanvas.height - markLength);
+                ctx.lineTo(this.overlayCanvas.width - bleedPx, this.overlayCanvas.height);
+                ctx.moveTo(this.overlayCanvas.width - markLength, this.overlayCanvas.height - bleedPx);
+                ctx.lineTo(this.overlayCanvas.width, this.overlayCanvas.height - bleedPx);
+
+                ctx.stroke();
+            }
+
+            drawSafeZoneLines(safeZoneConfig) {
+                if (!this.overlayContext || !safeZoneVisible) return;
+
+                const safeMargin = mmToPx(safeZoneConfig.safeZoneMM);
+                const ctx = this.overlayContext;
+
+                // Set line style
+                ctx.strokeStyle = '#00ff00';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([4, 4]);
+                ctx.globalAlpha = 1;
+
+                // Draw safe zone rectangle
+                ctx.strokeRect(
+                    safeMargin,
+                    safeMargin,
+                    this.overlayCanvas.width - (safeMargin * 2),
+                    this.overlayCanvas.height - (safeMargin * 2)
+                );
+            }
+
+            updateOverlay() {
+                if (!this.overlayContext) return;
+
+                // Clear overlay
+                this.overlayContext.clearRect(0, 0, this.overlayCanvas.width, this.overlayCanvas.height);
+
+                if (!this.isVisible) return;
+
+                // Draw guides
+                this.drawBleedLines(canvasConfig);
+                this.drawSafeZoneLines(canvasConfig);
+            }
+
+            toggleVisibility(visible) {
+                this.isVisible = visible;
+                if (this.overlayCanvas) {
+                    this.overlayCanvas.style.display = visible ? 'block' : 'none';
+                }
+                this.updateOverlay();
+            }
+
+            clear() {
+                if (this.overlayContext) {
+                    this.overlayContext.clearRect(0, 0, this.overlayCanvas.width, this.overlayCanvas.height);
+                }
+            }
+        }
+
+        // Global guide overlay manager
+        let guideOverlayManager = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function () {
+            initializeCanvas();
+            setupEventHandlers();
+            drawRulers();
+            updateContextToolbar();
+            loadProducts();
+            loadCategories();
+            loadTemplates();
+            checkURLParams();
+        });
+
+        // Check URL parameters for product/category
+        function checkURLParams() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productSlug = urlParams.get('product');
+            const categorySlug = urlParams.get('category');
+
+            if (productSlug) {
+                // Load specific product settings
+                fetch(`/api/products/${productSlug}/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data) {
+                            applyProductSettings(data);
+                        }
+                    });
+            }
+        }
+
+        // Load products from backend
+        async function loadProducts() {
+            try {
+                // Try the API endpoint first
+                let response = await fetch('/api/products/');
+                let data;
+
+                if (!response.ok) {
+                    // Fallback to products endpoint
+                    response = await fetch('/products/ajax/calculate-price/');
+                    // For now, use hardcoded products if API is not available
+                    data = {
+                        results: [
+                            { id: 1, name: 'Business Card', slug: 'business-card', width: 90, height: 54, bleed_size: 3, safe_zone: 5 },
+                            { id: 2, name: 'Flyer', slug: 'flyer', width: 210, height: 297, bleed_size: 3, safe_zone: 5 },
+                            { id: 3, name: 'Poster', slug: 'poster', width: 420, height: 594, bleed_size: 5, safe_zone: 10 }
+                        ]
+                    };
+                } else {
+                    data = await response.json();
+                }
+
+                if (data && data.results) {
+                    productsCache = data.results;
+                    const select = document.getElementById('productSelect');
+                    select.innerHTML = '<option value="">Select Product</option>';
+
+                    data.results.forEach(product => {
+                        const option = document.createElement('option');
+                        option.value = product.id;
+                        option.textContent = product.name;
+                        option.dataset.width = product.width;
+                        option.dataset.height = product.height;
+                        option.dataset.bleed = product.bleed_size || 3;
+                        option.dataset.safeZone = product.safe_zone || 5;
+                        select.appendChild(option);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading products:', error);
+                // Load default products as fallback
+                const defaultProducts = [
+                    { id: 1, name: 'Business Card', width: 90, height: 54 },
+                    { id: 2, name: 'Flyer', width: 210, height: 297 },
+                    { id: 3, name: 'Poster', width: 420, height: 594 }
+                ];
+
+                const select = document.getElementById('productSelect');
+                defaultProducts.forEach(product => {
+                    const option = document.createElement('option');
+                    option.value = product.id;
+                    option.textContent = product.name;
+                    option.dataset.width = product.width;
+                    option.dataset.height = product.height;
+                    option.dataset.bleed = 3;
+                    option.dataset.safeZone = 5;
+                    select.appendChild(option);
+                });
+            }
+        }
+
+        // Load categories from backend
+        async function loadCategories() {
+            try {
+                // Try API endpoint first
+                let response = await fetch('/api/categories/');
+                let data;
+
+                if (!response.ok) {
+                    // Use hardcoded categories as fallback
+                    data = {
+                        results: [
+                            { id: 1, name: 'Business Cards', slug: 'business-cards' },
+                            { id: 2, name: 'Marketing Materials', slug: 'marketing-materials' },
+                            { id: 3, name: 'Stationery', slug: 'stationery' }
+                        ]
+                    };
+                } else {
+                    data = await response.json();
+                }
+
+                if (data && data.results) {
+                    categoriesCache = data.results;
+                    const select = document.getElementById('categorySelect');
+                    select.innerHTML = '<option value="">All Categories</option>';
+
+                    data.results.forEach(category => {
+                        const option = document.createElement('option');
+                        option.value = category.slug;
+                        option.textContent = category.name;
+                        select.appendChild(option);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading categories:', error);
+            }
+        }
+
+        // Load templates from backend - FIXED URL
+        async function loadTemplates(page = 1, category = '') {
+            const loading = document.getElementById('templatesLoading');
+            const templatesList = document.getElementById('templatesList');
+            const pagination = document.getElementById('templatesPagination');
+
+            loading.style.display = 'flex';
+            templatesList.innerHTML = '';
+            pagination.style.display = 'none';
+
+            try {
+                // Use the correct Django endpoint
+                let url = `/design-tool/api/database-templates/?page=${page}&per_page=${templatesConfig.perPage}`;
+                if (category) {
+                    url += `&category=${category}`;
+                }
+
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (data && data.success && data.data && data.data.hits && data.data.hits.length > 0) {
+                    templatesConfig.totalHits = data.data.totalHits || data.data.hits.length;
+                    displayTemplates(data.data.hits);
+                    setupTemplatesPagination();
+                } else {
+                    // Try loading from Pixabay as fallback
+                    templatesList.innerHTML = '<p style="text-align: center; color: #999; padding: 20px;">No templates found. Try searching in the Image panel.</p>';
+                }
+            } catch (error) {
+                console.error('Error loading templates:', error);
+                templatesList.innerHTML = '<p style="text-align: center; color: #f44336;">Error loading templates</p>';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        // Display templates in grid - UPDATED
+        function displayTemplates(templates) {
+            const templatesList = document.getElementById('templatesList');
+            templatesList.innerHTML = '';
+
+            templates.forEach(template => {
+                const div = document.createElement('div');
+                div.className = 'search-item';
+                div.style.position = 'relative';
+
+                // Handle different image URL formats
+                const imageUrl = template.thumbnail ||
+                    template.preview_image ||
+                    template.webformatURL ||
+                    template.largeImageURL ||
+                    template.templateFileURL ||
+                    '/static/img/template-placeholder.png';
+
+                // Get template name
+                const templateName = template.name || template.tags || 'Template';
+
+                div.innerHTML = `
+                    <img src="${imageUrl}" alt="${templateName}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='/static/img/template-placeholder.png'">
+                    <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.7); color: white; padding: 5px; font-size: 11px;">
+                        ${templateName}
+                    </div>
+                `;
+
+                div.onclick = () => applyTemplate(template);
+                templatesList.appendChild(div);
+            });
+        }
+
+        // Apply template to canvas - ENHANCED
+        async function applyTemplate(template) {
+            if (!confirm('This will replace your current design. Continue?')) {
+                return;
+            }
+
+            // Clear canvas
+            canvas.clear();
+            canvas.backgroundColor = '#ffffff';
+
+            // Update canvas settings from template if available
+            if (template.width && template.height) {
+                canvasConfig.widthMM = parseFloat(template.width);
+                canvasConfig.heightMM = parseFloat(template.height);
+                document.getElementById('canvasWidthMM').value = template.width;
+                document.getElementById('canvasHeightMM').value = template.height;
+            }
+
+            if (template.bleed_size !== undefined) {
+                canvasConfig.bleedMM = parseFloat(template.bleed_size);
+                document.getElementById('bleedSize').value = template.bleed_size;
+            }
+
+            if (template.safe_zone !== undefined) {
+                canvasConfig.safeZoneMM = parseFloat(template.safe_zone);
+                document.getElementById('safeZoneSize').value = template.safe_zone;
+            }
+
+            // Update canvas size
+            updateCanvasFromMM();
+
+            // Load template content based on type
+            if (template.template_file) {
+                // Django template with file
+                loadSVGTemplate(template.template_file);
+            } else if (template.templateFileURL) {
+                // Pixabay or external template
+                if (template.templateFileURL.toLowerCase().endsWith('.svg')) {
+                    loadSVGTemplate(template.templateFileURL);
+                } else {
+                    // Load as image
+                    addTemplateAsImage(template.templateFileURL || template.largeImageURL || template.webformatURL);
+                }
+            } else if (template.template_data) {
+                // JSON template data
+                loadJSONTemplate(template.template_data);
+            }
+
+            canvasConfig.templateId = template.id;
+        }
+
+        // Add template as background image
+        function addTemplateAsImage(imageUrl) {
+            fabric.Image.fromURL(imageUrl, function (img) {
+                // Scale to fit canvas
+                const scale = Math.min(
+                    canvas.width / img.width,
+                    canvas.height / img.height
+                );
+
+                img.set({
+                    left: canvas.width / 2,
+                    top: canvas.height / 2,
+                    originX: 'center',
+                    originY: 'center',
+                    scaleX: scale,
+                    scaleY: scale,
+                    selectable: true,
+                    evented: true
+                });
+
+                canvas.add(img);
+                canvas.renderAll();
+                saveHistory();
+            }, { crossOrigin: 'anonymous' });
+        }
+
+        // Load SVG template - FIXED for full editability
+        async function loadSVGTemplate(svgUrl) {
+            try {
+                const response = await fetch(svgUrl);
+                const svgText = await response.text();
+
+                fabric.loadSVGFromString(svgText, function (objects, options) {
+                    // Get the original SVG dimensions
+                    const svgWidth = options.viewBox ? options.viewBox.width : options.width;
+                    const svgHeight = options.viewBox ? options.viewBox.height : options.height;
+
+                    // Calculate scale to match canvas size
+                    const scaleX = canvas.width / svgWidth;
+                    const scaleY = canvas.height / svgHeight;
+                    const scale = Math.min(scaleX, scaleY);
+
+                    // Calculate offset to center
+                    const offsetX = (canvas.width - svgWidth * scale) / 2;
+                    const offsetY = (canvas.height - svgHeight * scale) / 2;
+
+                    // Add each object individually (not as a group) for full editability
+                    objects.forEach(function (obj) {
+                        // Apply scale and position to each object
+                        obj.set({
+                            left: (obj.left * scale) + offsetX,
+                            top: (obj.top * scale) + offsetY,
+                            scaleX: obj.scaleX * scale,
+                            scaleY: obj.scaleY * scale
+                        });
+
+                        // Make text editable
+                        if (obj.type === 'text') {
+                            // Convert to IText for editability
+                            const editableText = new fabric.IText(obj.text, {
+                                left: obj.left,
+                                top: obj.top,
+                                fontSize: obj.fontSize * scale,
+                                fontFamily: obj.fontFamily,
+                                fontWeight: obj.fontWeight,
+                                fill: obj.fill,
+                                scaleX: 1, // Reset scale since fontSize is already scaled
+                                scaleY: 1,
+                                angle: obj.angle,
+                                originX: obj.originX,
+                                originY: obj.originY
+                            });
+                            canvas.add(editableText);
+                        } else {
+                            // Add other objects as-is but editable
+                            obj.set({
+                                selectable: true,
+                                evented: true,
+                                hasControls: true,
+                                hasBorders: true
+                            });
+                            canvas.add(obj);
+                        }
+                    });
+
+                    // Ensure guides are on top
+                    bringGuidesToFront();
+
+                    canvas.renderAll();
+                    saveHistory();
+                }, null, { crossOrigin: 'Anonymous' });
+            } catch (error) {
+                console.error('Error loading SVG template:', error);
+                alert('Failed to load template. Trying as image...');
+                addTemplateAsImage(svgUrl);
+            }
+        }
+
+        // Bring guides to front - now handled by overlay system
+        function bringGuidesToFront() {
+            // Guides are now in overlay, no need to manage z-index on main canvas
+            // Just ensure grid stays behind design elements
+            canvas.getObjects().forEach(obj => {
+                if (obj.customType === 'grid') {
+                    canvas.sendToBack(obj);
+                }
+            });
+        }
+
+        // These functions are now handled by the overlay system - keeping for compatibility
+        // but they no longer add elements to the main canvas
+
+        // Info buttons are no longer needed since guides are in overlay
+        function drawInfoButtons() {
+            // Info buttons functionality removed - guides are now in overlay system
+        }
+
+        // Tooltip system
+        let tooltipElement = null;
+
+        function showTooltip(title, text, x, y) {
+            hideTooltip();
+
+            tooltipElement = document.createElement('div');
+            tooltipElement.style.cssText = `
+                position: absolute;
+                background: rgba(0, 0, 0, 0.9);
+                color: white;
+                padding: 10px 15px;
+                border-radius: 6px;
+                max-width: 250px;
+                font-size: 12px;
+                z-index: 10000;
+                pointer-events: none;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            `;
+
+            tooltipElement.innerHTML = `
+                <div style="font-weight: bold; margin-bottom: 5px; font-size: 13px;">${title}</div>
+                <div style="line-height: 1.4;">${text}</div>
+            `;
+
+            document.body.appendChild(tooltipElement);
+
+            // Position tooltip
+            const canvasRect = canvas.getElement().getBoundingClientRect();
+            const zoom = canvas.getZoom();
+
+            tooltipElement.style.left = (canvasRect.left + x * zoom + 30) + 'px';
+            tooltipElement.style.top = (canvasRect.top + y * zoom) + 'px';
+        }
+
+        function hideTooltip() {
+            if (tooltipElement) {
+                document.body.removeChild(tooltipElement);
+                tooltipElement = null;
+            }
+        }
+
+        // Update canvas from MM with proper guide updates
+        function updateCanvasFromMM() {
+            canvasConfig.widthMM = parseFloat(document.getElementById('canvasWidthMM').value);
+            canvasConfig.heightMM = parseFloat(document.getElementById('canvasHeightMM').value);
+
+            const widthPx = mmToPx(canvasConfig.widthMM);
+            const heightPx = mmToPx(canvasConfig.heightMM);
+
+            canvas.setWidth(widthPx);
+            canvas.setHeight(heightPx);
+
+            // Redraw all guides and ensure they're on top
+            drawBleedLines();
+            drawSafeZone();
+            addGrid();
+            drawRulers();
+            drawInfoButtons();
+
+            canvas.renderAll();
+        }
+
+        // Modified grid function to ensure it stays behind content
+        function addGrid() {
+            // Remove existing grid
+            canvas.getObjects().forEach(obj => {
+                if (obj.customType === 'grid') {
+                    canvas.remove(obj);
+                }
+            });
+
+            if (!gridVisible) return;
+
+            const gridSize = mmToPx(5); // 5mm grid
+
+            // Create grid group to manage z-index better
+            const gridLines = [];
+
+            // Vertical lines
+            for (let i = 0; i < canvas.width / gridSize; i++) {
+                gridLines.push(new fabric.Line(
+                    [i * gridSize, 0, i * gridSize, canvas.height],
+                    {
+                        stroke: '#e0e0e0',
+                        strokeWidth: 0.5,
+                        selectable: false,
+                        evented: false,
+                        customType: 'grid',
+                        opacity: 0.5
+                    }
+                ));
+            }
+
+            // Horizontal lines
+            for (let i = 0; i < canvas.height / gridSize; i++) {
+                gridLines.push(new fabric.Line(
+                    [0, i * gridSize, canvas.width, i * gridSize],
+                    {
+                        stroke: '#e0e0e0',
+                        strokeWidth: 0.5,
+                        selectable: false,
+                        evented: false,
+                        customType: 'grid',
+                        opacity: 0.5
+                    }
+                ));
+            }
+
+            // Add grid lines to canvas (they'll be behind content)
+            gridLines.forEach(line => {
+                canvas.add(line);
+                canvas.sendToBack(line);
+            });
+
+            canvas.renderAll();
+        }
+
+        // Apply template to canvas - ENHANCED with dynamic settings
+        async function applyTemplate(template) {
+            if (!confirm('This will replace your current design. Continue?')) {
+                return;
+            }
+
+            // Clear canvas but keep guides
+            const objects = canvas.getObjects();
+            objects.forEach(obj => {
+                if (obj.customType !== 'grid' && obj.customType !== 'bleed' && obj.customType !== 'safezone') {
+                    canvas.remove(obj);
+                }
+            });
+            canvas.backgroundColor = '#ffffff';
+
+            // Update canvas settings from template - use actual values from your Django model
+            if (template.width_mm !== undefined && template.height_mm !== undefined) {
+                canvasConfig.widthMM = parseFloat(template.width_mm);
+                canvasConfig.heightMM = parseFloat(template.height_mm);
+                document.getElementById('canvasWidthMM').value = template.width_mm;
+                document.getElementById('canvasHeightMM').value = template.height_mm;
+            } else if (template.width && template.height) {
+                // Fallback for older format
+                canvasConfig.widthMM = parseFloat(template.width);
+                canvasConfig.heightMM = parseFloat(template.height);
+                document.getElementById('canvasWidthMM').value = template.width;
+                document.getElementById('canvasHeightMM').value = template.height;
+            }
+
+            // Set bleed from template
+            if (template.bleed_mm !== undefined) {
+                canvasConfig.bleedMM = parseFloat(template.bleed_mm);
+                document.getElementById('bleedSize').value = template.bleed_mm;
+            } else if (template.bleed_size !== undefined) {
+                canvasConfig.bleedMM = parseFloat(template.bleed_size);
+                document.getElementById('bleedSize').value = template.bleed_size;
+            }
+
+            // Set safe zone from template
+            if (template.safe_zone_mm !== undefined) {
+                canvasConfig.safeZoneMM = parseFloat(template.safe_zone_mm);
+                document.getElementById('safeZoneSize').value = template.safe_zone_mm;
+            } else if (template.safe_zone !== undefined) {
+                canvasConfig.safeZoneMM = parseFloat(template.safe_zone);
+                document.getElementById('safeZoneSize').value = template.safe_zone;
+            }
+
+            // Update canvas size and redraw guides
+            const widthPx = mmToPx(canvasConfig.widthMM);
+            const heightPx = mmToPx(canvasConfig.heightMM);
+
+            canvas.setWidth(widthPx);
+            canvas.setHeight(heightPx);
+
+            // Redraw all guides with new dimensions
+            drawBleedLines();
+            drawSafeZone();
+            addGrid();
+            drawRulers();
+
+            // Load template content based on type
+            if (template.svg_file || template.template_file) {
+                // Django template with SVG file
+                const svgUrl = template.svg_file || template.template_file;
+                loadSVGTemplate(svgUrl);
+            } else if (template.templateFileURL) {
+                // External template URL
+                if (template.templateFileURL.toLowerCase().endsWith('.svg')) {
+                    loadSVGTemplate(template.templateFileURL);
+                } else {
+                    // Load as image for non-SVG files
+                    addTemplateAsImage(template.templateFileURL || template.largeImageURL || template.webformatURL);
+                }
+            } else if (template.json_data || template.template_data) {
+                // JSON template data from Django
+                const jsonData = template.json_data || template.template_data;
+                loadJSONTemplate(jsonData);
+            } else if (template.largeImageURL || template.webformatURL) {
+                // Pixabay image
+                addTemplateAsImage(template.largeImageURL || template.webformatURL);
+            }
+
+            canvasConfig.templateId = template.id;
+            canvas.renderAll();
+        }
+
+        // Enhanced template display with size info
+        function displayTemplates(templates) {
+            const templatesList = document.getElementById('templatesList');
+            templatesList.innerHTML = '';
+
+            templates.forEach(template => {
+                const div = document.createElement('div');
+                div.className = 'search-item';
+                div.style.position = 'relative';
+
+                // Handle different image URL formats
+                const imageUrl = template.thumbnail ||
+                    template.preview_image ||
+                    template.webformatURL ||
+                    template.largeImageURL ||
+                    template.templateFileURL ||
+                    '/static/img/template-placeholder.png';
+
+                // Get template name and size
+                const templateName = template.name || template.tags || 'Template';
+                const width = template.width_mm || template.width || canvasConfig.widthMM;
+                const height = template.height_mm || template.height || canvasConfig.heightMM;
+
+                div.innerHTML = `
+                    <img src="${imageUrl}" alt="${templateName}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='/static/img/template-placeholder.png'">
+                    <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.8); color: white; padding: 5px; font-size: 10px;">
+                        <div style="font-weight: bold; margin-bottom: 2px;">${templateName}</div>
+                        <div style="opacity: 0.8;">${width}×${height}mm</div>
+                    </div>
+                `;
+
+                div.onclick = () => applyTemplate(template);
+                templatesList.appendChild(div);
+            });
+        }
+
+        // Add template as properly scaled image
+        function addTemplateAsImage(imageUrl) {
+            fabric.Image.fromURL(imageUrl, function (img) {
+                // The image should fill the canvas since it's designed for these dimensions
+                // Calculate scale to fit the entire canvas
+                const scaleX = canvas.width / img.width;
+                const scaleY = canvas.height / img.height;
+
+                // Use the scale that fills the canvas (might crop)
+                const scale = Math.max(scaleX, scaleY);
+
+                img.set({
+                    left: canvas.width / 2,
+                    top: canvas.height / 2,
+                    originX: 'center',
+                    originY: 'center',
+                    scaleX: scale,
+                    scaleY: scale,
+                    selectable: true,
+                    evented: true
+                });
+
+                canvas.add(img);
+                canvas.setActiveObject(img);
+                canvas.renderAll();
+                saveHistory();
+            }, { crossOrigin: 'anonymous' });
+        }
+
+        // Update canvas from MM with proper guide updates
+        function updateCanvasFromMM() {
+            canvasConfig.widthMM = parseFloat(document.getElementById('canvasWidthMM').value);
+            canvasConfig.heightMM = parseFloat(document.getElementById('canvasHeightMM').value);
+
+            const widthPx = mmToPx(canvasConfig.widthMM);
+            const heightPx = mmToPx(canvasConfig.heightMM);
+
+            canvas.setWidth(widthPx);
+            canvas.setHeight(heightPx);
+
+            // Redraw all guides
+            drawBleedLines();
+            drawSafeZone();
+            addGrid();
+            drawRulers();
+
+            canvas.renderAll();
+        }
+
+        // Enhanced bleed lines drawing
+        function drawBleedLines() {
+            // Remove existing bleed lines
+            canvas.getObjects().forEach(obj => {
+                if (obj.customType === 'bleed') {
+                    canvas.remove(obj);
+                }
+            });
+
+            if (!bleedLinesVisible) return;
+
+            const bleedPx = mmToPx(canvasConfig.bleedMM);
+
+            // Inner bleed rectangle (cut line)
+            const bleedRect = new fabric.Rect({
+                left: bleedPx,
+                top: bleedPx,
+                width: canvas.width - (bleedPx * 2),
+                height: canvas.height - (bleedPx * 2),
+                fill: 'transparent',
+                stroke: '#ff0000',
+                strokeWidth: 1,
+                strokeDashArray: [5, 5],
+                selectable: false,
+                evented: false,
+                customType: 'bleed',
+                opacity: 0.8
+            });
+
+            // Add bleed area indicators at corners
+            const cornerSize = 10;
+            const corners = [
+                { x: 0, y: 0 }, // top-left
+                { x: canvas.width - cornerSize, y: 0 }, // top-right
+                { x: 0, y: canvas.height - cornerSize }, // bottom-left
+                { x: canvas.width - cornerSize, y: canvas.height - cornerSize } // bottom-right
+            ];
+
+            corners.forEach(corner => {
+                const cornerRect = new fabric.Rect({
+                    left: corner.x,
+                    top: corner.y,
+                    width: cornerSize,
+                    height: cornerSize,
+                    fill: 'rgba(255, 0, 0, 0.1)',
+                    stroke: '#ff0000',
+                    strokeWidth: 0.5,
+                    selectable: false,
+                    evented: false,
+                    customType: 'bleed'
+                });
+                canvas.add(cornerRect);
+                canvas.sendToBack(cornerRect);
+            });
+
+            canvas.add(bleedRect);
+            canvas.sendToBack(bleedRect);
+        }
+
+        // Load JSON template
+        function loadJSONTemplate(templateData) {
+            if (typeof templateData === 'string') {
+                templateData = JSON.parse(templateData);
+            }
+
+            canvas.loadFromJSON(templateData, function () {
+                canvas.renderAll();
+                saveHistory();
+                updateDesignColorPalette();
+                updateLayersList();
+            });
+        }
+
+        // Load templates by category
+        function loadTemplatesByCategory() {
+            const category = document.getElementById('categorySelect').value;
+            templatesConfig.currentCategory = category;
+            templatesConfig.currentPage = 1;
+            loadTemplates(1, category);
+        }
+
+        // Template pagination
+        function setupTemplatesPagination() {
+            const pagination = document.getElementById('templatesPagination');
+            const totalPages = Math.ceil(templatesConfig.totalHits / templatesConfig.perPage);
+
+            if (totalPages > 1) {
+                pagination.style.display = 'flex';
+                document.getElementById('templatesPageInfo').textContent = `Page ${templatesConfig.currentPage} of ${totalPages}`;
+                document.getElementById('templatesPrev').disabled = templatesConfig.currentPage === 1;
+                document.getElementById('templatesNext').disabled = templatesConfig.currentPage === totalPages;
+            }
+        }
+
+        function changeTemplatePage(direction) {
+            templatesConfig.currentPage += direction;
+            loadTemplates(templatesConfig.currentPage, templatesConfig.currentCategory);
+        }
+
+        // Load product settings
+        function loadProductSettings() {
+            const select = document.getElementById('productSelect');
+            const selectedOption = select.options[select.selectedIndex];
+
+            if (selectedOption.value) {
+                const product = {
+                    id: selectedOption.value,
+                    width: parseFloat(selectedOption.dataset.width),
+                    height: parseFloat(selectedOption.dataset.height),
+                    bleed_size: parseFloat(selectedOption.dataset.bleed),
+                    safe_zone: parseFloat(selectedOption.dataset.safeZone)
+                };
+
+                applyProductSettings(product);
+            }
+        }
+
+        // Apply product settings to canvas
+        function applyProductSettings(product) {
+            canvasConfig.productId = product.id;
+            canvasConfig.widthMM = product.width;
+            canvasConfig.heightMM = product.height;
+            canvasConfig.bleedMM = product.bleed_size || 3;
+            canvasConfig.safeZoneMM = product.safe_zone || 5;
+
+            document.getElementById('canvasWidthMM').value = product.width;
+            document.getElementById('canvasHeightMM').value = product.height;
+            document.getElementById('bleedSize').value = canvasConfig.bleedMM;
+            document.getElementById('safeZoneSize').value = canvasConfig.safeZoneMM;
+
+            updateCanvasFromMM();
+        }
+
+        function initializeCanvas() {
+            // Calculate canvas size in pixels from mm
+            const widthPx = (canvasConfig.widthMM * canvasConfig.dpi) / 25.4;
+            const heightPx = (canvasConfig.heightMM * canvasConfig.dpi) / 25.4;
+
+            canvas = new fabric.Canvas('fabricCanvas', {
+                width: widthPx,
+                height: heightPx,
+                backgroundColor: '#ffffff',
+                preserveObjectStacking: true
+            });
+
+            // Initialize guide overlay manager
+            guideOverlayManager = new GuideOverlayManager(canvas);
+
+            // Draw grid on main canvas (this can stay as it's part of the design)
+            addGrid();
+
+            // Canvas events
+            canvas.on('selection:created', () => {
+                updateContextToolbar();
+                updateLayersList();
+            });
+            canvas.on('selection:updated', () => {
+                updateContextToolbar();
+                updateLayersList();
+            });
+            canvas.on('selection:cleared', () => {
+                hideContextToolbar();
+                updateLayersList();
+            });
+            canvas.on('object:modified', () => {
+                saveHistory();
+                updateLayersList();
+                updateDesignColorPalette();
+            });
+            canvas.on('object:added', () => {
+                saveHistory();
+                updateLayersList();
+                updateDesignColorPalette();
+            });
+            canvas.on('object:removed', () => {
+                saveHistory();
+                updateLayersList();
+                updateDesignColorPalette();
+            });
+
+            // Canvas transformation events for overlay sync
+            canvas.on('after:render', () => {
+                if (guideOverlayManager) {
+                    requestAnimationFrame(() => {
+                        guideOverlayManager.syncWithMainCanvas();
+                    });
+                }
+            });
+
+            // Pan and zoom events
+            canvas.on('mouse:wheel', () => {
+                if (guideOverlayManager) {
+                    requestAnimationFrame(() => {
+                        guideOverlayManager.syncWithMainCanvas();
+                    });
+                }
+            });
+
+            canvas.on('path:created', () => {
+                if (guideOverlayManager) {
+                    guideOverlayManager.syncWithMainCanvas();
+                }
+            });
+
+            // Right-click context menu
+            canvas.on('mouse:down', function(options) {
+                if (options.e.button === 2) { // Right click
+                    const target = canvas.findTarget(options.e);
+                    if (target && target.customType !== 'grid' && target.customType !== 'bleed' && target.customType !== 'safezone') {
+                        canvas.setActiveObject(target);
+                        canvas.renderAll();
+                        showContextMenu(options.e, target);
+                    }
+                }
+            });
+
+            // Prevent default context menu on canvas
+            canvas.upperCanvasEl.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+            });
+
+            saveHistory();
+            
+            // Initialize color palette
+            updateDesignColorPalette();
+            
+            // Initialize popular cliparts
+            setTimeout(() => {
+                loadPopularCliparts();
+            }, 1000);
+        }
+
+        // MM to Pixels conversion
+        function mmToPx(mm) {
+            return (mm * canvasConfig.dpi) / 25.4;
+        }
+
+        function pxToMm(px) {
+            return (px * 25.4) / canvasConfig.dpi;
+        }
+
+        // Update canvas from MM input
+        function updateCanvasFromMM() {
+            canvasConfig.widthMM = parseFloat(document.getElementById('canvasWidthMM').value);
+            canvasConfig.heightMM = parseFloat(document.getElementById('canvasHeightMM').value);
+
+            const widthPx = mmToPx(canvasConfig.widthMM);
+            const heightPx = mmToPx(canvasConfig.heightMM);
+
+            canvas.setWidth(widthPx);
+            canvas.setHeight(heightPx);
+            canvas.renderAll();
+
+            drawRulers();
+            addGrid();
+
+            // Update overlay guides
+            if (guideOverlayManager) {
+                guideOverlayManager.syncWithMainCanvas();
+            }
+        }
+
+        // Bleed lines - now using overlay system
+        function drawBleedLines() {
+            // This function is now handled by the overlay manager
+            if (guideOverlayManager) {
+                guideOverlayManager.updateOverlay();
+            }
+        }
+
+        function toggleBleedLines() {
+            bleedLinesVisible = document.getElementById('showBleed').checked;
+            if (guideOverlayManager) {
+                guideOverlayManager.updateOverlay();
+            }
+        }
+
+        function updateBleedLines() {
+            canvasConfig.bleedMM = parseFloat(document.getElementById('bleedSize').value);
+            if (guideOverlayManager) {
+                guideOverlayManager.updateOverlay();
+            }
+        }
+
+        // Safe zone - now using overlay system
+        function drawSafeZone() {
+            // This function is now handled by the overlay manager
+            if (guideOverlayManager) {
+                guideOverlayManager.updateOverlay();
+            }
+        }
+
+        function toggleSafeZone() {
+            safeZoneVisible = document.getElementById('showSafeZone').checked;
+            if (guideOverlayManager) {
+                guideOverlayManager.updateOverlay();
+            }
+        }
+
+        function updateSafeZone() {
+            canvasConfig.safeZoneMM = parseFloat(document.getElementById('safeZoneSize').value);
+            if (guideOverlayManager) {
+                guideOverlayManager.updateOverlay();
+            }
+        }
+
+        // Rulers
+        function drawRulers() {
+            if (!rulersVisible) {
+                document.getElementById('rulerH').style.display = 'none';
+                document.getElementById('rulerV').style.display = 'none';
+                document.querySelector('.ruler-corner').style.display = 'none';
+                return;
+            }
+
+            const rulerH = document.getElementById('rulerH');
+            const rulerV = document.getElementById('rulerV');
+
+            rulerH.style.display = 'flex';
+            rulerV.style.display = 'flex';
+            document.querySelector('.ruler-corner').style.display = 'flex';
+
+            rulerH.innerHTML = '';
+            rulerV.innerHTML = '';
+
+            // Draw horizontal ruler (mm marks)
+            const widthMM = canvasConfig.widthMM;
+            for (let i = 0; i <= widthMM; i++) {
+                if (i % 10 === 0) {
+                    const mark = document.createElement('div');
+                    mark.style.position = 'absolute';
+                    mark.style.left = mmToPx(i) + 'px';
+                    mark.style.bottom = '0';
+                    mark.style.borderLeft = '1px solid #666';
+                    mark.style.height = '15px';
+                    rulerH.appendChild(mark);
+
+                    const label = document.createElement('div');
+                    label.style.position = 'absolute';
+                    label.style.left = mmToPx(i) - 10 + 'px';
+                    label.style.bottom = '15px';
+                    label.style.fontSize = '10px';
+                    label.textContent = i;
+                    rulerH.appendChild(label);
+                } else if (i % 5 === 0) {
+                    const mark = document.createElement('div');
+                    mark.style.position = 'absolute';
+                    mark.style.left = mmToPx(i) + 'px';
+                    mark.style.bottom = '0';
+                    mark.style.borderLeft = '1px solid #999';
+                    mark.style.height = '8px';
+                    rulerH.appendChild(mark);
+                }
+            }
+
+            // Draw vertical ruler (mm marks)
+            const heightMM = canvasConfig.heightMM;
+            for (let i = 0; i <= heightMM; i++) {
+                if (i % 10 === 0) {
+                    const mark = document.createElement('div');
+                    mark.style.position = 'absolute';
+                    mark.style.top = mmToPx(i) + 'px';
+                    mark.style.right = '0';
+                    mark.style.borderTop = '1px solid #666';
+                    mark.style.width = '15px';
+                    rulerV.appendChild(mark);
+
+                    const label = document.createElement('div');
+                    label.style.position = 'absolute';
+                    label.style.top = mmToPx(i) - 5 + 'px';
+                    label.style.right = '15px';
+                    label.style.fontSize = '10px';
+                    label.textContent = i;
+                    rulerV.appendChild(label);
+                } else if (i % 5 === 0) {
+                    const mark = document.createElement('div');
+                    mark.style.position = 'absolute';
+                    mark.style.top = mmToPx(i) + 'px';
+                    mark.style.right = '0';
+                    mark.style.borderTop = '1px solid #999';
+                    mark.style.width = '8px';
+                    rulerV.appendChild(mark);
+                }
+            }
+        }
+
+        function toggleRulers() {
+            rulersVisible = !rulersVisible;
+            drawRulers();
+        }
+
+        // Grid
+        function addGrid() {
+            // Remove existing grid
+            canvas.getObjects().forEach(obj => {
+                if (obj.customType === 'grid') {
+                    canvas.remove(obj);
+                }
+            });
+
+            if (!gridVisible) return;
+
+            const gridSize = mmToPx(5); // 5mm grid
+
+            // Vertical lines
+            for (let i = 0; i < canvas.width / gridSize; i++) {
+                const line = new fabric.Line(
+                    [i * gridSize, 0, i * gridSize, canvas.height],
+                    {
+                        stroke: '#e0e0e0',
+                        selectable: false,
+                        evented: false,
+                        customType: 'grid'
+                    }
+                );
+                canvas.add(line);
+                canvas.sendToBack(line);
+            }
+
+            // Horizontal lines
+            for (let i = 0; i < canvas.height / gridSize; i++) {
+                const line = new fabric.Line(
+                    [0, i * gridSize, canvas.width, i * gridSize],
+                    {
+                        stroke: '#e0e0e0',
+                        selectable: false,
+                        evented: false,
+                        customType: 'grid'
+                    }
+                );
+                canvas.add(line);
+                canvas.sendToBack(line);
+            }
+
+            canvas.renderAll();
+        }
+
+        function toggleGrid() {
+            gridVisible = !gridVisible;
+            addGrid();
+        }
+
+        // Tool switching
+        function switchTool(toolName) {
+            document.querySelectorAll('.tool-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.querySelector(`[data-tool="${toolName}"]`).classList.add('active');
+
+            document.querySelectorAll('.panel-section').forEach(panel => {
+                panel.style.display = 'none';
+            });
+
+            const panelId = toolName + 'Panel';
+            const panel = document.getElementById(panelId);
+            if (panel) {
+                panel.style.display = 'block';
+                document.getElementById('optionsPanel').classList.add('active');
+            }
+
+            currentTool = toolName;
+        }
+
+        function closePanel() {
+            document.getElementById('optionsPanel').classList.remove('active');
+        }
+
+        // Context Toolbar
+        function updateContextToolbar() {
+            const activeObject = canvas.getActiveObject();
+            const activeSelection = canvas.getActiveObjects();
+            const contextToolbar = document.getElementById('contextToolbar');
+
+            if (!activeObject) {
+                hideContextToolbar();
+                updateColorPickerState();
+                return;
+            }
+
+            contextToolbar.classList.add('active');
+
+            // Hide all options first
+            document.getElementById('textOptions').style.display = 'none';
+            document.getElementById('shapeOptions').style.display = 'none';
+
+            if (activeObject.type === 'i-text' || activeObject.type === 'text') {
+                // Show text options
+                document.getElementById('textOptions').style.display = 'flex';
+                document.getElementById('ctxFontFamily').value = activeObject.fontFamily || 'Arial';
+                document.getElementById('ctxFontSize').value = activeObject.fontSize || 16;
+                document.getElementById('ctxTextColor').value = activeObject.fill || '#000000';
+
+                // Update style buttons
+                document.getElementById('ctxBold').classList.toggle('active', activeObject.fontWeight === 'bold');
+                document.getElementById('ctxItalic').classList.toggle('active', activeObject.fontStyle === 'italic');
+                document.getElementById('ctxUnderline').classList.toggle('active', activeObject.underline === true);
+            } else {
+                // Show shape/image options
+                document.getElementById('shapeOptions').style.display = 'flex';
+                document.getElementById('ctxX').value = Math.round(activeObject.left);
+                document.getElementById('ctxY').value = Math.round(activeObject.top);
+                document.getElementById('ctxWidth').value = Math.round(activeObject.width * activeObject.scaleX);
+                document.getElementById('ctxHeight').value = Math.round(activeObject.height * activeObject.scaleY);
+                document.getElementById('ctxRotation').value = Math.round(activeObject.angle);
+
+                // Update opacity controls
+                const opacity = (activeObject.opacity || 1) * 100;
+                document.getElementById('ctxOpacity').value = Math.round(opacity);
+                document.getElementById('opacityValue').textContent = Math.round(opacity) + '%';
+            }
+
+            // Update color picker state
+            updateColorPickerState();
+        }
+
+        // Update color picker state based on selection
+        function updateColorPickerState() {
+            const activeObject = canvas.getActiveObject();
+            const activeSelection = canvas.getActiveObjects();
+            const colorPicker = document.getElementById('navColorPicker');
+
+            if (activeSelection && activeSelection.length > 0) {
+                // Get color from first selected object
+                const firstObject = activeSelection[0];
+                let currentColor = '#000000';
+
+                if (firstObject.fill && typeof firstObject.fill === 'string') {
+                    currentColor = firstObject.fill;
+                }
+
+                colorPicker.value = currentColor;
+                colorPicker.disabled = false;
+                colorPicker.style.opacity = '1';
+
+                // Check if multiple objects have different colors
+                if (activeSelection.length > 1) {
+                    const hasMultipleColors = activeSelection.some(obj => obj.fill !== currentColor);
+                    if (hasMultipleColors) {
+                        colorPicker.style.background = 'linear-gradient(45deg, #ff0000, #00ff00, #0000ff)';
+                        colorPicker.title = 'Multiple colors selected';
+                    } else {
+                        colorPicker.style.background = '';
+                        colorPicker.title = 'Change color of selected elements';
+                    }
+                }
+            } else {
+                // No selection - disable color picker
+                colorPicker.disabled = true;
+                colorPicker.style.opacity = '0.5';
+                colorPicker.title = 'Select an element to change its color';
+                colorPicker.style.background = '';
+            }
+        }
+
+        function hideContextToolbar() {
+            document.getElementById('contextToolbar').classList.remove('active');
+            updateColorPickerState();
+        }
+
+        // Text functions
+        function addText(type) {
+            let text = '';
+            let fontSize = 16;
+            let fontWeight = 'normal';
+
+            switch (type) {
+                case 'heading':
+                    text = 'Add Your Heading';
+                    fontSize = 48;
+                    fontWeight = 'bold';
+                    break;
+                case 'subheading':
+                    text = 'Add Your Subheading';
+                    fontSize = 32;
+                    fontWeight = '500';
+                    break;
+                case 'body':
+                    text = 'Add your body text here. Click to edit.';
+                    fontSize = 16;
+                    break;
+            }
+
+            const fabricText = new fabric.IText(text, {
+                left: canvas.width / 2,
+                top: canvas.height / 2,
+                fontSize: fontSize,
+                fontWeight: fontWeight,
+                fontFamily: 'Arial',
+                fill: '#333333',
+                originX: 'center',
+                originY: 'center'
+            });
+
+            canvas.add(fabricText);
+            canvas.setActiveObject(fabricText);
+            canvas.renderAll();
+        }
+
+        function updateTextProperty(property, value) {
+            const activeObject = canvas.getActiveObject();
+            if (activeObject && (activeObject.type === 'i-text' || activeObject.type === 'text')) {
+                activeObject.set(property, value);
+                canvas.renderAll();
+                saveHistory();
+            }
+        }
+
+        function toggleTextStyle(style) {
+            const activeObject = canvas.getActiveObject();
+            if (!activeObject || (activeObject.type !== 'i-text' && activeObject.type !== 'text')) return;
+
+            switch (style) {
+                case 'bold':
+                    activeObject.set('fontWeight', activeObject.fontWeight === 'bold' ? 'normal' : 'bold');
+                    document.getElementById('ctxBold').classList.toggle('active');
+                    break;
+                case 'italic':
+                    activeObject.set('fontStyle', activeObject.fontStyle === 'italic' ? 'normal' : 'italic');
+                    document.getElementById('ctxItalic').classList.toggle('active');
+                    break;
+                case 'underline':
+                    activeObject.set('underline', !activeObject.underline);
+                    document.getElementById('ctxUnderline').classList.toggle('active');
+                    break;
+            }
+
+            canvas.renderAll();
+            saveHistory();
+        }
+
+        // Shape functions
+        function addShape(shapeType) {
+            let shape;
+
+            switch (shapeType) {
+                case 'rect':
+                    shape = new fabric.Rect({
+                        width: mmToPx(20),
+                        height: mmToPx(20),
+                        fill: '#ff5722',
+                        left: canvas.width / 2 - mmToPx(10),
+                        top: canvas.height / 2 - mmToPx(10)
+                    });
+                    break;
+                case 'circle':
+                    shape = new fabric.Circle({
+                        radius: mmToPx(10),
+                        fill: '#2196f3',
+                        left: canvas.width / 2 - mmToPx(10),
+                        top: canvas.height / 2 - mmToPx(10)
+                    });
+                    break;
+                case 'triangle':
+                    shape = new fabric.Triangle({
+                        width: mmToPx(20),
+                        height: mmToPx(20),
+                        fill: '#4caf50',
+                        left: canvas.width / 2 - mmToPx(10),
+                        top: canvas.height / 2 - mmToPx(10)
+                    });
+                    break;
+            }
+
+            if (shape) {
+                canvas.add(shape);
+                canvas.setActiveObject(shape);
+                canvas.renderAll();
+                saveHistory();
+            }
+        }
+
+        // Position and size updates
+        function updatePosition() {
+            const activeObject = canvas.getActiveObject();
+            if (activeObject) {
+                activeObject.set({
+                    left: parseInt(document.getElementById('ctxX').value),
+                    top: parseInt(document.getElementById('ctxY').value)
+                });
+                canvas.renderAll();
+                saveHistory();
+            }
+        }
+
+        function updateSize() {
+            const activeObject = canvas.getActiveObject();
+            if (activeObject) {
+                const newWidth = parseInt(document.getElementById('ctxWidth').value);
+                const newHeight = parseInt(document.getElementById('ctxHeight').value);
+
+                activeObject.set({
+                    scaleX: newWidth / activeObject.width,
+                    scaleY: newHeight / activeObject.height
+                });
+                canvas.renderAll();
+                saveHistory();
+            }
+        }
+
+        function updateRotation() {
+            const activeObject = canvas.getActiveObject();
+            if (activeObject) {
+                activeObject.set('angle', parseInt(document.getElementById('ctxRotation').value));
+                canvas.renderAll();
+                saveHistory();
+            }
+        }
+
+        // Pixabay API Integration
+        async function searchPixabayImages() {
+            const searchTerm = document.getElementById('pixabaySearch').value;
+            if (!searchTerm) {
+                alert('Please enter a search term');
+                return;
+            }
+
+            const loading = document.getElementById('pixabayLoading');
+            const resultsDiv = document.getElementById('pixabayResults');
+            const pagination = document.getElementById('pixabayPagination');
+
+            loading.style.display = 'flex';
+            resultsDiv.innerHTML = '';
+            pagination.style.display = 'none';
+
+            try {
+                // Using Django backend endpoint that proxies to Pixabay
+                const response = await fetch(`/design-tool/api/search/pixabay/?q=${encodeURIComponent(searchTerm)}&page=${pixabayConfig.currentPage}&per_page=${pixabayConfig.perPage}&image_type=photo`);
+                const data = await response.json();
+
+                if (data.success && data.data.hits.length > 0) {
+                    pixabayConfig.totalHits = data.data.totalHits;
+                    displayPixabayResults(data.data.hits);
+                    setupPixabayPagination();
+                } else {
+                    resultsDiv.innerHTML = '<p style="text-align: center; color: #999;">No images found</p>';
+                }
+            } catch (error) {
+                console.error('Pixabay search error:', error);
+                resultsDiv.innerHTML = '<p style="text-align: center; color: #f44336;">Error searching images</p>';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function displayPixabayResults(images) {
+            const resultsDiv = document.getElementById('pixabayResults');
+            resultsDiv.innerHTML = '';
+
+            images.forEach(image => {
+                const div = document.createElement('div');
+                div.className = 'search-item';
+                div.innerHTML = `<img src="${image.webformatURL}" alt="${image.tags}">`;
+                div.onclick = () => addImageToCanvas(image.largeImageURL || image.webformatURL);
+                resultsDiv.appendChild(div);
+            });
+        }
+
+        function setupPixabayPagination() {
+            const pagination = document.getElementById('pixabayPagination');
+            const totalPages = Math.ceil(pixabayConfig.totalHits / pixabayConfig.perPage);
+
+            if (totalPages > 1) {
+                pagination.style.display = 'flex';
+                document.getElementById('pixabayPageInfo').textContent = `Page ${pixabayConfig.currentPage} of ${totalPages}`;
+                document.getElementById('pixabayPrev').disabled = pixabayConfig.currentPage === 1;
+                document.getElementById('pixabayNext').disabled = pixabayConfig.currentPage === totalPages;
+            }
+        }
+
+        function changePixabayPage(direction) {
+            pixabayConfig.currentPage += direction;
+            searchPixabayImages();
+        }
+
+        function addImageToCanvas(url) {
+            fabric.Image.fromURL(url, function (img) {
+                // Scale image to fit canvas if too large
+                const maxWidth = canvas.width * 0.8;
+                const maxHeight = canvas.height * 0.8;
+
+                if (img.width > maxWidth || img.height > maxHeight) {
+                    const scale = Math.min(maxWidth / img.width, maxHeight / img.height);
+                    img.scale(scale);
+                }
+
+                img.set({
+                    left: canvas.width / 2,
+                    top: canvas.height / 2,
+                    originX: 'center',
+                    originY: 'center'
+                });
+
+                canvas.add(img);
+                canvas.setActiveObject(img);
+                canvas.renderAll();
+            }, { crossOrigin: 'anonymous' });
+        }
+
+        // File upload
+        function handleFileUpload(event) {
+            const files = event.target.files;
+            for (let file of files) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    fabric.Image.fromURL(e.target.result, function (img) {
+                        const maxWidth = canvas.width * 0.8;
+                        const maxHeight = canvas.height * 0.8;
+
+                        if (img.width > maxWidth || img.height > maxHeight) {
+                            const scale = Math.min(maxWidth / img.width, maxHeight / img.height);
+                            img.scale(scale);
+                        }
+
+                        img.set({
+                            left: canvas.width / 2,
+                            top: canvas.height / 2,
+                            originX: 'center',
+                            originY: 'center'
+                        });
+
+                        canvas.add(img);
+                        canvas.setActiveObject(img);
+                        canvas.renderAll();
+                    });
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // QR Code
+        function generateQRCode() {
+            const content = document.getElementById('qrContent').value;
+            if (!content) {
+                alert('Please enter content for the QR code');
+                return;
+            }
+
+            // Create temporary div for QR code
+            const tempDiv = document.createElement('div');
+            tempDiv.style.position = 'absolute';
+            tempDiv.style.left = '-9999px';
+            document.body.appendChild(tempDiv);
+
+            new QRCode(tempDiv, {
+                text: content,
+                width: 256,
+                height: 256
+            });
+
+            setTimeout(() => {
+                const qrImage = tempDiv.querySelector('img');
+                if (qrImage) {
+                    fabric.Image.fromURL(qrImage.src, function (img) {
+                        img.set({
+                            left: canvas.width / 2,
+                            top: canvas.height / 2,
+                            originX: 'center',
+                            originY: 'center'
+                        });
+                        canvas.add(img);
+                        canvas.renderAll();
+                    });
+                }
+                document.body.removeChild(tempDiv);
+            }, 100);
+        }
+
+        // Color selection
+        function selectColor(element, color) {
+            document.querySelectorAll('.color-swatch').forEach(swatch => {
+                swatch.classList.remove('active');
+            });
+            element.classList.add('active');
+
+            const activeObject = canvas.getActiveObject();
+            if (activeObject) {
+                activeObject.set('fill', color);
+                canvas.renderAll();
+                saveHistory();
+            } else {
+                canvas.backgroundColor = color;
+                canvas.renderAll();
+            }
+        }
+
+        // Apply color to selected elements (for navbar color picker)
+        function applyColorToSelected(color) {
+            const activeObject = canvas.getActiveObject();
+            const activeSelection = canvas.getActiveObjects();
+
+            if (activeSelection && activeSelection.length > 0) {
+                // Apply color to all selected objects
+                activeSelection.forEach(obj => {
+                    if (obj.type === 'i-text' || obj.type === 'text') {
+                        obj.set('fill', color);
+                    } else if (obj.type === 'rect' || obj.type === 'circle' || obj.type === 'triangle' || obj.type === 'polygon') {
+                        obj.set('fill', color);
+                    } else if (obj.type === 'path' || obj.type === 'path-group') {
+                        obj.set('fill', color);
+                    }
+                });
+                canvas.renderAll();
+                saveHistory();
+
+                // Update the color picker to show current color
+                document.getElementById('navColorPicker').value = color;
+            } else {
+                // Show message when no element is selected
+                alert('Please select an element first to change its color.');
+            }
+        }
+
+        // Change canvas background color (for navbar background picker)
+        function changeCanvasBackground(color) {
+            canvas.backgroundColor = color;
+            canvas.renderAll();
+
+            // Update the background color picker
+            document.getElementById('bgColorPicker').value = color;
+        }
+
+        // Context Menu Functions
+        let contextMenuTarget = null;
+
+        // Show context menu
+        function showContextMenu(e, target) {
+            e.preventDefault();
+            contextMenuTarget = target;
+            
+            const contextMenu = document.getElementById('contextMenu');
+            contextMenu.style.display = 'block';
+            contextMenu.style.left = e.clientX + 'px';
+            contextMenu.style.top = e.clientY + 'px';
+            
+            // Update menu items based on target type
+            updateContextMenuItems(target);
+            
+            // Hide menu when clicking elsewhere
+            setTimeout(() => {
+                document.addEventListener('click', hideContextMenu);
+            }, 10);
+        }
+
+        // Hide context menu
+        function hideContextMenu() {
+            const contextMenu = document.getElementById('contextMenu');
+            contextMenu.style.display = 'none';
+            contextMenuTarget = null;
+            document.removeEventListener('click', hideContextMenu);
+        }
+
+        // Update context menu items based on target
+        function updateContextMenuItems(target) {
+            const menuItems = document.querySelectorAll('.context-menu-item');
+            
+            // Enable/disable items based on target type
+            menuItems.forEach(item => {
+                item.classList.remove('disabled');
+                
+                // Disable edit for non-text elements
+                if (item.textContent.includes('Edit') && target && target.type !== 'i-text' && target.type !== 'text') {
+                    item.classList.add('disabled');
+                }
+            });
+        }
+
+        // Edit element (for text elements)
+        function editElement() {
+            if (!contextMenuTarget) return;
+            
+            if (contextMenuTarget.type === 'i-text' || contextMenuTarget.type === 'text') {
+                canvas.setActiveObject(contextMenuTarget);
+                contextMenuTarget.enterEditing();
+                canvas.renderAll();
+            } else {
+                // For non-text elements, show properties
+                showElementProperties();
+            }
+            hideContextMenu();
+        }
+
+        // Duplicate element
+        function duplicateElement() {
+            if (!contextMenuTarget) return;
+            
+            contextMenuTarget.clone(function(cloned) {
+                cloned.set({
+                    left: cloned.left + 20,
+                    top: cloned.top + 20,
+                });
+                canvas.add(cloned);
+                canvas.setActiveObject(cloned);
+                canvas.renderAll();
+                saveHistory();
+            });
+            hideContextMenu();
+        }
+
+        // Change element color
+        function changeElementColor() {
+            if (!contextMenuTarget) return;
+            
+            const colorPicker = document.createElement('input');
+            colorPicker.type = 'color';
+            colorPicker.style.position = 'absolute';
+            colorPicker.style.left = '-9999px';
+            
+            if (contextMenuTarget.fill) {
+                colorPicker.value = contextMenuTarget.fill;
+            }
+            
+            document.body.appendChild(colorPicker);
+            
+            colorPicker.onchange = () => {
+                contextMenuTarget.set('fill', colorPicker.value);
+                canvas.renderAll();
+                updateDesignColorPalette();
+                saveHistory();
+                document.body.removeChild(colorPicker);
+            };
+            
+            colorPicker.click();
+            hideContextMenu();
+        }
+
+        // Show element properties modal
+        function showElementProperties() {
+            if (!contextMenuTarget) return;
+            
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            `;
+            
+            const content = document.createElement('div');
+            content.style.cssText = `
+                background: white;
+                padding: 20px;
+                border-radius: 8px;
+                min-width: 300px;
+                max-height: 400px;
+                overflow-y: auto;
+            `;
+            
+            let propertiesHTML = `<h3 style="margin-bottom: 15px;">Element Properties</h3>`;
+            
+            // Common properties
+            propertiesHTML += `
+                <div style="margin-bottom: 10px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Position X:</label>
+                    <input type="number" id="propX" value="${Math.round(contextMenuTarget.left)}" style="width: 100%; padding: 5px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Position Y:</label>
+                    <input type="number" id="propY" value="${Math.round(contextMenuTarget.top)}" style="width: 100%; padding: 5px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Opacity:</label>
+                    <input type="range" id="propOpacity" min="0" max="100" value="${Math.round((contextMenuTarget.opacity || 1) * 100)}" style="width: 100%;">
+                    <span id="opacityDisplay">${Math.round((contextMenuTarget.opacity || 1) * 100)}%</span>
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Rotation:</label>
+                    <input type="number" id="propRotation" value="${Math.round(contextMenuTarget.angle || 0)}" min="0" max="360" style="width: 100%; padding: 5px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+            `;
+            
+            // Text-specific properties
+            if (contextMenuTarget.type === 'i-text' || contextMenuTarget.type === 'text') {
+                propertiesHTML += `
+                    <div style="margin-bottom: 10px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Text:</label>
+                        <textarea id="propText" style="width: 100%; padding: 5px; border: 1px solid #ddd; border-radius: 4px; height: 60px;">${contextMenuTarget.text || ''}</textarea>
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Font Size:</label>
+                        <input type="number" id="propFontSize" value="${contextMenuTarget.fontSize || 16}" min="8" max="200" style="width: 100%; padding: 5px; border: 1px solid #ddd; border-radius: 4px;">
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Font Family:</label>
+                        <select id="propFontFamily" style="width: 100%; padding: 5px; border: 1px solid #ddd; border-radius: 4px;">
+                            <option value="Arial" ${contextMenuTarget.fontFamily === 'Arial' ? 'selected' : ''}>Arial</option>
+                            <option value="Helvetica" ${contextMenuTarget.fontFamily === 'Helvetica' ? 'selected' : ''}>Helvetica</option>
+                            <option value="Times New Roman" ${contextMenuTarget.fontFamily === 'Times New Roman' ? 'selected' : ''}>Times New Roman</option>
+                            <option value="Georgia" ${contextMenuTarget.fontFamily === 'Georgia' ? 'selected' : ''}>Georgia</option>
+                            <option value="Verdana" ${contextMenuTarget.fontFamily === 'Verdana' ? 'selected' : ''}>Verdana</option>
+                        </select>
+                    </div>
+                `;
+            }
+            
+            // Color property
+            if (contextMenuTarget.fill) {
+                propertiesHTML += `
+                    <div style="margin-bottom: 10px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Color:</label>
+                        <input type="color" id="propColor" value="${contextMenuTarget.fill}" style="width: 100%; height: 40px; border: 1px solid #ddd; border-radius: 4px;">
+                    </div>
+                `;
+            }
+            
+            propertiesHTML += `
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button onclick="applyProperties()" style="flex: 1; padding: 10px; background: #ff5722; color: white; border: none; border-radius: 4px; cursor: pointer;">Apply</button>
+                    <button onclick="closePropertiesModal()" style="flex: 1; padding: 10px; background: #ddd; border: none; border-radius: 4px; cursor: pointer;">Cancel</button>
+                </div>
+            `;
+            
+            content.innerHTML = propertiesHTML;
+            modal.appendChild(content);
+            document.body.appendChild(modal);
+            
+            // Add opacity slider listener
+            const opacitySlider = document.getElementById('propOpacity');
+            const opacityDisplay = document.getElementById('opacityDisplay');
+            opacitySlider.oninput = () => {
+                opacityDisplay.textContent = opacitySlider.value + '%';
+            };
+            
+            modal.className = 'properties-modal';
+            
+            // Close on background click
+            modal.onclick = (e) => {
+                if (e.target === modal) {
+                    document.body.removeChild(modal);
+                }
+            };
+            
+            hideContextMenu();
+        }
+
+        // Apply properties from modal
+        function applyProperties() {
+            if (!contextMenuTarget) return;
+            
+            const propX = document.getElementById('propX');
+            const propY = document.getElementById('propY');
+            const propOpacity = document.getElementById('propOpacity');
+            const propRotation = document.getElementById('propRotation');
+            const propColor = document.getElementById('propColor');
+            
+            if (propX) contextMenuTarget.set('left', parseInt(propX.value));
+            if (propY) contextMenuTarget.set('top', parseInt(propY.value));
+            if (propOpacity) contextMenuTarget.set('opacity', parseInt(propOpacity.value) / 100);
+            if (propRotation) contextMenuTarget.set('angle', parseInt(propRotation.value));
+            if (propColor) contextMenuTarget.set('fill', propColor.value);
+            
+            // Text-specific properties
+            const propText = document.getElementById('propText');
+            const propFontSize = document.getElementById('propFontSize');
+            const propFontFamily = document.getElementById('propFontFamily');
+            
+            if (propText && (contextMenuTarget.type === 'i-text' || contextMenuTarget.type === 'text')) {
+                contextMenuTarget.set('text', propText.value);
+            }
+            if (propFontSize) contextMenuTarget.set('fontSize', parseInt(propFontSize.value));
+            if (propFontFamily) contextMenuTarget.set('fontFamily', propFontFamily.value);
+            
+            canvas.renderAll();
+            updateDesignColorPalette();
+            updateLayersList();
+            saveHistory();
+            closePropertiesModal();
+        }
+
+        // Close properties modal
+        function closePropertiesModal() {
+            const modal = document.querySelector('.properties-modal');
+            if (modal) {
+                document.body.removeChild(modal);
+            }
+        }
+
+        // Delete selected
+        function deleteSelected() {
+            const activeObject = canvas.getActiveObject();
+            if (activeObject) {
+                canvas.remove(activeObject);
+                canvas.renderAll();
+                hideContextToolbar();
+            }
+        }
+
+        // Zoom controls
+        function zoomIn() {
+            currentZoom = Math.min(currentZoom * 1.1, 3);
+            canvas.setZoom(currentZoom);
+            canvas.renderAll();
+            updateZoomLevel();
+
+            // Sync overlay with zoom
+            if (guideOverlayManager) {
+                guideOverlayManager.syncWithMainCanvas();
+            }
+        }
+
+        function zoomOut() {
+            currentZoom = Math.max(currentZoom / 1.1, 0.3);
+            canvas.setZoom(currentZoom);
+            canvas.renderAll();
+            updateZoomLevel();
+
+            // Sync overlay with zoom
+            if (guideOverlayManager) {
+                guideOverlayManager.syncWithMainCanvas();
+            }
+        }
+
+        function resetZoom() {
+            currentZoom = 1;
+            canvas.setZoom(1);
+            canvas.renderAll();
+            updateZoomLevel();
+
+            // Sync overlay with zoom
+            if (guideOverlayManager) {
+                guideOverlayManager.syncWithMainCanvas();
+            }
+        }
+
+        function updateZoomLevel() {
+            document.getElementById('zoomLevel').textContent = Math.round(currentZoom * 100) + '%';
+        }
+
+        // History
+        function saveHistory() {
+            const currentState = JSON.stringify(canvas.toJSON());
+            history = history.slice(0, historyStep + 1);
+            history.push(currentState);
+            historyStep++;
+
+            if (history.length > 50) {
+                history.shift();
+                historyStep--;
+            }
+        }
+
+        function undo() {
+            if (historyStep > 0) {
+                historyStep--;
+                canvas.loadFromJSON(history[historyStep], function () {
+                    canvas.renderAll();
+                });
+            }
+        }
+
+        function redo() {
+            if (historyStep < history.length - 1) {
+                historyStep++;
+                canvas.loadFromJSON(history[historyStep], function () {
+                    canvas.renderAll();
+                });
+            }
+        }
+
+        // Save and download
+        function saveDesign() {
+            const designData = {
+                canvas: canvas.toJSON(),
+                config: canvasConfig,
+                timestamp: new Date().toISOString()
+            };
+
+            // Send to Django backend
+            fetch('/design-tool/api/save-design/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify(designData)
+            }).then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Design saved successfully!');
+                    }
+                });
+        }
+
+        function downloadDesign() {
+            // Ensure we're only exporting the main canvas (no guides)
+            const dataURL = canvas.toDataURL({
+                format: 'png',
+                quality: 1,
+                multiplier: 2 // Higher quality export
+            });
+
+            const link = document.createElement('a');
+            link.download = `design_${Date.now()}.png`;
+            link.href = dataURL;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            // Log export validation
+            console.log('Design exported successfully - guides excluded from export');
+        }
+
+        // Export preview function
+        function getExportPreview() {
+            return canvas.toDataURL({
+                format: 'png',
+                quality: 0.8,
+                multiplier: 1
+            });
+        }
+
+        // Validate export doesn't contain guide elements
+        function validateExport() {
+            const objects = canvas.getObjects();
+            const hasGuideElements = objects.some(obj =>
+                obj.customType === 'bleed' ||
+                obj.customType === 'safezone' ||
+                obj.customType === 'info-button'
+            );
+
+            if (hasGuideElements) {
+                console.warn('Warning: Guide elements found on main canvas - they may appear in export');
+                return false;
+            }
+
+            console.log('Export validation passed - no guide elements on main canvas');
+            return true;
+        }
+
+        // Utility functions
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        // Missing functions for layers and controls
+
+        // Update opacity
+        function updateOpacity() {
+            const activeObject = canvas.getActiveObject();
+            if (activeObject) {
+                const opacity = parseInt(document.getElementById('ctxOpacity').value) / 100;
+                activeObject.set('opacity', opacity);
+                document.getElementById('opacityValue').textContent = Math.round(opacity * 100) + '%';
+                canvas.renderAll();
+                saveHistory();
+                updateLayersList();
+            }
+        }
+
+        // Layer ordering functions
+        function bringForward() {
+            const activeObject = canvas.getActiveObject();
+            if (activeObject) {
+                canvas.bringForward(activeObject);
+                canvas.renderAll();
+                saveHistory();
+                updateLayersList();
+            }
+        }
+
+        function sendBackward() {
+            const activeObject = canvas.getActiveObject();
+            if (activeObject) {
+                canvas.sendBackwards(activeObject);
+                canvas.renderAll();
+                saveHistory();
+                updateLayersList();
+            }
+        }
+
+        function bringToFront() {
+            const activeObject = canvas.getActiveObject();
+            if (activeObject) {
+                canvas.bringToFront(activeObject);
+                canvas.renderAll();
+                saveHistory();
+                updateLayersList();
+            }
+        }
+
+        function sendToBack() {
+            const activeObject = canvas.getActiveObject();
+            if (activeObject) {
+                canvas.sendToBack(activeObject);
+                canvas.renderAll();
+                saveHistory();
+                updateLayersList();
+            }
+        }
+
+        // Dynamic Color Palette Functions
+        let colorReplaceMode = false;
+        let selectedColorToReplace = null;
+
+        // Extract all colors used in the design
+        function extractDesignColors() {
+            const colors = new Set();
+            const objects = canvas.getObjects();
+            
+            objects.forEach(obj => {
+                // Skip guide elements
+                if (obj.customType === 'grid' || obj.customType === 'bleed' || obj.customType === 'safezone') {
+                    return;
+                }
+                
+                // Extract fill colors
+                if (obj.fill && typeof obj.fill === 'string' && obj.fill !== 'transparent') {
+                    colors.add(obj.fill.toLowerCase());
+                }
+                
+                // Extract stroke colors
+                if (obj.stroke && typeof obj.stroke === 'string' && obj.stroke !== 'transparent') {
+                    colors.add(obj.stroke.toLowerCase());
+                }
+                
+                // For text objects, also check text color
+                if ((obj.type === 'i-text' || obj.type === 'text') && obj.fill) {
+                    colors.add(obj.fill.toLowerCase());
+                }
+                
+                // For path objects, check fill and stroke
+                if (obj.type === 'path' || obj.type === 'path-group') {
+                    if (obj.fill && obj.fill !== 'transparent') {
+                        colors.add(obj.fill.toLowerCase());
+                    }
+                    if (obj.stroke && obj.stroke !== 'transparent') {
+                        colors.add(obj.stroke.toLowerCase());
+                    }
+                }
+            });
+            
+            // Also check canvas background
+            if (canvas.backgroundColor && canvas.backgroundColor !== 'transparent') {
+                colors.add(canvas.backgroundColor.toLowerCase());
+            }
+            
+            return Array.from(colors).filter(color => color && color !== '#000000' && color !== 'black');
+        }
+
+        // Update the dynamic color palette in navbar
+        function updateDesignColorPalette() {
+            const designColors = extractDesignColors();
+            const colorContainer = document.getElementById('designColors');
+            const replaceBtn = document.getElementById('colorReplaceBtn');
+            
+            if (designColors.length === 0) {
+                colorContainer.innerHTML = `
+                    <div style="font-size: 11px; color: #999; padding: 5px;">
+                        No colors in design
+                    </div>
+                `;
+                replaceBtn.style.display = 'none';
+                return;
+            }
+            
+            replaceBtn.style.display = 'block';
+            colorContainer.innerHTML = '';
+            
+            designColors.slice(0, 8).forEach(color => { // Limit to 8 colors for space
+                const colorSwatch = document.createElement('div');
+                colorSwatch.style.cssText = `
+                    width: 25px; 
+                    height: 25px; 
+                    background: ${color}; 
+                    border: 2px solid #ddd; 
+                    border-radius: 3px; 
+                    cursor: pointer; 
+                    transition: all 0.2s;
+                    position: relative;
+                `;
+                
+                colorSwatch.title = `Click to select elements with ${color}`;
+                
+                colorSwatch.onmouseover = () => {
+                    colorSwatch.style.transform = 'scale(1.1)';
+                    colorSwatch.style.borderColor = '#333';
+                };
+                
+                colorSwatch.onmouseout = () => {
+                    colorSwatch.style.transform = 'scale(1)';
+                    colorSwatch.style.borderColor = selectedColorToReplace === color ? '#ff5722' : '#ddd';
+                };
+                
+                colorSwatch.onclick = () => {
+                    if (colorReplaceMode) {
+                        selectColorToReplace(color, colorSwatch);
+                    } else {
+                        selectElementsByColor(color);
+                    }
+                };
+                
+                colorContainer.appendChild(colorSwatch);
+            });
+            
+            if (designColors.length > 8) {
+                const moreIndicator = document.createElement('div');
+                moreIndicator.style.cssText = `
+                    width: 25px; 
+                    height: 25px; 
+                    border: 1px solid #ddd; 
+                    border-radius: 3px; 
+                    display: flex; 
+                    align-items: center; 
+                    justify-content: center; 
+                    font-size: 10px; 
+                    color: #666;
+                    cursor: pointer;
+                `;
+                moreIndicator.textContent = `+${designColors.length - 8}`;
+                moreIndicator.title = `${designColors.length - 8} more colors`;
+                moreIndicator.onclick = () => showAllColors(designColors);
+                colorContainer.appendChild(moreIndicator);
+            }
+        }
+
+        // Select all elements with a specific color
+        function selectElementsByColor(color) {
+            const objects = canvas.getObjects();
+            const matchingObjects = objects.filter(obj => {
+                if (obj.customType === 'grid' || obj.customType === 'bleed' || obj.customType === 'safezone') {
+                    return false;
+                }
+                return (obj.fill && obj.fill.toLowerCase() === color.toLowerCase()) ||
+                       (obj.stroke && obj.stroke.toLowerCase() === color.toLowerCase());
+            });
+            
+            if (matchingObjects.length > 0) {
+                canvas.discardActiveObject();
+                if (matchingObjects.length === 1) {
+                    canvas.setActiveObject(matchingObjects[0]);
+                } else {
+                    const selection = new fabric.ActiveSelection(matchingObjects, {
+                        canvas: canvas,
+                    });
+                    canvas.setActiveObject(selection);
+                }
+                canvas.renderAll();
+                updateContextToolbar();
+            }
+        }
+
+        // Toggle color replace mode
+        function toggleColorReplace() {
+            colorReplaceMode = !colorReplaceMode;
+            const btn = document.getElementById('colorReplaceBtn');
+            
+            if (colorReplaceMode) {
+                btn.style.background = '#ff5722';
+                btn.style.color = 'white';
+                btn.title = 'Click a color to replace, then pick new color';
+                selectedColorToReplace = null;
+                
+                // Show instruction
+                showColorReplaceInstructions();
+            } else {
+                btn.style.background = '';
+                btn.style.color = '';
+                btn.title = 'Replace colors in design';
+                selectedColorToReplace = null;
+                updateDesignColorPalette(); // Reset color swatches
+            }
+        }
+
+        // Select color to replace
+        function selectColorToReplace(color, swatchElement) {
+            // Reset all swatches
+            document.querySelectorAll('#designColors > div').forEach(swatch => {
+                swatch.style.borderColor = '#ddd';
+            });
+            
+            selectedColorToReplace = color;
+            swatchElement.style.borderColor = '#ff5722';
+            swatchElement.style.borderWidth = '3px';
+            
+            // Show color picker for replacement
+            showColorReplacementPicker(color);
+        }
+
+        // Show color replacement picker
+        function showColorReplacementPicker(oldColor) {
+            const colorPicker = document.createElement('input');
+            colorPicker.type = 'color';
+            colorPicker.style.position = 'absolute';
+            colorPicker.style.left = '-9999px';
+            document.body.appendChild(colorPicker);
+            
+            colorPicker.onchange = () => {
+                replaceColorInDesign(oldColor, colorPicker.value);
+                document.body.removeChild(colorPicker);
+                toggleColorReplace(); // Exit replace mode
+            };
+            
+            colorPicker.click();
+        }
+
+        // Replace all instances of a color in the design
+        function replaceColorInDesign(oldColor, newColor) {
+            const objects = canvas.getObjects();
+            let replacedCount = 0;
+            
+            objects.forEach(obj => {
+                if (obj.customType === 'grid' || obj.customType === 'bleed' || obj.customType === 'safezone') {
+                    return;
+                }
+                
+                // Replace fill color
+                if (obj.fill && obj.fill.toLowerCase() === oldColor.toLowerCase()) {
+                    obj.set('fill', newColor);
+                    replacedCount++;
+                }
+                
+                // Replace stroke color
+                if (obj.stroke && obj.stroke.toLowerCase() === oldColor.toLowerCase()) {
+                    obj.set('stroke', newColor);
+                    replacedCount++;
+                }
+            });
+            
+            // Replace canvas background if it matches
+            if (canvas.backgroundColor && canvas.backgroundColor.toLowerCase() === oldColor.toLowerCase()) {
+                canvas.backgroundColor = newColor;
+                replacedCount++;
+            }
+            
+            canvas.renderAll();
+            updateDesignColorPalette();
+            saveHistory();
+            
+            // Show success message
+            if (replacedCount > 0) {
+                showTemporaryMessage(`Replaced ${replacedCount} color instances`);
+            }
+        }
+
+        // Show temporary message
+        function showTemporaryMessage(message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #4caf50;
+                color: white;
+                padding: 10px 15px;
+                border-radius: 4px;
+                z-index: 10000;
+                font-size: 13px;
+            `;
+            messageDiv.textContent = message;
+            document.body.appendChild(messageDiv);
+            
+            setTimeout(() => {
+                document.body.removeChild(messageDiv);
+            }, 2000);
+        }
+
+        // Show color replace instructions
+        function showColorReplaceInstructions() {
+            showTemporaryMessage('Click a color swatch to replace it with a new color');
+        }
+
+        // Show all colors in a modal
+        function showAllColors(colors) {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            `;
+            
+            const content = document.createElement('div');
+            content.style.cssText = `
+                background: white;
+                padding: 20px;
+                border-radius: 8px;
+                max-width: 400px;
+                max-height: 300px;
+                overflow-y: auto;
+            `;
+            
+            content.innerHTML = `
+                <h3 style="margin-bottom: 15px;">All Design Colors</h3>
+                <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px;">
+                    ${colors.map(color => `
+                        <div style="width: 40px; height: 40px; background: ${color}; border: 1px solid #ddd; border-radius: 4px; cursor: pointer;" 
+                             onclick="selectElementsByColor('${color}'); document.body.removeChild(document.querySelector('.color-modal'))" 
+                             title="${color}"></div>
+                    `).join('')}
+                </div>
+                <button onclick="document.body.removeChild(document.querySelector('.color-modal'))" 
+                        style="margin-top: 15px; padding: 8px 15px; background: #ddd; border: none; border-radius: 4px; cursor: pointer;">
+                    Close
+                </button>
+            `;
+            
+            modal.className = 'color-modal';
+            modal.appendChild(content);
+            document.body.appendChild(modal);
+            
+            modal.onclick = (e) => {
+                if (e.target === modal) {
+                    document.body.removeChild(modal);
+                }
+            };
+        }
+
+        // Layers panel functionality
+        function updateLayersList() {
+            const layersList = document.getElementById('layersList');
+            if (!layersList) return;
+
+            layersList.innerHTML = '';
+
+            const objects = canvas.getObjects().filter(obj =>
+                obj.customType !== 'grid' &&
+                obj.customType !== 'bleed' &&
+                obj.customType !== 'safezone'
+            );
+
+            if (objects.length === 0) {
+                layersList.innerHTML = '<p style="text-align: center; color: #999; padding: 20px;">No layers yet. Add some elements to see them here.</p>';
+                return;
+            }
+
+            // Reverse order to show top layers first
+            objects.reverse().forEach((obj, index) => {
+                const layerItem = document.createElement('div');
+                layerItem.className = 'layer-item';
+                layerItem.style.cssText = `
+                    padding: 10px;
+                    border: 1px solid #ddd;
+                    margin-bottom: 5px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    background: white;
+                    transition: all 0.3s;
+                `;
+
+                // Layer name and type
+                let layerName = 'Layer';
+                let layerIcon = 'fas fa-square';
+
+                if (obj.type === 'i-text' || obj.type === 'text') {
+                    layerName = obj.text ? obj.text.substring(0, 20) + (obj.text.length > 20 ? '...' : '') : 'Text';
+                    layerIcon = 'fas fa-font';
+                } else if (obj.type === 'image') {
+                    layerName = 'Image';
+                    layerIcon = 'fas fa-image';
+                } else if (obj.type === 'rect') {
+                    layerName = 'Rectangle';
+                    layerIcon = 'fas fa-square';
+                } else if (obj.type === 'circle') {
+                    layerName = 'Circle';
+                    layerIcon = 'fas fa-circle';
+                } else if (obj.type === 'triangle') {
+                    layerName = 'Triangle';
+                    layerIcon = 'fas fa-play';
+                } else if (obj.type === 'path' || obj.type === 'path-group') {
+                    layerName = 'Shape';
+                    layerIcon = 'fas fa-shapes';
+                }
+
+                const isSelected = canvas.getActiveObject() === obj;
+                if (isSelected) {
+                    layerItem.style.background = '#e3f2fd';
+                    layerItem.style.borderColor = '#2196f3';
+                }
+
+                layerItem.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 10px; flex: 1;">
+                        <i class="${layerIcon}" style="color: #666;"></i>
+                        <span style="font-size: 13px;">${layerName}</span>
+                        <span style="font-size: 11px; color: #999; opacity: ${obj.opacity || 1};">${Math.round((obj.opacity || 1) * 100)}%</span>
+                    </div>
+                    <div style="display: flex; gap: 5px;">
+                        <button onclick="toggleLayerVisibility(${objects.length - 1 - index})" style="border: none; background: none; cursor: pointer; padding: 2px;">
+                            <i class="fas fa-eye${obj.visible === false ? '-slash' : ''}" style="color: #666;"></i>
+                        </button>
+                        <button onclick="deleteLayer(${objects.length - 1 - index})" style="border: none; background: none; cursor: pointer; padding: 2px;">
+                            <i class="fas fa-trash" style="color: #f44336;"></i>
+                        </button>
+                    </div>
+                `;
+
+                layerItem.onclick = (e) => {
+                    if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'I') {
+                        canvas.setActiveObject(obj);
+                        canvas.renderAll();
+                        updateContextToolbar();
+                        updateLayersList();
+                    }
+                };
+
+                layersList.appendChild(layerItem);
+            });
+        }
+
+        // Toggle layer visibility
+        function toggleLayerVisibility(index) {
+            const objects = canvas.getObjects().filter(obj =>
+                obj.customType !== 'grid' &&
+                obj.customType !== 'bleed' &&
+                obj.customType !== 'safezone'
+            );
+
+            if (objects[index]) {
+                objects[index].visible = !objects[index].visible;
+                canvas.renderAll();
+                updateLayersList();
+                saveHistory();
+            }
+        }
+
+        // Delete layer
+        function deleteLayer(index) {
+            const objects = canvas.getObjects().filter(obj =>
+                obj.customType !== 'grid' &&
+                obj.customType !== 'bleed' &&
+                obj.customType !== 'safezone'
+            );
+
+            if (objects[index]) {
+                canvas.remove(objects[index]);
+                canvas.renderAll();
+                updateLayersList();
+                hideContextToolbar();
+                saveHistory();
+            }
+        }
+
+        // vCard functionality
+        function addVCardTool() {
+            // Add vCard tool to sidebar
+            const sidebar = document.querySelector('.tools-sidebar');
+            const vCardTool = document.createElement('div');
+            vCardTool.className = 'tool-item';
+            vCardTool.setAttribute('data-tool', 'vcard');
+            vCardTool.onclick = () => switchTool('vcard');
+            vCardTool.innerHTML = `
+                <i class="fas fa-address-card"></i>
+                <span>vCard</span>
+            `;
+            sidebar.appendChild(vCardTool);
+        }
+
+        // Generate vCard
+        function generateVCard() {
+            const name = document.getElementById('vcardName').value;
+            const phone = document.getElementById('vcardPhone').value;
+            const email = document.getElementById('vcardEmail').value;
+            const company = document.getElementById('vcardCompany').value;
+            const website = document.getElementById('vcardWebsite').value;
+
+            if (!name) {
+                alert('Please enter at least a name for the vCard');
+                return;
+            }
+
+            // Create vCard data
+            const vCardData = `BEGIN:VCARD
+VERSION:3.0
+FN:${name}
+${phone ? `TEL:${phone}` : ''}
+${email ? `EMAIL:${email}` : ''}
+${company ? `ORG:${company}` : ''}
+${website ? `URL:${website}` : ''}
+END:VCARD`;
+
+            // Create temporary div for QR code
+            const tempDiv = document.createElement('div');
+            tempDiv.style.position = 'absolute';
+            tempDiv.style.left = '-9999px';
+            document.body.appendChild(tempDiv);
+
+            new QRCode(tempDiv, {
+                text: vCardData,
+                width: 256,
+                height: 256
+            });
+
+            setTimeout(() => {
+                const qrImage = tempDiv.querySelector('img');
+                if (qrImage) {
+                    fabric.Image.fromURL(qrImage.src, function (img) {
+                        img.set({
+                            left: canvas.width / 2,
+                            top: canvas.height / 2,
+                            originX: 'center',
+                            originY: 'center'
+                        });
+                        canvas.add(img);
+                        canvas.renderAll();
+                        updateLayersList();
+                        saveHistory();
+                    });
+                }
+                document.body.removeChild(tempDiv);
+            }, 100);
+        }
+
+        // Generate vCard
+        function generateVCard() {
+            const name = document.getElementById('vcardName').value;
+            const phone = document.getElementById('vcardPhone').value;
+            const email = document.getElementById('vcardEmail').value;
+            const company = document.getElementById('vcardCompany').value;
+            const website = document.getElementById('vcardWebsite').value;
+            const address = document.getElementById('vcardAddress').value;
+
+            if (!name) {
+                alert('Please enter at least a name for the vCard');
+                return;
+            }
+
+            // Create vCard data
+            const vCardData = `BEGIN:VCARD
+VERSION:3.0
+FN:${name}
+${phone ? `TEL:${phone}` : ''}
+${email ? `EMAIL:${email}` : ''}
+${company ? `ORG:${company}` : ''}
+${website ? `URL:${website}` : ''}
+${address ? `ADR:;;${address};;;;` : ''}
+END:VCARD`;
+
+            // Create temporary div for QR code
+            const tempDiv = document.createElement('div');
+            tempDiv.style.position = 'absolute';
+            tempDiv.style.left = '-9999px';
+            document.body.appendChild(tempDiv);
+
+            new QRCode(tempDiv, {
+                text: vCardData,
+                width: 256,
+                height: 256
+            });
+
+            setTimeout(() => {
+                const qrImage = tempDiv.querySelector('img');
+                if (qrImage) {
+                    fabric.Image.fromURL(qrImage.src, function (img) {
+                        img.set({
+                            left: canvas.width / 2,
+                            top: canvas.height / 2,
+                            originX: 'center',
+                            originY: 'center'
+                        });
+                        canvas.add(img);
+                        canvas.renderAll();
+                        updateLayersList();
+                        saveHistory();
+                    });
+                }
+                document.body.removeChild(tempDiv);
+            }, 100);
+        }
+
+        // Clipart and Shape Functions
+        let clipartConfig = {
+            currentPage: 1,
+            totalHits: 0,
+            perPage: 12,
+            currentQuery: ''
+        };
+
+
+
+
+
+        // Handle clipart search on Enter key
+        function handleClipartSearch(event) {
+            if (event.key === 'Enter') {
+                searchCliparts();
+            }
+        }
+
+        // Search cliparts using Iconify API (more reliable)
+        async function searchCliparts(query = null, showLoading = true) {
+            const searchTerm = query || document.getElementById('clipartSearch').value || '';
+            
+            if (!searchTerm.trim()) {
+                loadPopularCliparts();
+                return;
+            }
+            
+            clipartConfig.currentQuery = searchTerm;
+            
+            const loading = document.getElementById('clipartLoading');
+            const resultsDiv = document.getElementById('clipartResults');
+            const pagination = document.getElementById('clipartPagination');
+            
+            if (showLoading) {
+                loading.style.display = 'flex';
+                resultsDiv.innerHTML = '';
+                pagination.style.display = 'none';
+            }
+            
+            try {
+                // Use a simpler approach with predefined popular icons
+                const popularIcons = getPopularIcons(searchTerm);
+                
+                if (popularIcons.length > 0) {
+                    clipartConfig.totalHits = popularIcons.length;
+                    displayCliparts(popularIcons.slice(0, clipartConfig.perPage));
+                    setupClipartPagination();
+                } else {
+                    displayNoResults();
+                }
+            } catch (error) {
+                console.error('Clipart search error:', error);
+                loadPopularCliparts();
+            } finally {
+                if (showLoading) {
+                    loading.style.display = 'none';
+                }
+            }
+        }
+
+        // Get popular icons based on search term
+        function getPopularIcons(searchTerm = '') {
+            const iconLibrary = {
+                'star': [
+                    { name: 'star', set: 'mdi', title: 'Star' },
+                    { name: 'star-outline', set: 'mdi', title: 'Star Outline' },
+                    { name: 'star-half', set: 'mdi', title: 'Star Half' },
+                    { name: 'star-circle', set: 'mdi', title: 'Star Circle' }
+                ],
+                'heart': [
+                    { name: 'heart', set: 'mdi', title: 'Heart' },
+                    { name: 'heart-outline', set: 'mdi', title: 'Heart Outline' },
+                    { name: 'heart-broken', set: 'mdi', title: 'Broken Heart' },
+                    { name: 'cards-heart', set: 'mdi', title: 'Heart Card' }
+                ],
+                'arrow': [
+                    { name: 'arrow-right', set: 'mdi', title: 'Arrow Right' },
+                    { name: 'arrow-left', set: 'mdi', title: 'Arrow Left' },
+                    { name: 'arrow-up', set: 'mdi', title: 'Arrow Up' },
+                    { name: 'arrow-down', set: 'mdi', title: 'Arrow Down' }
+                ],
+                'business': [
+                    { name: 'briefcase', set: 'mdi', title: 'Briefcase' },
+                    { name: 'office-building', set: 'mdi', title: 'Office Building' },
+                    { name: 'chart-line', set: 'mdi', title: 'Chart' },
+                    { name: 'currency-usd', set: 'mdi', title: 'Dollar' }
+                ],
+                'nature': [
+                    { name: 'tree', set: 'mdi', title: 'Tree' },
+                    { name: 'flower', set: 'mdi', title: 'Flower' },
+                    { name: 'leaf', set: 'mdi', title: 'Leaf' },
+                    { name: 'weather-sunny', set: 'mdi', title: 'Sun' }
+                ],
+                'tech': [
+                    { name: 'laptop', set: 'mdi', title: 'Laptop' },
+                    { name: 'cellphone', set: 'mdi', title: 'Phone' },
+                    { name: 'wifi', set: 'mdi', title: 'WiFi' },
+                    { name: 'cloud', set: 'mdi', title: 'Cloud' }
+                ],
+                'social': [
+                    { name: 'account', set: 'mdi', title: 'User' },
+                    { name: 'account-group', set: 'mdi', title: 'Group' },
+                    { name: 'thumb-up', set: 'mdi', title: 'Like' },
+                    { name: 'share', set: 'mdi', title: 'Share' }
+                ],
+                'home': [
+                    { name: 'home', set: 'mdi', title: 'Home' },
+                    { name: 'door', set: 'mdi', title: 'Door' },
+                    { name: 'window-closed', set: 'mdi', title: 'Window' },
+                    { name: 'garage', set: 'mdi', title: 'Garage' }
+                ]
+            };
+
+            // Search for matching categories
+            const searchLower = searchTerm.toLowerCase();
+            let matchedIcons = [];
+
+            // Direct category match
+            if (iconLibrary[searchLower]) {
+                matchedIcons = iconLibrary[searchLower];
+            } else {
+                // Search in all categories
+                Object.keys(iconLibrary).forEach(category => {
+                    if (category.includes(searchLower) || searchLower.includes(category)) {
+                        matchedIcons = matchedIcons.concat(iconLibrary[category]);
+                    }
+                });
+                
+                // If no matches, search in icon names
+                if (matchedIcons.length === 0) {
+                    Object.values(iconLibrary).forEach(icons => {
+                        icons.forEach(icon => {
+                            if (icon.name.includes(searchLower) || icon.title.toLowerCase().includes(searchLower)) {
+                                matchedIcons.push(icon);
+                            }
+                        });
+                    });
+                }
+            }
+
+            // Add SVG URLs
+            return matchedIcons.map(icon => ({
+                ...icon,
+                url: `https://api.iconify.design/${icon.set}/${icon.name}.svg`
+            }));
+        }
+
+        // Load popular cliparts by default
+        function loadPopularCliparts() {
+            const popularCategories = ['star', 'heart', 'arrow', 'business', 'nature', 'tech'];
+            let allPopularIcons = [];
+            
+            popularCategories.forEach(category => {
+                const icons = getPopularIcons(category);
+                allPopularIcons = allPopularIcons.concat(icons.slice(0, 2)); // 2 icons per category
+            });
+            
+            displayCliparts(allPopularIcons);
+        }
+
+        // Display cliparts in grid
+        function displayCliparts(cliparts) {
+            const resultsDiv = document.getElementById('clipartResults');
+            resultsDiv.innerHTML = '';
+            
+            cliparts.forEach(clipart => {
+                const div = document.createElement('div');
+                div.className = 'search-item';
+                div.style.cssText = `
+                    aspect-ratio: 1;
+                    border-radius: 8px;
+                    overflow: hidden;
+                    cursor: pointer;
+                    transition: all 0.3s;
+                    border: 2px solid #e0e0e0;
+                    background: white;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 15px;
+                    position: relative;
+                `;
+                
+                const svgUrl = clipart.url;
+                const title = clipart.title || clipart.name || 'Icon';
+                
+                // Create SVG element directly for better compatibility
+                div.innerHTML = `
+                    <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                        <img src="${svgUrl}" alt="${title}" 
+                             style="width: 32px; height: 32px; object-fit: contain;" 
+                             crossorigin="anonymous"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div style="display: none; align-items: center; justify-content: center; width: 32px; height: 32px;">
+                            <i class="fas fa-shapes" style="font-size: 24px; color: #ccc;"></i>
+                        </div>
+                    </div>
+                    <div style="position: absolute; bottom: 2px; left: 2px; right: 2px; background: rgba(0,0,0,0.7); color: white; font-size: 9px; padding: 2px 4px; border-radius: 3px; text-align: center; opacity: 0; transition: opacity 0.3s;">
+                        ${title}
+                    </div>
+                `;
+                
+                div.onmouseover = () => {
+                    div.style.transform = 'scale(1.05)';
+                    div.style.borderColor = '#ff5722';
+                    div.querySelector('div:last-child').style.opacity = '1';
+                };
+                
+                div.onmouseout = () => {
+                    div.style.transform = 'scale(1)';
+                    div.style.borderColor = '#e0e0e0';
+                    div.querySelector('div:last-child').style.opacity = '0';
+                };
+                
+                div.onclick = () => addClipartToCanvas(svgUrl, title);
+                
+                resultsDiv.appendChild(div);
+            });
+        }
+
+        // This function is now replaced by loadPopularCliparts
+
+        // Display no results message
+        function displayNoResults() {
+            const resultsDiv = document.getElementById('clipartResults');
+            resultsDiv.innerHTML = `
+                <div style="text-align: center; padding: 30px 20px; color: #999;">
+                    <i class="fas fa-search-minus" style="font-size: 48px; margin-bottom: 15px; opacity: 0.5;"></i>
+                    <h3 style="margin-bottom: 10px; color: #666;">No Results Found</h3>
+                    <p style="margin-bottom: 15px;">Try different keywords or check your spelling.</p>
+                    <button class="toolbar-btn" onclick="displayDefaultCliparts()" style="margin-top: 10px;">
+                        <i class="fas fa-arrow-left"></i> Back to Search
+                    </button>
+                </div>
+            `;
+        }
+
+        // Add clipart to canvas
+        function addClipartToCanvas(svgUrl, title) {
+            if (!svgUrl) return;
+            
+            console.log('Adding clipart:', title, svgUrl);
+            
+            // Try to load SVG directly first
+            fabric.loadSVGFromURL(svgUrl, function(objects, options) {
+                console.log('SVG loaded:', objects, options);
+                
+                if (!objects || objects.length === 0) {
+                    console.error('No objects loaded from SVG, trying alternative method');
+                    // Fallback: create a simple shape
+                    addFallbackShape(title);
+                    return;
+                }
+                
+                let obj;
+                if (objects.length === 1) {
+                    obj = objects[0];
+                } else {
+                    obj = fabric.util.groupSVGElements(objects, options);
+                }
+                
+                // Scale to reasonable size
+                const targetSize = mmToPx(12); // 12mm size
+                const currentSize = Math.max(obj.width || 100, obj.height || 100);
+                const scale = targetSize / currentSize;
+                
+                obj.set({
+                    left: canvas.width / 2,
+                    top: canvas.height / 2,
+                    originX: 'center',
+                    originY: 'center',
+                    scaleX: scale,
+                    scaleY: scale
+                });
+                
+                // Set default color for all objects
+                if (obj.type === 'group') {
+                    obj.forEachObject(function(o) {
+                        if (o.fill !== 'none' && o.fill !== '') {
+                            o.set('fill', '#333333');
+                        }
+                    });
+                } else {
+                    if (obj.fill !== 'none' && obj.fill !== '') {
+                        obj.set('fill', '#333333');
+                    }
+                }
+                
+                canvas.add(obj);
+                canvas.setActiveObject(obj);
+                canvas.renderAll();
+                saveHistory();
+                updateLayersList();
+                updateDesignColorPalette();
+                
+                console.log('Clipart added successfully');
+            }, function(item, object) {
+                // This callback is called for each object in the SVG
+                console.log('Processing SVG object:', object.type);
+            }, { 
+                crossOrigin: 'anonymous',
+                reviver: function(url, element, output) {
+                    // Custom reviver to handle colors
+                    if (output && output.fill && output.fill !== 'none') {
+                        output.fill = '#333333';
+                    }
+                    return output;
+                }
+            });
+        }
+
+        // Fallback function to add a simple shape when SVG loading fails
+        function addFallbackShape(title) {
+            console.log('Adding fallback shape for:', title);
+            
+            const shape = new fabric.Circle({
+                radius: mmToPx(6),
+                fill: '#333333',
+                left: canvas.width / 2,
+                top: canvas.height / 2,
+                originX: 'center',
+                originY: 'center'
+            });
+            
+            canvas.add(shape);
+            canvas.setActiveObject(shape);
+            canvas.renderAll();
+            saveHistory();
+            updateLayersList();
+            updateDesignColorPalette();
+        }
+
+        // Setup clipart pagination
+        function setupClipartPagination() {
+            const pagination = document.getElementById('clipartPagination');
+            const totalPages = Math.ceil(clipartConfig.totalHits / clipartConfig.perPage);
+            
+            if (totalPages > 1) {
+                pagination.style.display = 'flex';
+                document.getElementById('clipartPageInfo').textContent = `Page ${clipartConfig.currentPage} of ${totalPages}`;
+                document.getElementById('clipartPrev').disabled = clipartConfig.currentPage === 1;
+                document.getElementById('clipartNext').disabled = clipartConfig.currentPage === totalPages;
+            } else {
+                pagination.style.display = 'none';
+            }
+        }
+
+        // Change clipart page
+        function changeClipartPage(direction) {
+            clipartConfig.currentPage += direction;
+            searchCliparts(clipartConfig.currentQuery);
+        }
+
+        // Tool switching
+        function switchTool(toolName) {
+            // Update active tool
+            document.querySelectorAll('.tool-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.querySelector(`[data-tool="${toolName}"]`).classList.add('active');
+            
+            // Hide all panels
+            document.querySelectorAll('.panel-section').forEach(panel => {
+                panel.style.display = 'none';
+            });
+            
+            // Show selected panel
+            const panelId = toolName + 'Panel';
+            const panel = document.getElementById(panelId);
+            if (panel) {
+                panel.style.display = 'block';
+                document.getElementById('optionsPanel').classList.add('active');
+                
+                // Load cliparts when clipart panel is opened
+                if (toolName === 'clipart') {
+                    setTimeout(() => {
+                        const resultsDiv = document.getElementById('clipartResults');
+                        if (!resultsDiv.innerHTML.trim()) {
+                            loadPopularCliparts();
+                        }
+                    }, 100);
+                }
+            }
+            
+            currentTool = toolName;
+        }
+
+        function closePanel() {
+            document.getElementById('optionsPanel').classList.remove('active');
+        }
+
+        // Event handlers
+        function setupEventHandlers() {
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function (e) {
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+                if (e.ctrlKey || e.metaKey) {
+                    switch (e.key) {
+                        case 'z':
+                            e.preventDefault();
+                            undo();
+                            break;
+                        case 'y':
+                            e.preventDefault();
+                            redo();
+                            break;
+                        case 's':
+                            e.preventDefault();
+                            saveDesign();
+                            break;
+                    }
+                } else if (e.key === 'Delete') {
+                    deleteSelected();
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

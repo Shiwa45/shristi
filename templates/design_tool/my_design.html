@@ -1,0 +1,466 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Designs - Design Studio{% endblock %}
+
+{% block extra_css %}
+<style>
+    .design-card {
+        transition: all 0.3s ease;
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    }
+    
+    .design-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    
+    .design-preview {
+        aspect-ratio: 4/3;
+        background: #f1f5f9;
+        border-radius: 8px;
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .design-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .design-actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 12px;
+    }
+    
+    .btn-sm {
+        padding: 6px 12px;
+        font-size: 14px;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+    }
+    
+    .btn-primary {
+        background: #667eea;
+        color: white;
+    }
+    
+    .btn-primary:hover {
+        background: #5a67d8;
+        color: white;
+    }
+    
+    .btn-secondary {
+        background: #e2e8f0;
+        color: #4a5568;
+    }
+    
+    .btn-secondary:hover {
+        background: #cbd5e0;
+        color: #2d3748;
+    }
+    
+    .btn-danger {
+        background: #fed7d7;
+        color: #e53e3e;
+    }
+    
+    .btn-danger:hover {
+        background: #feb2b2;
+        color: #c53030;
+    }
+    
+    .empty-state {
+        text-align: center;
+        padding: 80px 20px;
+    }
+    
+    .empty-state i {
+        font-size: 4rem;
+        color: #cbd5e0;
+        margin-bottom: 20px;
+    }
+    
+    .search-filters {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+    }
+    
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+    
+    .stat-card {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+    
+    .stat-number {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #667eea;
+    }
+    
+    .stat-label {
+        color: #6b7280;
+        margin-top: 4px;
+    }
+    
+    .design-meta {
+        color: #6b7280;
+        font-size: 14px;
+        margin-top: 8px;
+    }
+    
+    .design-title {
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 4px;
+    }
+    
+    .product-badge {
+        background: #e0e7ff;
+        color: #5b21b6;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 500;
+    }
+    
+    .date-badge {
+        background: #f3f4f6;
+        color: #374151;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="bg-gradient-to-r from-purple-600 to-purple-800 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">My Designs</h1>
+            <p class="text-xl text-purple-200 mb-8">Manage your saved designs and continue working on them</p>
+            <a href="{% url 'design_tool:index' %}" 
+               class="inline-block bg-white text-purple-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
+                <i class="fas fa-plus mr-2"></i>Create New Design
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="py-12 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">{{ page_obj.paginator.count }}</div>
+                <div class="stat-label">Total Designs</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ designs|length }}</div>
+                <div class="stat-label">This Page</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">
+                    {% with recent_designs=designs|slice:":7" %}
+                        {% for design in recent_designs %}
+                            {% if design.updated_at|date:"Y-m-d" == "now"|date:"Y-m-d" %}{{ forloop.counter }}{% endif %}
+                        {% endfor %}
+                        {% empty %}0{% endwith %}
+                </div>
+                <div class="stat-label">Recent Updates</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">Storage Available</div>
+            </div>
+        </div>
+        
+        <!-- Search and Filters -->
+        <div class="search-filters">
+            <form method="GET" class="flex flex-col md:flex-row gap-4 items-center">
+                <div class="flex-1">
+                    <input type="text" 
+                           name="search" 
+                           value="{{ search_query }}"
+                           placeholder="Search designs by name or product..."
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div class="flex gap-4">
+                    <button type="submit" class="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition duration-300">
+                        <i class="fas fa-search mr-2"></i>Search
+                    </button>
+                    {% if search_query %}
+                    <a href="{% url 'design_tool:my_designs' %}" 
+                       class="bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-gray-600 transition duration-300">
+                        Clear
+                    </a>
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Designs Grid -->
+<section class="py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {% if designs %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {% for design in designs %}
+            <div class="design-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+                <!-- Design Preview -->
+                <div class="design-preview">
+                    {% if design.preview_image %}
+                    <img src="{{ design.preview_image.url }}" 
+                         alt="{{ design.name }}" 
+                         loading="lazy">
+                    {% else %}
+                    <div class="w-full h-full flex items-center justify-center text-gray-400">
+                        <i class="fas fa-image text-4xl"></i>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Quick Actions Overlay -->
+                    <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
+                        <a href="{% url 'design_tool:load_design' design.id %}" 
+                           class="bg-white text-gray-800 p-3 rounded-full hover:bg-gray-100 transition duration-300"
+                           title="Edit Design">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <button onclick="duplicateDesign({{ design.id }})" 
+                                class="bg-white text-gray-800 p-3 rounded-full hover:bg-gray-100 transition duration-300"
+                                title="Duplicate">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <button onclick="deleteDesign({{ design.id }}, '{{ design.name|escapejs }}')" 
+                                class="bg-red-500 text-white p-3 rounded-full hover:bg-red-600 transition duration-300"
+                                title="Delete">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Design Info -->
+                <div class="p-6">
+                    <div class="design-title">{{ design.name }}</div>
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="product-badge">{{ design.product.name }}</span>
+                        <span class="date-badge">{{ design.updated_at|timesince }} ago</span>
+                    </div>
+                    
+                    <div class="design-meta">
+                        <div class="mb-2">
+                            <i class="fas fa-ruler-combined text-gray-400 mr-2"></i>
+                            {{ design.width_mm }} × {{ design.height_mm }} mm
+                        </div>
+                        <div>
+                            <i class="fas fa-calendar text-gray-400 mr-2"></i>
+                            {{ design.created_at|date:"M j, Y" }}
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="design-actions">
+                        <a href="{% url 'design_tool:load_design' design.id %}" 
+                           class="btn-sm btn-primary flex-1">
+                            <i class="fas fa-edit"></i>Edit
+                        </a>
+                        <button onclick="duplicateDesign({{ design.id }})" 
+                                class="btn-sm btn-secondary">
+                            <i class="fas fa-copy"></i>Copy
+                        </button>
+                        <button onclick="shareDesign({{ design.id }})" 
+                                class="btn-sm btn-secondary">
+                            <i class="fas fa-share"></i>Share
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Pagination -->
+        {% if page_obj.has_other_pages %}
+        <div class="mt-12 flex justify-center">
+            <nav class="flex items-center space-x-2">
+                {% if page_obj.has_previous %}
+                <a href="?{% if search_query %}search={{ search_query }}&{% endif %}page={{ page_obj.previous_page_number }}" 
+                   class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-300">
+                    <i class="fas fa-chevron-left mr-1"></i>Previous
+                </a>
+                {% endif %}
+                
+                {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                <span class="px-4 py-2 bg-purple-600 text-white rounded-lg font-medium">{{ num }}</span>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <a href="?{% if search_query %}search={{ search_query }}&{% endif %}page={{ num }}" 
+                   class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-300">
+                    {{ num }}
+                </a>
+                {% endif %}
+                {% endfor %}
+                
+                {% if page_obj.has_next %}
+                <a href="?{% if search_query %}search={{ search_query }}&{% endif %}page={{ page_obj.next_page_number }}" 
+                   class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-300">
+                    Next<i class="fas fa-chevron-right ml-1"></i>
+                </a>
+                {% endif %}
+            </nav>
+        </div>
+        {% endif %}
+        
+        {% else %}
+        <!-- Empty State -->
+        <div class="empty-state">
+            {% if search_query %}
+            <i class="fas fa-search"></i>
+            <h3 class="text-2xl font-semibold text-gray-600 mb-4">No designs found</h3>
+            <p class="text-gray-500 mb-8">Try adjusting your search terms or create a new design.</p>
+            <a href="{% url 'design_tool:my_designs' %}" 
+               class="btn-sm btn-secondary mr-4">Clear Search</a>
+            {% else %}
+            <i class="fas fa-palette"></i>
+            <h3 class="text-2xl font-semibold text-gray-600 mb-4">No designs yet</h3>
+            <p class="text-gray-500 mb-8">Start creating amazing designs with our professional design tools.</p>
+            {% endif %}
+            <a href="{% url 'design_tool:index' %}" 
+               class="btn-sm btn-primary">
+                <i class="fas fa-plus mr-2"></i>Create Your First Design
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Delete design function
+async function deleteDesign(designId, designName) {
+    if (!confirm(`Are you sure you want to delete "${designName}"? This action cannot be undone.`)) {
+        return;
+    }
+    
+    try {
+        const response = await fetch(`/design-tool/api/delete/${designId}/`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            }
+        });
+        
+        const result = await response.json();
+        if (result.success) {
+            showNotification('Design deleted successfully', 'success');
+            location.reload();
+        } else {
+            showNotification('Failed to delete design: ' + result.error, 'error');
+        }
+    } catch (error) {
+        showNotification('Network error: ' + error.message, 'error');
+    }
+}
+
+// Duplicate design function
+async function duplicateDesign(designId) {
+    try {
+        const response = await fetch(`/design-tool/api/load/${designId}/`);
+        const result = await response.json();
+        
+        if (result.success) {
+            // Redirect to design tool with the design data
+            const params = new URLSearchParams({
+                duplicate: designId,
+                name: result.design.name + ' (Copy)'
+            });
+            window.location.href = `/design-tool/product/${result.design.product.slug}/?${params}`;
+        } else {
+            showNotification('Failed to duplicate design: ' + result.error, 'error');
+        }
+    } catch (error) {
+        showNotification('Network error: ' + error.message, 'error');
+    }
+}
+
+// Share design function
+function shareDesign(designId) {
+    const shareUrl = `${window.location.origin}/design-tool/shared/${designId}/`;
+    
+    if (navigator.share) {
+        navigator.share({
+            title: 'Check out my design',
+            url: shareUrl
+        });
+    } else if (navigator.clipboard) {
+        navigator.clipboard.writeText(shareUrl).then(() => {
+            showNotification('Share link copied to clipboard!', 'success');
+        });
+    } else {
+        // Fallback: show modal with share link
+        prompt('Copy this link to share your design:', shareUrl);
+    }
+}
+
+// Notification system
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `fixed top-4 right-4 z-50 px-6 py-4 rounded-lg text-white font-medium transition-all duration-300 transform translate-x-full`;
+    
+    if (type === 'success') {
+        notification.classList.add('bg-green-500');
+    } else if (type === 'error') {
+        notification.classList.add('bg-red-500');
+    } else {
+        notification.classList.add('bg-blue-500');
+    }
+    
+    notification.innerHTML = `
+        <div class="flex items-center">
+            <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'} mr-2"></i>
+            ${message}
+            <button onclick="this.parentElement.parentElement.remove()" class="ml-4">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Slide in
+    setTimeout(() => {
+        notification.classList.remove('translate-x-full');
+    }, 100);
+    
+    // Auto remove
+    setTimeout(() => {
+        notification.classList.add('translate-x-full');
+        setTimeout(() => notification.remove(), 300);
+    }, 5000);
+}
+</script>
+{% endblock %}

@@ -1,0 +1,253 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ page_title }} - Shirsti Printing Company{% endblock %}
+
+{% block extra_css %}
+<style>
+    .service-category-card {
+        transition: all 0.3s ease;
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    }
+    
+    .service-category-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+    }
+    
+    .category-icon {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .feature-badge {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="bg-gradient-to-r from-purple-600 to-purple-800 py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">Our Printing Services</h1>
+        <p class="text-xl md:text-2xl text-purple-200 mb-8 max-w-3xl mx-auto">
+            Professional printing solutions for businesses and individuals. From business cards to large format prints, we've got you covered.
+        </p>
+        
+        <!-- Search Bar -->
+        <div class="max-w-2xl mx-auto">
+            <form action="{% url 'services:search' %}" method="GET" class="relative">
+                <input type="text" 
+                       name="q" 
+                       placeholder="Search for products or services..."
+                       class="w-full px-6 py-4 text-lg rounded-full border-0 shadow-lg focus:outline-none focus:ring-4 focus:ring-purple-300"
+                       autocomplete="off">
+                <button type="submit" 
+                        class="absolute right-2 top-2 bg-purple-600 text-white p-3 rounded-full hover:bg-purple-700 transition duration-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Service Categories -->
+<section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Browse by Category</h2>
+            <p class="text-xl text-gray-600">Choose from our comprehensive range of printing services</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for category in categories %}
+            <div class="service-category-card rounded-2xl p-8 text-center border border-gray-200">
+                <div class="category-icon w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="{{ category.icon|default:'fas fa-print' }} text-3xl text-white"></i>
+                </div>
+                
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">{{ category.name }}</h3>
+                <p class="text-gray-600 mb-6 leading-relaxed">{{ category.description|default:"Professional printing solutions for your needs" }}</p>
+                
+                <!-- Product Count -->
+                <div class="flex items-center justify-center mb-6">
+                    <span class="bg-purple-100 text-purple-800 text-sm font-medium px-3 py-1 rounded-full">
+                        {{ category.products.count }} Products
+                    </span>
+                </div>
+                
+                <!-- Featured Products Preview -->
+                {% if category.products.exists %}
+                <div class="grid grid-cols-2 gap-2 mb-6">
+                    {% for product in category.products.all|slice:":4" %}
+                    <div class="relative">
+                        <div class="aspect-square bg-white rounded-lg p-2 shadow-sm border">
+                            {% if product.image %}
+                            <img src="{{ product.image.url }}" 
+                                 alt="{{ product.name }}" 
+                                 class="w-full h-full object-contain rounded">
+                            {% else %}
+                            <div class="w-full h-full flex items-center justify-center text-gray-400">
+                                <i class="fas fa-image text-lg"></i>
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% if product.has_design_tool %}
+                        <div class="absolute -top-1 -right-1 feature-badge w-5 h-5 rounded-full flex items-center justify-center">
+                            <i class="fas fa-paint-brush text-white text-xs"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                
+                <a href="{% url 'services:category' category.slug %}" 
+                   class="inline-block bg-purple-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-purple-700 transition duration-300 transform hover:scale-105">
+                    Explore {{ category.name }}
+                </a>
+            </div>
+            {% empty %}
+            <div class="col-span-full text-center py-16">
+                <i class="fas fa-box-open text-6xl text-gray-300 mb-4"></i>
+                <h3 class="text-2xl font-semibold text-gray-600 mb-2">No Services Available</h3>
+                <p class="text-gray-500">Please check back later for our printing services.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Why Choose Us?</h2>
+            <p class="text-xl text-gray-600">Quality printing services with modern conveniences</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center p-6">
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-palette text-2xl text-green-600"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Design Tools</h3>
+                <p class="text-gray-600">Create stunning designs with our integrated design tools for selected products.</p>
+            </div>
+            
+            <div class="text-center p-6">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-shipping-fast text-2xl text-blue-600"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Fast Delivery</h3>
+                <p class="text-gray-600">Quick turnaround times with reliable delivery options across India.</p>
+            </div>
+            
+            <div class="text-center p-6">
+                <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-award text-2xl text-purple-600"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Quality Guarantee</h3>
+                <p class="text-gray-600">Premium materials and latest printing technology for exceptional results.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-20 bg-gradient-to-r from-purple-600 to-purple-800">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Start Your Project?</h2>
+        <p class="text-xl text-purple-200 mb-8">
+            Get in touch with our team for custom quotes and bulk orders
+        </p>
+        <div class="space-x-4">
+            <a href="{% url 'core:contact' %}" 
+               class="inline-block bg-white text-purple-600 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition duration-300">
+                Get Custom Quote
+            </a>
+            <a href="tel:+911234567890" 
+               class="inline-block border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-purple-600 transition duration-300">
+                Call Now
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Search suggestions functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.querySelector('input[name="q"]');
+    let suggestionsContainer = null;
+    let debounceTimer;
+    
+    function createSuggestionsContainer() {
+        if (suggestionsContainer) return;
+        
+        suggestionsContainer = document.createElement('div');
+        suggestionsContainer.className = 'absolute top-full left-0 right-0 bg-white rounded-lg shadow-lg mt-2 z-10 hidden';
+        searchInput.parentElement.appendChild(suggestionsContainer);
+    }
+    
+    function showSuggestions(suggestions) {
+        if (!suggestions || suggestions.length === 0) {
+            suggestionsContainer.classList.add('hidden');
+            return;
+        }
+        
+        let html = '';
+        suggestions.forEach(item => {
+            html += `
+                <a href="${item.url}" class="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="font-medium text-gray-900">${item.name}</div>
+                            <div class="text-sm text-gray-500">${item.category}</div>
+                        </div>
+                        ${item.has_design_tool ? '<span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Design Tool</span>' : ''}
+                    </div>
+                </a>
+            `;
+        });
+        
+        suggestionsContainer.innerHTML = html;
+        suggestionsContainer.classList.remove('hidden');
+    }
+    
+    searchInput.addEventListener('input', function() {
+        const query = this.value.trim();
+        
+        clearTimeout(debounceTimer);
+        
+        if (query.length < 2) {
+            if (suggestionsContainer) {
+                suggestionsContainer.classList.add('hidden');
+            }
+            return;
+        }
+        
+        debounceTimer = setTimeout(() => {
+            fetch(`{% url 'services:api_suggestions' %}?q=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => {
+                    createSuggestionsContainer();
+                    showSuggestions(data.suggestions);
+                })
+                .catch(error => console.error('Search suggestions error:', error));
+        }, 300);
+    });
+    
+    // Hide suggestions when clicking outside
+    document.addEventListener('click', function(e) {
+        if (suggestionsContainer && !searchInput.parentElement.contains(e.target)) {
+            suggestionsContainer.classList.add('hidden');
+        }
+    });
+});
+</script>
+{% endblock %}

@@ -1,6 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
+        // Auto-save functionality
+        let autoSaveInterval = null;
+        function startAutoSave() {
+            if (!isAuthenticated || isAuthenticated === 'false') return;
+            if (autoSaveInterval) clearInterval(autoSaveInterval);
+            autoSaveInterval = setInterval(() => {
+                autoSaveDesign();
+            }, 30000); // 30 seconds
+        }
 
+        async function autoSaveDesign() {
+            // Only save if there are changes and a product is selected
+            if (!canvasConfig.productId) return;
+            const canvasData = JSON.stringify(canvas.toJSON());
+            const previewImage = canvas.toDataURL('image/png');
+            const data = {
+                name: 'AutoSave ' + (new Date()).toLocaleTimeString(),
+                product_id: canvasConfig.productId,
+                canvas_data: JSON.parse(canvasData),
+                width_mm: canvasConfig.widthMM,
+                height_mm: canvasConfig.heightMM,
+                bleed_mm: canvasConfig.bleedMM,
+                safe_zone_mm: canvasConfig.safeZoneMM,
+                preview_image: previewImage
+            };
+            try {
+                await fetch('{% url "design_tool:api_save_design" %}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    },
+                    body: JSON.stringify(data)
+                });
+                // Optionally show a subtle notification
+                // showNotification('Auto-saved', 'info');
+            } catch (error) {
+                // Optionally log or show error
+                // showNotification('Auto-save failed', 'error');
+            }
+        }
+
+        // Start auto-save on DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', function () {
+            startAutoSave();
+        });
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +58,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <script src="{% static 'js/main.js' %}"></script>
 
     <style>
         * {
@@ -621,6 +670,10 @@
 </head>
 
 <body>
+    <form id="csrfForm" style="display:none;">{% csrf_token %}</form>
+    <script>
+        const isAuthenticated = "{{ user.is_authenticated|yesno:'true,false' }}";
+    </script>
     <div class="designer-container">
         <!-- Left Tools Sidebar -->
         <div class="tools-sidebar">
@@ -696,7 +749,17 @@
                         <div class="property-row">
                             <span class="property-label">Product:</span>
                             <select id="productSelect" class="property-input" onchange="loadProductSettings()">
-                                <option value="">Select Product</option>
+                                <option value="">Choose a product...</option>
+                                {% for prod in products %}
+                                <option value="{{ prod.id }}" 
+                                        data-width="{{ prod.width_mm }}"
+                                        data-height="{{ prod.height_mm }}"
+                                        data-bleed="{{ prod.bleed_mm }}"
+                                        data-safe-zone="{{ prod.safe_zone_mm }}"
+                                        {% if product and prod.id == product.id %}selected{% endif %}>
+                                    {{ prod.name }} ({{ prod.width_mm }}×{{ prod.height_mm }}mm)
+                                </option>
+                                {% endfor %}
                             </select>
                         </div>
                         <div class="property-row">
@@ -1157,6 +1220,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>""
 
     <script>
+        // Django authentication integration
+    // const isAuthenticated = {{ user.is_authenticated|yesno:"true,false" }};
         // Global variables
         let canvas;
         let currentTool = 'design';
@@ -1197,6 +1262,8 @@
         // Products and categories cache
         let productsCache = [];
         let categoriesCache = [];
+</body>
+{% endblock %}
 
         // Guide Overlay Manager Class
         class GuideOverlayManager {
@@ -1494,8 +1561,8 @@
             pagination.style.display = 'none';
 
             try {
-                // Use the correct Django endpoint
-                let url = `/design-tool/api/database-templates/?page=${page}&per_page=${templatesConfig.perPage}`;
+                // Use Django URL tag for endpoint
+                let url = '{% url "design_tool:api_database_templates" %}?page=' + page + '&per_page=' + templatesConfig.perPage;
                 if (category) {
                     url += `&category=${category}`;
                 }
@@ -1508,7 +1575,6 @@
                     displayTemplates(data.data.hits);
                     setupTemplatesPagination();
                 } else {
-                    // Try loading from Pixabay as fallback
                     templatesList.innerHTML = '<p style="text-align: center; color: #999; padding: 20px;">No templates found. Try searching in the Image panel.</p>';
                 }
             } catch (error) {
@@ -2734,8 +2800,9 @@
             pagination.style.display = 'none';
 
             try {
-                // Using Django backend endpoint that proxies to Pixabay
-                const response = await fetch(`/design-tool/api/search/pixabay/?q=${encodeURIComponent(searchTerm)}&page=${pixabayConfig.currentPage}&per_page=${pixabayConfig.perPage}&image_type=photo`);
+                // Use Django URL tag for Pixabay endpoint
+                const url = '{% url "design_tool:api_search_pixabay" %}?q=' + encodeURIComponent(searchTerm) + '&page=' + pixabayConfig.currentPage + '&per_page=' + pixabayConfig.perPage + '&image_type=photo';
+                const response = await fetch(url);
                 const data = await response.json();
 
                 if (data.success && data.data.hits.length > 0) {
@@ -2752,6 +2819,57 @@
                 loading.style.display = 'none';
             }
         }
+        // User Designs Panel Integration
+        async function loadUserDesigns() {
+            if (!isAuthenticated || isAuthenticated === 'false') return;
+            try {
+                const response = await fetch('{% url "design_tool:api_user_designs" %}');
+                const data = await response.json();
+                if (data.success) {
+                    displayUserDesigns(data.designs);
+                }
+            } catch (error) {
+                console.error('Failed to load user designs:', error);
+            }
+        }
+
+        function displayUserDesigns(designs) {
+            let container = document.getElementById('userDesignsList');
+            if (!container) {
+                // Create sidebar if not present
+                container = document.createElement('div');
+                container.id = 'userDesignsList';
+                container.className = 'user-designs-panel';
+                container.style = 'position:fixed;right:0;top:0;width:320px;height:100vh;background:#f8f8f8;z-index:200;overflow-y:auto;box-shadow:-2px 0 10px rgba(0,0,0,0.08);padding:20px;';
+                document.body.appendChild(container);
+            }
+            container.innerHTML = '';
+            if (!designs || designs.length === 0) {
+                container.innerHTML = '<div style="color:#888;text-align:center;margin-top:40px;">No saved designs yet.</div>';
+                return;
+            }
+            designs.forEach(design => {
+                const div = document.createElement('div');
+                div.className = 'design-item';
+                div.style = 'background:#fff;border:1px solid #eee;border-radius:8px;margin-bottom:16px;padding:12px;display:flex;align-items:center;gap:12px;';
+                div.innerHTML = `
+                    <div style="width:60px;height:60px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#f0f0f0;border-radius:6px;">
+                        ${design.preview_image ? `<img src="${design.preview_image}" alt="${design.name}" style="max-width:100%;max-height:100%;border-radius:4px;"/>` : '<i class="fas fa-image" style="font-size:32px;color:#bbb;"></i>'}
+                    </div>
+                    <div style="flex:1;">
+                        <div style="font-weight:600;">${design.name}</div>
+                        <div style="font-size:12px;color:#888;">${design.product_name} • ${design.updated_at ? design.updated_at.split('T')[0] : ''}</div>
+                    </div>
+                    <button onclick="loadUserDesign(${design.id})" class="toolbar-btn primary" style="font-size:12px;padding:4px 10px;">Load</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Call loadUserDesigns on DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', function () {
+            loadUserDesigns();
+        });
 
         function displayPixabayResults(images) {
             const resultsDiv = document.getElementById('pixabayResults');

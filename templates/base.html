@@ -92,8 +92,8 @@
                             <span class="absolute -top-2 -right-2 bg-purple-600 text-white rounded-full text-xs h-5 w-5 flex items-center justify-center" id="cart-count">0</span>
                         </a>
                     {% else %}
-                        <a href="{% url 'accounts:login' %}" class="text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-medium transition duration-300">Login</a>
-                        <a href="{% url 'accounts:register' %}" class="bg-purple-600 text-white hover:bg-purple-700 px-4 py-2 rounded-md text-sm font-medium transition duration-300">Register</a>
+                        {# <a href="{% url 'accounts:login' %}" class="text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-medium transition duration-300">Login</a> #}
+                        {# <a href="{% url 'accounts:register' %}" class="bg-purple-600 text-white hover:bg-purple-700 px-4 py-2 rounded-md text-sm font-medium transition duration-300">Register</a> #}
                     {% endif %}
                 </div>
                 
@@ -126,8 +126,8 @@
                     </div>
                 {% else %}
                     <div class="border-t border-gray-200 pt-2">
-                        <a href="{% url 'accounts:login' %}" class="block px-3 py-2 text-gray-700 hover:text-purple-600">Login</a>
-                        <a href="{% url 'accounts:register' %}" class="block px-3 py-2 text-gray-700 hover:text-purple-600">Register</a>
+                        {# <a href="{% url 'accounts:login' %}" class="block px-3 py-2 text-gray-700 hover:text-purple-600">Login</a> #}
+                        {# <a href="{% url 'accounts:register' %}" class="block px-3 py-2 text-gray-700 hover:text-purple-600">Register</a> #}
                     </div>
                 {% endif %}
             </div>
@@ -219,20 +219,20 @@
         });
         
         // Update cart count
-        function updateCartCount() {
-            fetch('{% url "orders:cart_count" %}')
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('cart-count').textContent = data.count;
-                });
-        }
+        // function updateCartCount() {
+        //     fetch('')
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             document.getElementById('cart-count').textContent = data.count;
+        //         });
+        // }
         
         // Update cart count on page load
-        {% if user.is_authenticated %}
-            updateCartCount();
-        {% endif %}
+        // {% if user.is_authenticated %}
+        //     updateCartCount();
+        // {% endif %}
     </script>
-    
+     
     {% block extra_js %}{% endblock %}
 </body>
 </html>

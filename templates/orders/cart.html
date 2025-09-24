@@ -1,0 +1,588 @@
+<!-- templates/orders/cart.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Shopping Cart - Shirsti Printing{% endblock %}
+
+{% block extra_css %}
+<style>
+    .cart-item-image {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+    }
+    
+    .quantity-input {
+        width: 80px;
+        text-align: center;
+    }
+    
+    .coupon-section {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    }
+    
+    .cart-summary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .empty-cart-illustration {
+        max-width: 300px;
+    }
+    
+    @media (max-width: 768px) {
+        .cart-item-image {
+            width: 60px;
+            height: 60px;
+        }
+        
+        .quantity-input {
+            width: 60px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Page Header -->
+        <div class="mb-8">
+            <nav class="flex" aria-label="Breadcrumb">
+                <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                    <li><a href="{% url 'core:home' %}" class="text-gray-500 hover:text-purple-600">Home</a></li>
+                    <li><span class="text-gray-400 mx-2">/</span></li>
+                    <li><span class="text-purple-600 font-medium">Shopping Cart</span></li>
+                </ol>
+            </nav>
+            <h1 class="text-3xl font-bold text-gray-900 mt-4">Shopping Cart</h1>
+        </div>
+
+        {% if cart_items %}
+            <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+                <!-- Cart Items -->
+                <div class="lg:col-span-8">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                        <div class="px-6 py-4 border-b border-gray-200">
+                            <h2 class="text-xl font-semibold text-gray-900">Cart Items ({{ cart_count }})</h2>
+                        </div>
+                        
+                        <div class="divide-y divide-gray-200">
+                            {% for item in cart_items %}
+                            <div class="p-6 cart-item" data-item-id="{{ item.id }}">
+                                <div class="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
+                                    <!-- Product Image -->
+                                    <div class="flex-shrink-0">
+                                        {% if item.product.featured_image %}
+                                            <img src="{{ item.product.featured_image.url }}" 
+                                                 alt="{{ item.product.name }}" 
+                                                 class="cart-item-image rounded-lg shadow-sm">
+                                        {% else %}
+                                            <div class="cart-item-image rounded-lg bg-gray-200 flex items-center justify-center">
+                                                <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                                </svg>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <!-- Product Details -->
+                                    <div class="flex-1">
+                                        <h3 class="text-lg font-medium text-gray-900">
+                                            <a href="{% url 'services:product_detail' item.product.slug %}" 
+                                               class="hover:text-purple-600">
+                                                {{ item.product.name }}
+                                            </a>
+                                        </h3>
+                                        <p class="text-sm text-gray-500 mt-1">{{ item.product.service.name }}</p>
+                                        
+                                        <!-- Design Information -->
+                                        {% if item.user_design %}
+                                            <div class="mt-2 flex items-center text-sm text-purple-600">
+                                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"></path>
+                                                </svg>
+                                                Custom Design: {{ item.user_design.name }}
+                                            </div>
+                                        {% elif item.uploaded_file %}
+                                            <div class="mt-2 flex items-center text-sm text-green-600">
+                                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.586-6.586a2 2 0 00-2.828-2.828z"></path>
+                                                </svg>
+                                                File Uploaded
+                                            </div>
+                                        {% endif %}
+                                        
+                                        <!-- Specifications -->
+                                        {% if item.specifications %}
+                                            <div class="mt-2">
+                                                <details class="text-sm">
+                                                    <summary class="text-gray-600 cursor-pointer hover:text-gray-900">Specifications</summary>
+                                                    <div class="mt-1 text-gray-500 pl-4">
+                                                        {% for key, value in item.specifications.items %}
+                                                            <div>{{ key|title }}: {{ value }}</div>
+                                                        {% endfor %}
+                                                    </div>
+                                                </details>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <!-- Quantity and Price -->
+                                    <div class="flex flex-col sm:flex-row sm:items-center space-y-3 sm:space-y-0 sm:space-x-6">
+                                        <!-- Quantity Controls -->
+                                        <div class="flex items-center space-x-2">
+                                            <button onclick="updateQuantity({{ item.id }}, -1)" 
+                                                    class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
+                                                </svg>
+                                            </button>
+                                            <input type="number" 
+                                                   value="{{ item.quantity }}" 
+                                                   min="1" 
+                                                   max="999"
+                                                   class="quantity-input border border-gray-300 rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                                   onchange="updateQuantity({{ item.id }}, this.value, true)">
+                                            <button onclick="updateQuantity({{ item.id }}, 1)" 
+                                                    class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        
+                                        <!-- Price -->
+                                        <div class="text-right">
+                                            <div class="text-sm text-gray-500">₹{{ item.unit_price }} each</div>
+                                            <div class="text-lg font-semibold text-gray-900 item-total">₹{{ item.total_price }}</div>
+                                        </div>
+                                        
+                                        <!-- Remove Button -->
+                                        <button onclick="removeItem({{ item.id }})" 
+                                                class="text-red-500 hover:text-red-700 p-2 hover:bg-red-50 rounded-lg transition-colors duration-200">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <!-- Coupon Section -->
+                    <div class="mt-6 bg-white rounded-xl shadow-lg overflow-hidden coupon-section">
+                        <div class="p-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Have a Coupon?</h3>
+                            <div class="flex flex-col sm:flex-row gap-3">
+                                <input type="text" 
+                                       id="coupon-code" 
+                                       placeholder="Enter coupon code" 
+                                       class="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                <button onclick="applyCoupon()" 
+                                        class="bg-purple-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-purple-700 transition-colors duration-200">
+                                    Apply Coupon
+                                </button>
+                            </div>
+                            <div id="coupon-message" class="mt-3 text-sm"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Order Summary -->
+                <div class="lg:col-span-4 mt-8 lg:mt-0">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden sticky top-8">
+                        <div class="cart-summary text-white p-6">
+                            <h3 class="text-xl font-semibold">Order Summary</h3>
+                        </div>
+                        
+                        <div class="p-6 space-y-4">
+                            <div class="flex justify-between text-gray-600">
+                                <span>Subtotal ({{ cart_count }} items)</span>
+                                <span id="cart-subtotal">₹{{ cart_total }}</span>
+                            </div>
+                            
+                            <div id="coupon-discount" class="flex justify-between text-green-600" style="display: none;">
+                                <span>Coupon Discount</span>
+                                <span id="discount-amount">-₹0.00</span>
+                            </div>
+                            
+                            <div class="flex justify-between text-gray-600">
+                                <span>GST (18%)</span>
+                                <span id="cart-tax">₹{{ cart_total|floatformat:2|add:"0.18"|floatformat:2 }}</span>
+                            </div>
+                            
+                            <div class="border-t pt-4">
+                                <div class="flex justify-between text-xl font-semibold text-gray-900">
+                                    <span>Total</span>
+                                    <span id="cart-total">₹{{ cart_total|floatformat:2|add:"0.18"|floatformat:2 }}</span>
+                                </div>
+                            </div>
+                            
+                            <div class="pt-4 space-y-3">
+                                {% if user.is_authenticated %}
+                                    <a href="{% url 'orders:checkout' %}" 
+                                       class="w-full bg-purple-600 text-white text-center py-3 px-6 rounded-lg font-semibold hover:bg-purple-700 transition-colors duration-200 flex items-center justify-center">
+                                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                                        </svg>
+                                        Proceed to Checkout
+                                    </a>
+                                {% else %}
+                                    <a href="{% url 'accounts:login' %}?next={% url 'orders:checkout' %}" 
+                                       class="w-full bg-purple-600 text-white text-center py-3 px-6 rounded-lg font-semibold hover:bg-purple-700 transition-colors duration-200 flex items-center justify-center">
+                                        Login to Checkout
+                                    </a>
+                                {% endif %}
+                                
+                                <a href="{% url 'services:list' %}" 
+                                   class="w-full border-2 border-gray-300 text-gray-700 text-center py-3 px-6 rounded-lg font-semibold hover:bg-gray-50 transition-colors duration-200 flex items-center justify-center">
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"></path>
+                                    </svg>
+                                    Continue Shopping
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Trust Signals -->
+                    <div class="mt-6 bg-white rounded-xl shadow-lg p-6">
+                        <h4 class="font-semibold text-gray-900 mb-4">Why Choose Shirsti?</h4>
+                        <div class="space-y-3 text-sm text-gray-600">
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Quality Guaranteed
+                            </div>
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                Fast Turnaround
+                            </div>
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                                </svg>
+                                Secure Payment
+                            </div>
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364"></path>
+                                </svg>
+                                24/7 Support
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <!-- Empty Cart State -->
+            <div class="text-center py-16">
+                <div class="max-w-md mx-auto">
+                    <div class="empty-cart-illustration mx-auto mb-8">
+                        <svg viewBox="0 0 400 300" class="w-full h-auto">
+                            <defs>
+                                <linearGradient id="cartGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <!-- Shopping Cart Illustration -->
+                            <circle cx="200" cy="150" r="100" fill="#f7fafc" stroke="#e2e8f0" stroke-width="2"/>
+                            <path d="M150 120 L150 100 Q150 90 160 90 L240 90 Q250 90 250 100 L250 120 L240 140 L160 140 Z" 
+                                  fill="url(#cartGradient)" opacity="0.8"/>
+                            <circle cx="170" cy="160" r="8" fill="#4a5568"/>
+                            <circle cx="230" cy="160" r="8" fill="#4a5568"/>
+                            <path d="M160 120 L240 120 M170 100 L170 80" stroke="#4a5568" stroke-width="2" fill="none"/>
+                        </svg>
+                    </div>
+                    
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Your cart is empty</h2>
+                    <p class="text-gray-600 mb-8">Looks like you haven't added any items to your cart yet. Start browsing our services to find something you like!</p>
+                    
+                    <div class="space-y-4">
+                        <a href="{% url 'services:list' %}" 
+                           class="inline-flex items-center justify-center px-8 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors duration-200">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                            </svg>
+                            Browse Services
+                        </a>
+                        
+                        <div class="flex justify-center space-x-6 text-sm text-gray-500">
+                            <a href="{% url 'services:category' 'business-cards' %}" class="hover:text-purple-600">Business Cards</a>
+                            <a href="{% url 'services:category' 'flyers' %}" class="hover:text-purple-600">Flyers</a>
+                            <a href="{% url 'services:category' 'brochures' %}" class="hover:text-purple-600">Brochures</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Toast Notification -->
+<div id="toast" class="fixed top-4 right-4 z-50 transform translate-x-full transition-transform duration-300 ease-in-out">
+    <div class="bg-white rounded-lg shadow-lg border-l-4 border-purple-500 p-4 max-w-sm">
+        <div class="flex items-center">
+            <div class="flex-shrink-0">
+                <svg id="toast-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            <div class="ml-3">
+                <p id="toast-message" class="text-sm font-medium text-gray-900"></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // CSRF token for AJAX requests
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    
+    // Update item quantity
+    function updateQuantity(itemId, change, absolute = false) {
+        const cartItem = document.querySelector(`[data-item-id="${itemId}"]`);
+        const quantityInput = cartItem.querySelector('.quantity-input');
+        
+        let newQuantity;
+        if (absolute) {
+            newQuantity = parseInt(change);
+        } else {
+            newQuantity = parseInt(quantityInput.value) + parseInt(change);
+        }
+        
+        if (newQuantity < 1) {
+            if (confirm('Remove this item from cart?')) {
+                removeItem(itemId);
+            }
+            return;
+        }
+        
+        if (newQuantity > 999) {
+            newQuantity = 999;
+        }
+        
+        quantityInput.value = newQuantity;
+        
+        fetch("{% url 'orders:update_cart' %}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
+            },
+            body: JSON.stringify({
+                item_id: itemId,
+                quantity: newQuantity
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                updateCartUI(data);
+                showToast(data.message, 'success');
+            } else {
+                showToast(data.message, 'error');
+                // Revert quantity input
+                quantityInput.value = parseInt(quantityInput.value) - parseInt(change);
+            }
+        })
+        .catch(error => {
+            showToast('Error updating cart', 'error');
+            // Revert quantity input
+            quantityInput.value = parseInt(quantityInput.value) - parseInt(change);
+        });
+    }
+    
+    // Remove item from cart
+    function removeItem(itemId) {
+        if (!confirm('Are you sure you want to remove this item from your cart?')) {
+            return;
+        }
+        
+        fetch(`{% url 'orders:remove_from_cart' 0 %}`.replace('0', itemId), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Remove item from DOM
+                const cartItem = document.querySelector(`[data-item-id="${itemId}"]`);
+                cartItem.remove();
+                
+                updateCartUI(data);
+                showToast(data.message, 'success');
+                
+                // Check if cart is empty and reload page if needed
+                if (data.cart_count == 0) {
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1500);
+                }
+            } else {
+                showToast(data.message, 'error');
+            }
+        })
+        .catch(error => {
+            showToast('Error removing item', 'error');
+        });
+    }
+    
+    // Apply coupon
+    function applyCoupon() {
+        const couponCode = document.getElementById('coupon-code').value.trim();
+        
+        if (!couponCode) {
+            showToast('Please enter a coupon code', 'error');
+            return;
+        }
+        
+        fetch("{% url 'orders:apply_coupon' %}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
+            },
+            body: JSON.stringify({
+                coupon_code: couponCode
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            const messageDiv = document.getElementById('coupon-message');
+            
+            if (data.success) {
+                messageDiv.innerHTML = `<span class="text-green-600">${data.message}</span>`;
+                
+                // Show discount in order summary
+                const discountSection = document.getElementById('coupon-discount');
+                const discountAmount = document.getElementById('discount-amount');
+                discountSection.style.display = 'flex';
+                discountAmount.textContent = `-₹${data.discount}`;
+                
+                // Update totals
+                updateCartTotals(data.discount);
+                
+                showToast(data.message, 'success');
+            } else {
+                messageDiv.innerHTML = `<span class="text-red-600">${data.message}</span>`;
+                showToast(data.message, 'error');
+            }
+        })
+        .catch(error => {
+            showToast('Error applying coupon', 'error');
+        });
+    }
+    
+    // Update cart UI after operations
+    function updateCartUI(data) {
+        // Update cart count in navbar
+        const cartCountElements = document.querySelectorAll('#cart-count');
+        cartCountElements.forEach(element => {
+            element.textContent = data.cart_count || 0;
+        });
+        
+        // Update cart totals
+        if (data.cart_total) {
+            document.getElementById('cart-subtotal').textContent = `₹${data.cart_total}`;
+            updateCartTotals();
+        }
+    }
+    
+    // Update cart totals with tax calculation
+    function updateCartTotals(discountAmount = 0) {
+        const subtotalElement = document.getElementById('cart-subtotal');
+        const subtotal = parseFloat(subtotalElement.textContent.replace('₹', ''));
+        
+        const discountedSubtotal = subtotal - parseFloat(discountAmount);
+        const tax = discountedSubtotal * 0.18;
+        const total = discountedSubtotal + tax;
+        
+        document.getElementById('cart-tax').textContent = `₹${tax.toFixed(2)}`;
+        document.getElementById('cart-total').textContent = `₹${total.toFixed(2)}`;
+    }
+    
+    // Show toast notification
+    function showToast(message, type = 'success') {
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toast-message');
+        const toastIcon = document.getElementById('toast-icon');
+        
+        toastMessage.textContent = message;
+        
+        // Update icon and colors based on type
+        if (type === 'success') {
+            toast.querySelector('.border-l-4').className = 'bg-white rounded-lg shadow-lg border-l-4 border-green-500 p-4 max-w-sm';
+            toastIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>';
+            toastIcon.className = 'w-5 h-5 text-green-500';
+        } else {
+            toast.querySelector('.border-l-4').className = 'bg-white rounded-lg shadow-lg border-l-4 border-red-500 p-4 max-w-sm';
+            toastIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>';
+            toastIcon.className = 'w-5 h-5 text-red-500';
+        }
+        
+        // Show toast
+        toast.classList.remove('translate-x-full');
+        
+        // Hide toast after 3 seconds
+        setTimeout(() => {
+            toast.classList.add('translate-x-full');
+        }, 3000);
+    }
+    
+    // Update item totals when quantities change
+    document.addEventListener('DOMContentLoaded', function() {
+        const quantityInputs = document.querySelectorAll('.quantity-input');
+        quantityInputs.forEach(input => {
+            input.addEventListener('input', function() {
+                const cartItem = this.closest('.cart-item');
+                const itemId = cartItem.dataset.itemId;
+                const quantity = parseInt(this.value) || 1;
+                const unitPrice = parseFloat(cartItem.querySelector('.text-sm.text-gray-500').textContent.replace('₹', '').replace(' each', ''));
+                const totalElement = cartItem.querySelector('.item-total');
+                
+                totalElement.textContent = `₹${(unitPrice * quantity).toFixed(2)}`;
+            });
+        });
+    });
+    
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+        // Ctrl/Cmd + Enter to proceed to checkout
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+            const checkoutBtn = document.querySelector('a[href*="checkout"]');
+            if (checkoutBtn) {
+                checkoutBtn.click();
+            }
+        }
+    });
+    
+    // Auto-save cart state (for session recovery)
+    function saveCartState() {
+        const cartItems = Array.from(document.querySelectorAll('.cart-item')).map(item => ({
+            id: item.dataset.itemId,
+            quantity: item.querySelector('.quantity-input').value
+        }));
+        
+        sessionStorage.setItem('cart_state', JSON.stringify(cartItems));
+    }
+    
+    // Save state on quantity changes
+    document.addEventListener('input', function(e) {
+        if (e.target.classList.contains('quantity-input')) {
+            saveCartState();
+        }
+    });
+</script>
+{% endblock %}

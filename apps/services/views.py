@@ -163,33 +163,68 @@ def api_product_pricing(request, product_id):
     """API endpoint for dynamic pricing based on quantity"""
     try:
         product = Product.objects.get(id=product_id, is_active=True)
+        size = request.GET.get('size', '')
+        paper_type = request.GET.get('paper_type', '')
+        finish = request.GET.get('finish', '')
         quantity = int(request.GET.get('quantity', 1))
-        
-        # Basic pricing calculation (can be enhanced with complex pricing rules)
-        base_price = float(product.base_price)
-        unit_price = float(product.price_per_unit)
-        
-        # Volume discounts (example logic)
-        if quantity >= 1000:
-            unit_price *= 0.85  # 15% discount
-        elif quantity >= 500:
-            unit_price *= 0.90  # 10% discount
-        elif quantity >= 100:
-            unit_price *= 0.95  # 5% discount
-        
-        total_price = base_price + (unit_price * quantity)
-        
-        return JsonResponse({
-            'success': True,
-            'unit_price': unit_price,
-            'total_price': total_price,
-            'base_price': base_price,
-            'quantity': quantity,
-            'currency': 'INR'
-        })
-    
+
+        # Find the best matching ProductPricing
+        pricing_qs = product.pricings.filter(
+            size=size,
+            paper_type=paper_type,
+            finish=finish,
+            min_quantity__lte=quantity,
+            is_active=True
+        ).order_by('-min_quantity')
+
+        if pricing_qs.exists():
+            pricing = pricing_qs.first()
+            unit_price = float(pricing.price_per_unit)
+            total_price = unit_price * quantity
+            return JsonResponse({
+                'success': True,
+                'unit_price': unit_price,
+                'price': total_price,
+                'currency': 'INR',
+                'quantity': quantity
+            })
+        else:
+            return JsonResponse({
+                'success': False,
+                'error': 'No pricing found for selected options.'
+            }, status=404)
     except (Product.DoesNotExist, ValueError) as e:
         return JsonResponse({
             'success': False,
             'error': str(e)
         }, status=400)
+    
+
+# apps/services/views.py - Add this to your existing product_detail_view
+
+def product_detail_view_enhanced(request, slug):
+    """Enhanced product detail view with cart integration"""
+    product = get_object_or_404(Product, slug=slug)
+    
+    # Check if product is in user's cart
+    in_cart = False
+    if request.user.is_authenticated:
+        cart_manager = CartManager(request)
+        cart = cart_manager.get_or_create_cart()
+        in_cart = cart.items.filter(product=product).exists()
+    
+    # Get related products
+    related_products = Product.objects.filter(
+        service=product.service
+    ).exclude(id=product.id)[:4]
+    
+    context = {
+        'product': product,
+        'in_cart': in_cart,
+        'related_products': related_products,
+        'variations': product.variations.all() if hasattr(product, 'variations') else [],
+    }
+    
+    return render(request, 'services/product_detail.html', context)
+
+

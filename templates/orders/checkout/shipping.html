@@ -1,0 +1,578 @@
+<!-- templates/orders/checkout/shipping.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Checkout - Shipping Information - Shirsti Printing{% endblock %}
+
+{% block extra_css %}
+<style>
+    .checkout-step {
+        transition: all 0.3s ease;
+    }
+    
+    .checkout-step.current {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+    
+    .checkout-step.completed {
+        background-color: #10b981;
+        color: white;
+    }
+    
+    .form-section {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    }
+    
+    .required-field::after {
+        content: " *";
+        color: #ef4444;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Breadcrumb -->
+        <nav class="flex mb-8" aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                <li><a href="{% url 'core:home' %}" class="text-gray-500 hover:text-purple-600">Home</a></li>
+                <li><span class="text-gray-400 mx-2">/</span></li>
+                <li><a href="{% url 'orders:cart' %}" class="text-gray-500 hover:text-purple-600">Cart</a></li>
+                <li><span class="text-gray-400 mx-2">/</span></li>
+                <li><span class="text-purple-600 font-medium">Checkout - Shipping</span></li>
+            </ol>
+        </nav>
+
+        <!-- Checkout Progress Steps -->
+        <div class="mb-8">
+            <div class="flex items-center justify-between max-w-3xl mx-auto">
+                {% for step_item in steps %}
+                    <div class="flex items-center {% if not forloop.last %}flex-1{% endif %}">
+                        <div class="checkout-step w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold
+                                    {% if step_item.current %}current{% elif step_item.number < step %}completed{% else %}bg-gray-200 text-gray-600{% endif %}">
+                            {% if step_item.number < step %}
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            {% else %}
+                                {{ step_item.number }}
+                            {% endif %}
+                        </div>
+                        <span class="ml-3 text-sm font-medium text-gray-900 hidden sm:block">{{ step_item.name }}</span>
+                        {% if not forloop.last %}
+                            <div class="flex-1 mx-4 h-0.5 bg-gray-200"></div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+            <!-- Shipping Form -->
+            <div class="lg:col-span-8">
+                <form method="post" id="shipping-form">
+                    {% csrf_token %}
+                    
+                    <!-- Contact Information -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-6">
+                        <div class="form-section px-6 py-4 border-b border-gray-200">
+                            <h2 class="text-xl font-semibold text-gray-900">Contact Information</h2>
+                            <p class="text-gray-600 mt-1">We'll use this information to contact you about your order.</p>
+                        </div>
+                        
+                        <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="customer_name" class="block text-sm font-medium text-gray-700 required-field">Full Name</label>
+                                <input type="text" 
+                                       id="customer_name" 
+                                       name="customer_name" 
+                                       value="{{ initial_data.customer_name }}"
+                                       required
+                                       class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                            </div>
+                            
+                            <div>
+                                <label for="customer_phone" class="block text-sm font-medium text-gray-700 required-field">Phone Number</label>
+                                <input type="tel" 
+                                       id="customer_phone" 
+                                       name="customer_phone" 
+                                       value="{{ initial_data.customer_phone }}"
+                                       required
+                                       placeholder="+91 9876543210"
+                                       class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                            </div>
+                            
+                            <div class="md:col-span-2">
+                                <label for="customer_email" class="block text-sm font-medium text-gray-700 required-field">Email Address</label>
+                                <input type="email" 
+                                       id="customer_email" 
+                                       name="customer_email" 
+                                       value="{{ initial_data.customer_email }}"
+                                       required
+                                       class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Billing Address -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-6">
+                        <div class="form-section px-6 py-4 border-b border-gray-200">
+                            <h2 class="text-xl font-semibold text-gray-900">Billing Address</h2>
+                            <p class="text-gray-600 mt-1">Enter the address associated with your payment method.</p>
+                        </div>
+                        
+                        <div class="p-6 space-y-6">
+                            <div>
+                                <label for="billing_address_line1" class="block text-sm font-medium text-gray-700 required-field">Address Line 1</label>
+                                <input type="text" 
+                                       id="billing_address_line1" 
+                                       name="billing_address_line1" 
+                                       value="{{ initial_data.billing_address_line1 }}"
+                                       required
+                                       placeholder="House/Flat Number, Street Name"
+                                       class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                            </div>
+                            
+                            <div>
+                                <label for="billing_address_line2" class="block text-sm font-medium text-gray-700">Address Line 2</label>
+                                <input type="text" 
+                                       id="billing_address_line2" 
+                                       name="billing_address_line2" 
+                                       value="{{ initial_data.billing_address_line2 }}"
+                                       placeholder="Apartment, Suite, Floor (Optional)"
+                                       class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="billing_city" class="block text-sm font-medium text-gray-700 required-field">City</label>
+                                    <input type="text" 
+                                           id="billing_city" 
+                                           name="billing_city" 
+                                           value="{{ initial_data.billing_city }}"
+                                           required
+                                           class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                </div>
+                                
+                                <div>
+                                    <label for="billing_state" class="block text-sm font-medium text-gray-700 required-field">State</label>
+                                    <select id="billing_state" 
+                                            name="billing_state" 
+                                            required
+                                            class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                        <option value="">Select State</option>
+                                        <option value="Andhra Pradesh" {% if initial_data.billing_state == "Andhra Pradesh" %}selected{% endif %}>Andhra Pradesh</option>
+                                        <option value="Arunachal Pradesh" {% if initial_data.billing_state == "Arunachal Pradesh" %}selected{% endif %}>Arunachal Pradesh</option>
+                                        <option value="Assam" {% if initial_data.billing_state == "Assam" %}selected{% endif %}>Assam</option>
+                                        <option value="Bihar" {% if initial_data.billing_state == "Bihar" %}selected{% endif %}>Bihar</option>
+                                        <option value="Chhattisgarh" {% if initial_data.billing_state == "Chhattisgarh" %}selected{% endif %}>Chhattisgarh</option>
+                                        <option value="Delhi" {% if initial_data.billing_state == "Delhi" %}selected{% endif %}>Delhi</option>
+                                        <option value="Goa" {% if initial_data.billing_state == "Goa" %}selected{% endif %}>Goa</option>
+                                        <option value="Gujarat" {% if initial_data.billing_state == "Gujarat" %}selected{% endif %}>Gujarat</option>
+                                        <option value="Haryana" {% if initial_data.billing_state == "Haryana" %}selected{% endif %}>Haryana</option>
+                                        <option value="Himachal Pradesh" {% if initial_data.billing_state == "Himachal Pradesh" %}selected{% endif %}>Himachal Pradesh</option>
+                                        <option value="Jharkhand" {% if initial_data.billing_state == "Jharkhand" %}selected{% endif %}>Jharkhand</option>
+                                        <option value="Karnataka" {% if initial_data.billing_state == "Karnataka" %}selected{% endif %}>Karnataka</option>
+                                        <option value="Kerala" {% if initial_data.billing_state == "Kerala" %}selected{% endif %}>Kerala</option>
+                                        <option value="Madhya Pradesh" {% if initial_data.billing_state == "Madhya Pradesh" %}selected{% endif %}>Madhya Pradesh</option>
+                                        <option value="Maharashtra" {% if initial_data.billing_state == "Maharashtra" %}selected{% endif %}>Maharashtra</option>
+                                        <option value="Manipur" {% if initial_data.billing_state == "Manipur" %}selected{% endif %}>Manipur</option>
+                                        <option value="Meghalaya" {% if initial_data.billing_state == "Meghalaya" %}selected{% endif %}>Meghalaya</option>
+                                        <option value="Mizoram" {% if initial_data.billing_state == "Mizoram" %}selected{% endif %}>Mizoram</option>
+                                        <option value="Nagaland" {% if initial_data.billing_state == "Nagaland" %}selected{% endif %}>Nagaland</option>
+                                        <option value="Odisha" {% if initial_data.billing_state == "Odisha" %}selected{% endif %}>Odisha</option>
+                                        <option value="Punjab" {% if initial_data.billing_state == "Punjab" %}selected{% endif %}>Punjab</option>
+                                        <option value="Rajasthan" {% if initial_data.billing_state == "Rajasthan" %}selected{% endif %}>Rajasthan</option>
+                                        <option value="Sikkim" {% if initial_data.billing_state == "Sikkim" %}selected{% endif %}>Sikkim</option>
+                                        <option value="Tamil Nadu" {% if initial_data.billing_state == "Tamil Nadu" %}selected{% endif %}>Tamil Nadu</option>
+                                        <option value="Telangana" {% if initial_data.billing_state == "Telangana" %}selected{% endif %}>Telangana</option>
+                                        <option value="Tripura" {% if initial_data.billing_state == "Tripura" %}selected{% endif %}>Tripura</option>
+                                        <option value="Uttar Pradesh" {% if initial_data.billing_state == "Uttar Pradesh" %}selected{% endif %}>Uttar Pradesh</option>
+                                        <option value="Uttarakhand" {% if initial_data.billing_state == "Uttarakhand" %}selected{% endif %}>Uttarakhand</option>
+                                        <option value="West Bengal" {% if initial_data.billing_state == "West Bengal" %}selected{% endif %}>West Bengal</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="billing_pincode" class="block text-sm font-medium text-gray-700 required-field">PIN Code</label>
+                                    <input type="text" 
+                                           id="billing_pincode" 
+                                           name="billing_pincode" 
+                                           value="{{ initial_data.billing_pincode }}"
+                                           required
+                                           pattern="[0-9]{6}"
+                                           placeholder="110001"
+                                           class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                </div>
+                                
+                                <div>
+                                    <label for="billing_country" class="block text-sm font-medium text-gray-700 required-field">Country</label>
+                                    <select id="billing_country" 
+                                            name="billing_country" 
+                                            required
+                                            class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                        <option value="India" {% if initial_data.billing_country == "India" or not initial_data.billing_country %}selected{% endif %}>India</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Shipping Address -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-6">
+                        <div class="form-section px-6 py-4 border-b border-gray-200">
+                            <h2 class="text-xl font-semibold text-gray-900">Shipping Address</h2>
+                            <p class="text-gray-600 mt-1">Where should we deliver your order?</p>
+                        </div>
+                        
+                        <div class="p-6">
+                            <div class="mb-6">
+                                <label class="flex items-center">
+                                    <input type="checkbox" 
+                                           id="shipping_same_as_billing" 
+                                           name="shipping_same_as_billing" 
+                                           checked
+                                           class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded">
+                                    <span class="ml-2 text-sm text-gray-700">Shipping address is the same as billing address</span>
+                                </label>
+                            </div>
+                            
+                            <div id="shipping-address-fields" class="space-y-6" style="display: none;">
+                                <div>
+                                    <label for="shipping_address_line1" class="block text-sm font-medium text-gray-700">Address Line 1</label>
+                                    <input type="text" 
+                                           id="shipping_address_line1" 
+                                           name="shipping_address_line1" 
+                                           placeholder="House/Flat Number, Street Name"
+                                           class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                </div>
+                                
+                                <div>
+                                    <label for="shipping_address_line2" class="block text-sm font-medium text-gray-700">Address Line 2</label>
+                                    <input type="text" 
+                                           id="shipping_address_line2" 
+                                           name="shipping_address_line2" 
+                                           placeholder="Apartment, Suite, Floor (Optional)"
+                                           class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <input type="text" 
+                                               id="shipping_city" 
+                                               name="shipping_city" 
+                                               class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    </div>
+                                    
+                                    <div>
+                                        <label for="shipping_state" class="block text-sm font-medium text-gray-700">State</label>
+                                        <select id="shipping_state" 
+                                                name="shipping_state" 
+                                                class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                            <option value="">Select State</option>
+                                            <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                            <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                            <option value="Assam">Assam</option>
+                                            <option value="Bihar">Bihar</option>
+                                            <option value="Chhattisgarh">Chhattisgarh</option>
+                                            <option value="Delhi">Delhi</option>
+                                            <option value="Goa">Goa</option>
+                                            <option value="Gujarat">Gujarat</option>
+                                            <option value="Haryana">Haryana</option>
+                                            <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                            <option value="Jharkhand">Jharkhand</option>
+                                            <option value="Karnataka">Karnataka</option>
+                                            <option value="Kerala">Kerala</option>
+                                            <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                            <option value="Maharashtra">Maharashtra</option>
+                                            <option value="Manipur">Manipur</option>
+                                            <option value="Meghalaya">Meghalaya</option>
+                                            <option value="Mizoram">Mizoram</option>
+                                            <option value="Nagaland">Nagaland</option>
+                                            <option value="Odisha">Odisha</option>
+                                            <option value="Punjab">Punjab</option>
+                                            <option value="Rajasthan">Rajasthan</option>
+                                            <option value="Sikkim">Sikkim</option>
+                                            <option value="Tamil Nadu">Tamil Nadu</option>
+                                            <option value="Telangana">Telangana</option>
+                                            <option value="Tripura">Tripura</option>
+                                            <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                            <option value="Uttarakhand">Uttarakhand</option>
+                                            <option value="West Bengal">West Bengal</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label for="shipping_pincode" class="block text-sm font-medium text-gray-700">PIN Code</label>
+                                        <input type="text" 
+                                               id="shipping_pincode" 
+                                               name="shipping_pincode" 
+                                               pattern="[0-9]{6}"
+                                               placeholder="110001"
+                                               class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    </div>
+                                    
+                                    <div>
+                                        <label for="shipping_country" class="block text-sm font-medium text-gray-700">Country</label>
+                                        <select id="shipping_country" 
+                                                name="shipping_country" 
+                                                class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                            <option value="India" selected>India</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Navigation Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4 justify-between">
+                        <a href="{% url 'orders:checkout' %}" 
+                           class="flex items-center justify-center px-6 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition-colors duration-200">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"></path>
+                            </svg>
+                            Back to Review
+                        </a>
+                        
+                        <button type="submit" 
+                                class="flex items-center justify-center px-8 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors duration-200">
+                            Continue to Payment
+                            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Order Summary Sidebar -->
+            <div class="lg:col-span-4 mt-8 lg:mt-0">
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden sticky top-8">
+                    <div class="form-section p-6">
+                        <h3 class="text-xl font-semibold text-gray-900">Order Summary</h3>
+                    </div>
+                    
+                    <div class="p-6 space-y-4">
+                        <div class="flex justify-between text-gray-600">
+                            <span>Subtotal ({{ cart.total_items }} items)</span>
+                            <span>₹{{ cart.subtotal }}</span>
+                        </div>
+                        
+                        {% if request.session.applied_coupon %}
+                            <div class="flex justify-between text-green-600">
+                                <span>Coupon Discount</span>
+                                <span>-₹{{ request.session.applied_coupon.discount }}</span>
+                            </div>
+                        {% endif %}
+                        
+                        <div class="flex justify-between text-gray-600">
+                            <span>GST (18%)</span>
+                            <span>₹{% widthratio cart.subtotal 1 0.18 %}</span>
+                        </div>
+                        
+                        <div class="flex justify-between text-gray-600">
+                            <span>Shipping</span>
+                            <span class="text-green-600">FREE</span>
+                        </div>
+                        
+                        <div class="border-t pt-4">
+                            <div class="flex justify-between text-xl font-semibold text-gray-900">
+                                <span>Total</span>
+                                <span>₹{% widthratio cart.subtotal 1 1.18 %}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Progress Indicator -->
+                    <div class="p-6 border-t border-gray-200">
+                        <div class="text-sm text-gray-600 mb-2">Progress: Step 2 of 4</div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-purple-600 h-2 rounded-full" style="width: 50%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Help Section -->
+                <div class="mt-6 bg-white rounded-xl shadow-lg p-6">
+                    <h4 class="font-semibold text-gray-900 mb-4">Need Help?</h4>
+                    <div class="space-y-3 text-sm text-gray-600">
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-purple-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                            </svg>
+                            Call us: +91 123 456 7890
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-purple-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                            Email: support@shirstiprinting.com
+                        </div>
+                        <div class="flex items-start">
+                            <svg class="w-5 h-5 text-purple-500 mr-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <div>
+                                <div class="font-medium">Common Questions:</div>
+                                <ul class="mt-1 space-y-1 text-xs">
+                                    <li>• We deliver all over India</li>
+                                    <li>• Free shipping on orders over ₹500</li>
+                                    <li>• Delivery typically takes 3-7 days</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Toggle shipping address fields
+    document.addEventListener('DOMContentLoaded', function() {
+        const sameAsBillingCheckbox = document.getElementById('shipping_same_as_billing');
+        const shippingAddressFields = document.getElementById('shipping-address-fields');
+        
+        sameAsBillingCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                shippingAddressFields.style.display = 'none';
+                // Clear shipping address fields
+                shippingAddressFields.querySelectorAll('input, select').forEach(field => {
+                    field.value = '';
+                    field.removeAttribute('required');
+                });
+            } else {
+                shippingAddressFields.style.display = 'block';
+                // Make shipping fields required
+                shippingAddressFields.querySelectorAll('input[data-required], select[data-required]').forEach(field => {
+                    field.setAttribute('required', '');
+                });
+            }
+        });
+        
+        // Auto-fill city and state based on PIN code (basic implementation)
+        const pincodeFields = document.querySelectorAll('input[name$="_pincode"]');
+        pincodeFields.forEach(field => {
+            field.addEventListener('input', function() {
+                if (this.value.length === 6) {
+                    // You can integrate with postal code API here
+                    // For now, just validate the format
+                    if (!/^\d{6}$/.test(this.value)) {
+                        this.setCustomValidity('Please enter a valid 6-digit PIN code');
+                    } else {
+                        this.setCustomValidity('');
+                    }
+                }
+            });
+        });
+        
+        // Phone number formatting
+        const phoneField = document.getElementById('customer_phone');
+        phoneField.addEventListener('input', function() {
+            let value = this.value.replace(/\D/g, '');
+            if (value.length > 10) {
+                value = value.slice(0, 10);
+            }
+            this.value = value;
+        });
+        
+        // Form validation
+        const form = document.getElementById('shipping-form');
+        form.addEventListener('submit', function(e) {
+            const requiredFields = form.querySelectorAll('input[required], select[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.classList.add('border-red-500');
+                    isValid = false;
+                } else {
+                    field.classList.remove('border-red-500');
+                }
+            });
+            
+            if (!isValid) {
+                e.preventDefault();
+                alert('Please fill in all required fields.');
+                return false;
+            }
+            
+            // Validate PIN codes
+            const pincodes = form.querySelectorAll('input[name$="_pincode"]');
+            pincodes.forEach(pincode => {
+                if (pincode.value && !/^\d{6}$/.test(pincode.value)) {
+                    pincode.classList.add('border-red-500');
+                    isValid = false;
+                    alert('Please enter a valid 6-digit PIN code.');
+                }
+            });
+            
+            if (!isValid) {
+                e.preventDefault();
+                return false;
+            }
+        });
+        
+        // Auto-save form data to session storage
+        function saveFormData() {
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData);
+            sessionStorage.setItem('checkout_shipping_data', JSON.stringify(data));
+        }
+        
+        // Load saved form data
+        function loadFormData() {
+            const savedData = sessionStorage.getItem('checkout_shipping_data');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                Object.keys(data).forEach(key => {
+                    const field = form.querySelector(`[name="${key}"]`);
+                    if (field) {
+                        if (field.type === 'checkbox') {
+                            field.checked = data[key] === 'on';
+                        } else {
+                            field.value = data[key];
+                        }
+                    }
+                });
+            }
+        }
+        
+        // Save data on form changes
+        form.addEventListener('input', saveFormData);
+        form.addEventListener('change', saveFormData);
+        
+        // Load saved data on page load
+        loadFormData();
+        
+        // Focus first empty required field
+        const firstEmptyRequired = form.querySelector('input[required]:not([value]), input[required][value=""]');
+        if (firstEmptyRequired) {
+            firstEmptyRequired.focus();
+        }
+    });
+    
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+        // Ctrl/Cmd + Enter to submit form
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+            document.getElementById('shipping-form').submit();
+        }
+        
+        // Escape to go back
+        if (e.key === 'Escape') {
+            window.location.href = "{% url 'orders:checkout' %}";
+        }
+    });
+</script>
+{% endblock %}

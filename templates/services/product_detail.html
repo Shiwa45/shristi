@@ -4,60 +4,98 @@
 {% block title %}{{ product.name }} - Shirsti Printing Company{% endblock %}
 
 {% block content %}
-<!-- Breadcrumb -->
 <section class="bg-gray-50 py-4">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <nav class="flex" aria-label="Breadcrumb">
             <ol class="flex items-center space-x-4">
-                <li>
-                    <a href="{% url 'core:home' %}" class="text-gray-500 hover:text-purple-600">Home</a>
-                </li>
-                <li>
-                    <svg class="flex-shrink-0 h-4 w-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
-                    </svg>
-                    <a href="{% url 'services:list' %}" class="text-gray-500 hover:text-purple-600">Services</a>
-                </li>
-                <li>
-                    <svg class="flex-shrink-0 h-4 w-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
-                    </svg>
-                    <a href="{{ product.service.get_absolute_url }}" class="text-gray-500 hover:text-purple-600">{{ product.service.name }}</a>
-                </li>
-                <li>
-                    <svg class="flex-shrink-0 h-4 w-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
-                    </svg>
-                    <span class="text-gray-900 font-medium">{{ product.name }}</span>
-                </li>
+                <li><a href="{% url 'core:home' %}" class="text-gray-500 hover:text-purple-600">Home</a></li>
+                <li><svg class="h-4 w-4 text-gray-400 inline mx-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg><a href="{% url 'services:list' %}" class="text-gray-500 hover:text-purple-600">Services</a></li>
+                <li><svg class="h-4 w-4 text-gray-400 inline mx-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg><span class="text-gray-900 font-medium">{{ product.name }}</span></li>
             </ol>
         </nav>
     </div>
 </section>
 
-<!-- Product Detail -->
 <section class="py-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <!-- Product Images -->
             <div class="space-y-4">
-                <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden">
+                <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center">
                     {% if product.image %}
-                        <img src="{{ product.image.url }}" 
-                             alt="{{ product.name }}" 
-                             class="w-full h-full object-cover"
-                             id="main-image">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover" id="main-image">
                     {% else %}
-                        <div class="w-full h-full bg-gradient-to-br from-purple-400 to-blue-500 flex items-center justify-center text-white text-6xl">
-                            {{ product.get_icon_html|safe }}
-                        </div>
+                        <div class="w-full h-full bg-gradient-to-br from-purple-400 to-blue-500 flex items-center justify-center text-white text-6xl">{{ product.get_icon_html|safe }}</div>
                     {% endif %}
                 </div>
-                
-                <!-- Thumbnail Gallery -->
-                {% if product.gallery_images.exists %}
-                    <div class="flex space-x-2 overflow-x-auto">
-                        <img src="{{ product.image.url }}" 
+            </div>
+            <!-- Product Info & Pricing -->
+            <div>
+                <h1 class="text-3xl font-bold mb-2">{{ product.name }}</h1>
+                <div class="text-gray-600 mb-6">{{ product.description }}</div>
+                <form id="pricing-form" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block font-semibold mb-1">Size</label>
+                            <select name="size" class="w-full border rounded px-3 py-2" required>
+                                <option value="A6">A6 (105x148mm)</option>
+                                <option value="A5">A5 (148x210mm)</option>
+                                <option value="A4">A4 (210x297mm)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block font-semibold mb-1">Paper Type</label>
+                            <select name="paper_type" class="w-full border rounded px-3 py-2" required>
+                                <option value="Standard">Standard</option>
+                                <option value="Premium">Premium</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block font-semibold mb-1">Finish</label>
+                            <select name="finish" class="w-full border rounded px-3 py-2" required>
+                                <option value="Matte">Matte</option>
+                                <option value="Glossy">Glossy</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block font-semibold mb-1">Quantity</label>
+                            <input type="number" name="quantity" min="100" step="100" value="100" class="w-full border rounded px-3 py-2" required>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <span class="font-bold text-lg">Price: </span>
+                        <span id="price-display" class="text-2xl text-purple-700 font-bold">--</span>
+                    </div>
+                    <button type="button" id="add-to-cart-btn" class="mt-6 w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 transition">Add to Cart</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+// Dynamic pricing fetch
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('pricing-form');
+    const priceDisplay = document.getElementById('price-display');
+    function fetchPrice() {
+        const data = Object.fromEntries(new FormData(form));
+        fetch(`/services/api/pricing/{{ product.id }}/?size=${data.size}&paper_type=${data.paper_type}&finish=${data.finish}&quantity=${data.quantity}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    priceDisplay.textContent = `₹${data.price}`;
+                } else {
+                    priceDisplay.textContent = '--';
+                }
+            });
+    }
+    form.addEventListener('change', fetchPrice);
+    form.addEventListener('input', fetchPrice);
+    fetchPrice();
+});
+</script>
+{% endblock %}
                              alt="{{ product.name }}" 
                              class="w-20 h-20 object-cover rounded-lg border-2 border-purple-500 cursor-pointer thumbnail"
                              onclick="changeMainImage('{{ product.image.url }}')">
@@ -175,7 +213,7 @@
                 <!-- Action Buttons -->
                 <div class="flex flex-col sm:flex-row gap-4">
                     {% if product.service.has_design_tool %}
-                        <a href="{% url 'design_tool:create' product.service.slug %}?product={{ product.id }}" 
+                        <!-- Design Tool create URL not found, update if implemented -->
                            class="flex-1 bg-purple-600 text-white px-6 py-3 rounded-lg text-center font-semibold hover:bg-purple-700 transition duration-300 flex items-center justify-center">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"></path>
@@ -184,29 +222,7 @@
                         </a>
                     {% endif %}
                     
-                    {% if user.is_authenticated %}
-                        <button onclick="addToCart({{ product.id }})"
-                                class="flex-1 border-2 border-purple-600 text-purple-600 px-6 py-3 rounded-lg font-semibold hover:bg-purple-50 transition duration-300 flex items-center justify-center"
-                                id="add-to-cart-btn">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m4.5 0h6"></path>
-                            </svg>
-                            {% if in_cart %}In Cart{% else %}Add to Cart{% endif %}
-                        </button>
-                    {% else %}
-                        <a href="{% url 'accounts:login' %}?next={{ request.path }}"
-                           class="flex-1 border-2 border-purple-600 text-purple-600 px-6 py-3 rounded-lg font-semibold hover:bg-purple-50 transition duration-300 text-center">
-                            Login to Order
-                        </a>
-                    {% endif %}
-                    
-                    <button onclick="openQuoteModal()"
-                            class="flex-1 bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-700 transition duration-300 flex items-center justify-center">
-                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-                        </svg>
-                        Get Quote
-                    </button>
+                    <!-- Old action buttons removed for redesign. -->
                 </div>
                 
                 <!-- Features -->
@@ -424,25 +440,7 @@
 </div>
 {% endblock %}
 
-{% block extra_js %}
-<script>
-    let currentPrice = {{ product.base_price }};
-    
-    // Tab functionality
-    document.querySelectorAll('.tab-button').forEach(button => {
-        button.addEventListener('click', () => {
-            const tabName = button.dataset.tab;
-            
-            // Update button styles
-            document.querySelectorAll('.tab-button').forEach(btn => {
-                btn.classList.remove('border-purple-500', 'text-purple-600');
-                btn.classList.add('border-transparent', 'text-gray-500');
-            });
-            button.classList.remove('border-transparent', 'text-gray-500');
-            button.classList.add('border-purple-500', 'text-purple-600');
-            
-            // Show/hide content
-            document.querySelectorAll('.tab-content').forEach(content => {
+{% comment %} Old JS and tab code removed for redesign. {% endcomment %}
                 content.classList.add('hidden');
             });
             document.getElementById(`${tabName}-tab`).classList.remove('hidden');
@@ -506,14 +504,14 @@
     
     // Add to cart
     function addToCart(productId) {
-        {% if not user.is_authenticated %}
-            window.location.href = "{% url 'accounts:login' %}?next={{ request.path }}";
-            return;
-        {% endif %}
+        // {% if not user.is_authenticated %}
+    //     window.location.href = "{% url 'accounts:login' %}?next={{ request.path }}";
+        //     return;
+        // {% endif %}
         
         const quantity = parseInt(document.getElementById('quantity-input').value) || 1;
         
-        fetch(`{% url 'services:add_to_cart' product.id %}`, {
+    fetch(`{% url 'orders:add_to_cart' product.id %}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -586,21 +584,7 @@
             }
         };
         
-        fetch('{% url "services:quick_quote" %}', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                showNotification(data.message, 'success');
-                closeQuoteModal();
-                this.reset();
-            } else {
+    // Quick quote endpoint not implemented. Add AJAX call here if/when available.
                 showNotification(data.message, 'error');
             }
         })

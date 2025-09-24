@@ -1,3 +1,28 @@
+
+from django.db import models
+from django.urls import reverse
+from django.utils.text import slugify
+
+# Flexible pricing for products (must be after Product definition)
+class ProductPricing(models.Model):
+    product = models.ForeignKey('Product', on_delete=models.CASCADE, related_name='pricings')
+    size = models.CharField(max_length=100, blank=True)
+    paper_type = models.CharField(max_length=100, blank=True)
+    binding_type = models.CharField(max_length=100, blank=True)
+    finish = models.CharField(max_length=100, blank=True)
+    min_quantity = models.PositiveIntegerField(default=1)
+    price_per_unit = models.DecimalField(max_digits=10, decimal_places=2)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = 'Product Pricing'
+        verbose_name_plural = 'Product Pricings'
+        unique_together = ('product', 'size', 'paper_type', 'binding_type', 'finish', 'min_quantity')
+
+    def __str__(self):
+        return f"{self.product.name} | {self.size} | {self.paper_type} | {self.binding_type} | {self.finish} | Min Qty: {self.min_quantity} | ₹{self.price_per_unit}"
 # apps/services/models.py
 from django.db import models
 from django.urls import reverse

@@ -1,17 +1,26 @@
-# apps/services/urls.py
+# apps/services/urls.py - Enhanced URL patterns
+
 from django.urls import path
 from . import views
 
 app_name = 'services'
 
 urlpatterns = [
-    # Main services pages
-    path('', views.services_list_view, name='list'),
-    path('search/', views.products_search_view, name='search'),
-    path('category/<slug:slug>/', views.category_view, name='category'),
+    # Main service pages
+    path('', views.service_categories_view, name='categories'),
+    path('category/<slug:slug>/', views.category_products_view, name='category'),
     path('product/<slug:slug>/', views.product_detail_view, name='product_detail'),
     
-    # API endpoints
-    path('api/suggestions/', views.api_product_suggestions, name='api_suggestions'),
+    # Search functionality
+    path('search/', views.product_search, name='product_search'),
+    
+    # API endpoints for dynamic pricing and options
     path('api/pricing/<int:product_id>/', views.api_product_pricing, name='api_pricing'),
+    path('api/options/<int:product_id>/', views.api_product_options, name='api_options'),
+    
+    # Bulk pricing calculator
+    path('api/bulk-pricing/<int:product_id>/', views.api_bulk_pricing, name='api_bulk_pricing'),
+    
+    # Quote request handling
+    path('api/quote-request/', views.api_quote_request, name='api_quote_request'),
 ]

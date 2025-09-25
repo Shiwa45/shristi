@@ -4095,3 +4095,43 @@ Watching for file changes with StatReloader
 Watching for file changes with StatReloader
 Watching for file changes with StatReloader
 Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 23361
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+Not Found: /services/product/paperback-book-printing/
+"GET /services/product/paperback-book-printing/ HTTP/1.1" 404 5033
+Internal Server Error: /services/
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\services\views.py", line 35, in service_categories_view
+    return render(request, 'services/categories.html', context)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: services/categories.html
+"GET /services/ HTTP/1.1" 500 94459
+"GET / HTTP/1.1" 200 23361
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/ HTTP/1.1" 200 11946
+Not Found: /services/product/paperback-book-printing/
+"GET /services/product/paperback-book-printing/ HTTP/1.1" 404 5033
+"GET /services/category/book-printing/ HTTP/1.1" 200 32829
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/product/a4-book-printing/ HTTP/1.1" 200 62295
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /static/images/placeholder.png HTTP/1.1" 404 1993
+"GET /services/api/pricing/59/?quantity=100&size=A4&paper_type=75+gsm&finish=Standard&binding_type=Perfect+Bound&colors=Black+%26+White&page_count=100&print_sides=Single-sided&design_service=false&isbn_allocation=false HTTP/1.1" 200 262
+"GET /services/api/pricing/59/?quantity=100&size=A4&paper_type=Design+Support&finish=Standard&binding_type=Perfect+Bound&colors=Black+%26+White&page_count=100&print_sides=Single-sided&design_service=false&isbn_allocation=false HTTP/1.1" 200 262
+"GET /services/api/pricing/59/?quantity=100&size=A4&paper_type=100+gsm+Art+Paper&finish=Standard&binding_type=Perfect+Bound&colors=Black+%26+White&page_count=100&print_sides=Single-sided&design_service=false&isbn_allocation=false HTTP/1.1" 200 262
+"GET /services/api/pricing/59/?quantity=100&size=A4&paper_type=Binding+Option&finish=Standard&binding_type=Perfect+Bound&colors=Black+%26+White&page_count=100&print_sides=Single-sided&design_service=false&isbn_allocation=false HTTP/1.1" 200 262
+Not Found: /design-tool/product/59/
+"GET /design-tool/product/59/ HTTP/1.1" 404 4847
+"GET /services/product/a4-book-printing/ HTTP/1.1" 200 62295
+"GET /services/api/pricing/59/?quantity=100&design_service=true&isbn_allocation=true HTTP/1.1" 200 299
+Watching for file changes with StatReloader

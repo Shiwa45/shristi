@@ -72,12 +72,19 @@ class ProductAdmin(admin.ModelAdmin):
         ('Basic Information', {
             'fields': ('name', 'slug', 'category', 'description', 'short_description', 'image')
         }),
+        ('Hero Section', {
+            'fields': ('hero_title', 'hero_subtitle', 'hero_image', 'hero_quote'),
+            'classes': ('collapse',)
+        }),
         ('Design Specifications', {
             'fields': ('width_mm', 'height_mm', 'bleed_mm', 'safe_zone_mm', 'dpi'),
             'classes': ('collapse',)
         }),
         ('Features', {
             'fields': ('has_design_tool', 'allows_upload', 'allows_custom_size')
+        }),
+        ('Media', {
+            'fields': ('video_url', 'datasheet_file', 'sample_file', 'og_image', 'sample_paper_image', 'sample_color_image')
         }),
         ('Default Pricing', {
             'fields': ('base_price', 'price_per_unit', 'minimum_quantity'),

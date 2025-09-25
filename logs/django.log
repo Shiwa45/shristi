@@ -2259,3 +2259,1839 @@ Not Found: /services/api/pricing/9/
 "GET /services/api/pricing/9/?size=Standard&paper_type=Standard&finish=Standard&colors=4%2B0&quantity=1 HTTP/1.1" 404 101
 Not Found: /services/api/pricing/9/
 "GET /services/api/pricing/9/?size=Standard&paper_type=Standard&finish=Standard&colors=4%2B4&quantity=1 HTTP/1.1" 404 101
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 33523
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4048
+"GET /services/category/book-printing/ HTTP/1.1" 200 41593
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /services/product/annual-reports/ HTTP/1.1" 200 50814
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+Not Found: /services/api/pricing/10/
+"GET /services/api/pricing/10/?quantity=1&size=&paper_type=&finish=&binding_type= HTTP/1.1" 404 101
+"GET /services/product/annual-reports/ HTTP/1.1" 200 50814
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+Not Found: /services/api/pricing/10/
+"GET /services/api/pricing/10/?quantity=1&size=&paper_type=&finish=&binding_type= HTTP/1.1" 404 101
+"GET /services/product/annual-reports/ HTTP/1.1" 200 50814
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+Not Found: /services/api/pricing/10/
+"GET /services/api/pricing/10/?quantity=1&size=&paper_type=&finish=&binding_type= HTTP/1.1" 404 101
+"GET /services/product/annual-reports/ HTTP/1.1" 200 50814
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+Not Found: /services/api/pricing/10/
+"GET /services/api/pricing/10/?quantity=1&size=&paper_type=&finish=&binding_type= HTTP/1.1" 404 101
+"GET /services/product/annual-reports/ HTTP/1.1" 200 41876
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+Not Found: /services/api/pricing/10/
+"GET /services/api/pricing/10/?size=Standard&paper_type=Standard&finish=Standard&colors=4%2B4&quantity=1 HTTP/1.1" 404 101
+"GET /services/product/annual-reports/ HTTP/1.1" 200 41876
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+Not Found: /services/api/pricing/10/
+"GET /services/api/pricing/10/?size=Standard&paper_type=Standard&finish=Standard&colors=4%2B4&quantity=1 HTTP/1.1" 404 101
+"GET /services/product/annual-reports/ HTTP/1.1" 200 41876
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+Not Found: /services/api/pricing/10/
+"GET /services/api/pricing/10/?size=Standard&paper_type=Standard&finish=Standard&colors=4%2B4&quantity=1 HTTP/1.1" 404 101
+"GET /services/product/annual-reports/ HTTP/1.1" 200 43001
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /static/images/telescope-box.jpg HTTP/1.1" 404 1932
+"GET /static/images/tuck-box.jpg HTTP/1.1" 404 1917
+"GET /static/images/magnetic-box.jpg HTTP/1.1" 404 1929
+Not Found: /services/api/pricing/10/
+"GET /services/api/pricing/10/?quantity=200&size=54+cards&paper_type=300gsm&finish=matte HTTP/1.1" 404 101
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 33523
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4048
+"GET /services/category/book-printing/ HTTP/1.1" 200 41593
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+Internal Server Error: /services/product/annual-reports/
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 880, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+TypeError: 'ImageFieldFile' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\services\views.py", line 488, in product_detail_view
+    return render(request, 'services/product_detail.html', context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1064, in render
+    output = self.filter_expression.resolve(context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 715, in resolve
+    obj = self.var.resolve(context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 847, in resolve
+    value = self._resolve_lookup(context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 890, in _resolve_lookup
+    current = getattr(current, bit)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\fields\files.py", line 66, in url
+    self._require_file()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\fields\files.py", line 41, in _require_file
+    raise ValueError(
+        "The '%s' attribute has no file associated with it." % self.field.name
+    )
+ValueError: The 'image' attribute has no file associated with it.
+"GET /services/product/annual-reports/ HTTP/1.1" 500 197385
+C:\Users\shiwansh\shirsti_printing\apps\services\models.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\shiwansh\shirsti_printing\apps\services\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\shiwansh\shirsti_printing\apps\services\models.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /services/product/annual-reports/
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such column: services_product.video_url
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\services\views.py", line 470, in product_detail_view
+    product = get_object_or_404(Product, slug=slug, is_active=True)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\shortcuts.py", line 85, in get_object_or_404
+    return queryset.get(*args, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\query.py", line 633, in get
+    num = len(clone)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\query.py", line 380, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such column: services_product.video_url
+"GET /services/product/annual-reports/ HTTP/1.1" 500 162059
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4048
+Internal Server Error: /services/product/annual-reports/
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 880, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+TypeError: 'ImageFieldFile' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\services\views.py", line 505, in product_detail_view
+    return render(request, 'services/product_detail.html', context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1064, in render
+    output = self.filter_expression.resolve(context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 715, in resolve
+    obj = self.var.resolve(context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 847, in resolve
+    value = self._resolve_lookup(context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 890, in _resolve_lookup
+    current = getattr(current, bit)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\fields\files.py", line 66, in url
+    self._require_file()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\fields\files.py", line 41, in _require_file
+    raise ValueError(
+        "The '%s' attribute has no file associated with it." % self.field.name
+    )
+ValueError: The 'image' attribute has no file associated with it.
+"GET /services/product/annual-reports/ HTTP/1.1" 500 197522
+"GET /services/product/annual-reports/ HTTP/1.1" 200 61255
+"GET /static/images/placeholder.jpg HTTP/1.1" 404 1926
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /static/images/placeholder.jpg HTTP/1.1" 404 1926
+Not Found: /services/api/pricing/10/
+"GET /services/api/pricing/10/?quantity=1&size=&paper_type=&finish= HTTP/1.1" 404 101
+"GET /services/product/annual-reports/ HTTP/1.1" 200 61255
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /static/images/placeholder.jpg HTTP/1.1" 404 1926
+"GET /static/images/placeholder.jpg HTTP/1.1" 404 1926
+Not Found: /services/api/pricing/10/
+"GET /services/api/pricing/10/?quantity=1&size=&paper_type=&finish= HTTP/1.1" 404 101
+"GET /services/product/annual-reports/ HTTP/1.1" 200 61255
+"GET /static/images/placeholder.jpg HTTP/1.1" 404 1926
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /static/images/placeholder.jpg HTTP/1.1" 404 1926
+Not Found: /services/api/pricing/10/
+"GET /services/api/pricing/10/?quantity=1&size=&paper_type=&finish= HTTP/1.1" 404 101
+C:\Users\shiwansh\shirsti_printing\apps\services\models.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\shiwansh\shirsti_printing\apps\services\models.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\shiwansh\shirsti_printing\apps\services\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /services/product/annual-reports/
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\services\views.py", line 120, in product_detail_view
+    shipping_options = ShippingOption.objects.filter(is_active=True)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\query.py", line 1436, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\query.py", line 1454, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\query.py", line 1461, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\sql\query.py", line 1545, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\sql\query.py", line 1576, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<6 lines>...
+        summarize=summarize,
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\sql\query.py", line 1426, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\sql\query.py", line 1236, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\sql\query.py", line 1724, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'is_active' into field. Choices are: description, estimated_days, id, is_express, name, price
+"GET /services/product/annual-reports/ HTTP/1.1" 500 119949
+C:\Users\shiwansh\shirsti_printing\apps\services\views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /services/product/annual-reports/
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 880, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+TypeError: 'ImageFieldFile' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\services\views.py", line 151, in product_detail_view
+    return render(request, 'services/product_detail.html', context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1064, in render
+    output = self.filter_expression.resolve(context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 715, in resolve
+    obj = self.var.resolve(context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 847, in resolve
+    value = self._resolve_lookup(context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 890, in _resolve_lookup
+    current = getattr(current, bit)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\fields\files.py", line 66, in url
+    self._require_file()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\fields\files.py", line 41, in _require_file
+    raise ValueError(
+        "The '%s' attribute has no file associated with it." % self.field.name
+    )
+ValueError: The 'image' attribute has no file associated with it.
+"GET /services/product/annual-reports/ HTTP/1.1" 500 195410
+C:\Users\shiwansh\shirsti_printing\apps\services\views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /services/product/annual-reports/
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 880, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+TypeError: 'ImageFieldFile' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\services\views.py", line 151, in product_detail_view
+    return render(request, 'services/product_detail.html', context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1064, in render
+    output = self.filter_expression.resolve(context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 715, in resolve
+    obj = self.var.resolve(context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 847, in resolve
+    value = self._resolve_lookup(context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 890, in _resolve_lookup
+    current = getattr(current, bit)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\fields\files.py", line 66, in url
+    self._require_file()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\fields\files.py", line 41, in _require_file
+    raise ValueError(
+        "The '%s' attribute has no file associated with it." % self.field.name
+    )
+ValueError: The 'image' attribute has no file associated with it.
+"GET /services/product/annual-reports/ HTTP/1.1" 500 195410
+"GET /services/product/annual-reports/ HTTP/1.1" 200 43721
+"GET /static/images/placeholder.png HTTP/1.1" 404 1926
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /services/api/pricing/10/?quantity=100&size=&paper_type=undefined&finish=&binding_type=perfect HTTP/1.1" 200 153
+"GET /services/api/pricing/10/?quantity=100&size=&paper_type=undefined&finish=&binding_type=perfect HTTP/1.1" 200 153
+Internal Server Error: /services/product/annual-reports/
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\base.py", line 71, in reverse
+    extra, resolver = resolver.namespace_dict[ns]
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^
+KeyError: 'home'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\services\views.py", line 151, in product_detail_view
+    return render(request, 'services/product_detail.html', context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\base.py", line 82, in reverse
+    raise NoReverseMatch("%s is not a registered namespace" % key)
+django.urls.exceptions.NoReverseMatch: 'home' is not a registered namespace
+"GET /services/product/annual-reports/ HTTP/1.1" 500 182498
+"GET /services/product/annual-reports/ HTTP/1.1" 200 43721
+"GET /static/images/placeholder.png HTTP/1.1" 404 1926
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /services/api/pricing/10/?quantity=100&size=&paper_type=undefined&finish=&binding_type=perfect HTTP/1.1" 200 153
+"GET /services/api/pricing/10/?quantity=100&size=&paper_type=undefined&finish=&binding_type=perfect HTTP/1.1" 200 153
+"GET /services/product/annual-reports/ HTTP/1.1" 200 43721
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /static/images/placeholder.png HTTP/1.1" 404 1926
+"GET /services/api/pricing/10/?quantity=100&size=&paper_type=undefined&finish=&binding_type=perfect HTTP/1.1" 200 153
+"GET /services/api/pricing/10/?quantity=100&size=&paper_type=undefined&finish=&binding_type=perfect HTTP/1.1" 200 153
+"GET /services/api/pricing/10/?quantity=100&size=&paper_type=premium&finish=&binding_type=perfect HTTP/1.1" 200 153
+"GET /services/api/pricing/10/?quantity=100&size=&paper_type=premium&finish=&binding_type=perfect HTTP/1.1" 200 153
+Not Found: /services/product/annual-reports/admin/
+"GET /services/product/annual-reports/admin/ HTTP/1.1" 404 6275
+"GET /admin/ HTTP/1.1" 302 0
+"GET /admin/login/?next=/admin/ HTTP/1.1" 200 4197
+"GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2929
+"GET /static/admin/js/theme.js HTTP/1.1" 200 1943
+"GET /static/admin/css/login.css HTTP/1.1" 200 958
+"GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2694
+"GET /static/admin/css/base.css HTTP/1.1" 200 21207
+"GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+"GET /static/admin/css/responsive.css HTTP/1.1" 200 18533
+"POST /admin/login/?next=/admin/ HTTP/1.1" 200 4358
+"POST /admin/login/?next=/admin/ HTTP/1.1" 200 4355
+"POST /admin/login/?next=/admin/ HTTP/1.1" 200 4355
+"POST /admin/login/?next=/admin/ HTTP/1.1" 200 4362
+"POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+"GET /admin/ HTTP/1.1" 200 16430
+"GET /static/admin/css/dashboard.css HTTP/1.1" 200 441
+"GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+"GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+"GET /admin/services/product/ HTTP/1.1" 200 49203
+"GET /static/admin/css/changelists.css HTTP/1.1" 200 6566
+"GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+"GET /static/admin/js/core.js HTTP/1.1" 200 5682
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+"GET /static/admin/js/actions.js HTTP/1.1" 200 7872
+"GET /static/admin/js/urlify.js HTTP/1.1" 200 7887
+"GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531
+"GET /static/admin/css/forms.css HTTP/1.1" 200 9047
+"GET /static/admin/img/icon-yes.svg HTTP/1.1" 200 436
+"GET /static/admin/img/search.svg HTTP/1.1" 200 458
+"GET /static/admin/css/widgets.css HTTP/1.1" 200 11900
+"GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 8943
+"GET /static/admin/img/icon-no.svg HTTP/1.1" 200 560
+"GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 292458
+"GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 232381
+"GET /static/admin/js/filters.js HTTP/1.1" 200 978
+"GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+"GET /static/admin/img/sorting-icons.svg HTTP/1.1" 200 1097
+"GET /admin/services/product/3/change/ HTTP/1.1" 200 56424
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+"GET /static/admin/js/collapse.js HTTP/1.1" 200 1803
+"GET /static/admin/js/prepopulate_init.js HTTP/1.1" 200 586
+"GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 200 581
+"GET /static/admin/img/icon-unknown.svg HTTP/1.1" 200 655
+"GET /static/admin/js/inlines.js HTTP/1.1" 200 15526
+"GET /static/admin/js/change_form.js HTTP/1.1" 200 606
+"GET /static/admin/img/tooltag-arrowright.svg HTTP/1.1" 200 280
+"GET /static/admin/img/inline-delete.svg HTTP/1.1" 200 560
+"GET /admin/services/product/3/change/ HTTP/1.1" 200 56424
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\core\views.py", line 27, in home_view
+    return render(request, 'core/home.html', context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\defaulttags.py", line 321, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'logout' not found. 'logout' is not a valid view function or pattern name.
+"GET // HTTP/1.1" 500 173732
+Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\core\views.py", line 27, in home_view
+    return render(request, 'core/home.html', context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\defaulttags.py", line 321, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'logout' not found. 'logout' is not a valid view function or pattern name.
+"GET / HTTP/1.1" 500 173732
+Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\core\views.py", line 27, in home_view
+    return render(request, 'core/home.html', context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\defaulttags.py", line 321, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'logout' not found. 'logout' is not a valid view function or pattern name.
+"GET / HTTP/1.1" 500 173869
+C:\Users\shiwansh\shirsti_printing\apps\services\models.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\shiwansh\shirsti_printing\apps\services\models.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\core\views.py", line 27, in home_view
+    return render(request, 'core/home.html', context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\defaulttags.py", line 321, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'logout' not found. 'logout' is not a valid view function or pattern name.
+"GET / HTTP/1.1" 500 173869
+Internal Server Error: /services/product/annual-reports/
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\services\views.py", line 151, in product_detail_view
+    return render(request, 'services/product_detail.html', context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\defaulttags.py", line 321, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'logout' not found. 'logout' is not a valid view function or pattern name.
+"GET /services/product/annual-reports/ HTTP/1.1" 500 177719
+Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\core\views.py", line 27, in home_view
+    return render(request, 'core/home.html', context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\defaulttags.py", line 321, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'logout' not found. 'logout' is not a valid view function or pattern name.
+"GET / HTTP/1.1" 500 173732
+C:\Users\shiwansh\shirsti_printing\apps\accounts\urls.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 36401
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /services/category/book-printing/ HTTP/1.1" 200 44473
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /services/product/annual-reports/ HTTP/1.1" 200 49681
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /static/images/placeholder.png HTTP/1.1" 404 1926
+"GET /services/api/pricing/10/?quantity=100&size=&paper_type=&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/product/art-book-printing/ HTTP/1.1" 200 50254
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /static/images/placeholder.png HTTP/1.1" 404 1926
+"GET /services/api/pricing/9/?quantity=100&size=&paper_type=&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/product/childrens-book-printing/ HTTP/1.1" 200 50302
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /static/images/placeholder.png HTTP/1.1" 404 1926
+"GET /services/api/pricing/5/?quantity=100&size=&paper_type=&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/product/coffee-table-books/ HTTP/1.1" 200 50258
+"GET /static/images/placeholder.png HTTP/1.1" 404 1926
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /services/api/pricing/7/?quantity=100&size=&paper_type=&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"POST /orders/cart/add/7/ HTTP/1.1" 200 136
+"GET /orders/cart/ HTTP/1.1" 200 38820
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET / HTTP/1.1" 200 36401
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+Internal Server Error: /services/
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\services\views.py", line 35, in service_categories_view
+    return render(request, 'services/categories.html', context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: services/categories.html
+"GET /services/ HTTP/1.1" 500 92790
+"GET /services/category/book-printing/ HTTP/1.1" 200 44473
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /services/product/annual-reports/ HTTP/1.1" 200 49681
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /static/images/placeholder.png HTTP/1.1" 404 1926
+"GET /services/api/pricing/10/?quantity=100&size=&paper_type=&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+C:\Users\shiwansh\shirsti_printing\apps\accounts\urls.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\shiwansh\shirsti_printing\apps\services\models.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\shiwansh\shirsti_printing\apps\services\models.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /services/product/annual-reports/
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such column: services_product.hero_title
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\services\views.py", line 85, in product_detail_view
+    product = get_object_or_404(
+        Product.objects.select_related('category').prefetch_related(
+    ...<4 lines>...
+        is_active=True
+    )
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\shortcuts.py", line 85, in get_object_or_404
+    return queryset.get(*args, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\query.py", line 633, in get
+    num = len(clone)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\query.py", line 380, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such column: services_product.hero_title
+"GET /services/product/annual-reports/ HTTP/1.1" 500 173528
+"GET /services/product/annual-reports/ HTTP/1.1" 200 49681
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /static/images/placeholder.png HTTP/1.1" 404 1926
+"GET /services/api/pricing/10/?quantity=100&size=&paper_type=&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+C:\Users\shiwansh\shirsti_printing\apps\services\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\shiwansh\shirsti_printing\apps\services\admin.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /services/product/annual-reports/ HTTP/1.1" 200 49681
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /static/images/placeholder.png HTTP/1.1" 404 1926
+"GET /services/api/pricing/10/?quantity=100&size=&paper_type=&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/product/annual-reports/ HTTP/1.1" 200 49681
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /static/images/placeholder.png HTTP/1.1" 404 1926
+"GET /services/api/pricing/10/?quantity=100&size=&paper_type=&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/10/?quantity=100&size=&paper_type=&finish=&binding_type=perfect&colors=Full+Color&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/10/?quantity=100&size=&paper_type=&finish=&binding_type=perfect&colors=Full+Color&page_count=1000&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/10/?quantity=100&size=&paper_type=&finish=&binding_type=perfect&colors=Full+Color&page_count=1000&print_sides=Double-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/10/?quantity=100&size=&paper_type=&finish=&binding_type=perfect&colors=Full+Color&page_count=1000&print_sides=Double-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/10/?quantity=100&size=&paper_type=&finish=&binding_type=perfect&colors=Full+Color&page_count=1000&print_sides=Double-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing=Lamination HTTP/1.1" 200 153
+"GET /services/api/pricing/10/?quantity=100&size=&paper_type=&finish=&binding_type=perfect&colors=Full+Color&page_count=1000&print_sides=Double-sided&cover_finish=Matte&design_service=false&isbn_allocation=true&optional_finishing=Lamination HTTP/1.1" 200 153
+"GET /services/product/annual-reports/ HTTP/1.1" 200 49990
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /static/images/placeholder.png HTTP/1.1" 404 1926
+"GET /services/api/pricing/10/?quantity=100&size=&paper_type=&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/10/?quantity=100&size=&paper_type=&finish=Full+Color&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/10/?quantity=100&size=&paper_type=&finish=Full+Color&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/10/?quantity=100&size=&paper_type=&finish=Black+%26+White&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/10/?quantity=100&size=&paper_type=&finish=Black+%26+White&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"POST /orders/cart/add/10/ HTTP/1.1" 200 132
+"GET /admin/services/product/3/change/ HTTP/1.1" 200 64823
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+"POST /admin/services/product/3/change/ HTTP/1.1" 302 0
+"GET /admin/services/product/ HTTP/1.1" 200 49409
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+"GET /services/product/a4-flyer/ HTTP/1.1" 200 46518
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /static/images/placeholder.png HTTP/1.1" 404 1926
+"GET /media/products/gallery/design_1758175043425.png HTTP/1.1" 200 291583
+"GET /services/api/pricing/3/?quantity=100&size=&paper_type=&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 151
+Internal Server Error: /design-tool/product/a4-flyer/
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\design_tool\views.py", line 47, in design_tool_view
+    return render(request, 'design_tool/designer.html', context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 514, in parse
+    self.extend_nodelist(nodelist, compiled_result, token)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 531, in extend_nodelist
+    raise self.error(
+    ...<2 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: <ExtendsNode: extends 'base.html'> must be the first tag in the template.
+"GET /design-tool/product/a4-flyer/ HTTP/1.1" 500 155657
+"GET /static/images/placeholder.png HTTP/1.1" 404 1926
+"GET /static/images/placeholder.png HTTP/1.1" 404 1926
+"GET /static/images/placeholder.png HTTP/1.1" 404 1926
+"GET /admin/services/product/3/change/ HTTP/1.1" 200 66980
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+"POST /admin/services/product/3/change/ HTTP/1.1" 302 0
+"GET /admin/services/product/ HTTP/1.1" 200 49409
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+"GET /services/product/a4-flyer/ HTTP/1.1" 200 46518
+"GET /media/products/gallery/design_1758175043425.png HTTP/1.1" 304 0
+"GET /static/images/placeholder.png HTTP/1.1" 404 1926
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /static/images/placeholder.png HTTP/1.1" 404 1926
+"GET /services/api/pricing/3/?quantity=100&size=&paper_type=&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 151
+"GET /admin/services/product/3/change/ HTTP/1.1" 200 66980
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+"POST /admin/services/product/3/change/ HTTP/1.1" 302 0
+"GET /admin/services/product/ HTTP/1.1" 200 49409
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+"GET /services/product/a4-flyer/ HTTP/1.1" 200 46548
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /media/products/gallery/design_1758175043425.png HTTP/1.1" 304 0
+"GET /media/products/design_1758175043425.png HTTP/1.1" 200 291583
+"GET /services/api/pricing/3/?quantity=100&size=&paper_type=&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 151
+"GET /services/category/book-printing/ HTTP/1.1" 200 44473
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /services/product/childrens-book-printing/ HTTP/1.1" 200 50611
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /static/images/placeholder.png HTTP/1.1" 404 1926
+"GET /services/api/pricing/5/?quantity=100&size=&paper_type=&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/product/childrens-book-printing/ HTTP/1.1" 200 57223
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /static/images/placeholder.png HTTP/1.1" 404 1926
+"GET /services/api/pricing/5/?quantity=100&size=A4&paper_type=70gsm+Maplitho&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/5/?quantity=100&size=A4&paper_type=70gsm+Maplitho&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/5/?quantity=100&size=A4&paper_type=170gsm+Art+Paper&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/5/?quantity=100&size=A4&paper_type=170gsm+Art+Paper&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Double-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/5/?quantity=100&size=A4&paper_type=130gsm+Art+Paper&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Double-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/5/?quantity=100&size=A4&paper_type=300gsm+Art+Card&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Double-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/5/?quantity=100&size=A4&paper_type=100gsm+Art+Paper&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Double-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/5/?quantity=100&size=A4&paper_type=80gsm+Maplitho&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Double-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/5/?quantity=100&size=A4&paper_type=70gsm+Maplitho&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Double-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/5/?quantity=100&size=A4&paper_type=170gsm+Art+Paper&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Double-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/5/?quantity=100&size=A4&paper_type=80gsm+Maplitho&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Double-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/5/?quantity=100&size=A4&paper_type=100gsm+Art+Paper&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Double-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/5/?quantity=100&size=A4&paper_type=300gsm+Art+Card&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Double-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /admin/services/product/5/change/ HTTP/1.1" 200 1110569
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+The number of GET/POST parameters exceeded settings.DATA_UPLOAD_MAX_NUMBER_FIELDS.
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\base.py", line 185, in _get_response
+    response = middleware_method(
+        request, callback, callback_args, callback_kwargs
+    )
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\middleware\csrf.py", line 470, in process_view
+    self._check_token(request)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\middleware\csrf.py", line 373, in _check_token
+    request_csrf_token = request.POST.get("csrfmiddlewaretoken", "")
+                         ^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\wsgi.py", line 93, in _get_post
+    self._load_post_and_files()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\http\request.py", line 373, in _load_post_and_files
+    self._post, self._files = self.parse_file_upload(self.META, data)
+                              ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\http\request.py", line 321, in parse_file_upload
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\http\multipartparser.py", line 123, in parse
+    return self._parse()
+           ~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\http\multipartparser.py", line 203, in _parse
+    raise TooManyFieldsSent(
+    ...<2 lines>...
+    )
+django.core.exceptions.TooManyFieldsSent: The number of GET/POST parameters exceeded settings.DATA_UPLOAD_MAX_NUMBER_FIELDS.
+Bad Request: /admin/services/product/5/change/
+"POST /admin/services/product/5/change/ HTTP/1.1" 400 109236
+The number of GET/POST parameters exceeded settings.DATA_UPLOAD_MAX_NUMBER_FIELDS.
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\base.py", line 185, in _get_response
+    response = middleware_method(
+        request, callback, callback_args, callback_kwargs
+    )
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\middleware\csrf.py", line 470, in process_view
+    self._check_token(request)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\middleware\csrf.py", line 373, in _check_token
+    request_csrf_token = request.POST.get("csrfmiddlewaretoken", "")
+                         ^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\wsgi.py", line 93, in _get_post
+    self._load_post_and_files()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\http\request.py", line 373, in _load_post_and_files
+    self._post, self._files = self.parse_file_upload(self.META, data)
+                              ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\http\request.py", line 321, in parse_file_upload
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\http\multipartparser.py", line 123, in parse
+    return self._parse()
+           ~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\http\multipartparser.py", line 203, in _parse
+    raise TooManyFieldsSent(
+    ...<2 lines>...
+    )
+django.core.exceptions.TooManyFieldsSent: The number of GET/POST parameters exceeded settings.DATA_UPLOAD_MAX_NUMBER_FIELDS.
+Bad Request: /admin/services/product/5/change/
+"POST /admin/services/product/5/change/ HTTP/1.1" 400 109236
+"GET /admin/services/product/5/change/ HTTP/1.1" 200 1110569
+Internal Server Error: /admin/services/product/5/delete/
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: design_tool_designsession
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\contrib\admin\options.py", line 688, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\utils\decorators.py", line 134, in _wrapper_view
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\views\decorators\cache.py", line 62, in _wrapper_view_func
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\contrib\admin\sites.py", line 242, in inner
+    return view(request, *args, **kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\utils\decorators.py", line 46, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\utils\decorators.py", line 134, in _wrapper_view
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\contrib\admin\options.py", line 2106, in delete_view
+    return self._delete_view(request, object_id, extra_context)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\contrib\admin\options.py", line 2133, in _delete_view
+    ) = self.get_deleted_objects([obj], request)
+        ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\contrib\admin\options.py", line 2101, in get_deleted_objects
+    return get_deleted_objects(objs, request, self.admin_site)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\contrib\admin\utils.py", line 121, in get_deleted_objects
+    collector.collect(objs)
+    ~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\contrib\admin\utils.py", line 187, in collect
+    return super().collect(objs, source_attr=source_attr, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\deletion.py", line 348, in collect
+    if getattr(on_delete, "lazy_sub_objs", False) or sub_objs:
+                                                     ^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\query.py", line 412, in __bool__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such table: design_tool_designsession
+"GET /admin/services/product/5/delete/ HTTP/1.1" 500 221424
+"GET /admin/services/product/5/delete/ HTTP/1.1" 200 69421
+"GET /static/admin/js/cancel.js HTTP/1.1" 200 884
+"POST /admin/services/product/5/delete/ HTTP/1.1" 302 0
+"GET /admin/services/product/ HTTP/1.1" 200 48576
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+"GET /admin/sites/site/ HTTP/1.1" 200 16872
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+"GET /admin/sites/site/1/change/ HTTP/1.1" 200 16638
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+"GET /admin/sites/site/ HTTP/1.1" 200 16872
+"GET /admin/services/product/ HTTP/1.1" 200 48397
+"GET /admin/templates_mgmt/designtemplate/ HTTP/1.1" 200 17708
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+"GET /admin/services/product/ HTTP/1.1" 200 48397
+"GET /admin/accounts/user/ HTTP/1.1" 200 19320
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+"GET /admin/accounts/user/1/change/ HTTP/1.1" 200 45038
+"GET /static/admin/js/SelectBox.js HTTP/1.1" 200 4530
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+"GET /static/admin/js/calendar.js HTTP/1.1" 200 8466
+"GET /static/admin/js/SelectFilter2.js HTTP/1.1" 200 15292
+"GET /static/admin/js/admin/DateTimeShortcuts.js HTTP/1.1" 200 19319
+"GET /static/admin/img/icon-unknown-alt.svg HTTP/1.1" 200 655
+"GET /static/admin/img/icon-clock.svg HTTP/1.1" 200 677
+"GET /static/admin/img/selector-icons.svg HTTP/1.1" 200 3291
+"GET /static/admin/img/icon-calendar.svg HTTP/1.1" 200 1086
+"GET /admin/accounts/user/ HTTP/1.1" 200 19320
+"GET /admin/core/page/ HTTP/1.1" 200 17238
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+"GET /admin/core/page/add/ HTTP/1.1" 200 19802
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+"GET /admin/services/product/ HTTP/1.1" 200 48397
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+"GET /admin/services/product/add/ HTTP/1.1" 200 64270
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+Not Found: /services/product/childrens-book-printing/
+"GET /services/product/childrens-book-printing/ HTTP/1.1" 404 4211
+"GET /services/category/book-printing/ HTTP/1.1" 200 41649
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /services/product/art-book-printing/ HTTP/1.1" 200 57151
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /static/images/placeholder.png HTTP/1.1" 404 1926
+"GET /services/api/pricing/9/?quantity=100&size=A4&paper_type=70gsm+Maplitho&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/9/?quantity=100&size=A4&paper_type=70gsm+Maplitho&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /admin/services/product/ HTTP/1.1" 200 48397
+"GET /admin/services/product/9/change/ HTTP/1.1" 200 1106771
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+"GET /admin/services/product/ HTTP/1.1" 200 48397
+"GET /admin/services/product/9/change/ HTTP/1.1" 200 1106771
+The number of GET/POST parameters exceeded settings.DATA_UPLOAD_MAX_NUMBER_FIELDS.
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\base.py", line 185, in _get_response
+    response = middleware_method(
+        request, callback, callback_args, callback_kwargs
+    )
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\middleware\csrf.py", line 470, in process_view
+    self._check_token(request)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\middleware\csrf.py", line 373, in _check_token
+    request_csrf_token = request.POST.get("csrfmiddlewaretoken", "")
+                         ^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\wsgi.py", line 93, in _get_post
+    self._load_post_and_files()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\http\request.py", line 373, in _load_post_and_files
+    self._post, self._files = self.parse_file_upload(self.META, data)
+                              ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\http\request.py", line 321, in parse_file_upload
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\http\multipartparser.py", line 123, in parse
+    return self._parse()
+           ~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\http\multipartparser.py", line 203, in _parse
+    raise TooManyFieldsSent(
+    ...<2 lines>...
+    )
+django.core.exceptions.TooManyFieldsSent: The number of GET/POST parameters exceeded settings.DATA_UPLOAD_MAX_NUMBER_FIELDS.
+Bad Request: /admin/services/product/9/change/
+"POST /admin/services/product/9/change/ HTTP/1.1" 400 109236
+The number of GET/POST parameters exceeded settings.DATA_UPLOAD_MAX_NUMBER_FIELDS.
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\base.py", line 185, in _get_response
+    response = middleware_method(
+        request, callback, callback_args, callback_kwargs
+    )
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\middleware\csrf.py", line 470, in process_view
+    self._check_token(request)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\middleware\csrf.py", line 373, in _check_token
+    request_csrf_token = request.POST.get("csrfmiddlewaretoken", "")
+                         ^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\wsgi.py", line 93, in _get_post
+    self._load_post_and_files()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\http\request.py", line 373, in _load_post_and_files
+    self._post, self._files = self.parse_file_upload(self.META, data)
+                              ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\http\request.py", line 321, in parse_file_upload
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\http\multipartparser.py", line 123, in parse
+    return self._parse()
+           ~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\http\multipartparser.py", line 203, in _parse
+    raise TooManyFieldsSent(
+    ...<2 lines>...
+    )
+django.core.exceptions.TooManyFieldsSent: The number of GET/POST parameters exceeded settings.DATA_UPLOAD_MAX_NUMBER_FIELDS.
+Bad Request: /admin/services/product/9/change/
+"POST /admin/services/product/9/change/ HTTP/1.1" 400 109236
+The number of GET/POST parameters exceeded settings.DATA_UPLOAD_MAX_NUMBER_FIELDS.
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\base.py", line 185, in _get_response
+    response = middleware_method(
+        request, callback, callback_args, callback_kwargs
+    )
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\middleware\csrf.py", line 470, in process_view
+    self._check_token(request)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\middleware\csrf.py", line 373, in _check_token
+    request_csrf_token = request.POST.get("csrfmiddlewaretoken", "")
+                         ^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\wsgi.py", line 93, in _get_post
+    self._load_post_and_files()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\http\request.py", line 373, in _load_post_and_files
+    self._post, self._files = self.parse_file_upload(self.META, data)
+                              ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\http\request.py", line 321, in parse_file_upload
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\http\multipartparser.py", line 123, in parse
+    return self._parse()
+           ~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\http\multipartparser.py", line 203, in _parse
+    raise TooManyFieldsSent(
+    ...<2 lines>...
+    )
+django.core.exceptions.TooManyFieldsSent: The number of GET/POST parameters exceeded settings.DATA_UPLOAD_MAX_NUMBER_FIELDS.
+Bad Request: /admin/services/product/9/change/
+"POST /admin/services/product/9/change/ HTTP/1.1" 400 109236
+"GET /services/product/art-book-printing/ HTTP/1.1" 200 57151
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /static/images/placeholder.png HTTP/1.1" 404 1926
+"GET /services/api/pricing/9/?quantity=100&size=A4&paper_type=70gsm+Maplitho&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/9/?quantity=100&size=A4&paper_type=70gsm+Maplitho&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/9/?quantity=100&size=A4&paper_type=170gsm+Art+Paper&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/9/?quantity=100&size=A4&paper_type=170gsm+Art+Paper&finish=Full+Color&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/9/?quantity=100&size=A4&paper_type=170gsm+Art+Paper&finish=Full+Color&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/9/?quantity=100&size=A4&paper_type=170gsm+Art+Paper&finish=Full+Color&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Double-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/9/?quantity=100&size=A4&paper_type=170gsm+Art+Paper&finish=Black+%26+White&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Double-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/9/?quantity=100&size=A4&paper_type=170gsm+Art+Paper&finish=Black+%26+White&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Double-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/9/?quantity=100&size=A4&paper_type=170gsm+Art+Paper&finish=Full+Color&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Double-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/9/?quantity=100&size=A4&paper_type=170gsm+Art+Paper&finish=Full+Color&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Double-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/product/art-book-printing/ HTTP/1.1" 200 57151
+"GET /static/images/placeholder.png HTTP/1.1" 404 1926
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /services/api/pricing/9/?quantity=100&size=A4&paper_type=70gsm+Maplitho&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/9/?quantity=100&size=A4&paper_type=70gsm+Maplitho&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4048
+"GET /services/api/pricing/9/?quantity=100&size=A4&paper_type=70gsm+Maplitho&finish=Black+%26+White&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/9/?quantity=100&size=A4&paper_type=70gsm+Maplitho&finish=Black+%26+White&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/9/?quantity=100&size=A4&paper_type=70gsm+Maplitho&finish=Full+Color&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/9/?quantity=100&size=A4&paper_type=70gsm+Maplitho&finish=Full+Color&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/9/?quantity=1000&size=A4&paper_type=70gsm+Maplitho&finish=Full+Color&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 156
+C:\Users\shiwansh\shirsti_printing\apps\services\views.py changed, reloading.
+Watching for file changes with StatReloader
+The number of GET/POST parameters exceeded settings.DATA_UPLOAD_MAX_NUMBER_FIELDS.
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\base.py", line 185, in _get_response
+    response = middleware_method(
+        request, callback, callback_args, callback_kwargs
+    )
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\middleware\csrf.py", line 470, in process_view
+    self._check_token(request)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\middleware\csrf.py", line 373, in _check_token
+    request_csrf_token = request.POST.get("csrfmiddlewaretoken", "")
+                         ^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\wsgi.py", line 93, in _get_post
+    self._load_post_and_files()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\http\request.py", line 373, in _load_post_and_files
+    self._post, self._files = self.parse_file_upload(self.META, data)
+                              ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\http\request.py", line 321, in parse_file_upload
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\http\multipartparser.py", line 123, in parse
+    return self._parse()
+           ~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\http\multipartparser.py", line 203, in _parse
+    raise TooManyFieldsSent(
+    ...<2 lines>...
+    )
+django.core.exceptions.TooManyFieldsSent: The number of GET/POST parameters exceeded settings.DATA_UPLOAD_MAX_NUMBER_FIELDS.
+Bad Request: /admin/services/product/9/change/
+"POST /admin/services/product/9/change/ HTTP/1.1" 400 109236
+"GET /admin/services/product/9/change/ HTTP/1.1" 200 1106771
+"GET /admin/services/servicecategory/5/change/?_to_field=id HTTP/1.1" 200 20785
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+"GET /admin/services/product/9/change/ HTTP/1.1" 200 1106771
+C:\Users\shiwansh\shirsti_printing\apps\services\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /services/product/art-book-printing/ HTTP/1.1" 200 54454
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /static/images/placeholder.png HTTP/1.1" 404 1926
+"GET /services/api/pricing/9/?quantity=100&size=A4&paper_type=70gsm+Maplitho&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /services/api/pricing/9/?quantity=100&size=A4&paper_type=70gsm+Maplitho&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 153
+"GET /admin/services/product/9/change/ HTTP/1.1" 200 586259
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+"GET /admin/services/product/9/change/ HTTP/1.1" 302 0
+"GET /admin/ HTTP/1.1" 200 17778
+"GET /static/admin/img/icon-alert.svg HTTP/1.1" 200 504
+"GET /static/admin/img/icon-deletelink.svg HTTP/1.1" 200 392
+"GET /admin/services/product/ HTTP/1.1" 200 21074
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+"GET /admin/services/product/34/change/ HTTP/1.1" 200 80274
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+"GET /admin/services/servicecategory/ HTTP/1.1" 200 20487
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+"GET /admin/services/product/ HTTP/1.1" 200 21075
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+"GET /admin/services/product/ HTTP/1.1" 200 21075
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+"GET /admin/services/product/ HTTP/1.1" 200 21075
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+"GET /admin/services/product/ HTTP/1.1" 200 21075
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+"GET /admin/services/product/ HTTP/1.1" 200 21078
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+"GET /admin/services/pricingtier/ HTTP/1.1" 200 15478
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+"GET /admin/core/page/ HTTP/1.1" 200 17238
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+"GET /admin/services/product/ HTTP/1.1" 200 21078
+"GET /admin/jsi18n/ HTTP/1.1" 200 3343
+Not Found: /services/product/art-book-printing/
+"GET /services/product/art-book-printing/ HTTP/1.1" 404 4193
+"GET / HTTP/1.1" 200 26239
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /services/category/book-printing/ HTTP/1.1" 200 25402
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /services/product/book-printing/ HTTP/1.1" 200 60043
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /static/images/placeholder.png HTTP/1.1" 404 1926
+"GET /services/api/pricing/36/?quantity=100&size=A4&paper_type=75+gsm&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 149
+"GET /services/api/pricing/36/?quantity=100&size=A4&paper_type=75+gsm&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 149
+"GET /services/api/pricing/36/?quantity=100&size=A4&paper_type=100+gsm&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 149
+"GET /services/api/pricing/36/?quantity=100&size=A4&paper_type=100+gsm+Art+Paper&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 149
+"GET /services/api/pricing/36/?quantity=100&size=A4&paper_type=&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 149
+"GET /services/api/pricing/36/?quantity=1000&size=A4&paper_type=&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 150
+"GET /services/api/pricing/36/?quantity=1000&size=A4&paper_type=&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 150
+"GET /services/api/pricing/36/?quantity=1000&size=A4&paper_type=&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 150
+"GET /services/product/book-printing/ HTTP/1.1" 200 60043
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /static/images/placeholder.png HTTP/1.1" 404 1926
+"GET /services/api/pricing/36/?quantity=100&size=A4&paper_type=75+gsm&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 149
+"GET /services/api/pricing/36/?quantity=100&size=A4&paper_type=75+gsm&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 149
+"GET /services/product/book-printing/ HTTP/1.1" 200 60043
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /static/images/placeholder.png HTTP/1.1" 404 1926
+"GET /services/api/pricing/36/?quantity=100&size=A4&paper_type=75+gsm&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 149
+"GET /services/api/pricing/36/?quantity=100&size=A4&paper_type=75+gsm&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 149
+"GET /services/api/pricing/36/?quantity=100&size=A4&paper_type=&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 149
+"GET /services/api/pricing/36/?quantity=100&size=A4&paper_type=&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 149
+Internal Server Error: /design-tool/product/book-printing/
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\design_tool\views.py", line 47, in design_tool_view
+    return render(request, 'design_tool/designer.html', context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 514, in parse
+    self.extend_nodelist(nodelist, compiled_result, token)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 531, in extend_nodelist
+    raise self.error(
+    ...<2 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: <ExtendsNode: extends 'base.html'> must be the first tag in the template.
+"GET /design-tool/product/book-printing/ HTTP/1.1" 500 154652
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 23361
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4048
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 23361
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+C:\Users\shiwansh\shirsti_printing\apps\services\models.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 35466
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /services/category/book-printing/ HTTP/1.1" 200 40534
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /services/product/a4-book-printing/ HTTP/1.1" 200 66787
+"GET /static/images/placeholder.png HTTP/1.1" 404 1926
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /services/api/pricing/49/?quantity=100&size=A4&paper_type=75+gsm&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 149
+"GET /services/api/pricing/49/?quantity=100&size=A4&paper_type=75+gsm&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 149
+"GET /services/api/pricing/49/?quantity=100&size=A4&paper_type=Binding+Option&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 149
+"GET /services/api/pricing/49/?quantity=100&size=A4&paper_type=Design+Support&finish=&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 149
+"GET /services/api/pricing/49/?quantity=100&size=A4&paper_type=Design+Support&finish=Bulk+Discount+75&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 149
+"GET /services/api/pricing/49/?quantity=100&size=A4&paper_type=Design+Support&finish=Bulk+Discount+75&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 149
+"GET /services/api/pricing/49/?quantity=100&size=A4&paper_type=Design+Support&finish=Cover+Page+Design&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 149
+"GET /services/api/pricing/49/?quantity=100&size=A4&paper_type=Design+Support&finish=Cover+Page+Design&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 149
+"GET /services/api/pricing/49/?quantity=100&size=A4&paper_type=Design+Support&finish=Bulk+Discount+25&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 149
+"GET /services/api/pricing/49/?quantity=100&size=A4&paper_type=Design+Support&finish=Bulk+Discount+25&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 149
+"GET /services/api/pricing/49/?quantity=100&size=A4&paper_type=Design+Support&finish=Bulk+Discount+75&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 149
+"GET /services/api/pricing/49/?quantity=100&size=A4&paper_type=Design+Support&finish=Bulk+Discount+75&binding_type=perfect&colors=Black+%26+White&page_count=100&print_sides=Single-sided&cover_finish=Matte&design_service=false&isbn_allocation=false&optional_finishing= HTTP/1.1" 200 149
+C:\Users\shiwansh\shirsti_printing\apps\services\views.py changed, reloading.
+C:\Users\shiwansh\shirsti_printing\apps\services\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+C:\Users\shiwansh\shirsti_printing\apps\services\views.py changed, reloading.
+C:\Users\shiwansh\shirsti_printing\apps\services\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+C:\Users\shiwansh\shirsti_printing\shirsti_printing\settings.py changed, reloading.
+C:\Users\shiwansh\shirsti_printing\shirsti_printing\settings.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /services/product/a4-book-printing/
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\services\views.py", line 151, in product_detail_view
+    return render(request, 'services/product_detail.html', context)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 489, in parse
+    raise self.error(token, e)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 487, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 609, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 710, in __init__
+    raise TemplateSyntaxError(
+    ...<2 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Could not parse the remainder: '{ product.width_mm' from '{ product.width_mm'
+"GET /services/product/a4-book-printing/ HTTP/1.1" 500 232020
+"GET /services/product/a4-book-printing/ HTTP/1.1" 200 63265
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /static/images/placeholder.png HTTP/1.1" 404 1993
+"GET /services/api/pricing/49/?quantity=100&size=A4&paper_type=75+gsm&finish=Standard&binding_type=Perfect+Bound&colors=Black+%26+White&page_count=100&print_sides=Single-sided&design_service=false&isbn_allocation=false HTTP/1.1" 200 262
+"GET /services/api/pricing/49/?quantity=100&size=A4&paper_type=75+gsm&finish=Standard&binding_type=Perfect+Bound&colors=Black+%26+White&page_count=100&print_sides=Single-sided&design_service=false&isbn_allocation=false HTTP/1.1" 200 262
+"GET /services/api/pricing/49/?quantity=100&size=A4&paper_type=100+gsm&finish=Standard&binding_type=Perfect+Bound&colors=Black+%26+White&page_count=100&print_sides=Single-sided&design_service=false&isbn_allocation=false HTTP/1.1" 200 262
+"GET /services/api/pricing/49/?quantity=100&size=A4&paper_type=100+gsm&finish=Standard&binding_type=Spiral+Binding&colors=Black+%26+White&page_count=100&print_sides=Single-sided&design_service=false&isbn_allocation=false HTTP/1.1" 200 262
+"GET /services/api/pricing/49/?quantity=99&size=A4&paper_type=100+gsm&finish=Standard&binding_type=Spiral+Binding&colors=Black+%26+White&page_count=100&print_sides=Single-sided&design_service=false&isbn_allocation=false HTTP/1.1" 200 261
+"GET /services/api/pricing/49/?quantity=109&size=A4&paper_type=100+gsm&finish=Standard&binding_type=Spiral+Binding&colors=Black+%26+White&page_count=100&print_sides=Single-sided&design_service=false&isbn_allocation=false HTTP/1.1" 200 262
+"GET /services/api/pricing/49/?quantity=119&size=A4&paper_type=100+gsm&finish=Standard&binding_type=Spiral+Binding&colors=Black+%26+White&page_count=100&print_sides=Single-sided&design_service=false&isbn_allocation=false HTTP/1.1" 200 262
+"GET /services/product/paperback-book-printing/ HTTP/1.1" 200 61296
+Internal Server Error: /services/api/pricing/7/
+"GET /services/api/pricing/7/?quantity=100&size=A5%20%285.83%20x%208.27%20in%29&paper_type=75%20GSM%20White%20Paper&colors=Black%20%26%20White&binding_type=Perfect%20Bound HTTP/1.1" 500 74
+"GET /services/api/pricing/53/?quantity=100&size=A5%20%285.83%20x%208.27%20in%29&paper_type=75%20GSM%20White%20Paper&colors=Black%20%26%20White%20Interior&binding_type=Perfect%20Bound&finish=Matte HTTP/1.1" 200 302
+"GET /services/api/pricing/53/?quantity=100&size=A5%20%285.83%20x%208.27%20in%29&paper_type=75%20GSM%20White%20Paper&colors=Black%20%26%20White%20Interior&binding_type=Perfect%20Bound&finish=Matte&design_service=true&isbn_allocation=true HTTP/1.1" 200 310
+C:\Users\shiwansh\shirsti_printing\shirsti_printing\settings.py changed, reloading.
+C:\Users\shiwansh\shirsti_printing\shirsti_printing\settings.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /services/product/a4-book-printing/ HTTP/1.1" 200 63265
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /static/images/placeholder.png HTTP/1.1" 404 1926
+"GET /services/api/pricing/49/?quantity=100&size=A4&paper_type=75+gsm&finish=Standard&binding_type=Perfect+Bound&colors=Black+%26+White&page_count=100&print_sides=Single-sided&design_service=false&isbn_allocation=false HTTP/1.1" 200 262
+"GET /services/api/pricing/49/?quantity=100&size=A4&paper_type=130+gsm+Art+Paper&finish=Standard&binding_type=Perfect+Bound&colors=Black+%26+White&page_count=100&print_sides=Single-sided&design_service=false&isbn_allocation=false HTTP/1.1" 200 262
+"GET /services/api/pricing/49/?quantity=100&size=A4&paper_type=100+gsm&finish=Standard&binding_type=Perfect+Bound&colors=Black+%26+White&page_count=100&print_sides=Single-sided&design_service=false&isbn_allocation=false HTTP/1.1" 200 262
+"GET /services/api/pricing/49/?quantity=100&size=A4&paper_type=100+gsm&finish=Standard&binding_type=Perfect+Bound&colors=Full+Color&page_count=100&print_sides=Single-sided&design_service=false&isbn_allocation=false HTTP/1.1" 200 262
+C:\Users\shiwansh\shirsti_printing\shirsti_printing\settings.py changed, reloading.
+C:\Users\shiwansh\shirsti_printing\shirsti_printing\settings.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+C:\Users\shiwansh\shirsti_printing\shirsti_printing\settings.py changed, reloading.
+C:\Users\shiwansh\shirsti_printing\shirsti_printing\settings.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader

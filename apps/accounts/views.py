@@ -1,3 +1,8 @@
+from django.contrib.auth import logout
+
+def logout_view(request):
+    logout(request)
+    return redirect('accounts:login')
 # apps/accounts/views.py
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required

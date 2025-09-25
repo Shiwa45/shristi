@@ -34,6 +34,15 @@ class ServiceCategory(models.Model):
         return reverse('services:category', kwargs={'slug': self.slug})
 
 class Product(models.Model):
+    # Hero section content (admin-editable)
+    hero_title = models.CharField(max_length=200, blank=True, help_text="Hero section main title")
+    hero_subtitle = models.CharField(max_length=300, blank=True, help_text="Hero section subtitle/description")
+    hero_image = models.ImageField(upload_to='products/hero/', blank=True, null=True, help_text="Hero section main image")
+    hero_quote = models.CharField(max_length=300, blank=True, help_text="Hero section quote or tagline")
+
+    # Sample data for paper and color selection grids
+    sample_paper_image = models.ImageField(upload_to='products/sample_paper/', blank=True, null=True, help_text="Sample image for paper selection grid")
+    sample_color_image = models.ImageField(upload_to='products/sample_color/', blank=True, null=True, help_text="Sample image for color selection grid")
     name = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
     category = models.ForeignKey(ServiceCategory, on_delete=models.CASCADE, related_name='products')
@@ -73,6 +82,15 @@ class Product(models.Model):
     # Timestamps
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    # New fields for richer product details
+    video_url = models.URLField(blank=True, null=True, help_text="Optional product video URL")
+    datasheet_file = models.FileField(upload_to="product_datasheets/", blank=True, null=True, help_text="Optional product datasheet PDF")
+    sample_file = models.FileField(upload_to="product_samples/", blank=True, null=True, help_text="Optional downloadable sample file")
+    og_image = models.ImageField(upload_to="product_og_images/", blank=True, null=True, help_text="Open Graph image for social sharing")
+    bulk_discount_text = models.CharField(max_length=255, blank=True, null=True, help_text="Text describing bulk discount offer")
+    express_production = models.BooleanField(default=False, help_text="Whether express production is available")
+    trust_badges = models.CharField(max_length=255, blank=True, null=True, help_text="Comma-separated trust badge names or image URLs")
 
     class Meta:
         ordering = ['order', 'name']
@@ -114,12 +132,18 @@ class ProductPricing(models.Model):
     """Enhanced pricing model with more flexibility"""
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='pricings')
     
-    # Product specifications
+    # Product specifications (expanded)
     size = models.CharField(max_length=100, blank=True, help_text="e.g., A4, A5, Custom")
-    paper_type = models.CharField(max_length=100, blank=True, help_text="e.g., 300gsm Art Paper")
-    binding_type = models.CharField(max_length=100, blank=True, help_text="e.g., Saddle Stitched")
-    finish = models.CharField(max_length=100, blank=True, help_text="e.g., Matte Lamination")
-    colors = models.CharField(max_length=20, blank=True, help_text="e.g., 4+4, 4+0")
+    page_count = models.PositiveIntegerField(default=1, help_text="Number of pages")
+    paper_type = models.CharField(max_length=100, blank=True, help_text="e.g., 70gsm, 80gsm, Art Paper")
+    binding_type = models.CharField(max_length=100, blank=True, help_text="e.g., Perfect, Spiral, Saddle Stitched, Hard Cover, Soft Cover")
+    finish = models.CharField(max_length=100, blank=True, help_text="e.g., Matte, Glossy, Velvet")
+    colors = models.CharField(max_length=20, blank=True, help_text="e.g., Black & White, Full Color, 4+4, 4+0")
+    print_sides = models.CharField(max_length=20, blank=True, help_text="Single-sided, Double-sided")
+    cover_finish = models.CharField(max_length=50, blank=True, help_text="e.g., Matte, Glossy, Velvet")
+    design_service = models.BooleanField(default=False, help_text="Include design/formatting service")
+    isbn_allocation = models.BooleanField(default=False, help_text="ISBN allocation included")
+    optional_finishing = models.CharField(max_length=100, blank=True, help_text="e.g., Lamination, UV, Foiling")
     
     # Quantity and pricing
     min_quantity = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1)])
@@ -130,6 +154,10 @@ class ProductPricing(models.Model):
     # Discounts and modifiers
     volume_discount_percentage = models.DecimalField(max_digits=5, decimal_places=2, default=0.00, help_text="Percentage discount for this tier")
     rush_order_multiplier = models.DecimalField(max_digits=4, decimal_places=2, default=1.00, help_text="Rush order price multiplier")
+    
+    # Delivery/Shipping
+    delivery_speed = models.CharField(max_length=50, blank=True, help_text="e.g., Standard, Express")
+    delivery_location = models.CharField(max_length=100, blank=True, help_text="For location-based pricing")
     
     # Additional options
     turnaround_days = models.PositiveIntegerField(default=5, help_text="Standard turnaround time in days")
@@ -160,7 +188,7 @@ class ProductPricing(models.Model):
         if self.colors:
             parts.append(self.colors)
         parts.append(f"Min: {self.min_quantity}")
-        parts.append(f"₹{self.price_per_unit}")
+        parts.append(f"Rs.{self.price_per_unit}")
         return " | ".join(parts)
 
     def calculate_total_price(self, quantity, rush_order=False, include_setup=True):
@@ -261,6 +289,73 @@ class PricingTier(models.Model):
 
     class Meta:
         ordering = ['order', 'name']
+
+    def __str__(self):
+        return self.name
+
+
+# --- New Models for Product Details ---
+
+class ProductFeature(models.Model):
+    product = models.ForeignKey('Product', related_name='features', on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+    icon = models.CharField(max_length=100, blank=True, help_text="Optional icon class or image URL")
+
+    def __str__(self):
+        return f"{self.product.name} - {self.title}"
+
+
+class ProductProcess(models.Model):
+    product = models.ForeignKey('Product', related_name='processes', on_delete=models.CASCADE)
+    step_number = models.PositiveIntegerField()
+    title = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+    image = models.ImageField(upload_to="product_processes/", blank=True, null=True)
+
+    class Meta:
+        ordering = ['step_number']
+
+    def __str__(self):
+        return f"{self.product.name} - Step {self.step_number}: {self.title}"
+
+
+class ProductFAQ(models.Model):
+    product = models.ForeignKey('Product', related_name='faqs', on_delete=models.CASCADE)
+    question = models.CharField(max_length=255)
+    answer = models.TextField()
+
+    def __str__(self):
+        return f"{self.product.name} FAQ: {self.question}"
+
+
+class ProductTestimonial(models.Model):
+    product = models.ForeignKey('Product', related_name='testimonials', on_delete=models.CASCADE)
+    customer_name = models.CharField(max_length=100)
+    content = models.TextField()
+    rating = models.PositiveSmallIntegerField(default=5)
+    date = models.DateField(blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.product.name} Testimonial by {self.customer_name}"
+
+
+class ProductSample(models.Model):
+    product = models.ForeignKey('Product', related_name='samples', on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    file = models.FileField(upload_to="product_samples/", blank=True, null=True)
+    image = models.ImageField(upload_to="product_sample_images/", blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.product.name} Sample: {self.title}"
+
+
+class ShippingOption(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+    price = models.DecimalField(max_digits=8, decimal_places=2)
+    estimated_days = models.PositiveIntegerField(help_text="Estimated delivery days")
+    is_express = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

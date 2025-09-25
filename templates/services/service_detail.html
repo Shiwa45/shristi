@@ -1,0 +1,909 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ product.name }} - Custom Printing Services{% endblock %}
+
+{% block extra_css %}
+<style>
+    .price-table {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    }
+    
+    .price-table th {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 16px;
+        font-weight: 600;
+        text-align: center;
+    }
+    
+    .price-table td {
+        padding: 16px;
+        border-bottom: 1px solid #e5e7eb;
+        text-align: center;
+    }
+    
+    .price-table tr:hover td {
+        background: #f9fafb;
+    }
+    
+    .option-card {
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: 2px solid #e5e7eb;
+    }
+    
+    .option-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+        border-color: #8b5cf6;
+    }
+    
+    .option-card.selected {
+        border-color: #8b5cf6;
+        background: linear-gradient(135deg, #f3e7fc 0%, #e9d5ff 100%);
+    }
+    
+    .spec-badge {
+        background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+        padding: 8px 16px;
+        border-radius: 20px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .feature-icon {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    
+    .loading-spinner {
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #8b5cf6;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
+    .tab-content {
+        display: none;
+    }
+    
+    .tab-content.active {
+        display: block;
+    }
+    
+    .tab-btn {
+        border-bottom: 3px solid transparent;
+        transition: all 0.3s ease;
+    }
+    
+    .tab-btn.active {
+        border-bottom-color: #8b5cf6;
+        color: #8b5cf6;
+    }
+    
+    .pricing-calculator {
+        background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+        border-radius: 16px;
+        padding: 24px;
+    }
+    
+    .gallery-thumbnail {
+        cursor: pointer;
+        opacity: 0.7;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+    
+    .gallery-thumbnail:hover,
+    .gallery-thumbnail.active {
+        opacity: 1;
+        border-color: #8b5cf6;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb -->
+<section class="bg-gray-50 py-4">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <nav class="flex items-center text-sm">
+            <a href="{% url 'core:home' %}" class="text-gray-500 hover:text-purple-600">Home</a>
+            <span class="mx-2 text-gray-400">/</span>
+            <a href="{% url 'services:categories' %}" class="text-gray-500 hover:text-purple-600">Services</a>
+            <span class="mx-2 text-gray-400">/</span>
+            <a href="{% url 'services:category' product.category.slug %}" class="text-gray-500 hover:text-purple-600">{{ product.category.name }}</a>
+            <span class="mx-2 text-gray-400">/</span>
+            <span class="text-gray-900 font-medium">{{ product.name }}</span>
+        </nav>
+    </div>
+</section>
+
+<!-- Product Detail Section -->
+<section class="py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <!-- Product Images -->
+            <div>
+                <div class="bg-white rounded-xl shadow-lg p-8 mb-4">
+                    {% if product.image %}
+                    <img id="mainImage" src="{{ product.image.url }}" alt="{{ product.name }}" 
+                         class="w-full h-96 object-contain">
+                    {% else %}
+                    <div class="w-full h-96 flex items-center justify-center bg-gray-100 rounded-lg">
+                        <i class="fas fa-image text-6xl text-gray-400"></i>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Image Gallery -->
+                {% if product.images.exists %}
+                <div class="grid grid-cols-4 gap-2">
+                    <div class="gallery-thumbnail active" onclick="changeImage('{{ product.image.url }}')">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" 
+                             class="w-full h-20 object-cover rounded-lg">
+                    </div>
+                    {% for image in product.images.all %}
+                    <div class="gallery-thumbnail" onclick="changeImage('{{ image.image.url }}')">
+                        <img src="{{ image.image.url }}" alt="{{ image.alt_text }}" 
+                             class="w-full h-20 object-cover rounded-lg">
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            
+            <!-- Product Information -->
+            <div>
+                <h1 class="text-4xl font-bold text-gray-900 mb-4">{{ product.name }}</h1>
+                <p class="text-lg text-gray-600 mb-6">{{ product.short_description }}</p>
+                
+                <!-- Specifications -->
+                <div class="flex flex-wrap gap-3 mb-6">
+                    <div class="spec-badge">
+                        <i class="fas fa-ruler-combined text-purple-600"></i>
+                        <span>{{ product.width_mm }} × {{ product.height_mm }}mm</span>
+                    </div>
+                    <div class="spec-badge">
+                        <i class="fas fa-print text-purple-600"></i>
+                        <span>{{ product.dpi }}dpi Resolution</span>
+                    </div>
+                    <div class="spec-badge">
+                        <i class="fas fa-layer-group text-purple-600"></i>
+                        <span>Min. {{ product.minimum_quantity }} pieces</span>
+                    </div>
+                </div>
+                
+                <!-- Pricing Calculator -->
+                <div class="pricing-calculator mb-8">
+                    <h3 class="text-xl font-bold mb-4">Instant Quote Calculator</h3>
+                    
+                    <!-- Quantity Selector -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Quantity</label>
+                        <div class="flex items-center gap-2">
+                            <button onclick="decreaseQuantity()" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <input type="number" id="quantity" value="{{ product.minimum_quantity }}" 
+                                   min="{{ product.minimum_quantity }}" 
+                                   class="w-24 px-3 py-2 border border-gray-300 rounded-lg text-center"
+                                   onchange="calculatePrice()">
+                            <button onclick="increaseQuantity()" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Size Options -->
+                    {% if available_sizes %}
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Size</label>
+                        <div class="grid grid-cols-3 gap-2">
+                            {% for size in available_sizes %}
+                            <div class="option-card p-3 rounded-lg text-center" 
+                                 onclick="selectOption(this, 'size', '{{ size }}')" 
+                                 data-value="{{ size }}">
+                                <span class="text-sm font-medium">{{ size }}</span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Paper Type Options -->
+                    {% if available_paper_types %}
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Paper Type</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            {% for paper in available_paper_types %}
+                            <div class="option-card p-3 rounded-lg" 
+                                 onclick="selectOption(this, 'paper', '{{ paper }}')" 
+                                 data-value="{{ paper }}">
+                                <span class="text-sm font-medium">{{ paper }}</span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Finish Options -->
+                    {% if available_finishes %}
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Finish</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            {% for finish in available_finishes %}
+                            <div class="option-card p-3 rounded-lg" 
+                                 onclick="selectOption(this, 'finish', '{{ finish }}')" 
+                                 data-value="{{ finish }}">
+                                <span class="text-sm font-medium">{{ finish }}</span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Price Display -->
+                    <div class="bg-white rounded-lg p-4 mt-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-600">Unit Price:</span>
+                            <span id="unitPrice" class="font-medium">₹{{ product.price_per_unit }}</span>
+                        </div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-600">Quantity:</span>
+                            <span id="displayQuantity" class="font-medium">{{ product.minimum_quantity }}</span>
+                        </div>
+                        <div id="discountRow" class="flex justify-between items-center mb-2 hidden">
+                            <span class="text-gray-600">Volume Discount:</span>
+                            <span id="discount" class="font-medium text-green-600">-0%</span>
+                        </div>
+                        <hr class="my-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xl font-bold">Total:</span>
+                            <span id="totalPrice" class="text-2xl font-bold text-purple-600">₹0.00</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="flex gap-4 mb-8">
+                    {% if product.has_design_tool %}
+                    <a href="{% url 'design_tool:product' product.slug %}" 
+                       class="flex-1 bg-gradient-to-r from-purple-600 to-purple-700 text-white text-center py-3 px-6 rounded-lg font-semibold hover:from-purple-700 hover:to-purple-800 transition duration-300 shadow-lg">
+                        <i class="fas fa-paint-brush mr-2"></i>Design Online
+                    </a>
+                    {% endif %}
+                    <button onclick="addToCart()" 
+                            class="flex-1 bg-gradient-to-r from-green-500 to-green-600 text-white py-3 px-6 rounded-lg font-semibold hover:from-green-600 hover:to-green-700 transition duration-300 shadow-lg">
+                        <i class="fas fa-shopping-cart mr-2"></i>Add to Cart
+                    </button>
+                </div>
+                
+                <!-- Quick Quote Button -->
+                <div class="text-center">
+                    <button onclick="requestQuote()" 
+                            class="text-purple-600 hover:text-purple-700 font-medium">
+                        <i class="fas fa-file-alt mr-2"></i>Request Custom Quote
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Product Information Tabs -->
+        <div class="mt-16">
+            <div class="border-b border-gray-200">
+                <div class="flex space-x-8">
+                    <button class="tab-btn active py-4 px-6 font-semibold text-gray-700 hover:text-purple-600" 
+                            onclick="switchTab(this, 'description')">
+                        Description
+                    </button>
+                    <button class="tab-btn py-4 px-6 font-semibold text-gray-700 hover:text-purple-600" 
+                            onclick="switchTab(this, 'pricing')">
+                        Pricing Table
+                    </button>
+                    <button class="tab-btn py-4 px-6 font-semibold text-gray-700 hover:text-purple-600" 
+                            onclick="switchTab(this, 'specifications')">
+                        Specifications
+                    </button>
+                    <button class="tab-btn py-4 px-6 font-semibold text-gray-700 hover:text-purple-600" 
+                            onclick="switchTab(this, 'shipping')">
+                        Shipping & Delivery
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Tab Contents -->
+            <div class="py-8">
+                <!-- Description Tab -->
+                <div id="description" class="tab-content active">
+                    <div class="prose max-w-none">
+                        <h2 class="text-2xl font-bold mb-4">About {{ product.name }}</h2>
+                        <div class="text-gray-700 leading-relaxed">
+                            {{ product.description|safe|linebreaks }}
+                        </div>
+                        
+                        {% if product.specifications.exists %}
+                        <h3 class="text-xl font-bold mt-8 mb-4">Key Features</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {% for spec in product.specifications.filter %}
+                            <div class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-semibold">{{ spec.name }}:</span>
+                                    <span class="text-gray-600">{{ spec.value }}</span>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <!-- Pricing Tab -->
+                <div id="pricing" class="tab-content">
+                    <h2 class="text-2xl font-bold mb-6">Volume Pricing</h2>
+                    <p class="text-gray-600 mb-6">Order more and save! Check our competitive bulk pricing below.</p>
+                    
+                    <!-- Sample Pricing Table -->
+                    <div class="overflow-x-auto">
+                        <table class="price-table w-full">
+                            <thead>
+                                <tr>
+                                    <th>Quantity</th>
+                                    <th>200 pcs</th>
+                                    <th>500 pcs</th>
+                                    <th>1000 pcs</th>
+                                    <th>2000 pcs</th>
+                                    <th>5000 pcs</th>
+                                    <th>10000 pcs</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="font-semibold">Unit Price</td>
+                                    <td>₹6.07</td>
+                                    <td>₹3.26</td>
+                                    <td>₹2.33</td>
+                                    <td>₹1.90</td>
+                                    <td>₹1.64</td>
+                                    <td>₹1.57</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-semibold">Total</td>
+                                    <td>₹1,214</td>
+                                    <td>₹1,629</td>
+                                    <td>₹2,328</td>
+                                    <td>₹3,797</td>
+                                    <td>₹8,176</td>
+                                    <td>₹15,698</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-semibold text-green-600">You Save</td>
+                                    <td>-</td>
+                                    <td>46%</td>
+                                    <td>62%</td>
+                                    <td>69%</td>
+                                    <td>73%</td>
+                                    <td>74%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+                        <p class="text-sm text-blue-800">
+                            <i class="fas fa-info-circle mr-2"></i>
+                            Prices shown are indicative. Final pricing may vary based on specifications, finish, and current material costs.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Specifications Tab -->
+                <div id="specifications" class="tab-content">
+                    <h2 class="text-2xl font-bold mb-6">Technical Specifications</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gray-50 rounded-lg p-6">
+                            <h3 class="font-bold text-lg mb-4 text-purple-600">
+                                <i class="fas fa-ruler mr-2"></i>Dimensions
+                            </h3>
+                            <dl class="space-y-2">
+                                <div class="flex justify-between">
+                                    <dt class="text-gray-600">Width:</dt>
+                                    <dd class="font-medium">{{ product.width_mm }}mm</dd>
+                                </div>
+                                <div class="flex justify-between">
+                                    <dt class="text-gray-600">Height:</dt>
+                                    <dd class="font-medium">{{ product.height_mm }}mm</dd>
+                                </div>
+                                <div class="flex justify-between">
+                                    <dt class="text-gray-600">Bleed:</dt>
+                                    <dd class="font-medium">{{ product.bleed_mm }}mm</dd>
+                                </div>
+                                <div class="flex justify-between">
+                                    <dt class="text-gray-600">Safe Zone:</dt>
+                                    <dd class="font-medium">{{ product.safe_zone_mm }}mm</dd>
+                                </div>
+                            </dl>
+                        </div>
+                        
+                        <div class="bg-gray-50 rounded-lg p-6">
+                            <h3 class="font-bold text-lg mb-4 text-purple-600">
+                                <i class="fas fa-print mr-2"></i>Print Specifications
+                            </h3>
+                            <dl class="space-y-2">
+                                <div class="flex justify-between">
+                                    <dt class="text-gray-600">Resolution:</dt>
+                                    <dd class="font-medium">{{ product.dpi }}dpi</dd>
+                                </div>
+                                <div class="flex justify-between">
+                                    <dt class="text-gray-600">Color Mode:</dt>
+                                    <dd class="font-medium">CMYK</dd>
+                                </div>
+                                <div class="flex justify-between">
+                                    <dt class="text-gray-600">File Formats:</dt>
+                                    <dd class="font-medium">PDF, AI, PSD</dd>
+                                </div>
+                                <div class="flex justify-between">
+                                    <dt class="text-gray-600">Min. Quantity:</dt>
+                                    <dd class="font-medium">{{ product.minimum_quantity }} pieces</dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </div>
+                    
+                    <!-- Paper Options -->
+                    <div class="mt-8">
+                        <h3 class="font-bold text-lg mb-4">Available Paper Options</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <h4 class="font-semibold mb-2">Single Layer</h4>
+                                <p class="text-sm text-gray-600">300gsm or 350gsm cardstock</p>
+                                <p class="text-sm text-gray-500 mt-2">Standard thickness, perfect for regular use</p>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <h4 class="font-semibold mb-2">Double Layer</h4>
+                                <p class="text-sm text-gray-600">Mounted 300gsm + 300gsm</p>
+                                <p class="text-sm text-gray-500 mt-2">Extra rigid, 0.8-1mm thickness</p>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <h4 class="font-semibold mb-2">Triple Layer</h4>
+                                <p class="text-sm text-gray-600">Triple mounted cardstock</p>
+                                <p class="text-sm text-gray-500 mt-2">Maximum durability, 1.2-1.5mm thickness</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Shipping Tab -->
+                <div id="shipping" class="tab-content">
+                    <h2 class="text-2xl font-bold mb-6">Shipping & Delivery Information</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="font-bold text-lg mb-4">Production Time</h3>
+                            <ul class="space-y-2">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                    <span>Standard Production: 5-7 business days</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                    <span>Rush Service: 2-3 business days (additional charges apply)</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                    <span>Large Orders (5000+): 10-15 business days</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h3 class="font-bold text-lg mb-4">Shipping Options</h3>
+                            <ul class="space-y-2">
+                                <li class="flex items-start">
+                                    <i class="fas fa-truck text-blue-500 mt-1 mr-3"></i>
+                                    <span>Standard Delivery: 3-5 business days</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-shipping-fast text-purple-500 mt-1 mr-3"></i>
+                                    <span>Express Delivery: 1-2 business days</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-globe text-green-500 mt-1 mr-3"></i>
+                                    <span>International Shipping: 7-14 business days</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 p-6 bg-yellow-50 rounded-lg border border-yellow-200">
+                        <h3 class="font-bold text-lg mb-2">
+                            <i class="fas fa-exclamation-triangle text-yellow-600 mr-2"></i>
+                            Important Notes
+                        </h3>
+                        <ul class="text-sm text-gray-700 space-y-1">
+                            <li>• Production time starts after artwork approval</li>
+                            <li>• Shipping times are estimates and may vary based on location</li>
+                            <li>• Custom orders may require additional production time</li>
+                            <li>• Free shipping available for orders above ₹10,000</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Related Products -->
+        {% if related_products %}
+        <div class="mt-16">
+            <h2 class="text-3xl font-bold mb-8">Related Products</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                {% for related in related_products %}
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                    <div class="relative">
+                        {% if related.image %}
+                        <img src="{{ related.image.url }}" alt="{{ related.name }}" 
+                             class="w-full h-48 object-cover">
+                        {% else %}
+                        <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+                            <i class="fas fa-image text-4xl text-gray-400"></i>
+                        </div>
+                        {% endif %}
+                        
+                        {% if related.has_design_tool %}
+                        <span class="absolute top-2 right-2 bg-purple-600 text-white text-xs px-2 py-1 rounded-full">
+                            <i class="fas fa-palette mr-1"></i>Design Tool
+                        </span>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-2">{{ related.name }}</h3>
+                        <p class="text-gray-600 text-sm mb-3">{{ related.short_description|truncatewords:10 }}</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-purple-600 font-bold">
+                                {% if related.price_per_unit > 0 %}
+                                ₹{{ related.price_per_unit }}
+                                {% else %}
+                                Get Quote
+                                {% endif %}
+                            </span>
+                            <a href="{% url 'services:product_detail' related.slug %}" 
+                               class="text-purple-600 hover:text-purple-700 font-medium">
+                                View →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Quote Modal (hidden by default) -->
+<div id="quoteModal" class="hidden fixed inset-0 z-50 overflow-y-auto">
+    <div class="flex items-center justify-center min-h-screen px-4">
+        <div class="fixed inset-0 bg-black opacity-50" onclick="closeQuoteModal()"></div>
+        
+        <div class="relative bg-white rounded-lg max-w-md w-full p-8">
+            <button onclick="closeQuoteModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <i class="fas fa-times text-2xl"></i>
+            </button>
+            
+            <h2 class="text-2xl font-bold mb-4">Request Custom Quote</h2>
+            <form id="quoteForm" onsubmit="submitQuote(event)">
+                {% csrf_token %}
+                <input type="hidden" name="product_id" value="{{ product.id }}">
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Your Name</label>
+                    <input type="text" name="name" required 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500">
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                    <input type="email" name="email" required 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500">
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Phone</label>
+                    <input type="tel" name="phone" required 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500">
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Quantity Needed</label>
+                    <input type="number" name="quantity" min="1" required 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500">
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Additional Requirements</label>
+                    <textarea name="requirements" rows="3" 
+                              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500"></textarea>
+                </div>
+                
+                <button type="submit" 
+                        class="w-full bg-purple-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-purple-700 transition duration-300">
+                    Submit Quote Request
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Initialize variables
+    let selectedOptions = {
+        size: '',
+        paper: '',
+        finish: '',
+        binding: ''
+    };
+    
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        calculatePrice();
+        
+        // Select first option by default if available
+        const firstSize = document.querySelector('[data-value]');
+        if (firstSize) {
+            selectOption(firstSize, 'size', firstSize.dataset.value);
+        }
+    });
+    
+    // Image gallery functionality
+    function changeImage(imageUrl) {
+        document.getElementById('mainImage').src = imageUrl;
+        
+        // Update active thumbnail
+        document.querySelectorAll('.gallery-thumbnail').forEach(thumb => {
+            thumb.classList.remove('active');
+        });
+        event.currentTarget.classList.add('active');
+    }
+    
+    // Tab switching
+    function switchTab(button, tabId) {
+        // Update button states
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        button.classList.add('active');
+        
+        // Update content visibility
+        document.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.remove('active');
+        });
+        document.getElementById(tabId).classList.add('active');
+    }
+    
+    // Option selection
+    function selectOption(element, type, value) {
+        // Remove selected class from siblings
+        element.parentNode.querySelectorAll('.option-card').forEach(card => {
+            card.classList.remove('selected');
+        });
+        
+        // Add selected class to clicked element
+        element.classList.add('selected');
+        
+        // Update selected options
+        selectedOptions[type] = value;
+        
+        // Recalculate price
+        calculatePrice();
+    }
+    
+    // Quantity controls
+    function increaseQuantity() {
+        const input = document.getElementById('quantity');
+        input.value = parseInt(input.value) + 50;
+        calculatePrice();
+    }
+    
+    function decreaseQuantity() {
+        const input = document.getElementById('quantity');
+        const minQty = parseInt(input.min);
+        const currentQty = parseInt(input.value);
+        
+        if (currentQty > minQty) {
+            input.value = Math.max(minQty, currentQty - 50);
+            calculatePrice();
+        }
+    }
+    
+    // Price calculation
+    async function calculatePrice() {
+        const quantity = document.getElementById('quantity').value;
+        const productId = {{ product.id }};
+        
+        // Show loading state
+        document.getElementById('totalPrice').innerHTML = '<div class="loading-spinner inline-block"></div>';
+        
+        try {
+            // Build query parameters
+            const params = new URLSearchParams({
+                quantity: quantity,
+                size: selectedOptions.size || '',
+                paper_type: selectedOptions.paper || '',
+                finish: selectedOptions.finish || '',
+                binding_type: selectedOptions.binding || ''
+            });
+            
+            // Call pricing API
+            const response = await fetch(`/services/api/pricing/${productId}/?${params}`);
+            const data = await response.json();
+            
+            if (data.success) {
+                // Update price display
+                document.getElementById('unitPrice').textContent = `₹${data.unit_price}`;
+                document.getElementById('displayQuantity').textContent = quantity;
+                document.getElementById('totalPrice').textContent = `₹${data.price.toFixed(2)}`;
+                
+                // Show discount if applicable
+                if (data.volume_discount > 0) {
+                    document.getElementById('discountRow').classList.remove('hidden');
+                    document.getElementById('discount').textContent = `-${data.volume_discount}%`;
+                } else {
+                    document.getElementById('discountRow').classList.add('hidden');
+                }
+            } else {
+                // Show base price if API fails
+                const basePrice = {{ product.price_per_unit }};
+                const total = basePrice * quantity;
+                document.getElementById('totalPrice').textContent = `₹${total.toFixed(2)}`;
+            }
+        } catch (error) {
+            console.error('Error calculating price:', error);
+            // Fallback to base calculation
+            const basePrice = {{ product.price_per_unit }};
+            const total = basePrice * quantity;
+            document.getElementById('totalPrice').textContent = `₹${total.toFixed(2)}`;
+        }
+    }
+    
+    // Add to cart functionality
+    async function addToCart() {
+        const quantity = document.getElementById('quantity').value;
+        const productId = {{ product.id }};
+        
+        // Prepare form data
+        const formData = new FormData();
+        formData.append('quantity', quantity);
+        formData.append('size', selectedOptions.size);
+        formData.append('paper_type', selectedOptions.paper);
+        formData.append('finish', selectedOptions.finish);
+        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+        
+        try {
+            const response = await fetch(`/orders/cart/add/${productId}/`, {
+                method: 'POST',
+                body: formData
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                
+                // Show success message
+                showNotification('Product added to cart successfully!', 'success');
+                
+                // Update cart count if element exists
+                const cartCount = document.getElementById('cart-count');
+                if (cartCount && data.cart_count) {
+                    cartCount.textContent = data.cart_count;
+                }
+                
+                // Optional: Redirect to cart or show cart modal
+                if (data.redirect_to_cart) {
+                    setTimeout(() => {
+                        window.location.href = '/orders/cart/';
+                    }, 1500);
+                }
+            } else {
+                showNotification('Error adding product to cart. Please try again.', 'error');
+            }
+        } catch (error) {
+            console.error('Error adding to cart:', error);
+            showNotification('Error adding product to cart. Please try again.', 'error');
+        }
+    }
+    
+    // Quote modal functions
+    function requestQuote() {
+        document.getElementById('quoteModal').classList.remove('hidden');
+    }
+    
+    function closeQuoteModal() {
+        document.getElementById('quoteModal').classList.add('hidden');
+    }
+    
+    async function submitQuote(event) {
+        event.preventDefault();
+        
+        const formData = new FormData(event.target);
+        formData.append('selected_options', JSON.stringify(selectedOptions));
+        
+        try {
+            const response = await fetch('/services/api/quote-request/', {
+                method: 'POST',
+                body: formData
+            });
+            
+            if (response.ok) {
+                showNotification('Quote request submitted successfully! We will contact you soon.', 'success');
+                closeQuoteModal();
+                event.target.reset();
+            } else {
+                showNotification('Error submitting quote request. Please try again.', 'error');
+            }
+        } catch (error) {
+            console.error('Error submitting quote:', error);
+            showNotification('Error submitting quote request. Please try again.', 'error');
+        }
+    }
+    
+    // Notification system
+    function showNotification(message, type = 'info') {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `fixed top-20 right-4 z-50 p-4 rounded-lg shadow-lg transform transition-all duration-300 translate-x-full`;
+        
+        // Set color based on type
+        const colors = {
+            'success': 'bg-green-500',
+            'error': 'bg-red-500',
+            'info': 'bg-blue-500',
+            'warning': 'bg-yellow-500'
+        };
+        
+        notification.classList.add(colors[type] || colors['info'], 'text-white');
+        notification.innerHTML = `
+            <div class="flex items-center">
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'} mr-3"></i>
+                <span>${message}</span>
+            </div>
+        `;
+        
+        // Add to DOM
+        document.body.appendChild(notification);
+        
+        // Animate in
+        setTimeout(() => {
+            notification.classList.remove('translate-x-full');
+        }, 100);
+        
+        // Remove after 3 seconds
+        setTimeout(() => {
+            notification.classList.add('translate-x-full');
+            setTimeout(() => {
+                notification.remove();
+            }, 300);
+        }, 3000);
+    }
+    
+    // Handle design tool redirect
+    function openDesignTool() {
+        window.location.href = "{% url 'design_tool:product' product.slug %}";
+    }
+</script>
+{% endblock %}

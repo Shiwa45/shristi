@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{{ product.name }} - Drishthi Printing{% endblock %}
+{% block title %}{{ product.name }} - Professional Printing Services{% endblock %}
 
 {% block extra_css %}
 <style>
-    /* QinPrinting Inspired Dynamic Styling */
+    /* Variables */
     :root {
         --primary-blue: #0ea5e9;
         --primary-dark: #0284c7;
@@ -15,34 +15,26 @@
         --border-color: #e5e7eb;
         --bg-light: #f9fafb;
         --bg-section: #ffffff;
-        --success-green: #10b981;
-        --warning-orange: #f59e0b;
-        --error-red: #ef4444;
-    }
-
-    body {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-        color: var(--text-dark);
-        line-height: 1.6;
-        background: #fafbfc;
+        --success-color: #10b981;
+        --warning-color: #f59e0b;
+        --error-color: #ef4444;
     }
 
     /* Hero Section */
-    .product-hero {
+    .hero-section {
         background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-        padding: 3rem 0;
-        border-bottom: 1px solid var(--border-color);
+        padding: 6rem 0 3rem;
     }
 
     .hero-content {
-        max-width: 1400px;
+        max-width: 1200px;
         margin: 0 auto;
-        padding: 0 2rem;
+        padding: 0 1rem;
     }
 
     .hero-grid {
         display: grid;
-        grid-template-columns: 1fr 400px;
+        grid-template-columns: 1fr 1fr;
         gap: 3rem;
         align-items: start;
     }
@@ -52,157 +44,160 @@
         font-weight: 700;
         color: var(--text-dark);
         margin-bottom: 1rem;
-        line-height: 1.2;
     }
 
     .product-tagline {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         color: var(--text-medium);
-        margin-bottom: 2rem;
-        line-height: 1.5;
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
     }
 
     .product-highlights {
         display: flex;
-        gap: 1rem;
-        margin-bottom: 2rem;
         flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
     }
 
     .highlight-badge {
-        background: var(--success-green);
-        color: white;
+        background: var(--bg-light);
+        color: var(--text-dark);
         padding: 0.5rem 1rem;
         border-radius: 20px;
-        font-size: 0.9rem;
+        font-size: 0.875rem;
         font-weight: 500;
+        border: 1px solid var(--border-color);
     }
 
+    /* Product Gallery */
     .hero-image-container {
-        width: 100%;
-        height: 300px;
+        background: white;
         border-radius: 12px;
-        overflow: hidden;
-        background: #f8fafc;
-        border: 1px solid var(--border-color);
+        padding: 2rem;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     }
 
     .hero-image {
         width: 100%;
-        height: 100%;
-        object-fit: cover;
+        height: 400px;
+        object-fit: contain;
     }
 
-    .hero-image-placeholder {
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
-        border: 2px dashed var(--border-color);
+    .image-thumbnails {
         display: flex;
-        flex-direction: column;
-        align-items: center;
+        gap: 0.5rem;
+        margin-top: 1rem;
         justify-content: center;
-        color: var(--text-light);
-        position: relative;
     }
 
-    .placeholder-icon {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-        color: var(--text-light);
+    .thumbnail {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border: 2px solid transparent;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s;
     }
 
-    .placeholder-text {
-        font-size: 1rem;
-        text-align: center;
+    .thumbnail:hover,
+    .thumbnail.active {
+        border-color: var(--primary-blue);
     }
 
     /* Main Content Grid */
     .main-content {
         max-width: 1400px;
-        margin: 0 auto;
-        padding: 2rem;
+        margin: -2rem auto 0;
+        padding: 0 1rem;
         display: grid;
-        grid-template-columns: 1fr 380px;
-        gap: 3rem;
-        align-items: start;
+        grid-template-columns: 1fr 400px;
+        gap: 2rem;
+        position: relative;
     }
 
     .product-details {
         background: white;
         border-radius: 12px;
-        border: 1px solid var(--border-color);
-        overflow: hidden;
+        padding: 2rem;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     }
 
-    .section-header {
-        background: var(--bg-light);
-        padding: 1.5rem 2rem;
-        border-bottom: 1px solid var(--border-color);
-        font-size: 1.2rem;
+    /* Quote Calculator */
+    .quote-calculator {
+        position: sticky;
+        top: 80px;
+        height: fit-content;
+    }
+
+    .quote-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        border: 1px solid #e1e5e9;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        margin-bottom: 1rem;
+    }
+
+    .quote-field {
+        margin-bottom: 1.5rem;
+    }
+
+    .quote-label {
+        display: block;
+        font-size: 0.9rem;
         font-weight: 600;
         color: var(--text-dark);
+        margin-bottom: 0.5rem;
     }
 
-    .section-content {
-        padding: 2rem;
+    .quote-input-wrapper {
+        position: relative;
     }
 
-    /* Image Gallery */
-    .image-gallery {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-        gap: 1rem;
-        margin-bottom: 2rem;
-    }
-
-    .gallery-item {
-        aspect-ratio: 4/3;
+    .quote-select, .quote-input {
+        width: 100%;
+        padding: 0.75rem;
+        padding-right: 2.5rem;
+        border: 2px solid #e1e5e9;
         border-radius: 8px;
-        overflow: hidden;
-        border: 1px solid var(--border-color);
+        font-size: 0.95rem;
+        background: white;
+        appearance: none;
         cursor: pointer;
         transition: all 0.2s;
     }
 
-    .gallery-item:hover {
-        transform: scale(1.05);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    .quote-input {
+        cursor: text;
     }
 
-    .gallery-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .gallery-placeholder {
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
-        border: 2px dashed var(--border-color);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        color: var(--text-light);
-    }
-
-    .gallery-placeholder:hover {
+    .quote-select:focus, .quote-input:focus {
+        outline: none;
         border-color: var(--primary-blue);
-        background: linear-gradient(135deg, rgba(14, 165, 233, 0.05) 0%, rgba(14, 165, 233, 0.02) 100%);
+        box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
     }
 
-    /* Dynamic Paper Selection Grid */
-    .paper-grid {
+    .quote-dropdown-icon {
+        position: absolute;
+        right: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6c757d;
+        pointer-events: none;
+    }
+
+    /* Enhanced Option Cards */
+    .option-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: 1rem;
-        margin-top: 1rem;
+        margin: 1rem 0;
     }
 
-    .paper-card {
-        border: 2px solid var(--border-color);
+    .option-card {
+        border: 2px solid #e1e5e9;
         border-radius: 12px;
         overflow: hidden;
         cursor: pointer;
@@ -211,59 +206,74 @@
         position: relative;
     }
 
-    .paper-card:hover {
+    .option-card:hover {
         border-color: var(--primary-blue);
         transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(14, 165, 233, 0.15);
+        box-shadow: 0 8px 20px rgba(14, 165, 233, 0.2);
     }
 
-    .paper-card.selected {
+    .option-card.selected {
         border-color: var(--primary-blue);
-        background: linear-gradient(135deg, rgba(14, 165, 233, 0.05) 0%, rgba(14, 165, 233, 0.02) 100%);
-        box-shadow: 0 4px 15px rgba(14, 165, 233, 0.2);
+        background: rgba(14, 165, 233, 0.02);
     }
 
-    .paper-visual {
-        height: 140px;
+    .option-card input[type="radio"] {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        width: 20px;
+        height: 20px;
+        accent-color: var(--primary-blue);
+        cursor: pointer;
+        z-index: 2;
+    }
+
+    .option-preview {
+        width: 100%;
+        height: 120px;
         position: relative;
-        overflow: hidden;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     }
 
-    .paper-icon {
-        font-size: 2.5rem;
-        color: var(--text-light);
-        opacity: 0.4;
+    .option-price {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 600;
     }
 
-    .paper-info {
+    .option-info {
         padding: 1rem;
     }
 
-    .paper-title {
+    .option-title {
         font-size: 1rem;
         font-weight: 600;
         color: var(--text-dark);
         margin-bottom: 0.5rem;
     }
 
-    .paper-description {
+    .option-description {
         font-size: 0.85rem;
         color: var(--text-medium);
         margin-bottom: 0.75rem;
-        line-height: 1.4;
     }
 
-    .paper-specs {
+    .option-specs {
         display: flex;
-        gap: 0.5rem;
         flex-wrap: wrap;
+        gap: 0.5rem;
     }
 
-    .spec-badge {
+    .option-spec {
         background: var(--bg-light);
         color: var(--text-medium);
         padding: 0.25rem 0.5rem;
@@ -272,265 +282,236 @@
         font-weight: 500;
     }
 
-    .paper-price {
-        position: absolute;
-        top: 8px;
-        right: 8px;
-        background: var(--primary-blue);
-        color: white;
-        padding: 0.25rem 0.5rem;
-        border-radius: 4px;
-        font-size: 0.75rem;
-        font-weight: 600;
-    }
-
-    /* Colors Section */
-    .colors-section {
-        margin-top: 1.5rem;
-    }
-
-    .color-options {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    /* Quantity Selector */
+    .quantity-selector {
+        display: flex;
+        align-items: center;
         gap: 1rem;
-        margin-top: 1rem;
-    }
-
-    .color-option {
-        border: 2px solid var(--border-color);
-        border-radius: 8px;
+        background: #f8f9fa;
         padding: 1rem;
-        cursor: pointer;
-        transition: all 0.2s;
-        text-align: center;
-        background: white;
-    }
-
-    .color-option:hover {
-        border-color: var(--primary-blue);
-        background: rgba(14, 165, 233, 0.05);
-    }
-
-    .color-option.selected {
-        border-color: var(--primary-blue);
-        background: rgba(14, 165, 233, 0.1);
-    }
-
-    .color-preview {
-        width: 60px;
-        height: 40px;
-        border-radius: 4px;
-        margin: 0 auto 0.75rem;
-        border: 1px solid var(--border-color);
-    }
-
-    .color-4-4 { background: linear-gradient(45deg, #ff6b6b 0%, #4ecdc4 25%, #45b7d1 50%, #f7dc6f 75%, #bb6bd9 100%); }
-    .color-4-0 { background: linear-gradient(45deg, #ff6b6b 0%, #4ecdc4 33%, #45b7d1 66%, #f7dc6f 100%), linear-gradient(to bottom, transparent 50%, #f8f9fa 50%); }
-    .color-1-1 { background: linear-gradient(45deg, #2d3748 0%, #4a5568 100%); }
-    .color-1-0 { background: linear-gradient(to right, #2d3748 50%, #f8f9fa 50%); }
-
-    .color-name {
-        font-size: 0.9rem;
-        font-weight: 500;
-        color: var(--text-dark);
-        margin-bottom: 0.25rem;
-    }
-
-    .color-description {
-        font-size: 0.8rem;
-        color: var(--text-medium);
-    }
-
-    /* Quote Calculator */
-    .quote-calculator {
-        background: white;
-        border: 1px solid var(--border-color);
-        border-radius: 12px;
-        overflow: hidden;
-        position: sticky;
-        top: 2rem;
-    }
-
-    .calculator-header {
-        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
-        color: white;
-        padding: 1.5rem 2rem;
-        text-align: center;
-    }
-
-    .calculator-header h3 {
-        font-size: 1.3rem;
-        font-weight: 600;
-        margin-bottom: 0.5rem;
-    }
-
-    .calculator-form {
-        padding: 2rem;
-    }
-
-    .form-group {
-        margin-bottom: 1.5rem;
-    }
-
-    .form-label {
-        display: block;
-        font-weight: 600;
-        color: var(--text-dark);
-        margin-bottom: 0.5rem;
-        font-size: 0.9rem;
-    }
-
-    .form-select {
-        width: 100%;
-        padding: 0.75rem;
-        border: 2px solid var(--border-color);
         border-radius: 8px;
-        font-size: 0.9rem;
-        background: white;
-        transition: border-color 0.2s;
-    }
-
-    .form-select:focus {
-        outline: none;
-        border-color: var(--primary-blue);
-        box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
-    }
-
-    /* Price Display */
-    .price-display {
-        background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-        color: white;
-        padding: 2rem;
-        border-radius: 12px;
-        margin-top: 2rem;
-        text-align: center;
-    }
-
-    .price-amount {
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-    }
-
-    .price-unit {
-        font-size: 0.9rem;
-        opacity: 0.7;
         margin-bottom: 1rem;
     }
 
-    .action-buttons {
+    .quantity-controls {
         display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-        margin-top: 1.5rem;
+        align-items: center;
+        border: 2px solid #e1e5e9;
+        border-radius: 8px;
+        background: white;
     }
 
-    .btn-primary {
+    .qty-btn {
+        background: none;
+        border: none;
+        padding: 0.5rem 1rem;
+        font-size: 1.2rem;
+        cursor: pointer;
+        color: var(--primary-blue);
+        transition: background 0.2s;
+    }
+
+    .qty-btn:hover {
+        background: var(--bg-light);
+    }
+
+    .qty-input {
+        border: none;
+        padding: 0.5rem 1rem;
+        text-align: center;
+        font-weight: 600;
+        width: 80px;
+    }
+
+    /* Price Display */
+    .price-card {
+        background: linear-gradient(135deg, #1a4c68 0%, #0f2a3d 100%);
+        color: white;
+        border-radius: 12px;
+        padding: 2rem;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 1rem;
+    }
+
+    .price-card::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 100px;
+        height: 100px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 50%;
+        z-index: 1;
+    }
+
+    .price-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 2;
+    }
+
+    .price-location {
+        font-size: 0.9rem;
+        opacity: 0.9;
+    }
+
+    .price-discount {
+        background: var(--success-color);
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .price-main {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 2;
+    }
+
+    .price-currency {
+        font-size: 1.5rem;
+        margin-top: 0.5rem;
+    }
+
+    .price-amount {
+        font-size: 3rem;
+        font-weight: 700;
+        line-height: 1;
+    }
+
+    .price-breakdown {
+        font-size: 0.85rem;
+        opacity: 0.9;
+        position: relative;
+        z-index: 2;
+    }
+
+    .price-breakdown div {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.25rem;
+    }
+
+    .price-breakdown .total {
+        font-weight: 600;
+        font-size: 1rem;
+        padding-top: 0.5rem;
+        border-top: 1px solid rgba(255,255,255,0.3);
+        margin-top: 0.5rem;
+    }
+
+    /* Action Buttons */
+    .action-btn {
+        width: 100%;
+        padding: 1rem;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-bottom: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .action-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .save-quote-btn {
+        background: #17a2b8;
+        color: white;
+    }
+
+    .design-btn {
+        background: var(--success-color);
+        color: white;
+    }
+
+    .order-btn {
         background: var(--primary-blue);
         color: white;
-        border: none;
-        padding: 0.875rem 1.5rem;
-        border-radius: 8px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s;
-        font-size: 0.9rem;
-        text-decoration: none;
-        display: inline-block;
-        text-align: center;
     }
 
-    .btn-primary:hover {
-        background: var(--primary-dark);
-        transform: translateY(-1px);
-        color: white;
-        text-decoration: none;
-    }
-
-    .btn-secondary {
-        background: transparent;
-        color: white;
-        border: 2px solid rgba(255, 255, 255, 0.3);
-        padding: 0.875rem 1.5rem;
-        border-radius: 8px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s;
-        font-size: 0.9rem;
-    }
-
-    .btn-secondary:hover {
-        border-color: white;
-        background: rgba(255, 255, 255, 0.1);
-    }
-
-    /* Dynamic Pricing Table */
-    .pricing-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 1rem;
-        background: white;
-        border-radius: 8px;
-        overflow: hidden;
-        border: 1px solid var(--border-color);
-    }
-
-    .pricing-table th {
+    /* Features Section */
+    .features-section {
         background: var(--bg-light);
-        padding: 1rem 0.75rem;
+        padding: 4rem 0;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .feature-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
         text-align: center;
-        font-weight: 600;
-        color: var(--text-dark);
-        border-bottom: 1px solid var(--border-color);
-        font-size: 0.9rem;
+        border: 1px solid var(--border-color);
+        transition: all 0.3s;
     }
 
-    .pricing-table td {
-        padding: 0.875rem 0.75rem;
-        text-align: center;
-        border-bottom: 1px solid var(--border-color);
-        font-size: 0.85rem;
+    .feature-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
     }
 
-    .pricing-table tbody tr:nth-child(even) {
-        background: #fafbfc;
-    }
-
-    .pricing-table tbody tr:hover {
-        background: rgba(14, 165, 233, 0.05);
-    }
-
-    .price-highlight {
+    .feature-icon {
+        width: 60px;
+        height: 60px;
+        background: var(--bg-light);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
         color: var(--primary-blue);
-        font-weight: 600;
-    }
-
-    .total-price {
-        color: var(--text-light);
-        font-size: 0.8rem;
+        font-size: 1.5rem;
     }
 
     /* Specifications Table */
     .specs-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 1rem;
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        margin: 2rem 0;
     }
 
-    .specs-table tr {
+    .spec-row {
+        display: grid;
+        grid-template-columns: 30% 70%;
         border-bottom: 1px solid var(--border-color);
     }
 
-    .specs-table tr:last-child {
+    .spec-row:last-child {
         border-bottom: none;
     }
 
     .spec-label {
+        background: var(--bg-light);
         padding: 1rem;
         font-weight: 600;
         color: var(--text-dark);
-        background: var(--bg-light);
-        width: 30%;
     }
 
     .spec-value {
@@ -538,7 +519,60 @@
         color: var(--text-medium);
     }
 
-    /* Responsive Design */
+    /* Loading States */
+    .loading {
+        opacity: 0.6;
+        pointer-events: none;
+    }
+
+    .price-loading {
+        animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+    }
+
+    /* Template Download Section */
+    .template-download {
+        background: var(--primary-dark);
+        color: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-top: 1rem;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .template-download:hover {
+        background: var(--primary-blue);
+        transform: translateY(-2px);
+    }
+
+    .template-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .template-icon {
+        font-size: 1.5rem;
+        color: rgba(255,255,255,0.9);
+    }
+
+    .template-details h4 {
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+    }
+
+    .template-details p {
+        font-size: 0.8rem;
+        opacity: 0.8;
+        margin: 0;
+    }
+
+    /* Responsive */
     @media (max-width: 1024px) {
         .hero-grid,
         .main-content {
@@ -550,34 +584,54 @@
             position: static;
             order: -1;
         }
+
+        .option-grid {
+            grid-template-columns: 1fr;
+        }
     }
 
     @media (max-width: 768px) {
         .hero-content,
         .main-content {
-            padding: 1rem;
+            padding: 0 1rem;
         }
 
         .product-info h1 {
             font-size: 2rem;
         }
 
-        .paper-grid {
+        .option-grid {
             grid-template-columns: 1fr;
+        }
+
+        .spec-row {
+            grid-template-columns: 1fr;
+        }
+
+        .price-amount {
+            font-size: 2.5rem;
+        }
+
+        .quantity-selector {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 0.5rem;
         }
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<!-- Product Hero Section -->
-<section class="product-hero">
+<!-- Hero Section with Product Info -->
+<section class="hero-section">
     <div class="hero-content">
         <div class="hero-grid">
             <div class="product-info">
-                <h1>{{ product.name }}</h1>
-                <p class="product-tagline">{{ product.short_description|default:product.description|truncatewords:25 }}</p>
-                
+                <h1>{{ product.hero_title|default:product.name }}</h1>
+                <p class="product-tagline">{{ product.hero_subtitle|default:product.short_description|default:product.description|truncatewords:30 }}</p>
+                {% if product.hero_quote %}
+                <blockquote style="font-size:1.2rem;color:var(--primary-blue);margin-bottom:1.5rem;font-style:italic;">"{{ product.hero_quote }}"</blockquote>
+                {% endif %}
                 <div class="product-highlights">
                     <span class="highlight-badge">Premium Quality</span>
                     {% if product.has_design_tool %}
@@ -587,631 +641,874 @@
                     <span class="highlight-badge">Upload Ready</span>
                     {% endif %}
                     <span class="highlight-badge">MOQ: {{ product.minimum_quantity }} pieces</span>
+                    {% if product.express_production %}
+                    <span class="highlight-badge">Express Production</span>
+                    {% endif %}
                 </div>
             </div>
-
             <div class="hero-image-container">
-                {% if product.image %}
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="hero-image">
+                {% if product.hero_image %}
+                    <img id="mainImage" src="{{ product.hero_image.url }}" alt="{{ product.hero_title|default:product.name }}" class="hero-image">
+                {% elif product.image %}
+                    <img id="mainImage" src="{{ product.image.url }}" alt="{{ product.name }}" class="hero-image">
                 {% else %}
-                    <div class="hero-image-placeholder">
-                        <div class="placeholder-icon">
-                            <i class="fas fa-image"></i>
-                        </div>
-                        <div class="placeholder-text">
-                            <strong>{{ product.name }}</strong><br>
-                            Product image coming soon
-                        </div>
-                    </div>
+                    <img id="mainImage" src="{% static 'images/placeholder.png' %}" alt="{{ product.name }}" class="hero-image">
+                {% endif %}
+                {% if product.images.exists %}
+                <div class="image-thumbnails">
+                    {% if product.hero_image %}
+                    <img src="{{ product.hero_image.url }}" class="thumbnail active" onclick="changeImage('{{ product.hero_image.url }}', this)" alt="{{ product.hero_title|default:product.name }}">
+                    {% elif product.image %}
+                    <img src="{{ product.image.url }}" class="thumbnail active" onclick="changeImage('{{ product.image.url }}', this)" alt="{{ product.name }}">
+                    {% else %}
+                    <img src="{% static 'images/placeholder.png' %}" class="thumbnail active" onclick="changeImage('{% static 'images/placeholder.png' %}', this)" alt="{{ product.name }}">
+                    {% endif %}
+                    {% for image in product.images.all|slice:":4" %}
+                    <img src="{{ image.image.url }}" class="thumbnail" onclick="changeImage('{{ image.image.url }}', this)" alt="{{ image.alt_text }}">
+                    {% endfor %}
+                </div>
                 {% endif %}
             </div>
         </div>
     </div>
 </section>
 
-<!-- Main Content -->
-<div class="main-content" data-product-id="{{ product.id }}">
+<!-- Main Content: Calculator and Details -->
+<div class="main-content">
+    <!-- Product Configuration Section -->
     <div class="product-details">
-        <!-- Product Description -->
-        <div class="section-header">
-            About {{ product.name }}
-        </div>
-        <div class="section-content">
-            <p>{{ product.description }}</p>
-            
-            <!-- Dynamic Image Gallery -->
-            {% if product.images.exists %}
-            <div class="image-gallery">
-                {% for image in product.images.all %}
-                <div class="gallery-item" onclick="showImage('{{ image.image.url }}')">
-                    <img src="{{ image.image.url }}" alt="{{ image.alt_text|default:product.name }}" class="gallery-image">
-                </div>
-                {% endfor %}
-                
-                <!-- Fill remaining slots with placeholders if less than 4 images -->
-                {% with remaining_slots=4 %}
-                {% if product.images.count < remaining_slots %}
-                    {% for i in "1234"|slice:product.images.count|slice:":" %}
-                    <div class="gallery-item">
-                        <div class="gallery-placeholder">
-                            <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">
-                                <i class="fas fa-plus"></i>
-                            </div>
-                            <div style="font-size: 0.8rem;">Add Image</div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                {% endif %}
-                {% endwith %}
-            </div>
-            {% else %}
-            <!-- Default placeholders when no images -->
-            <div class="image-gallery">
-                {% for i in "1234" %}
-                <div class="gallery-item">
-                    <div class="gallery-placeholder">
-                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">
-                            <i class="fas fa-camera"></i>
-                        </div>
-                        <div style="font-size: 0.8rem;">Product Gallery {{ forloop.counter }}</div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-            {% endif %}
-        </div>
-
-        <!-- Dynamic Paper Selection -->
+        <!-- Paper Type Selection -->
         {% if available_paper_types %}
-        <div class="section-header">
-            Choose Your Paper Type
-        </div>
-        <div class="section-content">
-            <p style="margin-bottom: 1rem; color: var(--text-medium);">Select the perfect paper type for your {{ product.name|lower }}. Each option offers different benefits for durability, print quality, and cost.</p>
-            
-            <div class="paper-grid">
-                {% for paper_type in available_paper_types %}
-                <div class="paper-card {% if forloop.first %}selected{% endif %}" onclick="selectPaper(this, '{{ paper_type }}')">
-                    <div class="paper-visual">
-                        <div class="paper-price">
-                            {% if forloop.first %}Base Price{% else %}+₹{{ forloop.counter0|add:10 }}{% endif %}
-                        </div>
-                        <div class="paper-icon">
-                            <i class="fas fa-file{% if forloop.counter == 2 %}-alt{% elif forloop.counter == 3 %}-contract{% else %}{% endif %}"></i>
-                        </div>
-                    </div>
-                    <div class="paper-info">
-                        <div class="paper-title">{{ paper_type }}</div>
-                        <div class="paper-description">Professional {{ paper_type|lower }} with enhanced print quality and durability</div>
-                        <div class="paper-specs">
-                            <span class="spec-badge">{{ paper_type|truncatechars:8 }}</span>
-                            <span class="spec-badge">{% cycle 'Matte' 'Glossy' 'Premium' 'Luxury' %}</span>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
+        <div class="quote-card">
+            <label class="quote-label">
+                <i class="fas fa-file-alt" style="margin-right: 0.5rem; color: var(--primary-blue);"></i>
+                Paper Type
+            </label>
+            <div class="option-grid" id="paperTypeGrid">
+                <!-- Paper options will be populated by JavaScript -->
             </div>
         </div>
         {% endif %}
 
-        <!-- Dynamic Pricing Table -->
-        {% if product.pricings.exists %}
-        <div class="section-header">
-            {{ product.name }} Pricing
-        </div>
-        <div class="section-content">
-            <p style="margin-bottom: 1rem; color: var(--text-medium);">Sample pricing to help you estimate costs. Larger quantities offer better value per unit.</p>
-            
-            <table class="pricing-table">
-                <thead>
-                    <tr>
-                        <th>Specifications</th>
-                        {% for pricing in product.pricings.all|dictsort:"min_quantity"|slice:":5" %}
-                        <th>{{ pricing.min_quantity }}+ pcs</th>
-                        {% endfor %}
-                    </tr>
-                </thead>
-                <tbody>
-                    {% regroup product.pricings.all by paper_type as paper_groups %}
-                    {% for paper_group in paper_groups %}
-                    <tr>
-                        <td><strong>{{ paper_group.grouper|default:"Standard" }}</strong></td>
-                        {% for pricing in paper_group.list|dictsort:"min_quantity"|slice:":5" %}
-                        <td>
-                            <span class="price-highlight">₹{{ pricing.price_per_unit }}</span><br>
-                            <span class="total-price">₹{{ pricing.price_per_unit|floatformat:0 }} x {{ pricing.min_quantity }} = ₹-- total</span>
-                        </td>
-                        {% endfor %}
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-
-            <div style="margin-top: 1rem;">
-                <p style="font-size: 0.85rem; color: var(--text-light);">
-                    • All prices include setup costs and standard processing<br>
-                    • Custom finishing options available<br>
-                    • Volume discounts apply for larger quantities<br>
-                    • Prices exclude shipping costs
-                </p>
-            </div>
-        </div>
-        {% endif %}
-
-        <!-- Product Specifications -->
-        {% if product.specifications.exists or product.dpi or product.width_mm %}
-        <div class="section-header">
-            Technical Specifications
-        </div>
-        <div class="section-content">
-            <table class="specs-table">
-                {% for spec in product.specifications.all %}
-                <tr>
-                    <td class="spec-label">{{ spec.name }}</td>
-                    <td class="spec-value">{{ spec.value }}</td>
-                </tr>
-                {% endfor %}
-                {% if product.dpi %}
-                <tr>
-                    <td class="spec-label">Print Resolution</td>
-                    <td class="spec-value">{{ product.dpi }} DPI</td>
-                </tr>
-                {% endif %}
-                {% if product.width_mm and product.height_mm %}
-                <tr>
-                    <td class="spec-label">Dimensions</td>
-                    <td class="spec-value">{{ product.width_mm }}mm x {{ product.height_mm }}mm</td>
-                </tr>
-                {% endif %}
-                {% if product.bleed_mm %}
-                <tr>
-                    <td class="spec-label">Bleed Area</td>
-                    <td class="spec-value">{{ product.bleed_mm }}mm</td>
-                </tr>
-                {% endif %}
-            </table>
-        </div>
-        {% endif %}
-    </div>
-
-    <!-- Dynamic Quote Calculator -->
-    <div class="quote-calculator">
-        <div class="calculator-header">
-            <h3>{{ product.name }} Instant Quote</h3>
-            <p>Get pricing based on your specifications</p>
-        </div>
-
-        <form class="calculator-form" id="pricingForm">
-            {% csrf_token %}
-            
-            <div class="form-group">
-                <label class="form-label">Quantity</label>
-                <select class="form-select" id="quantity" name="quantity">
-                    {% with unique_quantities=product.pricings.all|dictsort:"min_quantity" %}
-                    {% regroup unique_quantities by min_quantity as quantity_groups %}
-                    {% for qty_group in quantity_groups %}
-                        <option value="{{ qty_group.grouper }}" {% if forloop.counter == 2 %}selected{% endif %}>{{ qty_group.grouper }} pieces</option>
-                    {% endfor %}
-                    {% endwith %}
-                    <option value="custom">Custom Quantity</option>
-                </select>
-            </div>
-
-            {% if available_sizes %}
-            <div class="form-group">
-                <label class="form-label">Size</label>
-                <select class="form-select" id="size" name="size">
+        <!-- Size Selection -->
+        {% if available_sizes %}
+        <div class="quote-card">
+            <label class="quote-label">
+                <i class="fas fa-ruler-combined" style="margin-right: 0.5rem; color: var(--primary-blue);"></i>
+                Size Options
+            </label>
+            <div class="quote-input-wrapper">
+                <select id="sizeSelect" class="quote-select" onchange="updatePricing()">
+                    <option value="">Select Size</option>
                     {% for size in available_sizes %}
                     <option value="{{ size }}" {% if forloop.first %}selected{% endif %}>{{ size }}</option>
                     {% endfor %}
                 </select>
+                <i class="fas fa-chevron-down quote-dropdown-icon"></i>
             </div>
-            {% endif %}
+        </div>
+        {% endif %}
 
-            {% if available_paper_types %}
-            <div class="form-group">
-                <label class="form-label">Paper Type</label>
-                <select class="form-select" id="paperType" name="paper_type">
-                    {% for paper_type in available_paper_types %}
-                    <option value="{{ paper_type }}" {% if forloop.first %}selected{% endif %}>{{ paper_type }}</option>
-                    {% endfor %}
+        <!-- Color Options -->
+        <div class="quote-card">
+            <label class="quote-label">
+                <i class="fas fa-palette" style="margin-right: 0.5rem; color: var(--primary-blue);"></i>
+                Interior Color
+            </label>
+            <div class="option-grid">
+                <div class="option-card selected" onclick="selectColor(this, 'Black & White')" data-color="Black & White">
+                    <input type="radio" name="colorOption" value="Black & White" checked>
+                    <div class="option-preview" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+                        <div class="option-price">Base</div>
+                        <span style="font-size: 2rem; color: #666;">⬛⬜</span>
+                    </div>
+                    <div class="option-info">
+                        <div class="option-title">Black & White</div>
+                        <div class="option-description">Professional black and white printing</div>
+                        <div class="option-specs">
+                            <span class="option-spec">Standard</span>
+                            <span class="option-spec">Cost Effective</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-card" onclick="selectColor(this, 'Full Color')" data-color="Full Color">
+                    <input type="radio" name="colorOption" value="Full Color">
+                    <div class="option-preview" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <div class="option-price">+Rs.5</div>
+                        <span style="font-size: 2rem; color: white;">🌈</span>
+                    </div>
+                    <div class="option-info">
+                        <div class="option-title">Full Color</div>
+                        <div class="option-description">Vibrant full-color printing</div>
+                        <div class="option-specs">
+                            <span class="option-spec">CMYK</span>
+                            <span class="option-spec">High Quality</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Advanced Options for Books -->
+        {% if 'book' in product.name|lower %}
+        <div class="quote-card">
+            <label class="quote-label">
+                <i class="fas fa-layer-group" style="margin-right: 0.5rem; color: var(--primary-blue);"></i>
+                Page Count
+            </label>
+            <div class="quantity-selector">
+                <span>Pages:</span>
+                <div class="quantity-controls">
+                    <button type="button" class="qty-btn" onclick="adjustPages(-10)">−10</button>
+                    <button type="button" class="qty-btn" onclick="adjustPages(-1)">−</button>
+                    <input type="number" id="pageCount" class="qty-input" value="100" min="1" max="1000" onchange="updatePricing()">
+                    <button type="button" class="qty-btn" onclick="adjustPages(1)">+</button>
+                    <button type="button" class="qty-btn" onclick="adjustPages(10)">+10</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="quote-card">
+            <label class="quote-label">
+                <i class="fas fa-book-open" style="margin-right: 0.5rem; color: var(--primary-blue);"></i>
+                Binding Type
+            </label>
+            <div class="quote-input-wrapper">
+                <select id="bindingType" class="quote-select" onchange="updatePricing()">
+                    <option value="Perfect Bound">Perfect Bound</option>
+                    <option value="Spiral Binding">Spiral Binding</option>
+                    <option value="Hard Cover">Hard Cover</option>
+                    <option value="Saddle Stitch">Saddle Stitch</option>
                 </select>
+                <i class="fas fa-chevron-down quote-dropdown-icon"></i>
             </div>
-            {% endif %}
+        </div>
+        {% endif %}
 
-            {% if available_finishes %}
-            <div class="form-group">
-                <label class="form-label">Finish</label>
-                <select class="form-select" id="finish" name="finish">
+        <!-- Print Sides -->
+        <div class="quote-card">
+            <label class="quote-label">
+                <i class="fas fa-copy" style="margin-right: 0.5rem; color: var(--primary-blue);"></i>
+                Print Sides
+            </label>
+            <div class="quote-input-wrapper">
+                <select id="printSides" class="quote-select" onchange="updatePricing()">
+                    <option value="Single-sided">Single-sided</option>
+                    <option value="Double-sided">Double-sided</option>
+                </select>
+                <i class="fas fa-chevron-down quote-dropdown-icon"></i>
+            </div>
+        </div>
+
+        <!-- Finish Options -->
+        {% if available_finishes %}
+        <div class="quote-card">
+            <label class="quote-label">
+                <i class="fas fa-magic" style="margin-right: 0.5rem; color: var(--primary-blue);"></i>
+                Finish
+            </label>
+            <div class="quote-input-wrapper">
+                <select id="finishType" class="quote-select" onchange="updatePricing()">
                     {% for finish in available_finishes %}
-                    <option value="{{ finish }}" {% if forloop.first %}selected{% endif %}>{{ finish }}</option>
+                    <option value="{{ finish }}">{{ finish }}</option>
                     {% endfor %}
                 </select>
+                <i class="fas fa-chevron-down quote-dropdown-icon"></i>
             </div>
-            {% endif %}
+        </div>
+        {% endif %}
 
-            <!-- Colors Section -->
-            <div class="colors-section">
-                <label class="form-label">Color Options</label>
-                <div class="color-options">
-                    <div class="color-option selected" onclick="selectColor(this, '4+4')">
-                        <div class="color-preview color-4-4"></div>
-                        <div class="color-name">Full Color</div>
-                        <div class="color-description">Both Sides</div>
-                    </div>
-                    <div class="color-option" onclick="selectColor(this, '4+0')">
-                        <div class="color-preview color-4-0"></div>
-                        <div class="color-name">Full Color</div>
-                        <div class="color-description">One Side</div>
-                    </div>
-                    <div class="color-option" onclick="selectColor(this, '1+1')">
-                        <div class="color-preview color-1-1"></div>
-                        <div class="color-name">Black & White</div>
-                        <div class="color-description">Both Sides</div>
-                    </div>
-                    <div class="color-option" onclick="selectColor(this, '1+0')">
-                        <div class="color-preview color-1-0"></div>
-                        <div class="color-name">Black & White</div>
-                        <div class="color-description">One Side</div>
+        <!-- Additional Services -->
+        <div class="quote-card">
+            <label class="quote-label">
+                <i class="fas fa-plus-circle" style="margin-right: 0.5rem; color: var(--primary-blue);"></i>
+                Additional Services
+            </label>
+
+            <div style="margin-bottom: 1rem;">
+                <label class="service-option" style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                    <input type="checkbox" id="designService" onchange="updatePricing()" style="accent-color: var(--primary-blue);">
+                    <span>Design & Formatting Service (+Rs.1500)</span>
+                </label>
+            </div>
+
+            <div style="margin-bottom: 1rem;">
+                <label class="service-option" style="display: flex; align-items: center; gap: 0.5rem;">
+                    <input type="checkbox" id="isbnService" onchange="updatePricing()" style="accent-color: var(--primary-blue);">
+                    <span>ISBN Allocation (+Rs.500)</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Specifications Table -->
+        <div class="specs-table">
+            <div class="spec-row">
+                <div class="spec-label">Dimensions</div>
+                <div class="spec-value">{{ product.width_mm }} × {{ product.height_mm }}mm</div>
+            </div>
+            <div class="spec-row">
+                <div class="spec-label">Resolution</div>
+                <div class="spec-value">{{ product.dpi }}dpi</div>
+            </div>
+            <div class="spec-row">
+                <div class="spec-label">Bleed</div>
+                <div class="spec-value">{{ product.bleed_mm }}mm</div>
+            </div>
+            <div class="spec-row">
+                <div class="spec-label">Safe Zone</div>
+                <div class="spec-value">{{ product.safe_zone_mm }}mm</div>
+            </div>
+            <div class="spec-row">
+                <div class="spec-label">Min. Order</div>
+                <div class="spec-value">{{ product.minimum_quantity }} pieces</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quote Calculator Sidebar -->
+    <div class="quote-calculator">
+        <!-- Quantity Selection -->
+        <div class="quote-card">
+            <div class="quote-field">
+                <label class="quote-label">
+                    <i class="fas fa-boxes" style="margin-right: 0.5rem; color: var(--primary-blue);"></i>
+                    Quantity
+                </label>
+                <div class="quantity-selector">
+                    <span>Qty:</span>
+                    <div class="quantity-controls">
+                        <button type="button" class="qty-btn" onclick="adjustQuantity(-10)">−10</button>
+                        <button type="button" class="qty-btn" onclick="adjustQuantity(-1)">−</button>
+                        <input type="number" id="quantityInput" class="qty-input" value="100" min="{{ product.minimum_quantity }}" onchange="updatePricing()">
+                        <button type="button" class="qty-btn" onclick="adjustQuantity(1)">+</button>
+                        <button type="button" class="qty-btn" onclick="adjustQuantity(10)">+10</button>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Price Display -->
-            <div class="price-display">
-                <div class="price-amount">₹<span id="totalPrice">{{ product.get_starting_price|floatformat:0|default:"999" }}</span></div>
-                <div class="price-unit">Unit Price: ₹<span id="unitPrice">{{ product.get_starting_price|floatformat:2|default:"9.99" }}</span> per piece</div>
-                
-                <div class="action-buttons">
-                    {% if product.has_design_tool %}
-                    <a href="{% url 'design_tool:editor' product.slug %}" class="btn-primary">
-                        <i class="fas fa-palette"></i> Design Now
-                    </a>
-                    {% endif %}
-                    <button type="button" class="btn-primary" onclick="addToCart()">
-                        <i class="fas fa-shopping-cart"></i> Add to Cart
-                    </button>
-                    <button type="button" class="btn-secondary" onclick="requestQuote()">
-                        <i class="fas fa-envelope"></i> Request Quote
-                    </button>
-                    {% if product.allows_upload %}
-                    <button type="button" class="btn-secondary" onclick="uploadDesign()">
-                        <i class="fas fa-upload"></i> Upload Design
-                    </button>
-                    {% endif %}
+        <!-- Price Display -->
+        <div class="price-card" id="priceCard">
+            <div class="price-header">
+                <div class="price-location">
+                    <i class="fas fa-map-marker-alt"></i> Mumbai Price
+                </div>
+                <div class="price-discount" id="discountBadge" style="display: none;">
+                    SAVE <span id="discountPercent">0</span>%
                 </div>
             </div>
-        </form>
+            <div class="price-main">
+                <span class="price-currency">Rs.</span>
+                <span class="price-amount" id="totalPrice">0</span>
+            </div>
+            <div class="price-breakdown">
+                <div>
+                    <span>Unit Price:</span>
+                    <span>Rs.<span id="unitPrice">0</span></span>
+                </div>
+                <div>
+                    <span>Subtotal:</span>
+                    <span>Rs.<span id="subtotal">0</span></span>
+                </div>
+                <div id="setupCostRow" style="display: none;">
+                    <span>Setup Cost:</span>
+                    <span>Rs.<span id="setupCost">0</span></span>
+                </div>
+                <div id="savingsRow" style="display: none;">
+                    <span style="color: var(--success-color);">Savings:</span>
+                    <span style="color: var(--success-color);">-Rs.<span id="savings">0</span></span>
+                </div>
+                <div class="total">
+                    <span>Total:</span>
+                    <span>Rs.<span id="finalTotal">0</span></span>
+                </div>
+            </div>
+            <div style="font-size: 0.85rem; opacity: 0.8; margin-top: 1rem;">
+                <i class="fas fa-clock"></i> Delivery: <span id="deliveryDays">5-7</span> days
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <button class="action-btn save-quote-btn" onclick="saveQuote()">
+            <i class="fas fa-save"></i> SAVE QUOTE
+        </button>
+
+        {% if product.has_design_tool %}
+        <button class="action-btn design-btn" onclick="openDesignTool()">
+            <i class="fas fa-palette"></i> DESIGN NOW
+        </button>
+        {% elif product.allows_upload %}
+        <button class="action-btn design-btn" onclick="uploadDesign()">
+            <i class="fas fa-upload"></i> UPLOAD DESIGN
+        </button>
+        {% endif %}
+
+        <button class="action-btn order-btn" onclick="addToCart()">
+            <i class="fas fa-shopping-cart"></i> ORDER NOW
+        </button>
+
+        <!-- Download Template -->
+        <div class="template-download" onclick="downloadTemplate()">
+            <div class="template-info">
+                <div class="template-icon">
+                    <i class="fas fa-download"></i>
+                </div>
+                <div class="template-details">
+                    <h4>Download Template</h4>
+                    <p>Based on your specifications</p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
-<script>
-// Dynamic product data
-let productId = {{ product.id }};
-let selectedPaperType = '{{ available_paper_types.0|default:"Standard" }}';
-let selectedColorOption = '4+4';
-let selectedSize = '{{ available_sizes.0|default:"Standard" }}';
-let selectedFinish = '{{ available_finishes.0|default:"Standard" }}';
-let isCalculating = false;
+<!-- Features Section -->
+<section class="features-section">
+    <div style="text-align: center; margin-bottom: 3rem;">
+        <h2 style="font-size: 2.5rem; font-weight: 700; color: var(--text-dark); margin-bottom: 1rem;">
+            Why Choose Our {{ product.name }}?
+        </h2>
+        <p style="font-size: 1.1rem; color: var(--text-medium);">
+            Professional quality printing with attention to every detail
+        </p>
+    </div>
 
-// Initialize calculator on page load
+    <div class="features-grid">
+        {% for feature in product.features.all %}
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="{{ feature.icon|default:'fas fa-check' }}"></i>
+            </div>
+            <h3 style="font-size: 1.2rem; font-weight: 600; color: var(--text-dark); margin-bottom: 0.5rem;">
+                {{ feature.title }}
+            </h3>
+            <p style="color: var(--text-medium); font-size: 0.95rem;">
+                {{ feature.description }}
+            </p>
+        </div>
+        {% empty %}
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-medal"></i>
+            </div>
+            <h3 style="font-size: 1.2rem; font-weight: 600; color: var(--text-dark); margin-bottom: 0.5rem;">
+                Premium Quality
+            </h3>
+            <p style="color: var(--text-medium); font-size: 0.95rem;">
+                High-quality materials and professional printing
+            </p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-palette"></i>
+            </div>
+            <h3 style="font-size: 1.2rem; font-weight: 600; color: var(--text-dark); margin-bottom: 0.5rem;">
+                Vibrant Colors
+            </h3>
+            <p style="color: var(--text-medium); font-size: 0.95rem;">
+                State-of-the-art printing technology
+            </p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <h3 style="font-size: 1.2rem; font-weight: 600; color: var(--text-dark); margin-bottom: 0.5rem;">
+                Fast Turnaround
+            </h3>
+            <p style="color: var(--text-medium); font-size: 0.95rem;">
+                Quick production without compromising quality
+            </p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-tags"></i>
+            </div>
+            <h3 style="font-size: 1.2rem; font-weight: 600; color: var(--text-dark); margin-bottom: 0.5rem;">
+                Best Prices
+            </h3>
+            <p style="color: var(--text-medium); font-size: 0.95rem;">
+                Competitive pricing with volume discounts
+            </p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Related Products -->
+{% if related_products %}
+<section style="padding: 4rem 0; background: white;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+        <h2 style="text-align: center; font-size: 2rem; font-weight: 700; margin-bottom: 3rem;">
+            Related Products
+        </h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+            {% for related in related_products %}
+            <a href="{% url 'services:product_detail' related.slug %}" style="text-decoration: none; color: inherit;">
+                <div style="background: white; border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; text-align: center; transition: all 0.3s;">
+                    <div style="width: 50px; height: 50px; background: var(--bg-light); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: var(--primary-blue);">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <h3 style="font-size: 1.1rem; font-weight: 600; color: var(--text-dark); margin-bottom: 0.5rem;">
+                        {{ related.name }}
+                    </h3>
+                    <p style="color: var(--text-light); font-size: 0.9rem;">
+                        Starting from Rs.{{ related.get_starting_price|floatformat:0 }}
+                    </p>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Global configuration
+const productConfig = {
+    id: {{ product.id }},
+    name: "{{ product.name }}",
+    minQuantity: {{ product.minimum_quantity }},
+    basePrice: {{ product.price_per_unit|default:0 }},
+    paperTypes: {% if available_paper_types %}{{ available_paper_types|safe }}{% else %}[]{% endif %},
+    sizes: {% if available_sizes %}{{ available_sizes|safe }}{% else %}[]{% endif %},
+    finishes: {% if available_finishes %}{{ available_finishes|safe }}{% else %}[]{% endif %}
+};
+
+// Current selections
+let currentSelection = {
+    quantity: 100,
+    paperType: '{{ available_paper_types.0|default:"" }}',
+    size: '{{ available_sizes.0|default:"" }}',
+    color: 'Black & White',
+    bindingType: 'Perfect Bound',
+    printSides: 'Single-sided',
+    finish: '{{ available_finishes.0|default:"Matte" }}',
+    pageCount: 100,
+    designService: false,
+    isbnService: false
+};
+
+// Initialize when DOM loads
 document.addEventListener('DOMContentLoaded', function() {
+    initializePaperTypes();
+    initializeDefaults();
+    updatePricing();
+
+    // Auto-update pricing when inputs change
     setupEventListeners();
-    calculatePrice();
 });
 
-function setupEventListeners() {
-    // Form field changes
-    const formFields = document.querySelectorAll('#pricingForm select');
-    formFields.forEach(field => {
-        field.addEventListener('change', function() {
-            // Update global variables
-            if (this.name === 'paper_type') selectedPaperType = this.value;
-            if (this.name === 'size') selectedSize = this.value;
-            if (this.name === 'finish') selectedFinish = this.value;
-            
-            calculatePrice();
-        });
+function initializePaperTypes() {
+    const paperTypeGrid = document.getElementById('paperTypeGrid');
+    if (!paperTypeGrid) return;
+
+    // Paper type definitions with pricing and visuals
+    const paperTypeData = {
+        '75 GSM White Paper': {
+            name: 'Standard Paper',
+            description: 'High-quality standard paper for everyday printing',
+            specs: ['75 GSM', 'White', 'Standard'],
+            priceAddon: 0,
+            gradient: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
+            icon: '📄'
+        },
+        '100 GSM White Paper': {
+            name: 'Premium Paper',
+            description: 'Premium quality paper with enhanced thickness',
+            specs: ['100 GSM', 'White', 'Premium'],
+            priceAddon: 2,
+            gradient: 'linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)',
+            icon: '📋'
+        },
+        '100 GSM Art Paper': {
+            name: 'Art Paper',
+            description: 'Glossy art paper perfect for color printing',
+            specs: ['100 GSM', 'Glossy', 'Art'],
+            priceAddon: 5,
+            gradient: 'linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%)',
+            icon: '🎨'
+        },
+        '130 GSM Art Paper': {
+            name: 'Premium Art Paper',
+            description: 'Premium art paper for professional color prints',
+            specs: ['130 GSM', 'Premium', 'Art'],
+            priceAddon: 8,
+            gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            icon: '✨'
+        },
+        '300 GSM Art Card': {
+            name: 'Standard Cardstock',
+            description: 'Thick cardstock perfect for business cards',
+            specs: ['300 GSM', 'Thick', 'Card'],
+            priceAddon: 1,
+            gradient: 'linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%)',
+            icon: '🗃️'
+        },
+        '400 GSM Premium Card': {
+            name: 'Premium Cardstock',
+            description: 'Ultra-premium cardstock with luxury feel',
+            specs: ['400 GSM', 'Luxury', 'Premium'],
+            priceAddon: 3,
+            gradient: 'linear-gradient(135deg, #ffd700 0%, #ffed4e 100%)',
+            icon: '💳'
+        }
+    };
+
+    productConfig.paperTypes.forEach((paperType, index) => {
+        const data = paperTypeData[paperType] || {
+            name: paperType,
+            description: `High-quality ${paperType.toLowerCase()}`,
+            specs: [paperType],
+            priceAddon: 0,
+            gradient: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
+            icon: '📄'
+        };
+
+        const isFirst = index === 0;
+        const cardHtml = `
+            <div class="option-card ${isFirst ? 'selected' : ''}"
+                 onclick="selectPaperType(this, '${paperType}')"
+                 data-paper="${paperType}">
+                <input type="radio" name="paperType" value="${paperType}" ${isFirst ? 'checked' : ''}>
+                <div class="option-preview" style="background: ${data.gradient};">
+                    <div class="option-price">${data.priceAddon > 0 ? '+Rs.' + data.priceAddon : 'Base'}</div>
+                    <span style="font-size: 2rem; color: #666;">${data.icon}</span>
+                </div>
+                <div class="option-info">
+                    <div class="option-title">${data.name}</div>
+                    <div class="option-description">${data.description}</div>
+                    <div class="option-specs">
+                        ${data.specs.map(spec => `<span class="option-spec">${spec}</span>`).join('')}
+                    </div>
+                </div>
+            </div>
+        `;
+        paperTypeGrid.innerHTML += cardHtml;
     });
 }
 
-function selectPaper(element, paperType) {
-    // Remove selected class from all paper cards
-    document.querySelectorAll('.paper-card').forEach(card => {
+function initializeDefaults() {
+    // Set default values
+    document.getElementById('quantityInput').value = currentSelection.quantity;
+    if (document.getElementById('pageCount')) {
+        document.getElementById('pageCount').value = currentSelection.pageCount;
+    }
+
+    // Set first available options as defaults
+    if (productConfig.sizes.length > 0) {
+        currentSelection.size = productConfig.sizes[0];
+    }
+    if (productConfig.finishes.length > 0) {
+        currentSelection.finish = productConfig.finishes[0];
+    }
+}
+
+function setupEventListeners() {
+    // Quantity input
+    const quantityInput = document.getElementById('quantityInput');
+    if (quantityInput) {
+        quantityInput.addEventListener('input', debounce(updatePricing, 300));
+    }
+
+    // Page count input
+    const pageCountInput = document.getElementById('pageCount');
+    if (pageCountInput) {
+        pageCountInput.addEventListener('input', debounce(updatePricing, 300));
+    }
+}
+
+function selectPaperType(element, paperType) {
+    // Update UI
+    document.querySelectorAll('#paperTypeGrid .option-card').forEach(card => {
         card.classList.remove('selected');
     });
-    
-    // Add selected class to clicked card
     element.classList.add('selected');
-    selectedPaperType = paperType;
-    
-    // Update paper type select if it exists
-    const paperSelect = document.getElementById('paperType');
-    if (paperSelect) {
-        paperSelect.value = paperType;
-    }
-    
-    // Visual feedback
-    element.style.transform = 'scale(0.98)';
-    setTimeout(() => {
-        element.style.transform = '';
-    }, 150);
-    
-    calculatePrice();
+
+    // Check radio button
+    const radio = element.querySelector('input[type="radio"]');
+    if (radio) radio.checked = true;
+
+    // Update selection
+    currentSelection.paperType = paperType;
+    updatePricing();
 }
 
-function selectColor(element, colorType) {
-    // Remove selected class from all color options
-    document.querySelectorAll('.color-option').forEach(option => {
-        option.classList.remove('selected');
+function selectColor(element, color) {
+    // Update UI
+    document.querySelectorAll('[data-color]').forEach(card => {
+        card.classList.remove('selected');
     });
-    
-    // Add selected class to clicked option
     element.classList.add('selected');
-    selectedColorOption = colorType;
-    
-    // Visual feedback
-    element.style.transform = 'scale(0.95)';
-    setTimeout(() => {
-        element.style.transform = '';
-    }, 150);
-    
-    calculatePrice();
+
+    // Check radio button
+    const radio = element.querySelector('input[type="radio"]');
+    if (radio) radio.checked = true;
+
+    // Update selection
+    currentSelection.color = color;
+    updatePricing();
 }
 
-function calculatePrice() {
-    if (isCalculating) return;
-    isCalculating = true;
-    
-    // Get form values
-    const quantity = parseInt(document.getElementById('quantity').value) || {{ product.minimum_quantity }};
-    const size = selectedSize;
-    const paperType = selectedPaperType;
-    const finish = selectedFinish;
-    const colors = selectedColorOption;
-    
-    // Build API request
-    const params = new URLSearchParams({
-        size: size,
-        paper_type: paperType,
-        finish: finish,
-        colors: colors,
-        quantity: quantity
-    });
-    
-    // Call pricing API
-    fetch(`/services/api/pricing/${productId}/?${params.toString()}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // Update price display
-                animateNumber('totalPrice', data.price);
-                animateNumber('unitPrice', data.unit_price);
-                
-                // Show savings if applicable
-                if (data.savings && data.savings > 0) {
-                    showSavings(data.savings);
-                }
-            } else {
-                // Handle pricing errors
-                document.getElementById('totalPrice').textContent = 'Quote';
-                document.getElementById('unitPrice').textContent = 'Required';
-                
-                if (data.requires_quote) {
-                    showQuoteRequired();
-                }
-            }
-        })
-        .catch(error => {
-            console.error('Pricing API error:', error);
-            // Fallback to basic calculation
-            fallbackPricing(quantity);
-        })
-        .finally(() => {
-            isCalculating = false;
+function adjustQuantity(amount) {
+    const input = document.getElementById('quantityInput');
+    const currentValue = parseInt(input.value) || productConfig.minQuantity;
+    const newValue = Math.max(productConfig.minQuantity, currentValue + amount);
+    input.value = newValue;
+    currentSelection.quantity = newValue;
+    updatePricing();
+}
+
+function adjustPages(amount) {
+    const input = document.getElementById('pageCount');
+    if (!input) return;
+
+    const currentValue = parseInt(input.value) || 1;
+    const newValue = Math.max(1, currentValue + amount);
+    input.value = newValue;
+    currentSelection.pageCount = newValue;
+    updatePricing();
+}
+
+async function updatePricing() {
+    // Update current selection from form inputs
+    currentSelection.quantity = parseInt(document.getElementById('quantityInput').value) || 100;
+    currentSelection.size = document.getElementById('sizeSelect')?.value || currentSelection.size;
+    currentSelection.bindingType = document.getElementById('bindingType')?.value || currentSelection.bindingType;
+    currentSelection.printSides = document.getElementById('printSides')?.value || currentSelection.printSides;
+    currentSelection.finish = document.getElementById('finishType')?.value || currentSelection.finish;
+    currentSelection.pageCount = parseInt(document.getElementById('pageCount')?.value) || 100;
+    currentSelection.designService = document.getElementById('designService')?.checked || false;
+    currentSelection.isbnService = document.getElementById('isbnService')?.checked || false;
+
+    // Show loading state
+    const priceCard = document.getElementById('priceCard');
+    priceCard.classList.add('price-loading');
+
+    try {
+        // Build API parameters
+        const params = new URLSearchParams({
+            quantity: currentSelection.quantity,
+            size: currentSelection.size,
+            paper_type: currentSelection.paperType,
+            finish: currentSelection.finish,
+            binding_type: currentSelection.bindingType,
+            colors: currentSelection.color,
+            page_count: currentSelection.pageCount,
+            print_sides: currentSelection.printSides,
+            design_service: currentSelection.designService,
+            isbn_allocation: currentSelection.isbnService
         });
-}
 
-function fallbackPricing(quantity) {
-    // Basic fallback pricing when API fails
-    const basePrice = {{ product.get_starting_price|default:"9.99" }};
-    const unitPrice = basePrice;
-    const totalPrice = unitPrice * quantity;
-    
-    animateNumber('totalPrice', totalPrice);
-    animateNumber('unitPrice', unitPrice);
-}
+        // Call pricing API
+        const response = await fetch(`/services/api/pricing/${productConfig.id}/?${params}`);
+        const data = await response.json();
 
-function animateNumber(elementId, targetValue) {
-    const element = document.getElementById(elementId);
-    if (!element) return;
-    
-    const startValue = parseFloat(element.textContent.replace(/[₹,]/g, '')) || 0;
-    const difference = targetValue - startValue;
-    const steps = 15;
-    const stepValue = difference / steps;
-    const stepDuration = 20;
-    
-    let currentStep = 0;
-    const timer = setInterval(() => {
-        currentStep++;
-        const currentValue = startValue + (stepValue * currentStep);
-        
-        if (elementId === 'totalPrice') {
-            element.textContent = Math.round(currentValue).toLocaleString('en-IN');
+        if (data.success) {
+            updatePriceDisplay(data);
         } else {
-            element.textContent = currentValue.toFixed(2);
+            // Fallback to basic calculation
+            fallbackPricing();
         }
-        
-        if (currentStep >= steps) {
-            clearInterval(timer);
-            // Final value for accuracy
-            if (elementId === 'totalPrice') {
-                element.textContent = Math.round(targetValue).toLocaleString('en-IN');
-            } else {
-                element.textContent = targetValue.toFixed(2);
-            }
-        }
-    }, stepDuration);
+    } catch (error) {
+        console.error('Pricing API error:', error);
+        fallbackPricing();
+    } finally {
+        priceCard.classList.remove('price-loading');
+    }
 }
 
-function showSavings(amount) {
-    // Create or update savings display
-    let savingsElement = document.getElementById('savingsDisplay');
-    if (!savingsElement) {
-        savingsElement = document.createElement('div');
-        savingsElement.id = 'savingsDisplay';
-        savingsElement.style.cssText = `
-            background: var(--success-green);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin: 0.5rem 0;
-            text-align: center;
-        `;
-        document.querySelector('.price-display').insertBefore(savingsElement, document.querySelector('.action-buttons'));
+function updatePriceDisplay(pricing) {
+    // Update price elements
+    document.getElementById('unitPrice').textContent = pricing.unit_price.toFixed(2);
+    document.getElementById('subtotal').textContent = pricing.subtotal.toFixed(2);
+    document.getElementById('totalPrice').textContent = pricing.price.toFixed(2);
+    document.getElementById('finalTotal').textContent = pricing.price.toFixed(2);
+
+    // Setup cost
+    const setupCostRow = document.getElementById('setupCostRow');
+    if (pricing.setup_cost > 0) {
+        document.getElementById('setupCost').textContent = pricing.setup_cost.toFixed(2);
+        setupCostRow.style.display = 'flex';
+    } else {
+        setupCostRow.style.display = 'none';
     }
-    
-    savingsElement.textContent = `You save ₹${Math.round(amount).toLocaleString('en-IN')}`;
-    savingsElement.style.display = 'block';
+
+    // Savings
+    const savingsRow = document.getElementById('savingsRow');
+    if (pricing.savings > 0) {
+        document.getElementById('savings').textContent = pricing.savings.toFixed(2);
+        savingsRow.style.display = 'flex';
+    } else {
+        savingsRow.style.display = 'none';
+    }
+
+    // Discount badge
+    const discountBadge = document.getElementById('discountBadge');
+    if (pricing.volume_discount > 0) {
+        document.getElementById('discountPercent').textContent = pricing.volume_discount.toFixed(0);
+        discountBadge.style.display = 'block';
+    } else {
+        discountBadge.style.display = 'none';
+    }
+
+    // Delivery time
+    document.getElementById('deliveryDays').textContent = `${pricing.turnaround_days || 5}-${(pricing.turnaround_days || 5) + 2}`;
 }
 
-function showQuoteRequired() {
-    const quoteBtn = document.querySelector('button[onclick="requestQuote()"]');
-    if (quoteBtn) {
-        quoteBtn.classList.add('animate-pulse');
-        quoteBtn.innerHTML = '<i class="fas fa-phone"></i> Get Custom Quote';
-    }
+function fallbackPricing() {
+    // Simple fallback calculation
+    const basePrice = productConfig.basePrice;
+    let unitPrice = basePrice;
+
+    // Add paper type cost
+    if (currentSelection.paperType.includes('130 GSM')) unitPrice += 5;
+    if (currentSelection.paperType.includes('400 GSM')) unitPrice += 3;
+
+    // Add color cost
+    if (currentSelection.color === 'Full Color') unitPrice += 5;
+
+    // Calculate total
+    let total = unitPrice * currentSelection.quantity;
+
+    // Add services
+    if (currentSelection.designService) total += 1500;
+    if (currentSelection.isbnService) total += 500;
+
+    // Update display
+    document.getElementById('unitPrice').textContent = unitPrice.toFixed(2);
+    document.getElementById('subtotal').textContent = (unitPrice * currentSelection.quantity).toFixed(2);
+    document.getElementById('totalPrice').textContent = total.toFixed(2);
+    document.getElementById('finalTotal').textContent = total.toFixed(2);
+}
+
+// Image gallery
+function changeImage(src, thumbnail) {
+    document.getElementById('mainImage').src = src;
+
+    document.querySelectorAll('.thumbnail').forEach(thumb => {
+        thumb.classList.remove('active');
+    });
+    if (thumbnail) thumbnail.classList.add('active');
 }
 
 // Action functions
-function addToCart() {
-    const quantity = document.getElementById('quantity').value;
-    
-    const cartData = {
-        product_id: productId,
-        quantity: quantity,
-        size: selectedSize,
-        paper_type: selectedPaperType,
-        finish: selectedFinish,
-        colors: selectedColorOption,
-        csrfmiddlewaretoken: document.querySelector('[name=csrfmiddlewaretoken]').value
+function saveQuote() {
+    const quoteData = {
+        product: productConfig.name,
+        selection: currentSelection,
+        price: document.getElementById('totalPrice').textContent,
+        timestamp: new Date().toISOString()
     };
-    
-    fetch(`/orders/add-to-cart/${productId}/`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': cartData.csrfmiddlewaretoken
-        },
-        body: JSON.stringify(cartData)
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            // Success feedback
-            const btn = event.target;
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-check"></i> Added to Cart!';
-            btn.style.background = 'var(--success-green)';
-            
-            setTimeout(() => {
-                btn.innerHTML = originalText;
-                btn.style.background = 'var(--primary-blue)';
-            }, 2000);
-        } else {
-            alert('Failed to add to cart: ' + (data.error || 'Unknown error'));
-        }
-    })
-    .catch(error => {
-        console.error('Add to cart error:', error);
-        alert('Failed to add to cart');
-    });
+
+    localStorage.setItem('savedQuote_' + productConfig.id, JSON.stringify(quoteData));
+
+    // Visual feedback
+    const btn = event.target.closest('button');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-check"></i> SAVED!';
+    btn.style.background = 'var(--success-color)';
+
+    setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.style.background = '#17a2b8';
+    }, 2000);
 }
 
-function requestQuote() {
-    // Collect quote data
-    const quoteData = {
-        product_id: productId,
-        quantity: document.getElementById('quantity').value,
-        specifications: {
-            size: selectedSize,
-            paper_type: selectedPaperType,
-            finish: selectedFinish,
-            colors: selectedColorOption
-        }
-    };
-    
-    // Redirect to quote request page with data
-    const params = new URLSearchParams({
-        product_id: productId,
-        quantity: quoteData.quantity,
-        size: selectedSize,
-        paper_type: selectedPaperType,
-        finish: selectedFinish,
-        colors: selectedColorOption
-    });
-    
-    window.location.href = `/orders/request-quote/?${params.toString()}`;
+function openDesignTool() {
+    // Save current config for design tool
+    sessionStorage.setItem('designToolConfig', JSON.stringify(currentSelection));
+    window.location.href = `/design-tool/product/${productConfig.id}/`;
 }
 
 function uploadDesign() {
-    {% if product.allows_upload %}
-    // Redirect to upload page
-    window.location.href = `/design-tool/upload/?product_id=${productId}`;
-    {% else %}
-    alert('Upload not available for this product');
-    {% endif %}
+    // Create file input
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.pdf,.png,.jpg,.jpeg,.ai,.psd';
+    input.onchange = function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            // Handle file upload
+            console.log('Uploading file:', file.name);
+            alert(`File "${file.name}" ready for upload! This feature will be available soon.`);
+        }
+    };
+    input.click();
 }
 
-function showImage(imageUrl) {
-    // Create image modal
-    const modal = document.createElement('div');
-    modal.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 1000;
-        cursor: pointer;
-    `;
-    
-    const img = document.createElement('img');
-    img.src = imageUrl;
-    img.style.cssText = `
-        max-width: 90%;
-        max-height: 90%;
-        object-fit: contain;
-        border-radius: 8px;
-    `;
-    
-    modal.appendChild(img);
-    document.body.appendChild(modal);
-    
-    modal.addEventListener('click', () => {
-        document.body.removeChild(modal);
-    });
+async function addToCart() {
+    const btn = event.target;
+    const originalText = btn.innerHTML;
+
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ADDING...';
+    btn.disabled = true;
+
+    try {
+        const formData = new FormData();
+        formData.append('product_id', productConfig.id);
+        formData.append('quantity', currentSelection.quantity);
+        formData.append('specifications', JSON.stringify(currentSelection));
+        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+        const response = await fetch('/orders/cart/add/', {
+            method: 'POST',
+            body: formData
+        });
+
+        if (response.ok) {
+            btn.innerHTML = '<i class="fas fa-check"></i> ADDED!';
+            btn.style.background = 'var(--success-color)';
+
+            setTimeout(() => {
+                window.location.href = '/orders/cart/';
+            }, 1000);
+        } else {
+            throw new Error('Failed to add to cart');
+        }
+    } catch (error) {
+        console.error('Error adding to cart:', error);
+        btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> ERROR';
+        btn.style.background = 'var(--error-color)';
+
+        setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.style.background = 'var(--primary-blue)';
+            btn.disabled = false;
+        }, 3000);
+    }
 }
 
-// Add CSS for animations
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes pulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.05); }
-    }
-    .animate-pulse {
-        animation: pulse 2s infinite;
-    }
-`;
-document.head.appendChild(style);
+function downloadTemplate() {
+    // Generate template based on current selection
+    const templateData = {
+        product: productConfig.name,
+        specifications: currentSelection,
+        dimensions: `{{ product.width_mm }}x{{ product.height_mm }}mm`,
+        bleed: '{{ product.bleed_mm }}mm',
+        safeZone: '{{ product.safe_zone_mm }}mm',
+        dpi: {{ product.dpi }}
+    };
+
+    // For now, show info about the template
+    alert(`Template for ${productConfig.name}\nSize: ${templateData.dimensions}\nResolution: ${templateData.dpi}dpi\n\nTemplate download will be available soon!`);
+}
+
+// Utility functions
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
 </script>
-
 {% endblock %}

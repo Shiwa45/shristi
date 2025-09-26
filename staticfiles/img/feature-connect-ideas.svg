@@ -1,0 +1,136 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="24" cy="24" r="24" fill="url(#connectBg)"/>
+  
+  <!-- Central Brain/Idea Hub -->
+  <g transform="translate(24, 24)">
+    <!-- Central Node -->
+    <circle cx="0" cy="0" r="6" fill="white" opacity="0.9"/>
+    <circle cx="0" cy="0" r="4" fill="url(#centralGrad)"/>
+    
+    <!-- Lightbulb in center -->
+    <path d="M-2 -2 Q0 -4 2 -2 Q2 0 0 2 Q-2 0 -2 -2" fill="white"/>
+    <rect x="-1" y="1" width="2" height="2" fill="white" rx="0.5"/>
+  </g>
+  
+  <!-- Connected Ideas (Nodes) -->
+  <!-- Top -->
+  <g transform="translate(24, 8)">
+    <circle cx="0" cy="0" r="4" fill="white" opacity="0.8"/>
+    <circle cx="0" cy="0" r="2.5" fill="url(#ideaGrad1)"/>
+    <text x="0" y="1" font-family="Arial" font-size="4" font-weight="bold" fill="white" text-anchor="middle">1</text>
+  </g>
+  
+  <!-- Top Right -->
+  <g transform="translate(35, 13)">
+    <circle cx="0" cy="0" r="3.5" fill="white" opacity="0.8"/>
+    <circle cx="0" cy="0" r="2" fill="url(#ideaGrad2)"/>
+    <text x="0" y="1" font-family="Arial" font-size="3" font-weight="bold" fill="white" text-anchor="middle">2</text>
+  </g>
+  
+  <!-- Right -->
+  <g transform="translate(40, 24)">
+    <circle cx="0" cy="0" r="4" fill="white" opacity="0.8"/>
+    <circle cx="0" cy="0" r="2.5" fill="url(#ideaGrad3)"/>
+    <text x="0" y="1" font-family="Arial" font-size="4" font-weight="bold" fill="white" text-anchor="middle">3</text>
+  </g>
+  
+  <!-- Bottom Right -->
+  <g transform="translate(35, 35)">
+    <circle cx="0" cy="0" r="3.5" fill="white" opacity="0.8"/>
+    <circle cx="0" cy="0" r="2" fill="url(#ideaGrad4)"/>
+    <text x="0" y="1" font-family="Arial" font-size="3" font-weight="bold" fill="white" text-anchor="middle">4</text>
+  </g>
+  
+  <!-- Bottom -->
+  <g transform="translate(24, 40)">
+    <circle cx="0" cy="0" r="4" fill="white" opacity="0.8"/>
+    <circle cx="0" cy="0" r="2.5" fill="url(#ideaGrad5)"/>
+    <text x="0" y="1" font-family="Arial" font-size="4" font-weight="bold" fill="white" text-anchor="middle">5</text>
+  </g>
+  
+  <!-- Bottom Left -->
+  <g transform="translate(13, 35)">
+    <circle cx="0" cy="0" r="3.5" fill="white" opacity="0.8"/>
+    <circle cx="0" cy="0" r="2" fill="url(#ideaGrad6)"/>
+    <text x="0" y="1" font-family="Arial" font-size="3" font-weight="bold" fill="white" text-anchor="middle">6</text>
+  </g>
+  
+  <!-- Left -->
+  <g transform="translate(8, 24)">
+    <circle cx="0" cy="0" r="4" fill="white" opacity="0.8"/>
+    <circle cx="0" cy="0" r="2.5" fill="url(#ideaGrad7)"/>
+    <text x="0" y="1" font-family="Arial" font-size="4" font-weight="bold" fill="white" text-anchor="middle">7</text>
+  </g>
+  
+  <!-- Top Left -->
+  <g transform="translate(13, 13)">
+    <circle cx="0" cy="0" r="3.5" fill="white" opacity="0.8"/>
+    <circle cx="0" cy="0" r="2" fill="url(#ideaGrad8)"/>
+    <text x="0" y="1" font-family="Arial" font-size="3" font-weight="bold" fill="white" text-anchor="middle">8</text>
+  </g>
+  
+  <!-- Connection Lines -->
+  <g stroke="white" stroke-width="1.5" opacity="0.6">
+    <line x1="24" y1="18" x2="24" y2="12" />
+    <line x1="30" y1="18" x2="32" y2="16" />
+    <line x1="30" y1="24" x2="36" y2="24" />
+    <line x1="30" y1="30" x2="32" y2="32" />
+    <line x1="24" y1="30" x2="24" y2="36" />
+    <line x1="18" y1="30" x2="16" y2="32" />
+    <line x1="18" y1="24" x2="12" y2="24" />
+    <line x1="18" y1="18" x2="16" y2="16" />
+  </g>
+  
+  <defs>
+    <linearGradient id="connectBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="centralGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fde047;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#facc15;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="ideaGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ef4444;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#dc2626;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="ideaGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="ideaGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="ideaGrad4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="ideaGrad5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0891b2;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="ideaGrad6" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#84cc16;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#65a30d;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="ideaGrad7" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f97316;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ea580c;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="ideaGrad8" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ec4899;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#db2777;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+</svg>

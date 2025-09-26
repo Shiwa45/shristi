@@ -5,1510 +5,1425 @@
 
 {% block extra_css %}
 <style>
-    /* Variables */
-    :root {
-        --primary-blue: #0ea5e9;
-        --primary-dark: #0284c7;
-        --text-dark: #1f2937;
-        --text-medium: #4b5563;
-        --text-light: #6b7280;
-        --border-color: #e5e7eb;
-        --bg-light: #f9fafb;
-        --bg-section: #ffffff;
-        --success-color: #10b981;
-        --warning-color: #f59e0b;
-        --error-color: #ef4444;
-    }
+/* Product Hero Section */
+.product-hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: relative;
+    overflow: hidden;
+}
 
-    /* Hero Section */
-    .hero-section {
-        background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-        padding: 6rem 0 3rem;
-    }
+.product-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3Ccircle cx='10' cy='10' r='4'/%3E%3Ccircle cx='50' cy='10' r='4'/%3E%3Ccircle cx='10' cy='50' r='4'/%3E%3Ccircle cx='50' cy='50' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
 
-    .hero-content {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 1rem;
-    }
+.product-hero-content {
+    position: relative;
+    z-index: 2;
+}
 
-    .hero-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
+.product-hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.hero-image-wrapper {
+    position: relative;
+}
+
+.hero-image {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    margin: 0 auto;
+    display: block;
+}
+
+.hero-badges {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.hero-badge {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.hero-badge.design-tool {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.hero-badge.premium {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.hero-description {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.hero-price {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.price-current {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #fbbf24;
+}
+
+.price-label {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.1rem;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.hero-btn {
+    padding: 16px 32px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 180px;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+}
+
+.hero-btn-primary {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    color: #92400e;
+    box-shadow: 0 10px 25px rgba(251, 191, 36, 0.4);
+}
+
+.hero-btn-primary:hover {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(251, 191, 36, 0.6);
+    color: white;
+    text-decoration: none;
+}
+
+.hero-btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.hero-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+    color: white;
+    text-decoration: none;
+}
+
+/* Quote Calculator Section */
+.calculator-section {
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+}
+
+.calculator-wrapper {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.calculator-form {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e2e8f0;
+}
+
+.form-section {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.form-section:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.section-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.section-title i {
+    color: #667eea;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.form-field {
+    position: relative;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.5rem;
+}
+
+.form-input,
+.form-select {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.form-input:focus,
+.form-select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/path%3e%3c/svg%3e");
+    background-position: right 12px center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+    padding-right: 40px;
+}
+
+/* Dynamic Form Elements */
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.radio-option:hover {
+    border-color: #667eea;
+    background: rgba(102, 126, 234, 0.02);
+}
+
+.radio-option input[type="radio"] {
+    margin-right: 12px;
+    accent-color: #667eea;
+}
+
+.radio-option input[type="radio"]:checked + .radio-label {
+    font-weight: 600;
+    color: #667eea;
+}
+
+.radio-label {
+    flex: 1;
+    font-size: 0.95rem;
+}
+
+.price-modifier {
+    font-size: 0.85rem;
+    color: #059669;
+    font-weight: 600;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.checkbox-option {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.checkbox-option:hover {
+    border-color: #667eea;
+    background: rgba(102, 126, 234, 0.02);
+}
+
+.checkbox-option input[type="checkbox"] {
+    margin-right: 12px;
+    accent-color: #667eea;
+}
+
+.checkbox-option input[type="checkbox"]:checked + .checkbox-label {
+    font-weight: 600;
+    color: #667eea;
+}
+
+.checkbox-label {
+    flex: 1;
+    font-size: 0.95rem;
+}
+
+/* Paper Selection Grid */
+.paper-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.paper-option {
+    border: 2px solid #e5e7eb;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: white;
+    position: relative;
+}
+
+.paper-option:hover {
+    border-color: #667eea;
+    transform: translateY(-4px);
+    box-shadow: 0 12px 25px rgba(102, 126, 234, 0.15);
+}
+
+.paper-option.selected {
+    border-color: #667eea;
+    background: rgba(102, 126, 234, 0.02);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
+}
+
+.paper-option input[type="radio"] {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    width: 20px;
+    height: 20px;
+    accent-color: #667eea;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.paper-preview {
+    width: 100%;
+    height: 140px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.paper-bw-standard {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.paper-bw-premium {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.05);
+}
+
+.paper-color-premium {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.paper-preview-icon {
+    font-size: 2.5rem;
+    opacity: 0.4;
+    color: #6b7280;
+    z-index: 1;
+}
+
+.paper-info {
+    padding: 1rem;
+}
+
+.paper-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.paper-description {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+}
+
+.paper-specs {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.paper-spec {
+    background: #f1f5f9;
+    color: #475569;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.paper-price-overlay {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    z-index: 2;
+}
+
+/* Quote Display */
+.quote-display {
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    color: white;
+    border-radius: 20px;
+    padding: 2rem;
+    position: sticky;
+    top: 120px;
+    height: fit-content;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.quote-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+}
+
+.quote-location {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.quote-discount {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.quote-price-main {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.price-currency {
+    font-size: 1.5rem;
+    font-weight: 600;
+    opacity: 0.8;
+    vertical-align: top;
+}
+
+.price-amount {
+    font-size: 4rem;
+    font-weight: 800;
+    line-height: 1;
+    color: #fbbf24;
+}
+
+.price-details {
+    margin-bottom: 2rem;
+}
+
+.unit-price {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 0.5rem;
+}
+
+.price-note {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 1rem;
+}
+
+.estimated-weight {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.quote-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.quote-btn {
+    width: 100%;
+    padding: 16px 20px;
+    border-radius: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+}
+
+.quote-btn-primary {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    color: #92400e;
+    box-shadow: 0 8px 20px rgba(251, 191, 36, 0.3);
+}
+
+.quote-btn-primary:hover {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(251, 191, 36, 0.5);
+    color: white;
+    text-decoration: none;
+}
+
+.quote-btn-secondary {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+}
+
+.quote-btn-secondary:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+    color: white;
+    text-decoration: none;
+}
+
+.quote-btn-outline {
+    background: transparent;
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.quote-btn-outline:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+    color: white;
+    text-decoration: none;
+}
+
+/* Template Card */
+.template-card {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.template-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(79, 70, 229, 0.3);
+}
+
+.template-icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.template-text h4 {
+    color: white;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.template-text p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.85rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .product-hero-grid {
+        grid-template-columns: 1fr;
         gap: 3rem;
-        align-items: start;
+        text-align: center;
     }
 
-    .product-info h1 {
+    .calculator-wrapper {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .quote-display {
+        position: static;
+        order: -1;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .paper-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-description {
+        font-size: 1rem;
+    }
+
+    .price-current {
         font-size: 2.5rem;
-        font-weight: 700;
-        color: var(--text-dark);
-        margin-bottom: 1rem;
     }
 
-    .product-tagline {
-        font-size: 1.1rem;
-        color: var(--text-medium);
-        margin-bottom: 1.5rem;
-        line-height: 1.6;
+    .hero-actions {
+        flex-direction: column;
     }
 
-    .product-highlights {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        margin-bottom: 2rem;
+    .hero-btn {
+        min-width: auto;
     }
 
-    .highlight-badge {
-        background: var(--bg-light);
-        color: var(--text-dark);
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-        font-size: 0.875rem;
-        font-weight: 500;
-        border: 1px solid var(--border-color);
-    }
-
-    /* Product Gallery */
-    .hero-image-container {
-        background: white;
-        border-radius: 12px;
-        padding: 2rem;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    }
-
-    .hero-image {
-        width: 100%;
-        height: 400px;
-        object-fit: contain;
-    }
-
-    .image-thumbnails {
-        display: flex;
-        gap: 0.5rem;
-        margin-top: 1rem;
-        justify-content: center;
-    }
-
-    .thumbnail {
-        width: 60px;
-        height: 60px;
-        object-fit: cover;
-        border: 2px solid transparent;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.3s;
-    }
-
-    .thumbnail:hover,
-    .thumbnail.active {
-        border-color: var(--primary-blue);
-    }
-
-    /* Main Content Grid */
-    .main-content {
-        max-width: 1400px;
-        margin: -2rem auto 0;
-        padding: 0 1rem;
-        display: grid;
-        grid-template-columns: 1fr 400px;
-        gap: 2rem;
-        position: relative;
-    }
-
-    .product-details {
-        background: white;
-        border-radius: 12px;
-        padding: 2rem;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    }
-
-    /* Quote Calculator */
-    .quote-calculator {
-        position: sticky;
-        top: 80px;
-        height: fit-content;
-    }
-
-    .quote-card {
-        background: white;
-        border-radius: 12px;
+    .calculator-form {
         padding: 1.5rem;
-        border: 1px solid #e1e5e9;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        margin-bottom: 1rem;
     }
 
-    .quote-field {
-        margin-bottom: 1.5rem;
-    }
-
-    .quote-label {
-        display: block;
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: var(--text-dark);
-        margin-bottom: 0.5rem;
-    }
-
-    .quote-input-wrapper {
-        position: relative;
-    }
-
-    .quote-select, .quote-input {
-        width: 100%;
-        padding: 0.75rem;
-        padding-right: 2.5rem;
-        border: 2px solid #e1e5e9;
-        border-radius: 8px;
-        font-size: 0.95rem;
-        background: white;
-        appearance: none;
-        cursor: pointer;
-        transition: all 0.2s;
-    }
-
-    .quote-input {
-        cursor: text;
-    }
-
-    .quote-select:focus, .quote-input:focus {
-        outline: none;
-        border-color: var(--primary-blue);
-        box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
-    }
-
-    .quote-dropdown-icon {
-        position: absolute;
-        right: 0.75rem;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #6c757d;
-        pointer-events: none;
-    }
-
-    /* Enhanced Option Cards */
-    .option-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 1rem;
-        margin: 1rem 0;
-    }
-
-    .option-card {
-        border: 2px solid #e1e5e9;
-        border-radius: 12px;
-        overflow: hidden;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        background: white;
-        position: relative;
-    }
-
-    .option-card:hover {
-        border-color: var(--primary-blue);
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(14, 165, 233, 0.2);
-    }
-
-    .option-card.selected {
-        border-color: var(--primary-blue);
-        background: rgba(14, 165, 233, 0.02);
-    }
-
-    .option-card input[type="radio"] {
-        position: absolute;
-        top: 12px;
-        right: 12px;
-        width: 20px;
-        height: 20px;
-        accent-color: var(--primary-blue);
-        cursor: pointer;
-        z-index: 2;
-    }
-
-    .option-preview {
-        width: 100%;
-        height: 120px;
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    }
-
-    .option-price {
-        position: absolute;
-        top: 12px;
-        left: 12px;
-        background: rgba(0, 0, 0, 0.8);
-        color: white;
-        padding: 0.25rem 0.5rem;
-        border-radius: 4px;
-        font-size: 0.75rem;
-        font-weight: 600;
-    }
-
-    .option-info {
-        padding: 1rem;
-    }
-
-    .option-title {
-        font-size: 1rem;
-        font-weight: 600;
-        color: var(--text-dark);
-        margin-bottom: 0.5rem;
-    }
-
-    .option-description {
-        font-size: 0.85rem;
-        color: var(--text-medium);
-        margin-bottom: 0.75rem;
-    }
-
-    .option-specs {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-    }
-
-    .option-spec {
-        background: var(--bg-light);
-        color: var(--text-medium);
-        padding: 0.25rem 0.5rem;
-        border-radius: 4px;
-        font-size: 0.75rem;
-        font-weight: 500;
-    }
-
-    /* Quantity Selector */
-    .quantity-selector {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        background: #f8f9fa;
-        padding: 1rem;
-        border-radius: 8px;
-        margin-bottom: 1rem;
-    }
-
-    .quantity-controls {
-        display: flex;
-        align-items: center;
-        border: 2px solid #e1e5e9;
-        border-radius: 8px;
-        background: white;
-    }
-
-    .qty-btn {
-        background: none;
-        border: none;
-        padding: 0.5rem 1rem;
-        font-size: 1.2rem;
-        cursor: pointer;
-        color: var(--primary-blue);
-        transition: background 0.2s;
-    }
-
-    .qty-btn:hover {
-        background: var(--bg-light);
-    }
-
-    .qty-input {
-        border: none;
-        padding: 0.5rem 1rem;
-        text-align: center;
-        font-weight: 600;
-        width: 80px;
-    }
-
-    /* Price Display */
-    .price-card {
-        background: linear-gradient(135deg, #1a4c68 0%, #0f2a3d 100%);
-        color: white;
-        border-radius: 12px;
-        padding: 2rem;
-        position: relative;
-        overflow: hidden;
-        margin-bottom: 1rem;
-    }
-
-    .price-card::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        right: -50%;
-        width: 100px;
-        height: 100px;
-        background: rgba(255,255,255,0.1);
-        border-radius: 50%;
-        z-index: 1;
-    }
-
-    .price-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1rem;
-        position: relative;
-        z-index: 2;
-    }
-
-    .price-location {
-        font-size: 0.9rem;
-        opacity: 0.9;
-    }
-
-    .price-discount {
-        background: var(--success-color);
-        color: white;
-        padding: 0.25rem 0.75rem;
-        border-radius: 15px;
-        font-size: 0.8rem;
-        font-weight: 600;
-    }
-
-    .price-main {
-        display: flex;
-        align-items: flex-start;
-        justify-content: center;
-        margin-bottom: 1rem;
-        position: relative;
-        z-index: 2;
-    }
-
-    .price-currency {
-        font-size: 1.5rem;
-        margin-top: 0.5rem;
-    }
-
-    .price-amount {
-        font-size: 3rem;
-        font-weight: 700;
-        line-height: 1;
-    }
-
-    .price-breakdown {
-        font-size: 0.85rem;
-        opacity: 0.9;
-        position: relative;
-        z-index: 2;
-    }
-
-    .price-breakdown div {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 0.25rem;
-    }
-
-    .price-breakdown .total {
-        font-weight: 600;
-        font-size: 1rem;
-        padding-top: 0.5rem;
-        border-top: 1px solid rgba(255,255,255,0.3);
-        margin-top: 0.5rem;
-    }
-
-    /* Action Buttons */
-    .action-btn {
-        width: 100%;
-        padding: 1rem;
-        border-radius: 8px;
-        font-size: 0.95rem;
-        font-weight: 600;
-        border: none;
-        cursor: pointer;
-        transition: all 0.2s;
-        margin-bottom: 0.75rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-    }
-
-    .action-btn:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-
-    .save-quote-btn {
-        background: #17a2b8;
-        color: white;
-    }
-
-    .design-btn {
-        background: var(--success-color);
-        color: white;
-    }
-
-    .order-btn {
-        background: var(--primary-blue);
-        color: white;
-    }
-
-    /* Features Section */
-    .features-section {
-        background: var(--bg-light);
-        padding: 4rem 0;
-    }
-
-    .features-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 2rem;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 1rem;
-    }
-
-    .feature-card {
-        background: white;
-        padding: 2rem;
-        border-radius: 12px;
-        text-align: center;
-        border: 1px solid var(--border-color);
-        transition: all 0.3s;
-    }
-
-    .feature-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    }
-
-    .feature-icon {
-        width: 60px;
-        height: 60px;
-        background: var(--bg-light);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 1rem;
-        color: var(--primary-blue);
-        font-size: 1.5rem;
-    }
-
-    /* Specifications Table */
-    .specs-table {
-        background: white;
-        border-radius: 12px;
-        overflow: hidden;
-        margin: 2rem 0;
-    }
-
-    .spec-row {
-        display: grid;
-        grid-template-columns: 30% 70%;
-        border-bottom: 1px solid var(--border-color);
-    }
-
-    .spec-row:last-child {
-        border-bottom: none;
-    }
-
-    .spec-label {
-        background: var(--bg-light);
-        padding: 1rem;
-        font-weight: 600;
-        color: var(--text-dark);
-    }
-
-    .spec-value {
-        padding: 1rem;
-        color: var(--text-medium);
-    }
-
-    /* Loading States */
-    .loading {
-        opacity: 0.6;
-        pointer-events: none;
-    }
-
-    .price-loading {
-        animation: pulse 1.5s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.5; }
-    }
-
-    /* Template Download Section */
-    .template-download {
-        background: var(--primary-dark);
-        color: white;
-        border-radius: 12px;
+    .quote-display {
         padding: 1.5rem;
-        margin-top: 1rem;
-        cursor: pointer;
-        transition: all 0.3s;
     }
-
-    .template-download:hover {
-        background: var(--primary-blue);
-        transform: translateY(-2px);
-    }
-
-    .template-info {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    .template-icon {
-        font-size: 1.5rem;
-        color: rgba(255,255,255,0.9);
-    }
-
-    .template-details h4 {
-        font-weight: 600;
-        margin-bottom: 0.25rem;
-    }
-
-    .template-details p {
-        font-size: 0.8rem;
-        opacity: 0.8;
-        margin: 0;
-    }
-
-    /* Responsive */
-    @media (max-width: 1024px) {
-        .hero-grid,
-        .main-content {
-            grid-template-columns: 1fr;
-            gap: 2rem;
-        }
-
-        .quote-calculator {
-            position: static;
-            order: -1;
-        }
-
-        .option-grid {
-            grid-template-columns: 1fr;
-        }
-    }
-
-    @media (max-width: 768px) {
-        .hero-content,
-        .main-content {
-            padding: 0 1rem;
-        }
-
-        .product-info h1 {
-            font-size: 2rem;
-        }
-
-        .option-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .spec-row {
-            grid-template-columns: 1fr;
-        }
-
-        .price-amount {
-            font-size: 2.5rem;
-        }
-
-        .quantity-selector {
-            flex-direction: column;
-            align-items: stretch;
-            gap: 0.5rem;
-        }
-    }
+}
 </style>
 {% endblock %}
 
 {% block content %}
-<!-- Hero Section with Product Info -->
-<section class="hero-section">
-    <div class="hero-content">
-        <div class="hero-grid">
-            <div class="product-info">
-                <h1>{{ product.hero_title|default:product.name }}</h1>
-                <p class="product-tagline">{{ product.hero_subtitle|default:product.short_description|default:product.description|truncatewords:30 }}</p>
-                {% if product.hero_quote %}
-                <blockquote style="font-size:1.2rem;color:var(--primary-blue);margin-bottom:1.5rem;font-style:italic;">"{{ product.hero_quote }}"</blockquote>
-                {% endif %}
-                <div class="product-highlights">
-                    <span class="highlight-badge">Premium Quality</span>
-                    {% if product.has_design_tool %}
-                    <span class="highlight-badge">Design Tool Available</span>
-                    {% endif %}
-                    {% if product.allows_upload %}
-                    <span class="highlight-badge">Upload Ready</span>
-                    {% endif %}
-                    <span class="highlight-badge">MOQ: {{ product.minimum_quantity }} pieces</span>
-                    {% if product.express_production %}
-                    <span class="highlight-badge">Express Production</span>
-                    {% endif %}
+<!-- Breadcrumb -->
+<nav class="bg-gray-100 py-3">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <ol class="flex items-center space-x-2 text-sm">
+            <li><a href="/" class="text-purple-600 hover:text-purple-800 transition-colors">Home</a></li>
+            <li class="text-gray-500">/</li>
+            <li><a href="/services/" class="text-purple-600 hover:text-purple-800 transition-colors">Services</a></li>
+            <li class="text-gray-500">/</li>
+            <li><a href="/services/category/{{ product.category.slug }}/" class="text-purple-600 hover:text-purple-800 transition-colors">{{ product.category.name }}</a></li>
+            <li class="text-gray-500">/</li>
+            <li class="text-gray-900 font-medium">{{ product.name }}</li>
+        </ol>
+    </div>
+</nav>
+
+<!-- Product Hero Section -->
+<section class="product-hero py-16">
+    <div class="product-hero-content">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="product-hero-grid">
+                <div>
+                    <div class="hero-badges">
+                        {% if product.has_design_tool %}
+                        <span class="hero-badge design-tool">
+                            <i class="fas fa-palette mr-2"></i>Design Tool Available
+                        </span>
+                        {% endif %}
+                        {% if product.is_featured %}
+                        <span class="hero-badge premium">
+                            <i class="fas fa-star mr-2"></i>Premium Quality
+                        </span>
+                        {% endif %}
+                        <span class="hero-badge">
+                            <i class="fas fa-boxes mr-2"></i>MOQ: {{ product.minimum_quantity }}
+                        </span>
+                    </div>
+
+                    <h1 class="hero-title">{{ product.hero_title|default:product.name }}</h1>
+                    <p class="hero-description">{{ product.hero_subtitle|default:product.description|truncatewords:30 }}</p>
+
+                    <div class="hero-price">
+                        <span class="price-current">Rs.{{ product.get_starting_price|floatformat:0 }}</span>
+                        <span class="price-label">Starting from</span>
+                    </div>
+
+                    <div class="hero-actions">
+                        {% if product.has_design_tool %}
+                        <a href="/design-tool/{{ product.slug }}/" class="hero-btn hero-btn-primary">
+                            <i class="fas fa-palette"></i>
+                            Design Now
+                        </a>
+                        {% endif %}
+                        
+                        {% if 'business card' in product.name|lower %}
+                        <a href="{% url 'services:business_card_quote' product.slug %}" class="hero-btn hero-btn-secondary">
+                            <i class="fas fa-calculator"></i>
+                            Get Instant Quote
+                        </a>
+                        {% elif 'children' in product.name|lower %}
+                        <a href="{% url 'services:children_book_quote' product.slug %}" class="hero-btn hero-btn-secondary">
+                            <i class="fas fa-calculator"></i>
+                            🌈 Get Children's Book Quote 📚
+                        </a>
+                        {% elif 'book' in product.name|lower %}
+                        <a href="{% url 'services:book_printing_quote' product.slug %}" class="hero-btn hero-btn-secondary">
+                            <i class="fas fa-calculator"></i>
+                            Get Instant Quote
+                        </a>
+                        {% elif 'brochure' in product.name|lower or 'flyer' in product.name|lower %}
+                        <a href="{% url 'services:brochure_quote' product.slug %}" class="hero-btn hero-btn-secondary">
+                            <i class="fas fa-calculator"></i>
+                            Get Instant Quote
+                        </a>
+                        {% else %}
+                        <button onclick="scrollToCalculator()" class="hero-btn hero-btn-secondary">
+                            <i class="fas fa-calculator"></i>
+                            Get Quote
+                        </button>
+                        {% endif %}
+                    </div>
                 </div>
-            </div>
-            <div class="hero-image-container">
-                {% if product.hero_image %}
-                    <img id="mainImage" src="{{ product.hero_image.url }}" alt="{{ product.hero_title|default:product.name }}" class="hero-image">
-                {% elif product.image %}
-                    <img id="mainImage" src="{{ product.image.url }}" alt="{{ product.name }}" class="hero-image">
-                {% else %}
-                    <img id="mainImage" src="{% static 'images/placeholder.png' %}" alt="{{ product.name }}" class="hero-image">
-                {% endif %}
-                {% if product.images.exists %}
-                <div class="image-thumbnails">
+
+                <div class="hero-image-wrapper">
                     {% if product.hero_image %}
-                    <img src="{{ product.hero_image.url }}" class="thumbnail active" onclick="changeImage('{{ product.hero_image.url }}', this)" alt="{{ product.hero_title|default:product.name }}">
+                    <img src="{{ product.hero_image.url }}" alt="{{ product.name }}" class="hero-image">
                     {% elif product.image %}
-                    <img src="{{ product.image.url }}" class="thumbnail active" onclick="changeImage('{{ product.image.url }}', this)" alt="{{ product.name }}">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="hero-image">
                     {% else %}
-                    <img src="{% static 'images/placeholder.png' %}" class="thumbnail active" onclick="changeImage('{% static 'images/placeholder.png' %}', this)" alt="{{ product.name }}">
+                    <div class="hero-image bg-white bg-opacity-20 flex items-center justify-center">
+                        <i class="fas fa-image text-white text-6xl opacity-50"></i>
+                    </div>
                     {% endif %}
-                    {% for image in product.images.all|slice:":4" %}
-                    <img src="{{ image.image.url }}" class="thumbnail" onclick="changeImage('{{ image.image.url }}', this)" alt="{{ image.alt_text }}">
-                    {% endfor %}
                 </div>
-                {% endif %}
             </div>
         </div>
     </div>
 </section>
 
-<!-- Main Content: Calculator and Details -->
-<div class="main-content">
-    <!-- Product Configuration Section -->
-    <div class="product-details">
-        <!-- Paper Type Selection -->
-        {% if available_paper_types %}
-        <div class="quote-card">
-            <label class="quote-label">
-                <i class="fas fa-file-alt" style="margin-right: 0.5rem; color: var(--primary-blue);"></i>
-                Paper Type
-            </label>
-            <div class="option-grid" id="paperTypeGrid">
-                <!-- Paper options will be populated by JavaScript -->
-            </div>
-        </div>
-        {% endif %}
-
-        <!-- Size Selection -->
-        {% if available_sizes %}
-        <div class="quote-card">
-            <label class="quote-label">
-                <i class="fas fa-ruler-combined" style="margin-right: 0.5rem; color: var(--primary-blue);"></i>
-                Size Options
-            </label>
-            <div class="quote-input-wrapper">
-                <select id="sizeSelect" class="quote-select" onchange="updatePricing()">
-                    <option value="">Select Size</option>
-                    {% for size in available_sizes %}
-                    <option value="{{ size }}" {% if forloop.first %}selected{% endif %}>{{ size }}</option>
-                    {% endfor %}
-                </select>
-                <i class="fas fa-chevron-down quote-dropdown-icon"></i>
-            </div>
-        </div>
-        {% endif %}
-
-        <!-- Color Options -->
-        <div class="quote-card">
-            <label class="quote-label">
-                <i class="fas fa-palette" style="margin-right: 0.5rem; color: var(--primary-blue);"></i>
-                Interior Color
-            </label>
-            <div class="option-grid">
-                <div class="option-card selected" onclick="selectColor(this, 'Black & White')" data-color="Black & White">
-                    <input type="radio" name="colorOption" value="Black & White" checked>
-                    <div class="option-preview" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
-                        <div class="option-price">Base</div>
-                        <span style="font-size: 2rem; color: #666;">⬛⬜</span>
-                    </div>
-                    <div class="option-info">
-                        <div class="option-title">Black & White</div>
-                        <div class="option-description">Professional black and white printing</div>
-                        <div class="option-specs">
-                            <span class="option-spec">Standard</span>
-                            <span class="option-spec">Cost Effective</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="option-card" onclick="selectColor(this, 'Full Color')" data-color="Full Color">
-                    <input type="radio" name="colorOption" value="Full Color">
-                    <div class="option-preview" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                        <div class="option-price">+Rs.5</div>
-                        <span style="font-size: 2rem; color: white;">🌈</span>
-                    </div>
-                    <div class="option-info">
-                        <div class="option-title">Full Color</div>
-                        <div class="option-description">Vibrant full-color printing</div>
-                        <div class="option-specs">
-                            <span class="option-spec">CMYK</span>
-                            <span class="option-spec">High Quality</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!-- Quote Calculator Section -->
+<section id="calculator" class="calculator-section py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">{{ product.name }} Instant Quote</h2>
+            <p class="text-lg text-gray-600">Customize your specifications and get an instant quote</p>
         </div>
 
-        <!-- Advanced Options for Books -->
-        {% if 'book' in product.name|lower %}
-        <div class="quote-card">
-            <label class="quote-label">
-                <i class="fas fa-layer-group" style="margin-right: 0.5rem; color: var(--primary-blue);"></i>
-                Page Count
-            </label>
-            <div class="quantity-selector">
-                <span>Pages:</span>
-                <div class="quantity-controls">
-                    <button type="button" class="qty-btn" onclick="adjustPages(-10)">−10</button>
-                    <button type="button" class="qty-btn" onclick="adjustPages(-1)">−</button>
-                    <input type="number" id="pageCount" class="qty-input" value="100" min="1" max="1000" onchange="updatePricing()">
-                    <button type="button" class="qty-btn" onclick="adjustPages(1)">+</button>
-                    <button type="button" class="qty-btn" onclick="adjustPages(10)">+10</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="quote-card">
-            <label class="quote-label">
-                <i class="fas fa-book-open" style="margin-right: 0.5rem; color: var(--primary-blue);"></i>
-                Binding Type
-            </label>
-            <div class="quote-input-wrapper">
-                <select id="bindingType" class="quote-select" onchange="updatePricing()">
-                    <option value="Perfect Bound">Perfect Bound</option>
-                    <option value="Spiral Binding">Spiral Binding</option>
-                    <option value="Hard Cover">Hard Cover</option>
-                    <option value="Saddle Stitch">Saddle Stitch</option>
-                </select>
-                <i class="fas fa-chevron-down quote-dropdown-icon"></i>
-            </div>
-        </div>
-        {% endif %}
-
-        <!-- Print Sides -->
-        <div class="quote-card">
-            <label class="quote-label">
-                <i class="fas fa-copy" style="margin-right: 0.5rem; color: var(--primary-blue);"></i>
-                Print Sides
-            </label>
-            <div class="quote-input-wrapper">
-                <select id="printSides" class="quote-select" onchange="updatePricing()">
-                    <option value="Single-sided">Single-sided</option>
-                    <option value="Double-sided">Double-sided</option>
-                </select>
-                <i class="fas fa-chevron-down quote-dropdown-icon"></i>
-            </div>
-        </div>
-
-        <!-- Finish Options -->
-        {% if available_finishes %}
-        <div class="quote-card">
-            <label class="quote-label">
-                <i class="fas fa-magic" style="margin-right: 0.5rem; color: var(--primary-blue);"></i>
-                Finish
-            </label>
-            <div class="quote-input-wrapper">
-                <select id="finishType" class="quote-select" onchange="updatePricing()">
-                    {% for finish in available_finishes %}
-                    <option value="{{ finish }}">{{ finish }}</option>
-                    {% endfor %}
-                </select>
-                <i class="fas fa-chevron-down quote-dropdown-icon"></i>
-            </div>
-        </div>
-        {% endif %}
-
-        <!-- Additional Services -->
-        <div class="quote-card">
-            <label class="quote-label">
-                <i class="fas fa-plus-circle" style="margin-right: 0.5rem; color: var(--primary-blue);"></i>
-                Additional Services
-            </label>
-
-            <div style="margin-bottom: 1rem;">
-                <label class="service-option" style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                    <input type="checkbox" id="designService" onchange="updatePricing()" style="accent-color: var(--primary-blue);">
-                    <span>Design & Formatting Service (+Rs.1500)</span>
-                </label>
-            </div>
-
-            <div style="margin-bottom: 1rem;">
-                <label class="service-option" style="display: flex; align-items: center; gap: 0.5rem;">
-                    <input type="checkbox" id="isbnService" onchange="updatePricing()" style="accent-color: var(--primary-blue);">
-                    <span>ISBN Allocation (+Rs.500)</span>
-                </label>
-            </div>
-        </div>
-
-        <!-- Specifications Table -->
-        <div class="specs-table">
-            <div class="spec-row">
-                <div class="spec-label">Dimensions</div>
-                <div class="spec-value">{{ product.width_mm }} × {{ product.height_mm }}mm</div>
-            </div>
-            <div class="spec-row">
-                <div class="spec-label">Resolution</div>
-                <div class="spec-value">{{ product.dpi }}dpi</div>
-            </div>
-            <div class="spec-row">
-                <div class="spec-label">Bleed</div>
-                <div class="spec-value">{{ product.bleed_mm }}mm</div>
-            </div>
-            <div class="spec-row">
-                <div class="spec-label">Safe Zone</div>
-                <div class="spec-value">{{ product.safe_zone_mm }}mm</div>
-            </div>
-            <div class="spec-row">
-                <div class="spec-label">Min. Order</div>
-                <div class="spec-value">{{ product.minimum_quantity }} pieces</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Quote Calculator Sidebar -->
-    <div class="quote-calculator">
-        <!-- Quantity Selection -->
-        <div class="quote-card">
-            <div class="quote-field">
-                <label class="quote-label">
-                    <i class="fas fa-boxes" style="margin-right: 0.5rem; color: var(--primary-blue);"></i>
-                    Quantity
-                </label>
-                <div class="quantity-selector">
-                    <span>Qty:</span>
-                    <div class="quantity-controls">
-                        <button type="button" class="qty-btn" onclick="adjustQuantity(-10)">−10</button>
-                        <button type="button" class="qty-btn" onclick="adjustQuantity(-1)">−</button>
-                        <input type="number" id="quantityInput" class="qty-input" value="100" min="{{ product.minimum_quantity }}" onchange="updatePricing()">
-                        <button type="button" class="qty-btn" onclick="adjustQuantity(1)">+</button>
-                        <button type="button" class="qty-btn" onclick="adjustQuantity(10)">+10</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Price Display -->
-        <div class="price-card" id="priceCard">
-            <div class="price-header">
-                <div class="price-location">
-                    <i class="fas fa-map-marker-alt"></i> Mumbai Price
-                </div>
-                <div class="price-discount" id="discountBadge" style="display: none;">
-                    SAVE <span id="discountPercent">0</span>%
-                </div>
-            </div>
-            <div class="price-main">
-                <span class="price-currency">Rs.</span>
-                <span class="price-amount" id="totalPrice">0</span>
-            </div>
-            <div class="price-breakdown">
-                <div>
-                    <span>Unit Price:</span>
-                    <span>Rs.<span id="unitPrice">0</span></span>
-                </div>
-                <div>
-                    <span>Subtotal:</span>
-                    <span>Rs.<span id="subtotal">0</span></span>
-                </div>
-                <div id="setupCostRow" style="display: none;">
-                    <span>Setup Cost:</span>
-                    <span>Rs.<span id="setupCost">0</span></span>
-                </div>
-                <div id="savingsRow" style="display: none;">
-                    <span style="color: var(--success-color);">Savings:</span>
-                    <span style="color: var(--success-color);">-Rs.<span id="savings">0</span></span>
-                </div>
-                <div class="total">
-                    <span>Total:</span>
-                    <span>Rs.<span id="finalTotal">0</span></span>
-                </div>
-            </div>
-            <div style="font-size: 0.85rem; opacity: 0.8; margin-top: 1rem;">
-                <i class="fas fa-clock"></i> Delivery: <span id="deliveryDays">5-7</span> days
-            </div>
-        </div>
-
-        <!-- Action Buttons -->
-        <button class="action-btn save-quote-btn" onclick="saveQuote()">
-            <i class="fas fa-save"></i> SAVE QUOTE
-        </button>
-
-        {% if product.has_design_tool %}
-        <button class="action-btn design-btn" onclick="openDesignTool()">
-            <i class="fas fa-palette"></i> DESIGN NOW
-        </button>
-        {% elif product.allows_upload %}
-        <button class="action-btn design-btn" onclick="uploadDesign()">
-            <i class="fas fa-upload"></i> UPLOAD DESIGN
-        </button>
-        {% endif %}
-
-        <button class="action-btn order-btn" onclick="addToCart()">
-            <i class="fas fa-shopping-cart"></i> ORDER NOW
-        </button>
-
-        <!-- Download Template -->
-        <div class="template-download" onclick="downloadTemplate()">
-            <div class="template-info">
-                <div class="template-icon">
-                    <i class="fas fa-download"></i>
-                </div>
-                <div class="template-details">
-                    <h4>Download Template</h4>
-                    <p>Based on your specifications</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Features Section -->
-<section class="features-section">
-    <div style="text-align: center; margin-bottom: 3rem;">
-        <h2 style="font-size: 2.5rem; font-weight: 700; color: var(--text-dark); margin-bottom: 1rem;">
-            Why Choose Our {{ product.name }}?
-        </h2>
-        <p style="font-size: 1.1rem; color: var(--text-medium);">
-            Professional quality printing with attention to every detail
-        </p>
-    </div>
-
-    <div class="features-grid">
-        {% for feature in product.features.all %}
-        <div class="feature-card">
-            <div class="feature-icon">
-                <i class="{{ feature.icon|default:'fas fa-check' }}"></i>
-            </div>
-            <h3 style="font-size: 1.2rem; font-weight: 600; color: var(--text-dark); margin-bottom: 0.5rem;">
-                {{ feature.title }}
-            </h3>
-            <p style="color: var(--text-medium); font-size: 0.95rem;">
-                {{ feature.description }}
-            </p>
-        </div>
-        {% empty %}
-        <div class="feature-card">
-            <div class="feature-icon">
-                <i class="fas fa-medal"></i>
-            </div>
-            <h3 style="font-size: 1.2rem; font-weight: 600; color: var(--text-dark); margin-bottom: 0.5rem;">
-                Premium Quality
-            </h3>
-            <p style="color: var(--text-medium); font-size: 0.95rem;">
-                High-quality materials and professional printing
-            </p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">
-                <i class="fas fa-palette"></i>
-            </div>
-            <h3 style="font-size: 1.2rem; font-weight: 600; color: var(--text-dark); margin-bottom: 0.5rem;">
-                Vibrant Colors
-            </h3>
-            <p style="color: var(--text-medium); font-size: 0.95rem;">
-                State-of-the-art printing technology
-            </p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">
-                <i class="fas fa-clock"></i>
-            </div>
-            <h3 style="font-size: 1.2rem; font-weight: 600; color: var(--text-dark); margin-bottom: 0.5rem;">
-                Fast Turnaround
-            </h3>
-            <p style="color: var(--text-medium); font-size: 0.95rem;">
-                Quick production without compromising quality
-            </p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">
-                <i class="fas fa-tags"></i>
-            </div>
-            <h3 style="font-size: 1.2rem; font-weight: 600; color: var(--text-dark); margin-bottom: 0.5rem;">
-                Best Prices
-            </h3>
-            <p style="color: var(--text-medium); font-size: 0.95rem;">
-                Competitive pricing with volume discounts
-            </p>
-        </div>
-        {% endfor %}
-    </div>
-</section>
-
-<!-- Related Products -->
-{% if related_products %}
-<section style="padding: 4rem 0; background: white;">
-    <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
-        <h2 style="text-align: center; font-size: 2rem; font-weight: 700; margin-bottom: 3rem;">
-            Related Products
-        </h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
-            {% for related in related_products %}
-            <a href="{% url 'services:product_detail' related.slug %}" style="text-decoration: none; color: inherit;">
-                <div style="background: white; border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; text-align: center; transition: all 0.3s;">
-                    <div style="width: 50px; height: 50px; background: var(--bg-light); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: var(--primary-blue);">
-                        <i class="fas fa-box"></i>
-                    </div>
-                    <h3 style="font-size: 1.1rem; font-weight: 600; color: var(--text-dark); margin-bottom: 0.5rem;">
-                        {{ related.name }}
+        <div class="calculator-wrapper">
+            <!-- Calculator Form -->
+            <div class="calculator-form">
+                <!-- Dynamic Form Fields -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-layer-group"></i>
+                        Product Specifications
                     </h3>
-                    <p style="color: var(--text-light); font-size: 0.9rem;">
-                        Starting from Rs.{{ related.get_starting_price|floatformat:0 }}
-                    </p>
+                    
+
+                    
+                    <div class="form-grid">
+                        {% for field in form_fields %}
+                        <div class="form-field" data-field="{{ field.field_name }}">
+                            <label class="form-label">
+                                {{ field.field_label }}
+                                {% if field.is_required %}<span class="text-red-500">*</span>{% endif %}
+                            </label>
+                            
+                            {% if field.field_type == 'select' %}
+                                <select id="{{ field.field_name }}" name="{{ field.field_name }}" class="form-select" {% if field.is_required %}required{% endif %} onchange="updatePrice()">
+                                    {% for option in field.get_options %}
+                                    <option value="{{ option.value }}" 
+                                            data-price-modifier="{{ option.price_modifier }}"
+                                            {% if option.value == field.default_value %}selected{% endif %}>
+                                        {{ option.label }}
+                                        {% if option.price_modifier > 0 %}(+₹{{ option.price_modifier }}){% endif %}
+                                        {% if option.price_modifier < 0 and option.price_modifier > -1 %}({% widthratio option.price_modifier 1 -100 %}% off){% endif %}
+                                        {% if option.price_modifier < -1 %}(₹{{ option.price_modifier|floatformat:0 }}){% endif %}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            
+                            {% elif field.field_type == 'radio' %}
+                                <div class="radio-group">
+                                    {% for option in field.get_options %}
+                                    <label class="radio-option">
+                                        <input type="radio" 
+                                               name="{{ field.field_name }}" 
+                                               value="{{ option.value }}"
+                                               data-price-modifier="{{ option.price_modifier }}"
+                                               {% if option.value == field.default_value %}checked{% endif %}
+                                               onchange="updatePrice()"
+                                               {% if field.is_required %}required{% endif %}>
+                                        <span class="radio-label">{{ option.label }}</span>
+                                        {% if option.price_modifier > 0 %}
+                                        <span class="price-modifier">(+Rs.{{ option.price_modifier }})</span>
+                                        {% endif %}
+                                    </label>
+                                    {% endfor %}
+                                </div>
+                            
+                            {% elif field.field_type == 'checkbox' %}
+                                <div class="checkbox-group">
+                                    {% for option in field.get_options %}
+                                    <label class="checkbox-option">
+                                        <input type="checkbox" 
+                                               name="{{ field.field_name }}" 
+                                               value="{{ option.value }}"
+                                               data-price-modifier="{{ option.price_modifier }}"
+                                               onchange="updatePrice()">
+                                        <span class="checkbox-label">{{ option.label }}</span>
+                                    </label>
+                                    {% endfor %}
+                                </div>
+                            
+                            {% elif field.field_type == 'number' %}
+                                <input type="number" 
+                                       id="{{ field.field_name }}" 
+                                       name="{{ field.field_name }}" 
+                                       class="form-input"
+                                       value="{{ field.default_value }}"
+                                       {% if field.min_value %}min="{{ field.min_value }}"{% endif %}
+                                       {% if field.max_value %}max="{{ field.max_value }}"{% endif %}
+                                       {% if field.is_required %}required{% endif %}
+                                       onchange="updatePrice()">
+                            
+                            {% else %}
+                                <input type="text" 
+                                       id="{{ field.field_name }}" 
+                                       name="{{ field.field_name }}" 
+                                       class="form-input"
+                                       value="{{ field.default_value }}"
+                                       {% if field.is_required %}required{% endif %}>
+                            {% endif %}
+                            
+                            {% if field.help_text %}
+                            <small class="text-gray-500 text-sm mt-1 block">{{ field.help_text }}</small>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
-            </a>
-            {% endfor %}
+
+
+            </div>
+
+            <!-- Quote Display -->
+            <div class="quote-display">
+                <div class="quote-header">
+                    <div class="quote-location">Mumbai Price: INR</div>
+                    <div class="quote-discount" id="discountBadge" style="display: none;">Save 20%</div>
+                </div>
+
+                <div class="quote-price-main">
+                    <span class="price-currency">Rs.</span>
+                    <span class="price-amount" id="totalPrice">{{ product.base_price|floatformat:0 }}</span>
+                </div>
+
+                <div class="price-details">
+                    <div class="unit-price">Unit Price: Rs.<span id="unitPrice">{{ product.base_price|floatformat:2 }}</span></div>
+                    <div class="price-note">Price includes basic setup and consultation</div>
+                    <div class="estimated-weight">
+                        <i class="fas fa-weight-hanging"></i>
+                        Estimated weight: <span id="estimatedWeight">2 kg</span>
+                    </div>
+                </div>
+
+                <div class="quote-actions">
+                    {% if product.has_design_tool %}
+                    <a href="/design-tool/{{ product.slug }}/" class="quote-btn quote-btn-primary">
+                        <i class="fas fa-palette"></i>
+                        Design Now
+                    </a>
+                    {% endif %}
+                    <button class="quote-btn quote-btn-secondary" onclick="addToCart()">
+                        <i class="fas fa-shopping-cart"></i>
+                        Add to Cart
+                    </button>
+                    <button class="quote-btn quote-btn-outline" onclick="saveQuote()">
+                        <i class="fas fa-bookmark"></i>
+                        Save Quote
+                    </button>
+                </div>
+
+                <div class="template-card" onclick="downloadTemplate()">
+                    <div class="template-icon">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <div class="template-text">
+                        <h4>Download Free Template</h4>
+                        <p>Based on your specifications</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
-{% endif %}
 
+<!-- Technical Specifications Section -->
+<section class="py-16 bg-gray-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Technical Specifications</h2>
+            <p class="text-lg text-gray-600">Detailed specifications for {{ product.name }}</p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-0">
+                <div class="px-6 py-4 bg-gray-50 border-b md:border-b-0 md:border-r border-gray-200">
+                    <strong class="text-gray-900">Dimensions:</strong>
+                </div>
+                <div class="px-6 py-4 border-b border-gray-200">
+                    {{ product.width_mm }}mm × {{ product.height_mm }}mm
+                </div>
+
+                <div class="px-6 py-4 bg-gray-50 border-b md:border-b-0 md:border-r border-gray-200">
+                    <strong class="text-gray-900">Print Resolution:</strong>
+                </div>
+                <div class="px-6 py-4 border-b border-gray-200">
+                    {{ product.dpi }} DPI
+                </div>
+
+                <div class="px-6 py-4 bg-gray-50 border-b md:border-b-0 md:border-r border-gray-200">
+                    <strong class="text-gray-900">Bleed Area:</strong>
+                </div>
+                <div class="px-6 py-4 border-b border-gray-200">
+                    {{ product.bleed_mm }}mm all sides
+                </div>
+
+                <div class="px-6 py-4 bg-gray-50 border-b md:border-b-0 md:border-r border-gray-200">
+                    <strong class="text-gray-900">Safe Zone:</strong>
+                </div>
+                <div class="px-6 py-4 border-b border-gray-200">
+                    {{ product.safe_zone_mm }}mm from edges
+                </div>
+
+                <div class="px-6 py-4 bg-gray-50 border-b md:border-b-0 md:border-r border-gray-200">
+                    <strong class="text-gray-900">Minimum Quantity:</strong>
+                </div>
+                <div class="px-6 py-4 border-b border-gray-200">
+                    {{ product.minimum_quantity }} pieces
+                </div>
+
+                <div class="px-6 py-4 bg-gray-50 md:border-r border-gray-200">
+                    <strong class="text-gray-900">Design Tool:</strong>
+                </div>
+                <div class="px-6 py-4">
+                    {% if product.has_design_tool %}
+                    <span class="text-green-600 font-semibold">Available</span>
+                    {% else %}
+                    <span class="text-gray-500">Upload Design Only</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="py-16 bg-gradient-to-r from-purple-600 to-purple-800">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl font-bold text-white mb-4">Ready to Get Started?</h2>
+        <p class="text-xl text-purple-200 mb-8">
+            Get your {{ product.name }} printed with professional quality and fast delivery
+        </p>
+
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            {% if product.has_design_tool %}
+            <a href="/design-tool/{{ product.slug }}/"
+               class="inline-flex items-center bg-yellow-400 text-purple-800 px-8 py-4 rounded-full font-bold hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105">
+                <i class="fas fa-palette mr-2"></i>
+                Start Designing
+            </a>
+            {% endif %}
+            <a href="/contact/?product={{ product.slug }}"
+               class="inline-flex items-center bg-white text-purple-600 px-8 py-4 rounded-full font-bold hover:bg-gray-100 transition-all duration-300">
+                <i class="fas fa-envelope mr-2"></i>
+                Get Free Quote
+            </a>
+            <a href="tel:+919876543210"
+               class="inline-flex items-center border-2 border-white text-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-purple-600 transition-all duration-300">
+                <i class="fas fa-phone mr-2"></i>
+                Call Expert
+            </a>
+        </div>
+    </div>
+</section>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-// Global configuration
-const productConfig = {
-    id: {{ product.id }},
-    name: "{{ product.name }}",
-    minQuantity: {{ product.minimum_quantity }},
-    basePrice: {{ product.price_per_unit|default:0 }},
-    paperTypes: {% if available_paper_types %}{{ available_paper_types|safe }}{% else %}[]{% endif %},
-    sizes: {% if available_sizes %}{{ available_sizes|safe }}{% else %}[]{% endif %},
-    finishes: {% if available_finishes %}{{ available_finishes|safe }}{% else %}[]{% endif %}
-};
+// Dynamic Quote Calculator Functionality
+let basePrice = {{ product.base_price }};
+let currentConfig = {};
 
-// Current selections
-let currentSelection = {
-    quantity: 100,
-    paperType: '{{ available_paper_types.0|default:"" }}',
-    size: '{{ available_sizes.0|default:"" }}',
-    color: 'Black & White',
-    bindingType: 'Perfect Bound',
-    printSides: 'Single-sided',
-    finish: '{{ available_finishes.0|default:"Matte" }}',
-    pageCount: 100,
+function updatePrice() {
+    let totalPrice = basePrice;
+    let quantity = 1;
+    let priceModifiers = [];
+    
+    // Get all form fields
+    const formFields = document.querySelectorAll('[data-field]');
+    
+    formFields.forEach(field => {
+        const fieldName = field.getAttribute('data-field');
+        let fieldValue = null;
+        let priceModifier = 0;
+        
+        // Handle different field types
+        const select = field.querySelector('select');
+        const radioChecked = field.querySelector('input[type="radio"]:checked');
+        const checkboxes = field.querySelectorAll('input[type="checkbox"]:checked');
+        const numberInput = field.querySelector('input[type="number"]');
+        const textInput = field.querySelector('input[type="text"]');
+        
+        if (select) {
+            fieldValue = select.value;
+            const selectedOption = select.options[select.selectedIndex];
+            priceModifier = parseFloat(selectedOption.getAttribute('data-price-modifier') || 0);
+            
+
+            
+            // Special handling for quantity
+            if (fieldName === 'quantity') {
+                quantity = parseInt(fieldValue);
+                // Apply percentage discount for bulk orders (values between -1 and 0)
+                if (priceModifier < 0 && priceModifier > -1) {
+                    // This is a percentage discount
+                    totalPrice = basePrice * (1 + priceModifier); // priceModifier is negative
+                } else {
+                    totalPrice = basePrice + priceModifier;
+                }
+            } else {
+                totalPrice += priceModifier;
+            }
+            
+        } else if (radioChecked) {
+            fieldValue = radioChecked.value;
+            priceModifier = parseFloat(radioChecked.getAttribute('data-price-modifier') || 0);
+            totalPrice += priceModifier;
+
+            
+        } else if (checkboxes.length > 0) {
+            let checkboxModifier = 0;
+            checkboxes.forEach(checkbox => {
+                checkboxModifier += parseFloat(checkbox.getAttribute('data-price-modifier') || 0);
+            });
+            totalPrice += checkboxModifier;
+            priceModifier = checkboxModifier;
+
+            
+        } else if (numberInput) {
+            fieldValue = numberInput.value;
+            
+        } else if (textInput) {
+            fieldValue = textInput.value;
+        }
+        
+        // Store in config
+        currentConfig[fieldName] = fieldValue;
+        
+        // Add to modifiers for display
+        if (priceModifier !== 0) {
+            priceModifiers.push({
+                field: fieldName,
+                modifier: priceModifier,
+                label: field.querySelector('.form-label').textContent.trim()
+            });
+        }
+    });
+    
+    // Calculate final price
+    const finalPrice = totalPrice * quantity;
+    const unitPrice = totalPrice;
+    
+
+    
+    // Update display elements
+    const totalPriceElement = document.getElementById('totalPrice');
+    const unitPriceElement = document.getElementById('unitPrice');
+    const estimatedWeightElement = document.getElementById('estimatedWeight');
+    
+    if (totalPriceElement) {
+        totalPriceElement.textContent = Math.round(finalPrice).toLocaleString();
+    }
+    
+    if (unitPriceElement) {
+        unitPriceElement.textContent = unitPrice.toFixed(2);
+    }
+    
+    // Update estimated weight (rough calculation)
+    const estimatedWeight = Math.max(0.5, quantity * 0.1);
+    if (estimatedWeightElement) {
+        estimatedWeightElement.textContent = estimatedWeight.toFixed(1) + ' kg';
+    }
+    
+    // Show/hide discount badge
+    const discountBadge = document.getElementById('discountBadge');
+    if (discountBadge) {
+        const hasDiscount = priceModifiers.some(m => m.modifier < 0);
+        if (hasDiscount && quantity >= 250) {
+            discountBadge.style.display = 'block';
+        } else {
+            discountBadge.style.display = 'none';
+        }
+    }
+}
+
+// Initialize price calculation on page load
+document.addEventListener('DOMContentLoaded', function() {
+    updatePrice();
+    
+    // Add event listeners to all form elements
+    const formFields = document.querySelectorAll('[data-field]');
+    
+    formFields.forEach(field => {
+        const select = field.querySelector('select');
+        const radios = field.querySelectorAll('input[type="radio"]');
+        const checkboxes = field.querySelectorAll('input[type="checkbox"]');
+        const numberInput = field.querySelector('input[type="number"]');
+        const textInput = field.querySelector('input[type="text"]');
+        
+        if (select) {
+            select.addEventListener('change', updatePrice);
+        }
+        
+        radios.forEach(radio => {
+            radio.addEventListener('change', updatePrice);
+        });
+        
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updatePrice);
+        });
+        
+        if (numberInput) {
+            numberInput.addEventListener('input', updatePrice);
+        }
+        
+        if (textInput) {
+            textInput.addEventListener('input', updatePrice);
+        }
+    });
+});
+let currentConfig = {
+    quantity: 50,
+    pages: 100,
+    paper: 'bw_standard',
+    binding: 'spiral',
+    delivery: 'standard',
+    finishing: 'standard',
     designService: false,
     isbnService: false
 };
 
-// Initialize when DOM loads
+// Initialize calculator
 document.addEventListener('DOMContentLoaded', function() {
-    initializePaperTypes();
-    initializeDefaults();
-    updatePricing();
-
-    // Auto-update pricing when inputs change
+    calculatePrice();
     setupEventListeners();
 });
 
-function initializePaperTypes() {
-    const paperTypeGrid = document.getElementById('paperTypeGrid');
-    if (!paperTypeGrid) return;
+function setupEventListeners() {
+    // Real-time price updates
+    const inputs = document.querySelectorAll('select, input[type="checkbox"]');
+    inputs.forEach(input => {
+        input.addEventListener('change', function() {
+            updateConfig();
+            calculatePrice();
+        });
+    });
+}
 
-    // Paper type definitions with pricing and visuals
-    const paperTypeData = {
-        '75 GSM White Paper': {
-            name: 'Standard Paper',
-            description: 'High-quality standard paper for everyday printing',
-            specs: ['75 GSM', 'White', 'Standard'],
-            priceAddon: 0,
-            gradient: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
-            icon: '📄'
-        },
-        '100 GSM White Paper': {
-            name: 'Premium Paper',
-            description: 'Premium quality paper with enhanced thickness',
-            specs: ['100 GSM', 'White', 'Premium'],
-            priceAddon: 2,
-            gradient: 'linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)',
-            icon: '📋'
-        },
-        '100 GSM Art Paper': {
-            name: 'Art Paper',
-            description: 'Glossy art paper perfect for color printing',
-            specs: ['100 GSM', 'Glossy', 'Art'],
-            priceAddon: 5,
-            gradient: 'linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%)',
-            icon: '🎨'
-        },
-        '130 GSM Art Paper': {
-            name: 'Premium Art Paper',
-            description: 'Premium art paper for professional color prints',
-            specs: ['130 GSM', 'Premium', 'Art'],
-            priceAddon: 8,
-            gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            icon: '✨'
-        },
-        '300 GSM Art Card': {
-            name: 'Standard Cardstock',
-            description: 'Thick cardstock perfect for business cards',
-            specs: ['300 GSM', 'Thick', 'Card'],
-            priceAddon: 1,
-            gradient: 'linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%)',
-            icon: '🗃️'
-        },
-        '400 GSM Premium Card': {
-            name: 'Premium Cardstock',
-            description: 'Ultra-premium cardstock with luxury feel',
-            specs: ['400 GSM', 'Luxury', 'Premium'],
-            priceAddon: 3,
-            gradient: 'linear-gradient(135deg, #ffd700 0%, #ffed4e 100%)',
-            icon: '💳'
-        }
+function updateConfig() {
+    currentConfig.quantity = parseInt(document.getElementById('quantity').value) || 50;
+    currentConfig.pages = parseInt(document.getElementById('pages')?.value) || 100;
+    currentConfig.binding = document.getElementById('binding')?.value || 'spiral';
+    currentConfig.delivery = document.getElementById('delivery')?.value || 'standard';
+    currentConfig.finishing = document.getElementById('finishing')?.value || 'standard';
+    currentConfig.designService = document.getElementById('designService')?.checked || false;
+    currentConfig.isbnService = document.getElementById('isbnService')?.checked || false;
+    currentConfig.paper = selectedPaper;
+}
+
+function selectPaper(element, paperType) {
+    // Remove selected class from all options
+    document.querySelectorAll('.paper-option').forEach(option => {
+        option.classList.remove('selected');
+    });
+
+    // Add selected class to clicked option
+    element.classList.add('selected');
+
+    // Check the radio button
+    const radio = element.querySelector('input[type="radio"]');
+    if (radio) {
+        radio.checked = true;
+    }
+
+    selectedPaper = paperType;
+    currentConfig.paper = paperType;
+    calculatePrice();
+
+    // Visual feedback
+    element.style.transform = 'scale(0.98)';
+    setTimeout(() => {
+        element.style.transform = '';
+    }, 150);
+}
+
+async function calculatePrice() {
+    updateConfig();
+
+    const basePrice = {{ product.get_starting_price|default:10 }};
+    let total = basePrice * currentConfig.quantity;
+    let unitPrice = basePrice;
+
+    // Paper type adjustments
+    const paperPrices = {
+        'bw_standard': 0,
+        'bw_premium': 2,
+        'color_premium': 8
     };
 
-    productConfig.paperTypes.forEach((paperType, index) => {
-        const data = paperTypeData[paperType] || {
-            name: paperType,
-            description: `High-quality ${paperType.toLowerCase()}`,
-            specs: [paperType],
-            priceAddon: 0,
-            gradient: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
-            icon: '📄'
-        };
+    const paperAddon = paperPrices[currentConfig.paper] || 0;
+    total += paperAddon * currentConfig.quantity;
+    unitPrice += paperAddon;
 
-        const isFirst = index === 0;
-        const cardHtml = `
-            <div class="option-card ${isFirst ? 'selected' : ''}"
-                 onclick="selectPaperType(this, '${paperType}')"
-                 data-paper="${paperType}">
-                <input type="radio" name="paperType" value="${paperType}" ${isFirst ? 'checked' : ''}>
-                <div class="option-preview" style="background: ${data.gradient};">
-                    <div class="option-price">${data.priceAddon > 0 ? '+Rs.' + data.priceAddon : 'Base'}</div>
-                    <span style="font-size: 2rem; color: #666;">${data.icon}</span>
-                </div>
-                <div class="option-info">
-                    <div class="option-title">${data.name}</div>
-                    <div class="option-description">${data.description}</div>
-                    <div class="option-specs">
-                        ${data.specs.map(spec => `<span class="option-spec">${spec}</span>`).join('')}
-                    </div>
-                </div>
-            </div>
-        `;
-        paperTypeGrid.innerHTML += cardHtml;
-    });
-}
-
-function initializeDefaults() {
-    // Set default values
-    document.getElementById('quantityInput').value = currentSelection.quantity;
-    if (document.getElementById('pageCount')) {
-        document.getElementById('pageCount').value = currentSelection.pageCount;
+    // Page adjustments for books
+    if (currentConfig.pages > 100) {
+        const pageMultiplier = Math.ceil(currentConfig.pages / 100);
+        total *= pageMultiplier;
+        unitPrice *= pageMultiplier;
     }
 
-    // Set first available options as defaults
-    if (productConfig.sizes.length > 0) {
-        currentSelection.size = productConfig.sizes[0];
-    }
-    if (productConfig.finishes.length > 0) {
-        currentSelection.finish = productConfig.finishes[0];
-    }
-}
-
-function setupEventListeners() {
-    // Quantity input
-    const quantityInput = document.getElementById('quantityInput');
-    if (quantityInput) {
-        quantityInput.addEventListener('input', debounce(updatePricing, 300));
+    // Delivery speed adjustments
+    if (currentConfig.delivery === 'express') {
+        total += 50;
+    } else if (currentConfig.delivery === 'rush') {
+        total += 150;
     }
 
-    // Page count input
-    const pageCountInput = document.getElementById('pageCount');
-    if (pageCountInput) {
-        pageCountInput.addEventListener('input', debounce(updatePricing, 300));
-    }
-}
+    // Finishing adjustments
+    const finishingPrices = {
+        'standard': 0,
+        'lamination': 25,
+        'spot_uv': 75,
+        'embossing': 100
+    };
 
-function selectPaperType(element, paperType) {
-    // Update UI
-    document.querySelectorAll('#paperTypeGrid .option-card').forEach(card => {
-        card.classList.remove('selected');
-    });
-    element.classList.add('selected');
-
-    // Check radio button
-    const radio = element.querySelector('input[type="radio"]');
-    if (radio) radio.checked = true;
-
-    // Update selection
-    currentSelection.paperType = paperType;
-    updatePricing();
-}
-
-function selectColor(element, color) {
-    // Update UI
-    document.querySelectorAll('[data-color]').forEach(card => {
-        card.classList.remove('selected');
-    });
-    element.classList.add('selected');
-
-    // Check radio button
-    const radio = element.querySelector('input[type="radio"]');
-    if (radio) radio.checked = true;
-
-    // Update selection
-    currentSelection.color = color;
-    updatePricing();
-}
-
-function adjustQuantity(amount) {
-    const input = document.getElementById('quantityInput');
-    const currentValue = parseInt(input.value) || productConfig.minQuantity;
-    const newValue = Math.max(productConfig.minQuantity, currentValue + amount);
-    input.value = newValue;
-    currentSelection.quantity = newValue;
-    updatePricing();
-}
-
-function adjustPages(amount) {
-    const input = document.getElementById('pageCount');
-    if (!input) return;
-
-    const currentValue = parseInt(input.value) || 1;
-    const newValue = Math.max(1, currentValue + amount);
-    input.value = newValue;
-    currentSelection.pageCount = newValue;
-    updatePricing();
-}
-
-async function updatePricing() {
-    // Update current selection from form inputs
-    currentSelection.quantity = parseInt(document.getElementById('quantityInput').value) || 100;
-    currentSelection.size = document.getElementById('sizeSelect')?.value || currentSelection.size;
-    currentSelection.bindingType = document.getElementById('bindingType')?.value || currentSelection.bindingType;
-    currentSelection.printSides = document.getElementById('printSides')?.value || currentSelection.printSides;
-    currentSelection.finish = document.getElementById('finishType')?.value || currentSelection.finish;
-    currentSelection.pageCount = parseInt(document.getElementById('pageCount')?.value) || 100;
-    currentSelection.designService = document.getElementById('designService')?.checked || false;
-    currentSelection.isbnService = document.getElementById('isbnService')?.checked || false;
-
-    // Show loading state
-    const priceCard = document.getElementById('priceCard');
-    priceCard.classList.add('price-loading');
-
-    try {
-        // Build API parameters
-        const params = new URLSearchParams({
-            quantity: currentSelection.quantity,
-            size: currentSelection.size,
-            paper_type: currentSelection.paperType,
-            finish: currentSelection.finish,
-            binding_type: currentSelection.bindingType,
-            colors: currentSelection.color,
-            page_count: currentSelection.pageCount,
-            print_sides: currentSelection.printSides,
-            design_service: currentSelection.designService,
-            isbn_allocation: currentSelection.isbnService
-        });
-
-        // Call pricing API
-        const response = await fetch(`/services/api/pricing/${productConfig.id}/?${params}`);
-        const data = await response.json();
-
-        if (data.success) {
-            updatePriceDisplay(data);
-        } else {
-            // Fallback to basic calculation
-            fallbackPricing();
-        }
-    } catch (error) {
-        console.error('Pricing API error:', error);
-        fallbackPricing();
-    } finally {
-        priceCard.classList.remove('price-loading');
-    }
-}
-
-function updatePriceDisplay(pricing) {
-    // Update price elements
-    document.getElementById('unitPrice').textContent = pricing.unit_price.toFixed(2);
-    document.getElementById('subtotal').textContent = pricing.subtotal.toFixed(2);
-    document.getElementById('totalPrice').textContent = pricing.price.toFixed(2);
-    document.getElementById('finalTotal').textContent = pricing.price.toFixed(2);
-
-    // Setup cost
-    const setupCostRow = document.getElementById('setupCostRow');
-    if (pricing.setup_cost > 0) {
-        document.getElementById('setupCost').textContent = pricing.setup_cost.toFixed(2);
-        setupCostRow.style.display = 'flex';
-    } else {
-        setupCostRow.style.display = 'none';
+    const finishingCost = finishingPrices[currentConfig.finishing] || 0;
+    if (finishingCost > 0) {
+        total += finishingCost * currentConfig.quantity;
+        unitPrice += finishingCost;
     }
 
-    // Savings
-    const savingsRow = document.getElementById('savingsRow');
-    if (pricing.savings > 0) {
-        document.getElementById('savings').textContent = pricing.savings.toFixed(2);
-        savingsRow.style.display = 'flex';
-    } else {
-        savingsRow.style.display = 'none';
+    // Additional services
+    if (currentConfig.designService) {
+        total += 1500;
+    }
+    if (currentConfig.isbnService) {
+        total += 500;
     }
 
-    // Discount badge
+    // Apply quantity discounts
+    let discount = 0;
+    if (currentConfig.quantity >= 1000) discount = 0.15;
+    else if (currentConfig.quantity >= 500) discount = 0.12;
+    else if (currentConfig.quantity >= 250) discount = 0.08;
+    else if (currentConfig.quantity >= 100) discount = 0.05;
+
     const discountBadge = document.getElementById('discountBadge');
-    if (pricing.volume_discount > 0) {
-        document.getElementById('discountPercent').textContent = pricing.volume_discount.toFixed(0);
+    if (discount > 0) {
+        total = total * (1 - discount);
+        unitPrice = unitPrice * (1 - discount);
         discountBadge.style.display = 'block';
+        discountBadge.textContent = `Save ${Math.round(discount * 100)}%`;
     } else {
         discountBadge.style.display = 'none';
     }
 
-    // Delivery time
-    document.getElementById('deliveryDays').textContent = `${pricing.turnaround_days || 5}-${(pricing.turnaround_days || 5) + 2}`;
-}
-
-function fallbackPricing() {
-    // Simple fallback calculation
-    const basePrice = productConfig.basePrice;
-    let unitPrice = basePrice;
-
-    // Add paper type cost
-    if (currentSelection.paperType.includes('130 GSM')) unitPrice += 5;
-    if (currentSelection.paperType.includes('400 GSM')) unitPrice += 3;
-
-    // Add color cost
-    if (currentSelection.color === 'Full Color') unitPrice += 5;
-
-    // Calculate total
-    let total = unitPrice * currentSelection.quantity;
-
-    // Add services
-    if (currentSelection.designService) total += 1500;
-    if (currentSelection.isbnService) total += 500;
-
     // Update display
-    document.getElementById('unitPrice').textContent = unitPrice.toFixed(2);
-    document.getElementById('subtotal').textContent = (unitPrice * currentSelection.quantity).toFixed(2);
-    document.getElementById('totalPrice').textContent = total.toFixed(2);
-    document.getElementById('finalTotal').textContent = total.toFixed(2);
+    animateNumber('totalPrice', Math.round(total));
+    animateNumber('unitPrice', unitPrice);
+
+    // Update estimated weight
+    const weight = Math.max(1, Math.ceil(currentConfig.quantity * 0.05 + (currentConfig.pages * 0.001 * currentConfig.quantity)));
+    document.getElementById('estimatedWeight').textContent = weight + ' kg';
 }
 
-// Image gallery
-function changeImage(src, thumbnail) {
-    document.getElementById('mainImage').src = src;
+function animateNumber(elementId, targetValue) {
+    const element = document.getElementById(elementId);
+    if (!element) return;
 
-    document.querySelectorAll('.thumbnail').forEach(thumb => {
-        thumb.classList.remove('active');
-    });
-    if (thumbnail) thumbnail.classList.add('active');
+    const startValue = parseFloat(element.textContent.replace(/[Rs.,]/g, '')) || 0;
+    const difference = targetValue - startValue;
+    const duration = 300;
+    const steps = 20;
+    const stepValue = difference / steps;
+    const stepDuration = duration / steps;
+
+    let currentStep = 0;
+    const timer = setInterval(() => {
+        currentStep++;
+        const currentValue = startValue + (stepValue * currentStep);
+
+        if (elementId === 'totalPrice') {
+            element.textContent = Math.round(currentValue).toLocaleString('en-IN');
+        } else {
+            element.textContent = currentValue.toFixed(2);
+        }
+
+        if (currentStep >= steps) {
+            clearInterval(timer);
+            if (elementId === 'totalPrice') {
+                element.textContent = Math.round(targetValue).toLocaleString('en-IN');
+            } else {
+                element.textContent = targetValue.toFixed(2);
+            }
+        }
+    }, stepDuration);
 }
 
-// Action functions
 function saveQuote() {
     const quoteData = {
-        product: productConfig.name,
-        selection: currentSelection,
-        price: document.getElementById('totalPrice').textContent,
+        product: '{{ product.name }}',
+        totalPrice: document.getElementById('totalPrice').textContent,
+        unitPrice: document.getElementById('unitPrice').textContent,
+        config: currentConfig,
         timestamp: new Date().toISOString()
     };
 
-    localStorage.setItem('savedQuote_' + productConfig.id, JSON.stringify(quoteData));
+    localStorage.setItem('savedQuote_{{ product.id }}', JSON.stringify(quoteData));
 
     // Visual feedback
-    const btn = event.target.closest('button');
+    const btn = event.target;
     const originalText = btn.innerHTML;
-    btn.innerHTML = '<i class="fas fa-check"></i> SAVED!';
-    btn.style.background = 'var(--success-color)';
+    btn.innerHTML = '<i class="fas fa-check mr-2"></i>Quote Saved!';
+    btn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
 
     setTimeout(() => {
         btn.innerHTML = originalText;
-        btn.style.background = '#17a2b8';
+        btn.style.background = '';
     }, 2000);
 }
 
-function openDesignTool() {
-    // Save current config for design tool
-    sessionStorage.setItem('designToolConfig', JSON.stringify(currentSelection));
-    window.location.href = `/design-tool/product/${productConfig.id}/`;
-}
-
-function uploadDesign() {
-    // Create file input
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = '.pdf,.png,.jpg,.jpeg,.ai,.psd';
-    input.onchange = function(e) {
-        const file = e.target.files[0];
-        if (file) {
-            // Handle file upload
-            console.log('Uploading file:', file.name);
-            alert(`File "${file.name}" ready for upload! This feature will be available soon.`);
-        }
-    };
-    input.click();
-}
-
-async function addToCart() {
+function addToCart() {
+    // Simulate add to cart
     const btn = event.target;
     const originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Adding...';
 
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ADDING...';
-    btn.disabled = true;
-
-    try {
-        const formData = new FormData();
-        formData.append('product_id', productConfig.id);
-        formData.append('quantity', currentSelection.quantity);
-        formData.append('specifications', JSON.stringify(currentSelection));
-        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
-
-        const response = await fetch('/orders/cart/add/', {
-            method: 'POST',
-            body: formData
-        });
-
-        if (response.ok) {
-            btn.innerHTML = '<i class="fas fa-check"></i> ADDED!';
-            btn.style.background = 'var(--success-color)';
-
-            setTimeout(() => {
-                window.location.href = '/orders/cart/';
-            }, 1000);
-        } else {
-            throw new Error('Failed to add to cart');
-        }
-    } catch (error) {
-        console.error('Error adding to cart:', error);
-        btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> ERROR';
-        btn.style.background = 'var(--error-color)';
+    setTimeout(() => {
+        btn.innerHTML = '<i class="fas fa-check mr-2"></i>Added to Cart!';
+        btn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
 
         setTimeout(() => {
             btn.innerHTML = originalText;
-            btn.style.background = 'var(--primary-blue)';
-            btn.disabled = false;
-        }, 3000);
-    }
+            btn.style.background = '';
+        }, 2000);
+    }, 1000);
 }
 
 function downloadTemplate() {
-    // Generate template based on current selection
-    const templateData = {
-        product: productConfig.name,
-        specifications: currentSelection,
-        dimensions: `{{ product.width_mm }}x{{ product.height_mm }}mm`,
-        bleed: '{{ product.bleed_mm }}mm',
-        safeZone: '{{ product.safe_zone_mm }}mm',
-        dpi: {{ product.dpi }}
-    };
-
-    // For now, show info about the template
-    alert(`Template for ${productConfig.name}\nSize: ${templateData.dimensions}\nResolution: ${templateData.dpi}dpi\n\nTemplate download will be available soon!`);
+    // Simulate template download
+    alert('Template download will be available soon! Our team is preparing customized templates for this product.');
 }
 
-// Utility functions
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
+function scrollToCalculator() {
+    document.getElementById('calculator').scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+    });
 }
 </script>
 {% endblock %}

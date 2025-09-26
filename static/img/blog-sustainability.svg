@@ -1,0 +1,149 @@
+<svg width="400" height="250" viewBox="0 0 400 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="400" height="250" fill="url(#gradient-bg)"/>
+  
+  <!-- Gradient definitions -->
+  <defs>
+    <linearGradient id="gradient-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#56ab2f;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a8e6cf;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="leaf-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2d5a27;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4a7c59;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Abstract background elements -->
+  <circle cx="50" cy="50" r="30" fill="rgba(255,255,255,0.1)"/>
+  <circle cx="350" cy="80" r="25" fill="rgba(255,255,255,0.1)"/>
+  <circle cx="320" cy="200" r="20" fill="rgba(255,255,255,0.1)"/>
+  
+  <!-- Recycling symbol -->
+  <g transform="translate(120, 80)">
+    <!-- Main recycling triangle -->
+    <path d="M0,-30 L26,15 L-26,15 Z" fill="none" stroke="white" stroke-width="3"/>
+    
+    <!-- Arrow 1 -->
+    <path d="M-10,-15 L-5,-20 L-15,-20 Z" fill="white"/>
+    <path d="M-10,-15 L-5,-10 L-15,-10 Z" fill="white"/>
+    
+    <!-- Arrow 2 -->
+    <path d="M18,8 L23,3 L23,13 Z" fill="white"/>
+    <path d="M18,8 L13,3 L13,13 Z" fill="white"/>
+    
+    <!-- Arrow 3 -->
+    <path d="M-8,8 L-13,13 L-3,13 Z" fill="white"/>
+    <path d="M-8,8 L-13,3 L-3,3 Z" fill="white"/>
+  </g>
+  
+  <!-- Eco-friendly printer -->
+  <g transform="translate(220, 70)">
+    <!-- Printer body -->
+    <rect x="0" y="0" width="100" height="70" rx="8" fill="white" stroke="#28a745" stroke-width="2"/>
+    
+    <!-- Green status indicator -->
+    <circle cx="15" cy="15" r="6" fill="#28a745"/>
+    <circle cx="15" cy="15" r="3" fill="white"/>
+    
+    <!-- Eco label -->
+    <rect x="25" y="10" width="60" height="12" rx="6" fill="#28a745"/>
+    <text x="55" y="18" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="white">ECO</text>
+    
+    <!-- Paper tray with recycled paper -->
+    <rect x="20" y="60" width="60" height="8" rx="2" fill="#6c757d"/>
+    <rect x="25" y="65" width="50" height="3" rx="1" fill="#f8f9fa"/>
+  </g>
+  
+  <!-- Sustainable materials -->
+  <g transform="translate(80, 160)">
+    <!-- Bamboo -->
+    <rect x="0" y="0" width="4" height="30" fill="#8fbc8f"/>
+    <rect x="2" y="0" width="2" height="30" fill="#228b22"/>
+    <ellipse cx="2" cy="5" rx="8" ry="3" fill="#90ee90"/>
+    <ellipse cx="2" cy="15" rx="6" ry="2" fill="#90ee90"/>
+  </g>
+  
+  <g transform="translate(100, 160)">
+    <!-- Recycled paper stack -->
+    <rect x="0" y="0" width="25" height="35" rx="2" fill="#f8f9fa" stroke="#dee2e6" stroke-width="1"/>
+    <rect x="2" y="2" width="21" height="31" rx="1" fill="#e9ecef"/>
+    <rect x="4" y="4" width="17" height="27" rx="1" fill="#f8f9fa"/>
+    <rect x="6" y="6" width="13" height="23" rx="1" fill="#e9ecef"/>
+    
+    <!-- Recycling symbol on paper -->
+    <circle cx="12" cy="15" r="4" fill="none" stroke="#28a745" stroke-width="1"/>
+    <path d="M10,13 L12,11 L14,13" stroke="#28a745" stroke-width="1" fill="none"/>
+  </g>
+  
+  <g transform="translate(130, 160)">
+    <!-- Soy ink bottle -->
+    <rect x="0" y="0" width="20" height="30" rx="3" fill="#8b4513"/>
+    <rect x="2" y="2" width="16" height="26" rx="2" fill="#a0522d"/>
+    <rect x="4" y="4" width="12" height="22" rx="1" fill="#cd853f"/>
+    
+    <!-- Label -->
+    <rect x="6" y="8" width="8" height="10" fill="#f4a460"/>
+    <text x="10" y="15" text-anchor="middle" font-family="Arial, sans-serif" font-size="6" fill="#8b4513">SOY</text>
+  </g>
+  
+  <!-- Energy efficiency -->
+  <g transform="translate(280, 150)">
+    <!-- Solar panel -->
+    <rect x="0" y="0" width="60" height="40" fill="#2c3e50"/>
+    <rect x="2" y="2" width="26" height="16" fill="#f39c12"/>
+    <rect x="32" y="2" width="26" height="16" fill="#f39c12"/>
+    <rect x="2" y="22" width="26" height="16" fill="#f39c12"/>
+    <rect x="32" y="22" width="26" height="16" fill="#f39c12"/>
+    
+    <!-- Sun rays -->
+    <path d="M30,-10 L30,-5 M40,-15 L35,-10 M20,-15 L25,-10" stroke="#f1c40f" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Carbon footprint reduction -->
+  <g transform="translate(180, 120)">
+    <!-- Footprint with leaf -->
+    <ellipse cx="0" cy="0" rx="8" ry="12" fill="#6c757d" opacity="0.3"/>
+    <ellipse cx="0" cy="-8" rx="6" ry="8" fill="#6c757d" opacity="0.3"/>
+    <ellipse cx="0" cy="8" rx="6" ry="8" fill="#6c757d" opacity="0.3"/>
+    <ellipse cx="-6" cy="0" rx="6" ry="8" fill="#6c757d" opacity="0.3"/>
+    <ellipse cx="6" cy="0" rx="6" ry="8" fill="#6c757d" opacity="0.3"/>
+    
+    <!-- Green leaf overlay -->
+    <path d="M0,-10 Q5,-5 0,0 Q-5,-5 0,-10" fill="#28a745" opacity="0.8"/>
+  </g>
+  
+  <!-- Environmental benefits -->
+  <g transform="translate(320, 80)">
+    <!-- Tree -->
+    <rect x="0" y="0" width="4" height="20" fill="#8b4513"/>
+    <circle cx="2" cy="-5" r="12" fill="#228b22"/>
+    <circle cx="2" cy="-8" r="8" fill="#32cd32"/>
+  </g>
+  
+  <!-- Water conservation -->
+  <g transform="translate(350, 120)">
+    <!-- Water drop -->
+    <path d="M0,-8 Q4,-4 0,0 Q-4,-4 0,-8" fill="#007bff" opacity="0.7"/>
+    <path d="M0,-6 Q2,-3 0,0 Q-2,-3 0,-6" fill="#0056b3" opacity="0.7"/>
+  </g>
+  
+  <!-- Floating eco elements -->
+  <g transform="translate(50, 120)">
+    <!-- Leaf -->
+    <path d="M0,0 Q5,-5 10,0 Q5,5 0,0" fill="#28a745" opacity="0.8"/>
+  </g>
+  
+  <g transform="translate(70, 100)">
+    <!-- Another leaf -->
+    <path d="M0,0 Q4,-4 8,0 Q4,4 0,0" fill="#32cd32" opacity="0.8"/>
+  </g>
+  
+  <!-- Floating particles -->
+  <circle cx="100" cy="40" r="2" fill="rgba(255,255,255,0.6)"/>
+  <circle cx="320" cy="50" r="1.5" fill="rgba(255,255,255,0.6)"/>
+  <circle cx="200" cy="30" r="1" fill="rgba(255,255,255,0.6)"/>
+  <circle cx="240" cy="45" r="1.5" fill="rgba(255,255,255,0.6)"/>
+  <circle cx="180" cy="60" r="1" fill="rgba(255,255,255,0.6)"/>
+  <circle cx="280" cy="25" r="1" fill="rgba(255,255,255,0.6)"/>
+</svg> 

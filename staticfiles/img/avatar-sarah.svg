@@ -1,0 +1,48 @@
+<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="30" cy="30" r="30" fill="url(#avatarBg1)"/>
+  
+  <!-- Hair -->
+  <ellipse cx="30" cy="20" rx="18" ry="15" fill="#8b5a2b"/>
+  <path d="M12 20 Q30 5 48 20 Q45 15 30 15 Q15 15 12 20" fill="#6d4423"/>
+  
+  <!-- Face -->
+  <ellipse cx="30" cy="32" rx="14" ry="16" fill="#fdbcbc"/>
+  
+  <!-- Eyes -->
+  <ellipse cx="25" cy="28" rx="2" ry="3" fill="white"/>
+  <ellipse cx="35" cy="28" rx="2" ry="3" fill="white"/>
+  <circle cx="25" cy="28" r="1.5" fill="#4a5568"/>
+  <circle cx="35" cy="28" r="1.5" fill="#4a5568"/>
+  <circle cx="25.5" cy="27.5" r="0.5" fill="white"/>
+  <circle cx="35.5" cy="27.5" r="0.5" fill="white"/>
+  
+  <!-- Eyebrows -->
+  <path d="M22 24 Q25 22 28 24" stroke="#6d4423" stroke-width="1.5" fill="none"/>
+  <path d="M32 24 Q35 22 38 24" stroke="#6d4423" stroke-width="1.5" fill="none"/>
+  
+  <!-- Nose -->
+  <ellipse cx="30" cy="32" rx="1" ry="2" fill="#f7a8a8"/>
+  
+  <!-- Mouth -->
+  <path d="M27 37 Q30 40 33 37" stroke="#d69e2e" stroke-width="2" fill="none"/>
+  
+  <!-- Cheeks -->
+  <circle cx="20" cy="35" r="3" fill="#f687b3" opacity="0.3"/>
+  <circle cx="40" cy="35" r="3" fill="#f687b3" opacity="0.3"/>
+  
+  <!-- Clothes -->
+  <path d="M10 55 Q30 45 50 55 L50 60 L10 60 Z" fill="#6366f1"/>
+  <rect x="25" y="48" width="10" height="12" fill="#8b5cf6"/>
+  
+  <!-- Accessories -->
+  <circle cx="22" cy="30" r="1" fill="#f59e0b" opacity="0.8"/>
+  <circle cx="38" cy="30" r="1" fill="#f59e0b" opacity="0.8"/>
+  
+  <defs>
+    <linearGradient id="avatarBg1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e0e7ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#c7d2fe;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+</svg>

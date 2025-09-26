@@ -2,6 +2,7 @@
 
 from django.urls import path
 from . import views
+from . import views_product_types
 
 app_name = 'services'
 
@@ -28,4 +29,13 @@ urlpatterns = [
     
     # Shipping calculation
     path('api/shipping-cost/', views.api_shipping_cost, name='api_shipping_cost'),
+    
+    # Product-specific quote forms
+    path('quote/book/<slug:product_slug>/', views_product_types.book_printing_quote_view, name='book_printing_quote'),
+    path('quote/business-card/<slug:product_slug>/', views_product_types.business_card_quote_view, name='business_card_quote'),
+    path('quote/brochure/<slug:product_slug>/', views_product_types.brochure_quote_view, name='brochure_quote'),
+    path('quote/children-book/<slug:product_slug>/', views_product_types.children_book_quote_view, name='children_book_quote'),
+    
+    # AJAX price calculation
+    path('api/calculate-price/', views_product_types.ajax_calculate_price, name='ajax_calculate_price'),
 ]

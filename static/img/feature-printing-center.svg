@@ -1,0 +1,131 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="24" cy="24" r="24" fill="url(#printingBg)"/>
+  
+  <!-- Printing Facility -->
+  <g transform="translate(8, 12)">
+    <!-- Building Structure -->
+    <rect x="0" y="8" width="32" height="20" fill="white" opacity="0.9" rx="2"/>
+    
+    <!-- Roof -->
+    <polygon points="0,8 16,2 32,8" fill="url(#roofGrad)"/>
+    
+    <!-- Windows -->
+    <rect x="4" y="12" width="4" height="4" fill="url(#windowGrad)" rx="1"/>
+    <rect x="10" y="12" width="4" height="4" fill="url(#windowGrad)" rx="1"/>
+    <rect x="18" y="12" width="4" height="4" fill="url(#windowGrad)" rx="1"/>
+    <rect x="24" y="12" width="4" height="4" fill="url(#windowGrad)" rx="1"/>
+    
+    <!-- Door -->
+    <rect x="14" y="20" width="4" height="8" fill="url(#doorGrad)" rx="2"/>
+    <circle cx="16.5" cy="24" r="0.5" fill="white"/>
+    
+    <!-- Company Sign -->
+    <rect x="8" y="18" width="16" height="3" fill="url(#signGrad)" rx="1"/>
+    <text x="16" y="20" font-family="Arial" font-size="3" font-weight="bold" fill="white" text-anchor="middle">SHRISTI PRESS</text>
+    
+    <!-- Printing Equipment Inside -->
+    <rect x="6" y="22" width="3" height="4" fill="url(#equipGrad)" rx="0.5"/>
+    <rect x="11" y="22" width="3" height="4" fill="url(#equipGrad)" rx="0.5"/>
+    <rect x="19" y="22" width="3" height="4" fill="url(#equipGrad)" rx="0.5"/>
+    <rect x="24" y="22" width="3" height="4" fill="url(#equipGrad)" rx="0.5"/>
+  </g>
+  
+  <!-- Quality Indicators -->
+  <g transform="translate(35, 8)">
+    <circle cx="0" cy="0" r="5" fill="white" opacity="0.9"/>
+    <circle cx="0" cy="0" r="3" fill="url(#qualityBadgeGrad)"/>
+    <text x="0" y="1" font-family="Arial" font-size="3" font-weight="bold" fill="white" text-anchor="middle">★</text>
+  </g>
+  
+  <!-- Delivery Truck -->
+  <g transform="translate(6, 35)">
+    <!-- Truck Body -->
+    <rect x="4" y="0" width="12" height="6" fill="url(#truckGrad)" rx="1"/>
+    
+    <!-- Truck Cab -->
+    <rect x="0" y="2" width="6" height="4" fill="url(#truckGrad)" rx="1"/>
+    
+    <!-- Windows -->
+    <rect x="1" y="3" width="2" height="2" fill="url(#truckWindowGrad)" rx="0.5"/>
+    <rect x="4" y="3" width="1" height="2" fill="url(#truckWindowGrad)" rx="0.5"/>
+    
+    <!-- Wheels -->
+    <circle cx="3" cy="7" r="1.5" fill="url(#wheelGrad)"/>
+    <circle cx="13" cy="7" r="1.5" fill="url(#wheelGrad)"/>
+    
+    <!-- Company Logo on Truck -->
+    <rect x="6" y="2" width="8" height="2" fill="url(#logoGrad)" rx="0.5"/>
+    <text x="10" y="3.5" font-family="Arial" font-size="2" font-weight="bold" fill="white" text-anchor="middle">SHRISTI</text>
+  </g>
+  
+  <!-- Production Line Indicators -->
+  <g transform="translate(30, 35)">
+    <rect x="0" y="0" width="2" height="6" fill="url(#prodGrad)" rx="1"/>
+    <rect x="3" y="2" width="2" height="4" fill="url(#prodGrad)" rx="1"/>
+    <rect x="6" y="1" width="2" height="5" fill="url(#prodGrad)" rx="1"/>
+    <rect x="9" y="3" width="2" height="3" fill="url(#prodGrad)" rx="1"/>
+  </g>
+  
+  <defs>
+    <linearGradient id="printingBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="roofGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#dc2626;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#b91c1c;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="windowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#dbeafe;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#bfdbfe;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="doorGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#92400e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#78350f;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="signGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4f46e5;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="equipGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1f2937;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#374151;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="qualityBadgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="truckGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="truckWindowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e0f2fe;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#b3e5fc;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="wheelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1f2937;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#374151;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4f46e5;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="prodGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d97706;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+</svg>

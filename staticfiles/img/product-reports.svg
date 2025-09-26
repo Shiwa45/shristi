@@ -1,0 +1,331 @@
+<svg width="300" height="200" viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="300" height="200" fill="url(#reportsBg)"/>
+  
+  <!-- Main Report Stack -->
+  <g transform="translate(60, 30)">
+    <!-- Report 3 (Back) -->
+    <g transform="translate(8, 8)">
+      <rect x="0" y="0" width="160" height="120" fill="white" rx="8" filter="url(#reportShadow)"/>
+      <rect x="0" y="0" width="160" height="25" fill="url(#report3HeaderGrad)" rx="8"/>
+      <rect x="0" y="17" width="160" height="8" fill="url(#report3HeaderGrad)"/>
+      
+      <!-- Header Content -->
+      <text x="80" y="15" font-family="Inter" font-size="12" font-weight="700" fill="white" text-anchor="middle">QUARTERLY REPORT</text>
+      
+      <!-- Chart Area -->
+      <rect x="15" y="40" width="130" height="60" fill="url(#chartBgGrad)" rx="4"/>
+      
+      <!-- Bar Chart -->
+      <g transform="translate(25, 85)">
+        <rect x="0" y="0" width="8" height="15" fill="url(#bar1Grad)" rx="1"/>
+        <rect x="15" y="-5" width="8" height="20" fill="url(#bar2Grad)" rx="1"/>
+        <rect x="30" y="-10" width="8" height="25" fill="url(#bar3Grad)" rx="1"/>
+        <rect x="45" y="-3" width="8" height="18" fill="url(#bar4Grad)" rx="1"/>
+        <rect x="60" y="-15" width="8" height="30" fill="url(#bar5Grad)" rx="1"/>
+        <rect x="75" y="-8" width="8" height="23" fill="url(#bar6Grad)" rx="1"/>
+        <rect x="90" y="-12" width="8" height="27" fill="url(#bar7Grad)" rx="1"/>
+        <rect x="105" y="-6" width="8" height="21" fill="url(#bar8Grad)" rx="1"/>
+      </g>
+      
+      <!-- Grid Lines -->
+      <g stroke="white" stroke-width="0.5" opacity="0.3">
+        <line x1="25" y1="55" x2="135" y2="55"/>
+        <line x1="25" y1="70" x2="135" y2="70"/>
+        <line x1="25" y1="85" x2="135" y2="85"/>
+      </g>
+      
+      <!-- Footer Stats -->
+      <rect x="15" y="105" width="40" height="8" fill="white" opacity="0.8" rx="2"/>
+      <rect x="60" y="105" width="40" height="8" fill="white" opacity="0.8" rx="2"/>
+      <rect x="105" y="105" width="40" height="8" fill="white" opacity="0.8" rx="2"/>
+    </g>
+    
+    <!-- Report 2 (Middle) -->
+    <g transform="translate(4, 4)">
+      <rect x="0" y="0" width="160" height="120" fill="white" rx="8" filter="url(#reportShadow)"/>
+      <rect x="0" y="0" width="160" height="25" fill="url(#report2HeaderGrad)" rx="8"/>
+      <rect x="0" y="17" width="160" height="8" fill="url(#report2HeaderGrad)"/>
+      
+      <!-- Header Content -->
+      <text x="80" y="15" font-family="Inter" font-size="12" font-weight="700" fill="white" text-anchor="middle">ANNUAL REPORT 2024</text>
+      
+      <!-- Pie Chart -->
+      <g transform="translate(80, 70)">
+        <circle cx="0" cy="0" r="25" fill="url(#pieSlice1)" opacity="0.9"/>
+        <path d="M0,0 L0,-25 A25,25 0 0,1 17.7,-17.7 Z" fill="url(#pieSlice2)"/>
+        <path d="M0,0 L17.7,-17.7 A25,25 0 0,1 25,0 Z" fill="url(#pieSlice3)"/>
+        <path d="M0,0 L25,0 A25,25 0 0,1 17.7,17.7 Z" fill="url(#pieSlice4)"/>
+        <circle cx="0" cy="0" r="8" fill="white"/>
+      </g>
+      
+      <!-- Legend -->
+      <g transform="translate(110, 50)">
+        <rect x="0" y="0" width="8" height="4" fill="url(#pieSlice1)" rx="1"/>
+        <rect x="0" y="6" width="8" height="4" fill="url(#pieSlice2)" rx="1"/>
+        <rect x="0" y="12" width="8" height="4" fill="url(#pieSlice3)" rx="1"/>
+        <rect x="0" y="18" width="8" height="4" fill="url(#pieSlice4)" rx="1"/>
+      </g>
+      
+      <!-- Text Areas -->
+      <rect x="15" y="35" width="45" height="2" fill="url(#report2TextGrad)" rx="1"/>
+      <rect x="15" y="40" width="35" height="1.5" fill="#9ca3af" rx="0.75"/>
+      <rect x="15" y="45" width="40" height="1.5" fill="#9ca3af" rx="0.75"/>
+      
+      <rect x="15" y="100" width="130" height="2" fill="url(#report2TextGrad)" rx="1"/>
+      <rect x="15" y="105" width="100" height="1.5" fill="#9ca3af" rx="0.75"/>
+      <rect x="15" y="110" width="120" height="1.5" fill="#9ca3af" rx="0.75"/>
+    </g>
+    
+    <!-- Report 1 (Front) -->
+    <g transform="translate(0, 0)">
+      <rect x="0" y="0" width="160" height="120" fill="white" rx="8" filter="url(#reportShadow)"/>
+      <rect x="0" y="0" width="160" height="25" fill="url(#report1HeaderGrad)" rx="8"/>
+      <rect x="0" y="17" width="160" height="8" fill="url(#report1HeaderGrad)"/>
+      
+      <!-- Header Content -->
+      <text x="80" y="15" font-family="Inter" font-size="12" font-weight="700" fill="white" text-anchor="middle">BUSINESS ANALYTICS</text>
+      
+      <!-- Line Chart -->
+      <g transform="translate(20, 45)">
+        <rect x="0" y="0" width="120" height="50" fill="url(#lineChartBg)" rx="4"/>
+        
+        <!-- Line Graph -->
+        <polyline points="10,40 25,35 40,25 55,30 70,20 85,15 100,25 110,18" 
+                  stroke="url(#lineGrad)" stroke-width="2" fill="none"/>
+        
+        <!-- Data Points -->
+        <circle cx="10" cy="40" r="2" fill="url(#pointGrad)"/>
+        <circle cx="25" cy="35" r="2" fill="url(#pointGrad)"/>
+        <circle cx="40" cy="25" r="2" fill="url(#pointGrad)"/>
+        <circle cx="55" cy="30" r="2" fill="url(#pointGrad)"/>
+        <circle cx="70" cy="20" r="2" fill="url(#pointGrad)"/>
+        <circle cx="85" cy="15" r="2" fill="url(#pointGrad)"/>
+        <circle cx="100" cy="25" r="2" fill="url(#pointGrad)"/>
+        <circle cx="110" cy="18" r="2" fill="url(#pointGrad)"/>
+        
+        <!-- Area under curve -->
+        <polygon points="10,40 25,35 40,25 55,30 70,20 85,15 100,25 110,18 110,50 10,50" 
+                 fill="url(#areaGrad)" opacity="0.3"/>
+      </g>
+      
+      <!-- KPI Boxes -->
+      <g transform="translate(15, 100)">
+        <rect x="0" y="0" width="25" height="15" fill="url(#kpi1Grad)" rx="3"/>
+        <text x="12.5" y="8" font-family="Inter" font-size="6" font-weight="700" fill="white" text-anchor="middle">+24%</text>
+        
+        <rect x="35" y="0" width="25" height="15" fill="url(#kpi2Grad)" rx="3"/>
+        <text x="47.5" y="8" font-family="Inter" font-size="6" font-weight="700" fill="white" text-anchor="middle">₹2.4M</text>
+        
+        <rect x="70" y="0" width="25" height="15" fill="url(#kpi3Grad)" rx="3"/>
+        <text x="82.5" y="8" font-family="Inter" font-size="6" font-weight="700" fill="white" text-anchor="middle">95%</text>
+        
+        <rect x="105" y="0" width="25" height="15" fill="url(#kpi4Grad)" rx="3"/>
+        <text x="117.5" y="8" font-family="Inter" font-size="6" font-weight="700" fill="white" text-anchor="middle">1.2K</text>
+      </g>
+      
+      <!-- Status Badge -->
+      <g transform="translate(135, 35)">
+        <circle cx="0" cy="0" r="8" fill="url(#statusBadgeGrad)"/>
+        <path d="M-3 0 L-1 2 L3 -2" stroke="white" stroke-width="1.5" fill="none"/>
+      </g>
+    </g>
+  </g>
+  
+  <!-- Floating Charts -->
+  <g transform="translate(240, 40)">
+    <rect x="0" y="0" width="40" height="30" fill="white" opacity="0.9" rx="4" filter="url(#floatingShadow)"/>
+    
+    <!-- Mini Line Chart -->
+    <polyline points="5,20 10,15 15,18 20,12 25,16 30,10 35,14" 
+              stroke="url(#miniLineGrad)" stroke-width="1.5" fill="none"/>
+    <circle cx="35" cy="14" r="1.5" fill="url(#miniPointGrad)"/>
+  </g>
+  
+  <g transform="translate(20, 150)">
+    <circle cx="15" cy="15" r="15" fill="url(#floatingCircleGrad)" opacity="0.2"/>
+    <rect x="8" y="8" width="14" height="14" fill="white" opacity="0.8" rx="2"/>
+    
+    <!-- Mini Pie -->
+    <g transform="translate(15, 15)">
+      <circle cx="0" cy="0" r="5" fill="url(#miniPie1)"/>
+      <path d="M0,0 L0,-5 A5,5 0 0,1 3.5,-3.5 Z" fill="url(#miniPie2)"/>
+      <path d="M0,0 L3.5,-3.5 A5,5 0 0,1 5,0 Z" fill="url(#miniPie3)"/>
+    </g>
+  </g>
+  
+  <defs>
+    <linearGradient id="reportsBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fafafa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f4f4f5;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="report1HeaderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4f46e5;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="report2HeaderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="report3HeaderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d97706;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="chartBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fefce8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fef3c7;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="bar1Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ef4444;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#dc2626;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="bar2Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="bar3Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="bar4Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="bar5Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0891b2;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="bar6Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#84cc16;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#65a30d;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="bar7Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f97316;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ea580c;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="bar8Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ec4899;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#db2777;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="pieSlice1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="pieSlice2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="pieSlice3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d97706;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="pieSlice4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="report2TextGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#047857;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#065f46;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="lineChartBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f0f9ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e0f2fe;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4f46e5;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="pointGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1d4ed8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e3a8a;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="areaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:#6366f1;stop-opacity:0.1" />
+    </linearGradient>
+    
+    <linearGradient id="kpi1Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#22c55e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#16a34a;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="kpi2Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="kpi3Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d97706;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="kpi4Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="statusBadgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="miniLineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4f46e5;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="miniPointGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1d4ed8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e3a8a;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="floatingCircleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ec4899;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#db2777;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="miniPie1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="miniPie2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="miniPie3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d97706;stop-opacity:1" />
+    </linearGradient>
+    
+    <filter id="reportShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#000000" flood-opacity="0.1"/>
+    </filter>
+    
+    <filter id="floatingShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000000" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+</svg>

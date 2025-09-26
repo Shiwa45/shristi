@@ -1,0 +1,264 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ product.name }} - Get Instant Quote{% endblock %}
+
+{% block extra_css %}
+<style>
+.quote-form {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.5rem;
+}
+
+.form-select, .form-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-select:focus, .form-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.price-display {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 16px;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.price-amount {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #fbbf24;
+}
+
+.price-details {
+    margin-top: 1rem;
+    opacity: 0.9;
+}
+
+.submit-btn {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    padding: 16px 32px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="py-16 bg-gray-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-4">{{ product.name }} - Instant Quote</h1>
+            <p class="text-lg text-gray-600">Get your custom quote in seconds</p>
+        </div>
+
+        <form id="quoteForm" class="quote-form">
+            {% csrf_token %}
+            <input type="hidden" name="product_type" value="business_card">
+            
+            <div class="form-grid">
+                <div class="form-group">
+                    <label class="form-label">Quantity</label>
+                    <select name="quantity" class="form-select" onchange="updatePrice()">
+                        <option value="100">100 Cards</option>
+                        <option value="250">250 Cards (10% off)</option>
+                        <option value="500" selected>500 Cards (20% off)</option>
+                        <option value="1000">1000 Cards (30% off)</option>
+                        <option value="2500">2500 Cards (35% off)</option>
+                        <option value="5000">5000 Cards (40% off)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Card Size</label>
+                    <select name="card_size" class="form-select" onchange="updatePrice()">
+                        <option value="standard" selected>Standard (90 x 54 mm)</option>
+                        <option value="mini">Mini (85 x 50 mm)</option>
+                        <option value="square">Square (70 x 70 mm)</option>
+                        <option value="folded">Folded (180 x 54 mm)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Paper Type</label>
+                    <select name="paper_type" class="form-select" onchange="updatePrice()">
+                        <option value="300gsm_art" selected>300 GSM Art Card</option>
+                        <option value="350gsm_art">350 GSM Art Card</option>
+                        <option value="400gsm_art">400 GSM Art Card</option>
+                        <option value="300gsm_duplex">300 GSM Duplex Board</option>
+                        <option value="textured">Textured Paper</option>
+                        <option value="linen">Linen Finish</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Printing Sides</label>
+                    <select name="printing_sides" class="form-select" onchange="updatePrice()">
+                        <option value="single">Single Side (4+0)</option>
+                        <option value="double" selected>Double Side (4+4)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Finishing</label>
+                    <select name="finishing" class="form-select" onchange="updatePrice()">
+                        <option value="matte">Matte Finish</option>
+                        <option value="gloss_lam">Gloss Lamination</option>
+                        <option value="matte_lam" selected>Matte Lamination</option>
+                        <option value="spot_uv">Spot UV</option>
+                        <option value="foiling">Gold/Silver Foiling</option>
+                        <option value="embossing">Embossing</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Design Service</label>
+                    <select name="design_service" class="form-select" onchange="updatePrice()">
+                        <option value="none" selected>No Design Service</option>
+                        <option value="basic">Basic Design (+₹500)</option>
+                        <option value="premium">Premium Design (+₹1,500)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Customer Information -->
+            <div class="form-grid" style="margin-top: 2rem;">
+                <div class="form-group">
+                    <label class="form-label">Your Name</label>
+                    <input type="text" name="customer_name" class="form-input" placeholder="Enter your name">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="customer_email" class="form-input" placeholder="your@email.com">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Phone</label>
+                    <input type="tel" name="customer_phone" class="form-input" placeholder="+91 9876543210">
+                </div>
+            </div>
+
+            <!-- Price Display -->
+            <div class="price-display">
+                <div class="price-amount">₹<span id="totalPrice">4,000</span></div>
+                <div class="price-details">
+                    <div>Unit Price: ₹<span id="unitPrice">8.00</span> per card</div>
+                    <div>Quantity: <span id="quantity">500</span> cards</div>
+                    <div id="discountInfo" style="color: #fbbf24; font-weight: 600;"></div>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                <i class="fas fa-shopping-cart mr-2"></i>
+                Get This Quote
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+function updatePrice() {
+    const form = document.getElementById('quoteForm');
+    const formData = new FormData(form);
+    
+    fetch('{% url "services:ajax_calculate_price" %}', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById('totalPrice').textContent = Math.round(data.total_price).toLocaleString();
+            document.getElementById('unitPrice').textContent = data.unit_price.toFixed(2);
+            document.getElementById('quantity').textContent = data.quantity;
+            
+            const discountInfo = document.getElementById('discountInfo');
+            if (data.discount_percent > 0) {
+                discountInfo.textContent = `${data.discount_percent}% Bulk Discount Applied!`;
+                discountInfo.style.display = 'block';
+            } else {
+                discountInfo.style.display = 'none';
+            }
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+// Initialize price on page load
+document.addEventListener('DOMContentLoaded', function() {
+    updatePrice();
+});
+
+// Handle form submission
+document.getElementById('quoteForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    
+    fetch('{% url "services:business_card_quote" product.slug %}', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(`Quote saved! Total: ₹${data.total_price.toLocaleString()}`);
+            // Redirect or show success message
+        }
+    })
+    .catch(error => console.error('Error:', error));
+});
+</script>
+{% endblock %}

@@ -32,6 +32,10 @@ class ServiceCategory(models.Model):
 
     def get_absolute_url(self):
         return reverse('services:category', kwargs={'slug': self.slug})
+    
+    def get_design_tool_count(self):
+        """Get count of products with design tool enabled"""
+        return self.products.filter(has_design_tool=True, is_active=True).count()
 
 class Product(models.Model):
     # Hero section content (admin-editable)
@@ -359,3 +363,57 @@ class ShippingOption(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class ProductFormField(models.Model):
+    """Dynamic form fields for product quote forms"""
+    FIELD_TYPES = [
+        ('text', 'Text Input'),
+        ('number', 'Number Input'),
+        ('select', 'Select Dropdown'),
+        ('radio', 'Radio Buttons'),
+        ('checkbox', 'Checkbox'),
+        ('range', 'Range Slider'),
+    ]
+    
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='form_fields')
+    field_name = models.CharField(max_length=100, help_text="Internal field name (e.g., 'color', 'paper_type')")
+    field_label = models.CharField(max_length=200, help_text="Display label (e.g., 'Color', 'Paper Type')")
+    field_type = models.CharField(max_length=20, choices=FIELD_TYPES, default='select')
+    is_required = models.BooleanField(default=True)
+    order = models.IntegerField(default=0, help_text="Display order")
+    help_text = models.CharField(max_length=300, blank=True)
+    
+    # For select/radio options (JSON format)
+    options = models.TextField(blank=True, help_text='JSON format: [{"value": "option1", "label": "Option 1", "price_modifier": 0}]')
+    
+    # Default value
+    default_value = models.CharField(max_length=200, blank=True)
+    
+    # Validation
+    min_value = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    max_value = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    
+    # Conditional display
+    show_condition = models.CharField(max_length=200, blank=True, help_text="JSON condition for when to show this field")
+    
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['order', 'field_name']
+        unique_together = ('product', 'field_name')
+
+    def __str__(self):
+        return f"{self.product.name} - {self.field_label}"
+    
+    def get_options(self):
+        """Parse JSON options"""
+        if self.options:
+            try:
+                import json
+                return json.loads(self.options)
+            except json.JSONDecodeError:
+                return []
+        return []

@@ -18,6 +18,9 @@ import uuid
 
 from apps.services.models import Product
 from apps.templates_mgmt.models import DesignTemplate, TemplateCategory, UserDesign
+from .models import DesignAsset
+import requests
+from django.utils import timezone
 
 
 def design_tool_view(request, product_slug=None):
@@ -467,7 +470,230 @@ def api_user_designs(request):
             'success': True,
             'designs': designs_data
         })
-        
+
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'error': str(e)
+        }, status=500)
+
+
+@login_required
+@csrf_exempt
+@require_http_methods(["POST"])
+def api_upload_svg_template(request):
+    """API endpoint for uploading SVG templates"""
+    try:
+        if 'svg_file' not in request.FILES:
+            return JsonResponse({
+                'success': False,
+                'error': 'No SVG file provided'
+            }, status=400)
+
+        svg_file = request.FILES['svg_file']
+        name = request.POST.get('name', svg_file.name)
+        category_id = request.POST.get('category_id')
+        width_mm = float(request.POST.get('width_mm', 90))
+        height_mm = float(request.POST.get('height_mm', 54))
+
+        # Validate file type
+        if not svg_file.name.lower().endswith('.svg'):
+            return JsonResponse({
+                'success': False,
+                'error': 'Only SVG files are allowed'
+            }, status=400)
+
+        # Get or create default category
+        if category_id:
+            try:
+                category = TemplateCategory.objects.get(id=category_id)
+            except TemplateCategory.DoesNotExist:
+                category, created = TemplateCategory.objects.get_or_create(
+                    slug='user-uploads',
+                    defaults={'name': 'User Uploads', 'description': 'User uploaded templates'}
+                )
+        else:
+            category, created = TemplateCategory.objects.get_or_create(
+                slug='user-uploads',
+                defaults={'name': 'User Uploads', 'description': 'User uploaded templates'}
+            )
+
+        # Create design template
+        template = DesignTemplate.objects.create(
+            name=name,
+            category=category,
+            width_mm=width_mm,
+            height_mm=height_mm,
+            bleed_mm=3.0,
+            safe_zone_mm=5.0,
+        )
+
+        # Save SVG file
+        template.svg_file.save(
+            f"template_{template.id}_{svg_file.name}",
+            svg_file,
+            save=True
+        )
+
+        # Create asset record for user
+        asset = DesignAsset.objects.create(
+            user=request.user,
+            name=name,
+            asset_type='template',
+            file=template.svg_file,
+            file_size=svg_file.size,
+            mime_type='image/svg+xml',
+            metadata={
+                'width_mm': width_mm,
+                'height_mm': height_mm,
+                'template_id': template.id
+            }
+        )
+
+        return JsonResponse({
+            'success': True,
+            'template_id': template.id,
+            'asset_id': asset.id,
+            'message': 'SVG template uploaded successfully',
+            'template': {
+                'id': template.id,
+                'name': template.name,
+                'svg_url': template.svg_file.url,
+                'category': template.category.name,
+                'width_mm': template.width_mm,
+                'height_mm': template.height_mm,
+            }
+        })
+
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'error': str(e)
+        }, status=500)
+
+
+@require_http_methods(["GET"])
+def api_pixabay_images(request):
+    """API endpoint for Pixabay image search"""
+    try:
+        # Get Pixabay API key from settings
+        pixabay_api_key = getattr(settings, 'PIXABAY_API_KEY', None)
+        if not pixabay_api_key or pixabay_api_key == 'your-pixabay-api-key':
+            return JsonResponse({
+                'success': False,
+                'error': 'Pixabay API key not configured'
+            }, status=500)
+
+        # Get search parameters
+        query = request.GET.get('q', 'business')
+        page = int(request.GET.get('page', 1))
+        per_page = min(int(request.GET.get('per_page', 12)), 50)  # Pixabay max is 50
+        category = request.GET.get('category', '')
+        image_type = request.GET.get('image_type', 'photo')
+        orientation = request.GET.get('orientation', 'all')
+
+        # Build Pixabay API URL
+        pixabay_url = "https://pixabay.com/api/"
+        params = {
+            'key': pixabay_api_key,
+            'q': query,
+            'image_type': image_type,
+            'orientation': orientation,
+            'category': category,
+            'page': page,
+            'per_page': per_page,
+            'safesearch': 'true',
+            'order': 'popular'
+        }
+
+        # Remove empty parameters
+        params = {k: v for k, v in params.items() if v}
+
+        # Make request to Pixabay
+        response = requests.get(pixabay_url, params=params, timeout=10)
+        response.raise_for_status()
+
+        data = response.json()
+
+        # Format images for frontend
+        images = []
+        for img in data.get('hits', []):
+            images.append({
+                'id': img['id'],
+                'preview_url': img['webformatURL'],
+                'thumbnail_url': img['previewURL'],
+                'large_url': img['largeImageURL'],
+                'tags': img['tags'],
+                'user': img['user'],
+                'downloads': img['downloads'],
+                'likes': img['likes'],
+                'views': img['views'],
+                'width': img['imageWidth'],
+                'height': img['imageHeight'],
+                'size': img['imageSize']
+            })
+
+        return JsonResponse({
+            'success': True,
+            'images': images,
+            'pagination': {
+                'current_page': page,
+                'total_hits': data.get('totalHits', 0),
+                'per_page': per_page,
+                'total_pages': (data.get('totalHits', 0) + per_page - 1) // per_page
+            }
+        })
+
+    except requests.RequestException as e:
+        return JsonResponse({
+            'success': False,
+            'error': f'Pixabay API error: {str(e)}'
+        }, status=500)
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'error': str(e)
+        }, status=500)
+
+
+@login_required
+@require_http_methods(["GET"])
+def api_user_templates(request):
+    """API endpoint for user's uploaded templates"""
+    try:
+        # Get user's uploaded templates through DesignAsset
+        assets = DesignAsset.objects.filter(
+            user=request.user,
+            asset_type='template'
+        ).order_by('-created_at')
+
+        templates_data = []
+        for asset in assets:
+            template_id = asset.metadata.get('template_id')
+            if template_id:
+                try:
+                    template = DesignTemplate.objects.get(id=template_id)
+                    templates_data.append({
+                        'id': template.id,
+                        'name': template.name,
+                        'thumbnail': template.thumbnail.url if template.thumbnail else None,
+                        'svg_file': template.svg_file.url if template.svg_file else None,
+                        'width_mm': template.width_mm,
+                        'height_mm': template.height_mm,
+                        'bleed_mm': template.bleed_mm,
+                        'safe_zone_mm': template.safe_zone_mm,
+                        'category': template.category.name,
+                        'created_at': asset.created_at.isoformat(),
+                        'usage_count': asset.usage_count,
+                    })
+                except DesignTemplate.DoesNotExist:
+                    continue
+
+        return JsonResponse({
+            'success': True,
+            'templates': templates_data
+        })
+
     except Exception as e:
         return JsonResponse({
             'success': False,

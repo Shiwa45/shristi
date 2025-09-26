@@ -5,18 +5,25 @@ from .models import HomepageSlider, Page, ContactSubmission, Testimonial, FAQCat
 
 @admin.register(HomepageSlider)
 class HomepageSliderAdmin(admin.ModelAdmin):
-    list_display = ('title', 'image_preview', 'is_active', 'order', 'created_at')
+    list_display = ('title', 'subtitle', 'image_preview', 'is_active', 'order', 'created_at')
     list_filter = ('is_active', 'created_at')
     list_editable = ('is_active', 'order')
-    search_fields = ('title', 'description')
-    prepopulated_fields = {'cta_url': ('title',)}
+    search_fields = ('title', 'subtitle', 'description')
     
     fieldsets = (
         ('Content', {
-            'fields': ('title', 'description', 'image')
+            'fields': ('title', 'subtitle', 'description', 'image')
         }),
-        ('Call to Action', {
-            'fields': ('cta_text', 'cta_url')
+        ('Call to Actions', {
+            'fields': ('primary_cta_text', 'primary_cta_url', 'secondary_cta_text', 'secondary_cta_url')
+        }),
+        ('Background Styling', {
+            'fields': ('background_gradient_from', 'background_gradient_via', 'background_gradient_to'),
+            'classes': ('collapse',)
+        }),
+        ('Legacy Fields', {
+            'fields': ('cta_text', 'cta_url'),
+            'classes': ('collapse',)
         }),
         ('Settings', {
             'fields': ('is_active', 'order')

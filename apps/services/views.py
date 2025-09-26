@@ -85,11 +85,14 @@ def product_detail_view(request, slug):
     product = get_object_or_404(
         Product.objects.select_related('category').prefetch_related(
             'images', 'pricings', 'specifications', 'features',
-            'processes', 'faqs', 'testimonials', 'samples'
+            'processes', 'faqs', 'testimonials', 'samples', 'form_fields'
         ),
         slug=slug,
         is_active=True
     )
+    
+    # Get dynamic form fields
+    form_fields = product.form_fields.filter(is_active=True).order_by('order')
     
     # Get available options from pricing
     available_sizes = product.pricings.filter(
@@ -137,6 +140,7 @@ def product_detail_view(request, slug):
     
     context = {
         'product': product,
+        'form_fields': form_fields,
         'available_sizes': list(available_sizes),
         'available_paper_types': list(available_paper_types),
         'available_finishes': list(available_finishes),

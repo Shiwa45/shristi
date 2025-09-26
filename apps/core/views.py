@@ -15,12 +15,14 @@ def home_view(request):
     """Homepage view with slider and featured products"""
     sliders = HomepageSlider.objects.filter(is_active=True).order_by('order')
     featured_products = Product.objects.filter(is_active=True, is_featured=True)[:6]
+    design_enabled_products = Product.objects.filter(is_active=True, has_design_tool=True)[:6]
     service_categories = ServiceCategory.objects.filter(is_active=True).order_by('order')[:4]
     testimonials = Testimonial.objects.filter(is_active=True, is_featured=True).order_by('order')[:6]
     
     context = {
         'sliders': sliders,
         'featured_products': featured_products,
+        'design_enabled_products': design_enabled_products,
         'service_categories': service_categories,
         'testimonials': testimonials,
     }

@@ -1,0 +1,27 @@
+{% load static %}
+
+<!-- This template is now integrated directly into the base.html mega menu structure -->
+<!-- The mega menu content is generated dynamically using the services_menu context variable -->
+
+<!-- Fallback content for when template tag is used directly -->
+<div class="mega-menu-columns">
+    {% for category_data in menu_categories %}
+        <div class="mega-menu-column">
+            <h3 class="mega-menu-heading">{{ category_data.category.name }}</h3>
+            <ul class="mega-menu-links">
+                {% for product in category_data.products %}
+                    <li>
+                        <a href="{{ product.get_absolute_url }}">
+                            {{ product.name }}
+                            {% if product.is_featured %}⭐{% endif %}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% empty %}
+        <div class="mega-menu-column">
+            <p>Services coming soon...</p>
+        </div>
+    {% endfor %}
+</div>

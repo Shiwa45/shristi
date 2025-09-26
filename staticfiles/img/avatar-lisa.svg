@@ -1,0 +1,50 @@
+<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="30" cy="30" r="30" fill="url(#lisaGradient)"/>
+  
+  <!-- Hair -->
+  <path d="M30 15c-8 0-15 4-15 12 0 8 7 12 15 12s15-4 15-12c0-8-7-12-15-12z" fill="#8B4513"/>
+  <path d="M20 25c-2-3-3-6-3-10 0-4 1-7 3-10 2 3 3 6 3 10s-1 7-3 10z" fill="#8B4513"/>
+  <path d="M40 25c2-3 3-6 3-10 0-4-1-7-3-10-2 3-3 6-3 10s1 7 3 10z" fill="#8B4513"/>
+  
+  <!-- Face -->
+  <ellipse cx="30" cy="32" rx="12" ry="14" fill="#FFE4C4"/>
+  
+  <!-- Eyes -->
+  <ellipse cx="26" cy="28" rx="2" ry="3" fill="#2F2F2F"/>
+  <ellipse cx="34" cy="28" rx="2" ry="3" fill="#2F2F2F"/>
+  <circle cx="26" cy="27" r="1" fill="white"/>
+  <circle cx="34" cy="27" r="1" fill="white"/>
+  
+  <!-- Nose -->
+  <path d="M30 32l-1 2h2l-1-2z" fill="#FFDAB9"/>
+  
+  <!-- Mouth -->
+  <path d="M28 36c0 0 2 2 4 2s4-2 4-2" stroke="#2F2F2F" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  
+  <!-- Cheeks -->
+  <circle cx="24" cy="32" r="2" fill="#FFB6C1" opacity="0.6"/>
+  <circle cx="36" cy="32" r="2" fill="#FFB6C1" opacity="0.6"/>
+  
+  <!-- Earrings -->
+  <circle cx="22" cy="30" r="1.5" fill="#FFD700"/>
+  <circle cx="38" cy="30" r="1.5" fill="#FFD700"/>
+  
+  <!-- Necklace -->
+  <path d="M25 42c0 0 2 1 5 1s5-1 5-1" stroke="#FFD700" stroke-width="2" fill="none"/>
+  <circle cx="30" cy="44" r="1" fill="#FFD700"/>
+  
+  <!-- Professional Blouse -->
+  <path d="M20 45c0 0 5 3 10 3s10-3 10-3v8c0 0-5 2-10 2s-10-2-10-2v-8z" fill="#4169E1"/>
+  
+  <!-- Collar -->
+  <path d="M25 45l-2-2h14l-2 2h-10z" fill="white"/>
+  
+  <!-- Gradient Definition -->
+  <defs>
+    <linearGradient id="lisaGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E6F3FF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#B3D9FF;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+</svg> 

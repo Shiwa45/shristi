@@ -1,0 +1,50 @@
+<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="30" cy="30" r="30" fill="url(#avatar-gradient)"/>
+  
+  <!-- Gradient definitions -->
+  <defs>
+    <linearGradient id="avatar-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#56ab2f;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a8e6cf;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Head -->
+  <circle cx="30" cy="25" r="12" fill="#f4d03f"/>
+  
+  <!-- Hair -->
+  <path d="M18,20 Q30,15 42,20 Q40,18 38,17 Q36,16 34,16 Q32,16 30,16 Q28,16 26,17 Q24,18 22,19 Q20,20 18,20" fill="#2c3e50"/>
+  <path d="M20,18 Q30,13 40,18 Q38,16 36,15 Q34,14 32,14 Q30,14 28,15 Q26,16 24,17 Q22,18 20,18" fill="#34495e"/>
+  
+  <!-- Eyes -->
+  <circle cx="26" cy="23" r="2" fill="#2c3e50"/>
+  <circle cx="34" cy="23" r="2" fill="#2c3e50"/>
+  <circle cx="26" cy="23" r="1" fill="white"/>
+  <circle cx="34" cy="23" r="1" fill="white"/>
+  
+  <!-- Eyebrows -->
+  <path d="M24,20 L28,20" stroke="#2c3e50" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M32,20 L36,20" stroke="#2c3e50" stroke-width="1.5" stroke-linecap="round"/>
+  
+  <!-- Nose -->
+  <path d="M30,25 L28,28 L30,27 L32,28 Z" fill="#e67e22"/>
+  
+  <!-- Mouth -->
+  <path d="M28,30 Q30,32 32,30" stroke="#e74c3c" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  
+  <!-- Beard -->
+  <path d="M26,28 Q30,30 34,28 Q32,30 30,31 Q28,30 26,28" fill="#2c3e50" opacity="0.7"/>
+  
+  <!-- Body -->
+  <rect x="22" y="37" width="16" height="20" rx="8" fill="#27ae60"/>
+  
+  <!-- Shirt -->
+  <path d="M24,37 L36,37 L35,40 L25,40 Z" fill="#229954"/>
+  
+  <!-- Collar -->
+  <path d="M27,37 L33,37 L32,39 L28,39 Z" fill="#1e8449"/>
+  
+  <!-- Initial -->
+  <text x="30" y="52" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">D</text>
+</svg> 

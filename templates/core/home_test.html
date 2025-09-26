@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Test{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-center mb-8">Welcome to Drishthi Printing</h1>
+    <p class="text-center text-lg text-gray-600 mb-8">Your trusted partner for professional printing services</p>
+    
+    <div class="text-center">
+        <a href="{% url 'services:categories' %}" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
+            View Our Services
+        </a>
+    </div>
+    
+    <!-- Test Services Menu Data -->
+    <div class="mt-12">
+        <h2 class="text-2xl font-bold mb-4">Services Menu Test:</h2>
+        {% if services_menu %}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {% for category in services_menu %}
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <h3 class="font-bold">{{ category.name }}</h3>
+                        <ul class="mt-2">
+                            {% for product in category.products %}
+                                <li class="text-sm text-gray-600">
+                                    {{ product.name }}
+                                    {% if product.is_featured %}⭐{% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-red-500">No services menu data found</p>
+        {% endif %}
+    </div>
+</div>
+{% en

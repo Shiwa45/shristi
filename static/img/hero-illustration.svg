@@ -1,0 +1,104 @@
+<svg width="500" height="400" viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Elements -->
+  <circle cx="400" cy="100" r="80" fill="url(#heroGradient1)" opacity="0.3"/>
+  <circle cx="80" cy="320" r="60" fill="url(#heroGradient2)" opacity="0.2"/>
+  
+  <!-- Main Illustration - Printing Press -->
+  <rect x="150" y="120" width="200" height="160" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2" rx="8"/>
+  
+  <!-- Printer Body -->
+  <rect x="160" y="140" width="180" height="80" fill="url(#printerGradient)" rx="6"/>
+  
+  <!-- Paper Stack -->
+  <rect x="170" y="150" width="50" height="60" fill="white" stroke="#cbd5e1" stroke-width="1" rx="2"/>
+  <rect x="172" y="148" width="50" height="60" fill="white" stroke="#cbd5e1" stroke-width="1" rx="2"/>
+  <rect x="174" y="146" width="50" height="60" fill="white" stroke="#cbd5e1" stroke-width="1" rx="2"/>
+  
+  <!-- Print Head -->
+  <rect x="240" y="155" width="80" height="20" fill="#6366f1" rx="10"/>
+  <circle cx="250" cy="165" r="3" fill="white"/>
+  <circle cx="260" cy="165" r="3" fill="white"/>
+  <circle cx="270" cy="165" r="3" fill="white"/>
+  <circle cx="280" cy="165" r="3" fill="white"/>
+  
+  <!-- Printed Materials -->
+  <rect x="280" y="230" width="40" height="30" fill="white" stroke="#e2e8f0" stroke-width="1" rx="2"/>
+  <rect x="285" y="235" width="30" height="2" fill="#6366f1" rx="1"/>
+  <rect x="285" y="240" width="25" height="2" fill="#f59e0b" rx="1"/>
+  <rect x="285" y="245" width="20" height="2" fill="#10b981" rx="1"/>
+  
+  <!-- Business Cards -->
+  <g transform="translate(350, 180)">
+    <rect x="0" y="0" width="35" height="20" fill="white" stroke="#e2e8f0" stroke-width="1" rx="2"/>
+    <rect x="2" y="15" width="15" height="1" fill="#6366f1" rx="0.5"/>
+    <rect x="2" y="17" width="10" height="1" fill="#94a3b8" rx="0.5"/>
+    <circle cx="25" cy="10" r="6" fill="url(#cardGradient)"/>
+  </g>
+  
+  <!-- Floating Elements -->
+  <g class="floating-element" style="animation: float 3s ease-in-out infinite;">
+    <circle cx="100" cy="180" r="8" fill="#f59e0b" opacity="0.6"/>
+    <text x="100" y="185" font-family="Arial" font-size="8" fill="white" text-anchor="middle">!</text>
+  </g>
+  
+  <g class="floating-element" style="animation: float 3s ease-in-out infinite 1s;">
+    <rect x="380" y="250" width="20" height="20" fill="#10b981" opacity="0.6" rx="4"/>
+    <path d="M385 260 L390 265 L395 255" stroke="white" stroke-width="2" fill="none"/>
+  </g>
+  
+  <!-- Quality Badge -->
+  <g transform="translate(50, 80)">
+    <circle cx="0" cy="0" r="25" fill="url(#qualityBadge)"/>
+    <text x="0" y="-5" font-family="Inter" font-size="8" font-weight="700" fill="white" text-anchor="middle">100%</text>
+    <text x="0" y="5" font-family="Inter" font-size="6" fill="white" text-anchor="middle">QUALITY</text>
+  </g>
+  
+  <!-- Design Elements -->
+  <path d="M50 50 Q80 30 110 50 Q140 70 170 50" stroke="url(#lineGradient)" stroke-width="2" fill="none" opacity="0.5"/>
+  <path d="M330 350 Q360 330 390 350 Q420 370 450 350" stroke="url(#lineGradient)" stroke-width="2" fill="none" opacity="0.5"/>
+  
+  <!-- Gradient Definitions -->
+  <defs>
+    <linearGradient id="heroGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="heroGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ef4444;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="printerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f1f5f9;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="cardGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="qualityBadge" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:0" />
+      <stop offset="50%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6366f1;stop-opacity:0" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Animation Keyframes (CSS) -->
+  <style>
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    .floating-element {
+      animation: float 3s ease-in-out infinite;
+    }
+  </style>
+</svg>

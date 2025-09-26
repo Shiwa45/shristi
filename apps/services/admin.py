@@ -7,8 +7,9 @@ from django.urls import reverse
 from django.utils.safestring import mark_safe
 from .models import (
     ServiceCategory, Product, ProductPricing, 
-    ProductImage, ProductSpecification, PricingTier
+    ProductImage, ProductSpecification, PricingTier, ProductFormField
 )
+from .models_product_types import BookPrintingQuote, BusinessCardQuote, BrochureQuote, ChildrenBookQuote
 
 @admin.register(ServiceCategory)
 class ServiceCategoryAdmin(admin.ModelAdmin):
@@ -278,6 +279,90 @@ def duplicate_pricing_rules(modeladmin, request, queryset):
         pricing.save()
 
 ProductPricingAdmin.actions = [duplicate_pricing_rules]
+
+@admin.register(ProductFormField)
+class ProductFormFieldAdmin(admin.ModelAdmin):
+    list_display = ('product', 'field_label', 'field_type', 'is_required', 'order', 'is_active')
+    list_filter = ('field_type', 'is_required', 'is_active', 'product__category')
+    list_editable = ('order', 'is_active')
+    search_fields = ('field_label', 'field_name', 'product__name')
+    
+    fieldsets = (
+        ('Basic Info', {
+            'fields': ('product', 'field_name', 'field_label', 'field_type')
+        }),
+        ('Configuration', {
+            'fields': ('is_required', 'order', 'help_text', 'default_value')
+        }),
+        ('Options (JSON)', {
+            'fields': ('options',),
+            'description': 'For select/radio/checkbox fields. Format: [{"value": "option1", "label": "Option 1", "price_modifier": 0}]'
+        }),
+        ('Validation', {
+            'fields': ('min_value', 'max_value'),
+            'classes': ('collapse',)
+        }),
+        ('Advanced', {
+            'fields': ('show_condition', 'is_active'),
+            'classes': ('collapse',)
+        }),
+    )
+
+# Register quote models
+@admin.register(BookPrintingQuote)
+class BookPrintingQuoteAdmin(admin.ModelAdmin):
+    list_display = ('customer_name', 'quantity', 'book_size', 'page_count', 'total_price', 'created_at')
+    list_filter = ('book_size', 'binding_type', 'cover_finish', 'created_at')
+    search_fields = ('customer_name', 'customer_email', 'customer_phone')
+    readonly_fields = ('unit_price', 'total_price', 'created_at', 'updated_at')
+
+@admin.register(BusinessCardQuote)
+class BusinessCardQuoteAdmin(admin.ModelAdmin):
+    list_display = ('customer_name', 'quantity', 'card_size', 'paper_type', 'total_price', 'created_at')
+    list_filter = ('card_size', 'paper_type', 'finishing', 'created_at')
+    search_fields = ('customer_name', 'customer_email', 'customer_phone')
+    readonly_fields = ('unit_price', 'total_price', 'created_at')
+
+@admin.register(BrochureQuote)
+class BrochureQuoteAdmin(admin.ModelAdmin):
+    list_display = ('customer_name', 'quantity', 'size', 'paper_type', 'total_price', 'created_at')
+    list_filter = ('size', 'paper_type', 'folding', 'created_at')
+    search_fields = ('customer_name', 'customer_email', 'customer_phone')
+    readonly_fields = ('unit_price', 'total_price', 'created_at')
+
+@admin.register(ChildrenBookQuote)
+class ChildrenBookQuoteAdmin(admin.ModelAdmin):
+    list_display = ('customer_name', 'book_title', 'quantity', 'age_group', 'total_price', 'created_at')
+    list_filter = ('age_group', 'book_size', 'binding_type', 'design_service', 'created_at')
+    search_fields = ('customer_name', 'customer_email', 'customer_phone', 'book_title')
+    readonly_fields = ('unit_price', 'total_price', 'created_at', 'updated_at')
+    
+    fieldsets = (
+        ('Customer Information', {
+            'fields': ('customer_name', 'customer_email', 'customer_phone', 'book_title')
+        }),
+        ('Book Specifications', {
+            'fields': ('quantity', 'book_size', 'page_count', 'age_group')
+        }),
+        ('Paper & Printing', {
+            'fields': ('inner_paper', 'inner_printing', 'cover_paper', 'binding_type', 'cover_finish')
+        }),
+        ('Special Features', {
+            'fields': ('rounded_corners', 'scratch_sniff', 'pop_up_elements', 'texture_pages', 'glow_in_dark', 'sound_module'),
+            'classes': ('collapse',)
+        }),
+        ('Services', {
+            'fields': ('design_service', 'writing_service', 'publishing_service')
+        }),
+        ('Pricing', {
+            'fields': ('unit_price', 'total_price'),
+            'classes': ('collapse',)
+        }),
+        ('Timestamps', {
+            'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',)
+        }),
+    )
 
 # Admin site customization
 admin.site.site_header = "Shirsti Printing Administration"

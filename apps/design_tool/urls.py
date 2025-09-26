@@ -22,4 +22,11 @@ urlpatterns = [
     path('api/delete/<int:design_id>/', views.api_delete_design, name='api_delete_design'),
     path('api/export/', views.api_export_design, name='api_export_design'),
     path('api/user-designs/', views.api_user_designs, name='api_user_designs'),
+
+    # Template management APIs
+    path('api/upload-svg-template/', views.api_upload_svg_template, name='api_upload_svg_template'),
+    path('api/user-templates/', views.api_user_templates, name='api_user_templates'),
+
+    # Pixabay integration
+    path('api/pixabay/images/', views.api_pixabay_images, name='api_pixabay_images'),
 ]

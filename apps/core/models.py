@@ -5,17 +5,29 @@ from django.urls import reverse
 class HomepageSlider(models.Model):
     """Homepage slider/banner management"""
     title = models.CharField(max_length=200)
+    subtitle = models.CharField(max_length=300, blank=True, help_text="Subtitle/tagline")
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to='sliders/')
-    
-    # Call to action
-    cta_text = models.CharField(max_length=50, blank=True, help_text="Button text")
-    cta_url = models.CharField(max_length=200, blank=True, help_text="Button link")
-    
+
+    # Call to actions
+    primary_cta_text = models.CharField(max_length=50, blank=True, help_text="Primary button text")
+    primary_cta_url = models.CharField(max_length=200, blank=True, help_text="Primary button link")
+    secondary_cta_text = models.CharField(max_length=50, blank=True, help_text="Secondary button text")
+    secondary_cta_url = models.CharField(max_length=200, blank=True, help_text="Secondary button link")
+
+    # Background gradients
+    background_gradient_from = models.CharField(max_length=50, default='from-blue-50', help_text="Tailwind gradient from class")
+    background_gradient_via = models.CharField(max_length=50, default='via-indigo-50', help_text="Tailwind gradient via class")
+    background_gradient_to = models.CharField(max_length=50, default='to-purple-50', help_text="Tailwind gradient to class")
+
+    # Legacy fields (for backward compatibility)
+    cta_text = models.CharField(max_length=50, blank=True, help_text="Legacy button text")
+    cta_url = models.CharField(max_length=200, blank=True, help_text="Legacy button link")
+
     # Settings
     is_active = models.BooleanField(default=True)
     order = models.IntegerField(default=0, help_text="Display order")
-    
+
     # Meta
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

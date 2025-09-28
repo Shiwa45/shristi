@@ -1,0 +1,869 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Design {{ static_product.name }} - Shirsti Printing{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/design_tool/editor.css' %}">
+<style>
+    .design-editor-container {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .editor-header {
+        background: white;
+        border-bottom: 1px solid #e5e7eb;
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 50;
+    }
+
+    .editor-main {
+        flex: 1;
+        display: flex;
+        height: calc(100vh - 80px);
+    }
+
+    .editor-sidebar {
+        width: 320px;
+        background: #f9fafb;
+        border-right: 1px solid #e5e7eb;
+        overflow-y: auto;
+    }
+
+    .editor-canvas-area {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .canvas-toolbar {
+        background: white;
+        border-bottom: 1px solid #e5e7eb;
+        padding: 0.75rem;
+    }
+
+    .canvas-container {
+        flex: 1;
+        background: #f3f4f6;
+        padding: 2rem;
+        overflow: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .canvas-wrapper {
+        background: white;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .editor-properties {
+        width: 280px;
+        background: #f9fafb;
+        border-left: 1px solid #e5e7eb;
+        overflow-y: auto;
+    }
+
+    .tool-btn {
+        background: white;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        padding: 0.75rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.25rem;
+        font-size: 0.875rem;
+    }
+
+    .tool-btn:hover {
+        background: #f3f4f6;
+        border-color: #6366f1;
+    }
+
+    .template-item {
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        overflow: hidden;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .template-item:hover {
+        border-color: #6366f1;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .design-item {
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        padding: 0.75rem;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .design-item:hover {
+        background: #f3f4f6;
+        border-color: #6366f1;
+    }
+
+    .btn-primary {
+        background: #6366f1;
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .btn-primary:hover {
+        background: #4f46e5;
+    }
+
+    .btn-secondary {
+        background: white;
+        color: #374151;
+        border: 1px solid #d1d5db;
+        padding: 0.75rem 1.5rem;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .btn-secondary:hover {
+        background: #f9fafb;
+        border-color: #6366f1;
+        color: #6366f1;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        font-size: 0.875rem;
+    }
+
+    .form-input:focus {
+        outline: none;
+        border-color: #6366f1;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+
+    .notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 1rem;
+        border-radius: 6px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        z-index: 100;
+        transform: translateX(400px);
+        transition: transform 0.3s ease;
+    }
+
+    .notification.show {
+        transform: translateX(0);
+    }
+
+    .notification-success {
+        background: #10b981;
+        color: white;
+    }
+
+    .notification-error {
+        background: #ef4444;
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="design-editor-container">
+    <!-- Header with product info and actions -->
+    <header class="editor-header">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <div>
+                        <h1 class="text-xl font-semibold">Design {{ static_product.name }}</h1>
+                        <p class="text-sm text-gray-500">{{ static_product.category.name }} | {{ canvas_width }}×{{ canvas_height }}px</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button id="save-design-btn" class="btn-secondary">
+                        <i class="fas fa-save mr-2"></i>Save Design
+                    </button>
+                    <button id="add-to-cart-btn" class="btn-primary">
+                        <i class="fas fa-cart-plus mr-2"></i>Add to Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main editor layout -->
+    <div class="editor-main">
+        <!-- Left Sidebar - Tools & Templates -->
+        <aside class="editor-sidebar">
+            <div class="p-4 space-y-6">
+                <!-- Templates Section -->
+                <div class="templates-section">
+                    <h3 class="font-semibold mb-3 text-gray-900">Templates</h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        {% for template in design_templates %}
+                        <div class="template-item" onclick="loadTemplate({{ template.id }})">
+                            {% if template.thumbnail %}
+                            <img src="{{ template.thumbnail.url }}" alt="{{ template.name }}" class="w-full h-20 object-cover">
+                            {% else %}
+                            <div class="w-full h-20 bg-gray-200 flex items-center justify-center">
+                                <i class="fas fa-image text-gray-400"></i>
+                            </div>
+                            {% endif %}
+                            <div class="p-2">
+                                <div class="text-sm font-medium">{{ template.name }}</div>
+                                {% if template.is_premium %}
+                                <span class="text-xs text-yellow-600 font-medium">Premium</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="col-span-2 text-center py-8 text-gray-500">
+                            <i class="fas fa-palette text-2xl mb-2"></i>
+                            <p>No templates available</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Tools Section -->
+                <div class="tools-section">
+                    <h3 class="font-semibold mb-3 text-gray-900">Design Tools</h3>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button class="tool-btn" onclick="designEditor.addText()">
+                            <i class="fas fa-font text-lg"></i>
+                            <span>Text</span>
+                        </button>
+                        <button class="tool-btn" onclick="designEditor.addRectangle()">
+                            <i class="fas fa-square text-lg"></i>
+                            <span>Rectangle</span>
+                        </button>
+                        <button class="tool-btn" onclick="designEditor.addCircle()">
+                            <i class="fas fa-circle text-lg"></i>
+                            <span>Circle</span>
+                        </button>
+                        <button class="tool-btn" onclick="document.getElementById('image-upload').click()">
+                            <i class="fas fa-image text-lg"></i>
+                            <span>Upload</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Saved Designs -->
+                {% if user_designs %}
+                <div class="saved-designs-section">
+                    <h3 class="font-semibold mb-3 text-gray-900">Your Designs</h3>
+                    <div class="space-y-2" id="saved-designs-list">
+                        {% for design in user_designs %}
+                        <div class="design-item" onclick="loadDesign({{ design.id }})">
+                            <div class="flex items-center space-x-3">
+                                {% if design.preview_image %}
+                                <img src="{{ design.preview_image.url }}" alt="{{ design.name }}" class="w-12 h-12 object-cover rounded">
+                                {% else %}
+                                <div class="w-12 h-12 bg-gray-200 rounded flex items-center justify-center">
+                                    <i class="fas fa-palette text-gray-400"></i>
+                                </div>
+                                {% endif %}
+                                <div class="flex-1 min-w-0">
+                                    <div class="text-sm font-medium truncate">{{ design.name }}</div>
+                                    <div class="text-xs text-gray-500">{{ design.updated_at|date:"M d, Y" }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </aside>
+
+        <!-- Center - Canvas Area -->
+        <main class="editor-canvas-area">
+            <!-- Canvas Toolbar -->
+            <div class="canvas-toolbar">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <!-- Zoom Controls -->
+                        <div class="flex items-center space-x-1">
+                            <button onclick="designEditor.zoomOut()" class="p-1 text-gray-600 hover:text-gray-900">
+                                <i class="fas fa-search-minus"></i>
+                            </button>
+                            <span id="zoom-level" class="text-sm px-2 min-w-[4rem] text-center">100%</span>
+                            <button onclick="designEditor.zoomIn()" class="p-1 text-gray-600 hover:text-gray-900">
+                                <i class="fas fa-search-plus"></i>
+                            </button>
+                        </div>
+
+                        <!-- Alignment Tools -->
+                        <div class="flex items-center space-x-1 border-l pl-3">
+                            <button onclick="designEditor.alignLeft()" class="p-1 text-gray-600 hover:text-gray-900" title="Align Left">
+                                <i class="fas fa-align-left"></i>
+                            </button>
+                            <button onclick="designEditor.alignCenter()" class="p-1 text-gray-600 hover:text-gray-900" title="Align Center">
+                                <i class="fas fa-align-center"></i>
+                            </button>
+                            <button onclick="designEditor.alignRight()" class="p-1 text-gray-600 hover:text-gray-900" title="Align Right">
+                                <i class="fas fa-align-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center space-x-3">
+                        <!-- Undo/Redo -->
+                        <button onclick="designEditor.undo()" class="p-1 text-gray-600 hover:text-gray-900" title="Undo">
+                            <i class="fas fa-undo"></i>
+                        </button>
+                        <button onclick="designEditor.redo()" class="p-1 text-gray-600 hover:text-gray-900" title="Redo">
+                            <i class="fas fa-redo"></i>
+                        </button>
+
+                        <!-- Delete -->
+                        <button onclick="designEditor.deleteSelected()" class="p-1 text-red-600 hover:text-red-900" title="Delete">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Canvas Container -->
+            <div class="canvas-container">
+                <div class="canvas-wrapper">
+                    <canvas id="design-canvas" width="{{ canvas_width }}" height="{{ canvas_height }}"></canvas>
+                </div>
+            </div>
+        </main>
+
+        <!-- Right Sidebar - Properties & Options -->
+        <aside class="editor-properties">
+            <div class="p-4 space-y-6">
+                <!-- Object Properties -->
+                <div class="properties-section">
+                    <h3 class="font-semibold mb-3 text-gray-900">Properties</h3>
+                    <div id="object-properties" class="space-y-3">
+                        <div class="text-sm text-gray-500">Select an object to edit properties</div>
+                    </div>
+                </div>
+
+                <!-- Product Options -->
+                <div class="product-options-section">
+                    <h3 class="font-semibold mb-3 text-gray-900">Product Options</h3>
+                    <div class="space-y-4">
+                        <!-- Quantity -->
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Quantity</label>
+                            <input type="number" id="quantity" value="{{ static_product.minimum_quantity }}"
+                                   min="{{ static_product.minimum_quantity }}" class="form-input">
+                        </div>
+
+                        <!-- Price Display -->
+                        <div class="bg-white p-3 rounded border">
+                            <div class="text-sm font-medium mb-1">Estimated Price</div>
+                            <div id="estimated-price" class="text-lg font-bold text-blue-600">₹{{ static_product.base_price }}</div>
+                            <div class="text-xs text-gray-500">Per {{ static_product.minimum_quantity }} pieces</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+</div>
+
+<!-- Hidden file input for image upload -->
+<input type="file" id="image-upload" accept="image/*" style="display: none;" onchange="designEditor.uploadImage(this.files[0])">
+
+<!-- Design Save Modal -->
+<div id="save-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white rounded-lg p-6 w-96">
+        <h3 class="text-lg font-semibold mb-4">Save Design</h3>
+        <input type="text" id="design-name" placeholder="Enter design name" class="form-input mb-4">
+        <div class="flex justify-end space-x-3">
+            <button onclick="closeSaveModal()" class="btn-secondary">Cancel</button>
+            <button onclick="saveDesignWithName()" class="btn-primary">Save</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/fabric.min.js' %}"></script>
+<script>
+// Global configuration for the design editor
+window.designEditorConfig = {
+    productId: {{ static_product.id }},
+    canvasWidth: {{ canvas_width }},
+    canvasHeight: {{ canvas_height }},
+    basePrice: {{ static_product.base_price }},
+    minimumQuantity: {{ static_product.minimum_quantity }},
+    pricingApiUrl: '{% url "services:static_pricing_api" static_product.id %}',
+    saveUrl: '{% url "design_tool:save_design_ajax" %}',
+    loadUrl: '{% url "design_tool:load_design_ajax" 0 %}'.replace('0', '{id}'),
+    templateUrl: '{% url "design_tool:load_template_ajax" 0 %}'.replace('0', '{id}')
+};
+
+// Design Editor Class
+class StaticProductDesignEditor {
+    constructor(config) {
+        this.config = config;
+        this.canvas = new fabric.Canvas('design-canvas', {
+            width: config.canvasWidth,
+            height: config.canvasHeight,
+            backgroundColor: 'white'
+        });
+        this.currentDesign = null;
+        this.init();
+    }
+
+    init() {
+        this.setupEventListeners();
+        this.updatePricing();
+    }
+
+    setupEventListeners() {
+        // Save button
+        document.getElementById('save-design-btn').addEventListener('click', () => {
+            this.showSaveModal();
+        });
+
+        // Add to cart button
+        document.getElementById('add-to-cart-btn').addEventListener('click', () => {
+            this.addToCart();
+        });
+
+        // Quantity change
+        document.getElementById('quantity').addEventListener('input', () => {
+            this.updatePricing();
+        });
+
+        // Canvas selection events
+        this.canvas.on('selection:created', (e) => this.updateProperties(e.selected[0]));
+        this.canvas.on('selection:updated', (e) => this.updateProperties(e.selected[0]));
+        this.canvas.on('selection:cleared', () => this.clearProperties());
+    }
+
+    // Template Management
+    loadTemplate(templateId) {
+        fetch(this.config.templateUrl.replace('{id}', templateId))
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    this.canvas.loadFromJSON(data.template_data, () => {
+                        this.canvas.renderAll();
+                        this.showNotification('Template loaded successfully');
+                    });
+                } else {
+                    this.showNotification('Error loading template', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                this.showNotification('Error loading template', 'error');
+            });
+    }
+
+    // Design Saving/Loading
+    showSaveModal() {
+        document.getElementById('save-modal').classList.remove('hidden');
+        document.getElementById('save-modal').classList.add('flex');
+        document.getElementById('design-name').focus();
+    }
+
+    saveDesign(name) {
+        const designData = {
+            product_id: this.config.productId,
+            name: name,
+            canvas_data: this.canvas.toJSON(),
+            thumbnail_data: this.canvas.toDataURL({
+                format: 'png',
+                quality: 0.8,
+                multiplier: 0.3
+            })
+        };
+
+        if (this.currentDesign) {
+            designData.design_id = this.currentDesign;
+        }
+
+        fetch(this.config.saveUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: JSON.stringify(designData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                this.currentDesign = data.design_id;
+                this.showNotification('Design saved successfully');
+                this.updateDesignsList();
+            } else {
+                this.showNotification('Error saving design', 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            this.showNotification('Error saving design', 'error');
+        });
+    }
+
+    loadDesign(designId) {
+        fetch(this.config.loadUrl.replace('{id}', designId))
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    this.canvas.loadFromJSON(data.design_data, () => {
+                        this.canvas.renderAll();
+                        this.currentDesign = designId;
+                        this.showNotification('Design loaded successfully');
+                    });
+                } else {
+                    this.showNotification('Error loading design', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                this.showNotification('Error loading design', 'error');
+            });
+    }
+
+    // Design Tools
+    addText(text = 'Click to edit') {
+        const textObj = new fabric.Text(text, {
+            left: 100,
+            top: 100,
+            fontFamily: 'Arial',
+            fontSize: 20,
+            fill: '#000000'
+        });
+
+        this.canvas.add(textObj);
+        this.canvas.setActiveObject(textObj);
+    }
+
+    addRectangle() {
+        const rect = new fabric.Rect({
+            left: 100,
+            top: 100,
+            width: 100,
+            height: 100,
+            fill: '#ff0000',
+            stroke: '#000000',
+            strokeWidth: 2
+        });
+
+        this.canvas.add(rect);
+        this.canvas.setActiveObject(rect);
+    }
+
+    addCircle() {
+        const circle = new fabric.Circle({
+            left: 100,
+            top: 100,
+            radius: 50,
+            fill: '#00ff00',
+            stroke: '#000000',
+            strokeWidth: 2
+        });
+
+        this.canvas.add(circle);
+        this.canvas.setActiveObject(circle);
+    }
+
+    uploadImage(file) {
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            fabric.Image.fromURL(e.target.result, (img) => {
+                img.scale(0.5);
+                img.set({
+                    left: 100,
+                    top: 100
+                });
+                this.canvas.add(img);
+                this.canvas.setActiveObject(img);
+            });
+        };
+        reader.readAsDataURL(file);
+    }
+
+    // Canvas Controls
+    zoomIn() {
+        const zoom = this.canvas.getZoom();
+        this.canvas.setZoom(Math.min(zoom * 1.1, 3));
+        this.updateZoomDisplay();
+    }
+
+    zoomOut() {
+        const zoom = this.canvas.getZoom();
+        this.canvas.setZoom(Math.max(zoom * 0.9, 0.1));
+        this.updateZoomDisplay();
+    }
+
+    updateZoomDisplay() {
+        const zoom = Math.round(this.canvas.getZoom() * 100);
+        document.getElementById('zoom-level').textContent = zoom + '%';
+    }
+
+    // Alignment Tools
+    alignLeft() {
+        const activeObj = this.canvas.getActiveObject();
+        if (activeObj) {
+            activeObj.set('left', 0);
+            this.canvas.renderAll();
+        }
+    }
+
+    alignCenter() {
+        const activeObj = this.canvas.getActiveObject();
+        if (activeObj) {
+            activeObj.set('left', (this.canvas.width - activeObj.width * activeObj.scaleX) / 2);
+            this.canvas.renderAll();
+        }
+    }
+
+    alignRight() {
+        const activeObj = this.canvas.getActiveObject();
+        if (activeObj) {
+            activeObj.set('left', this.canvas.width - activeObj.width * activeObj.scaleX);
+            this.canvas.renderAll();
+        }
+    }
+
+    // Undo/Redo (simplified)
+    undo() {
+        // Implement undo functionality
+        this.showNotification('Undo functionality coming soon');
+    }
+
+    redo() {
+        // Implement redo functionality
+        this.showNotification('Redo functionality coming soon');
+    }
+
+    deleteSelected() {
+        const activeObj = this.canvas.getActiveObject();
+        if (activeObj) {
+            this.canvas.remove(activeObj);
+        }
+    }
+
+    // Properties Panel
+    updateProperties(obj) {
+        const propertiesDiv = document.getElementById('object-properties');
+        if (!obj) {
+            this.clearProperties();
+            return;
+        }
+
+        let html = '';
+
+        if (obj.type === 'text') {
+            html = `
+                <div>
+                    <label class="block text-sm font-medium mb-1">Text</label>
+                    <input type="text" value="${obj.text}" onchange="designEditor.updateObjectProperty('text', this.value)" class="form-input">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Font Size</label>
+                    <input type="number" value="${obj.fontSize}" onchange="designEditor.updateObjectProperty('fontSize', parseInt(this.value))" class="form-input">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Color</label>
+                    <input type="color" value="${obj.fill}" onchange="designEditor.updateObjectProperty('fill', this.value)" class="form-input">
+                </div>
+            `;
+        } else {
+            html = `
+                <div>
+                    <label class="block text-sm font-medium mb-1">Fill Color</label>
+                    <input type="color" value="${obj.fill || '#000000'}" onchange="designEditor.updateObjectProperty('fill', this.value)" class="form-input">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Stroke Color</label>
+                    <input type="color" value="${obj.stroke || '#000000'}" onchange="designEditor.updateObjectProperty('stroke', this.value)" class="form-input">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Stroke Width</label>
+                    <input type="number" value="${obj.strokeWidth || 0}" onchange="designEditor.updateObjectProperty('strokeWidth', parseInt(this.value))" class="form-input">
+                </div>
+            `;
+        }
+
+        propertiesDiv.innerHTML = html;
+    }
+
+    clearProperties() {
+        document.getElementById('object-properties').innerHTML =
+            '<div class="text-sm text-gray-500">Select an object to edit properties</div>';
+    }
+
+    updateObjectProperty(property, value) {
+        const activeObj = this.canvas.getActiveObject();
+        if (activeObj) {
+            activeObj.set(property, value);
+            this.canvas.renderAll();
+        }
+    }
+
+    // Pricing
+    updatePricing() {
+        const quantity = parseInt(document.getElementById('quantity').value) || this.config.minimumQuantity;
+        const price = this.config.basePrice * quantity;
+        document.getElementById('estimated-price').textContent = `₹${price.toLocaleString()}`;
+    }
+
+    // Add to Cart
+    addToCart() {
+        if (!this.currentDesign) {
+            this.showNotification('Please save your design first', 'error');
+            return;
+        }
+
+        const quantity = parseInt(document.getElementById('quantity').value) || this.config.minimumQuantity;
+
+        const cartData = {
+            quantity: quantity,
+            design_id: this.currentDesign,
+            specifications: {
+                design_tool_used: true,
+                canvas_dimensions: {
+                    width: this.config.canvasWidth,
+                    height: this.config.canvasHeight
+                }
+            }
+        };
+
+        fetch(`/orders/api/static-product/add/${this.config.productId}/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: JSON.stringify(cartData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                this.showNotification(`${data.message} - Total: ₹${data.cart_total}`, 'success');
+                this.updateCartDisplay(data.cart_count, data.cart_total);
+            } else {
+                this.showNotification(data.message, 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            this.showNotification('Error adding to cart', 'error');
+        });
+    }
+
+    // Update cart display in navbar
+    updateCartDisplay(count, total) {
+        // Update cart count in navbar if it exists
+        const cartCountEl = document.querySelector('.cart-count');
+        if (cartCountEl) {
+            cartCountEl.textContent = count;
+        }
+
+        const cartTotalEl = document.querySelector('.cart-total');
+        if (cartTotalEl) {
+            cartTotalEl.textContent = `₹${total}`;
+        }
+    }
+
+    // Utility Functions
+    showNotification(message, type = 'success') {
+        const notification = document.createElement('div');
+        notification.className = `notification notification-${type}`;
+        notification.textContent = message;
+
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.classList.add('show');
+        }, 100);
+
+        setTimeout(() => {
+            notification.remove();
+        }, 3000);
+    }
+
+    updateDesignsList() {
+        // Reload the page to update the designs list
+        // In a real implementation, this would update the sidebar via AJAX
+        location.reload();
+    }
+}
+
+// Global Functions
+function loadTemplate(templateId) {
+    window.designEditor.loadTemplate(templateId);
+}
+
+function loadDesign(designId) {
+    window.designEditor.loadDesign(designId);
+}
+
+function closeSaveModal() {
+    document.getElementById('save-modal').classList.add('hidden');
+    document.getElementById('save-modal').classList.remove('flex');
+}
+
+function saveDesignWithName() {
+    const name = document.getElementById('design-name').value.trim();
+    if (!name) {
+        alert('Please enter a design name');
+        return;
+    }
+
+    window.designEditor.saveDesign(name);
+    closeSaveModal();
+    document.getElementById('design-name').value = '';
+}
+
+// CSRF Token Helper
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// Initialize the design editor when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    window.designEditor = new StaticProductDesignEditor(window.designEditorConfig);
+});
+</script>
+{% endblock %}

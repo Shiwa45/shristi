@@ -1,6 +1,6 @@
 # apps/templates_mgmt/admin.py
 from django.contrib import admin
-from .models import TemplateCategory, DesignTemplate, UserDesign
+from .models import TemplateCategory, DesignTemplate, UserDesign, StaticProductTemplate
 
 @admin.register(TemplateCategory)
 class TemplateCategoryAdmin(admin.ModelAdmin):
@@ -39,14 +39,14 @@ class DesignTemplateAdmin(admin.ModelAdmin):
 
 @admin.register(UserDesign)
 class UserDesignAdmin(admin.ModelAdmin):
-    list_display = ('name', 'user', 'product', 'is_public', 'created_at')
-    list_filter = ('product', 'is_public', 'created_at')
+    list_display = ('name', 'user', 'static_product', 'is_public', 'created_at')
+    list_filter = ('static_product', 'is_public', 'created_at')
     search_fields = ('name', 'user__email', 'user__username')
     readonly_fields = ('created_at', 'updated_at')
     
     fieldsets = (
         ('Basic Info', {
-            'fields': ('user', 'name', 'product')
+            'fields': ('user', 'name', 'static_product')
         }),
         ('Design Data', {
             'fields': ('canvas_data', 'preview_image')
@@ -59,6 +59,31 @@ class UserDesignAdmin(admin.ModelAdmin):
         }),
         ('Timestamps', {
             'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',)
+        }),
+    )
+
+
+@admin.register(StaticProductTemplate)
+class StaticProductTemplateAdmin(admin.ModelAdmin):
+    list_display = ('name', 'static_product', 'category', 'is_active', 'is_premium', 'is_featured', 'usage_count', 'order')
+    list_filter = ('static_product', 'category', 'is_active', 'is_premium', 'is_featured', 'created_at')
+    search_fields = ('name', 'description', 'tags')
+    list_editable = ('is_active', 'is_premium', 'is_featured', 'order')
+    readonly_fields = ('usage_count', 'created_at', 'updated_at')
+
+    fieldsets = (
+        ('Basic Info', {
+            'fields': ('static_product', 'name', 'description', 'category', 'tags')
+        }),
+        ('Template Files', {
+            'fields': ('template_data', 'thumbnail', 'preview_image')
+        }),
+        ('Settings', {
+            'fields': ('is_active', 'is_premium', 'is_featured', 'order')
+        }),
+        ('Stats', {
+            'fields': ('usage_count', 'created_at', 'updated_at'),
             'classes': ('collapse',)
         }),
     )

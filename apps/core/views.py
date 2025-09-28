@@ -8,14 +8,14 @@ from django.conf import settings
 from django.db.models import Q
 
 from .models import HomepageSlider, Page, ContactSubmission, Testimonial, FAQCategory, FAQ
-from apps.services.models import ServiceCategory, Product
+from apps.services.models import ServiceCategory, StaticProduct
 
 
 def home_view(request):
     """Homepage view with slider and featured products"""
     sliders = HomepageSlider.objects.filter(is_active=True).order_by('order')
-    featured_products = Product.objects.filter(is_active=True, is_featured=True)[:6]
-    design_enabled_products = Product.objects.filter(is_active=True, has_design_tool=True)[:6]
+    featured_products = StaticProduct.objects.filter(is_active=True, is_featured=True)[:6]
+    design_enabled_products = StaticProduct.objects.filter(is_active=True, design_tool_enabled=True)[:6]
     service_categories = ServiceCategory.objects.filter(is_active=True).order_by('order')[:4]
     testimonials = Testimonial.objects.filter(is_active=True, is_featured=True).order_by('order')[:6]
     

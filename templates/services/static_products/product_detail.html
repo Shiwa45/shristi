@@ -1,0 +1,201 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ product.name }} - Professional Printing Services | Shirsti Printing{% endblock %}
+
+{% block meta_description %}
+{{ product.short_description }} Professional printing services with instant pricing. Starting from ₹{{ product.base_price }}. Fast delivery, high quality guaranteed.
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/products/product-detail.css' %}">
+<link rel="stylesheet" href="{% static 'css/products/pricing-calculator.css' %}">
+<link rel="stylesheet" href="{% static 'css/products/product-gallery.css' %}">
+<link rel="stylesheet" href="{% static 'css/products/responsive-products.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-16">
+    <div class="container mx-auto px-4">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <!-- Hero Content -->
+            <div class="space-y-6">
+                <!-- Breadcrumbs -->
+                <nav class="flex items-center space-x-2 text-sm text-gray-600" aria-label="Breadcrumb">
+                    <a href="{% url 'services:home' %}" class="hover:text-blue-600 transition-colors">Home</a>
+                    <span>/</span>
+                    <a href="{% url 'services:category' product.category.slug %}" class="hover:text-blue-600 transition-colors">{{ product.category.name }}</a>
+                    <span>/</span>
+                    <span class="text-gray-900">{{ product.name }}</span>
+                </nav>
+
+                <!-- Product Title -->
+                <h1 class="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+                    {{ product.name }}
+                </h1>
+
+                <!-- Short Description -->
+                <p class="text-xl text-gray-600 leading-relaxed">
+                    {{ product.short_description }}
+                </p>
+
+                <!-- Key Features -->
+                <div class="flex flex-wrap gap-3">
+                    {% if product.turnaround_time %}
+                    <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+                        ⚡ {{ product.turnaround_time }} delivery
+                    </span>
+                    {% endif %}
+                    <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+                        💎 Premium Quality
+                    </span>
+                    <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">
+                        📏 Custom Sizes
+                    </span>
+                    {% if product.design_tool_enabled %}
+                    <span class="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm font-medium">
+                        🎨 Design Tool
+                    </span>
+                    {% endif %}
+                </div>
+
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button class="btn-primary px-8 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                        Get Quote Now
+                    </button>
+                    <button class="btn-secondary px-8 py-3 border border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-colors">
+                        View Samples
+                    </button>
+                </div>
+
+                <!-- Trust Indicators -->
+                <div class="flex items-center space-x-6 text-sm text-gray-600">
+                    <div class="flex items-center space-x-1">
+                        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span>Money Back Guarantee</span>
+                    </div>
+                    <div class="flex items-center space-x-1">
+                        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span>Free Shipping Available</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Image -->
+            <div class="relative">
+                <div class="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl overflow-hidden shadow-2xl">
+                    {% if product.hero_image %}
+                        <img src="{{ product.hero_image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover">
+                    {% else %}
+                        <div class="w-full h-full flex items-center justify-center">
+                            <div class="text-center text-gray-500">
+                                <svg class="w-20 h-20 mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
+                                </svg>
+                                <p class="text-lg font-medium">{{ product.name }}</p>
+                                <p class="text-sm">Professional Quality</p>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                <!-- Floating stats -->
+                <div class="absolute -bottom-4 -right-4 bg-white rounded-lg shadow-lg p-4">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-blue-600">₹{{ product.base_price }}</div>
+                        <div class="text-sm text-gray-600">Starting from</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main Product Section -->
+<section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+        <div class="grid lg:grid-cols-12 gap-8">
+            <!-- Product Gallery (cols 1-4) -->
+            <div class="lg:col-span-4">
+                {% include 'services/static_products/partials/product_gallery.html' %}
+            </div>
+
+            <!-- Options Panel (cols 5-8) -->
+            <div class="lg:col-span-5">
+                {% include 'services/static_products/partials/options_panel.html' %}
+
+                {% if product.design_tool_enabled %}
+                    {% include 'services/static_products/partials/design_tool_section.html' %}
+                {% endif %}
+            </div>
+
+            <!-- Pricing Calculator (cols 9-12) -->
+            <div class="lg:col-span-3">
+                {% include 'services/static_products/partials/pricing_calculator.html' %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Product Details Tabs -->
+<section class="py-16 bg-gray-50">
+    {% include 'services/static_products/partials/product_tabs.html' %}
+</section>
+
+<!-- Related Products -->
+<section class="py-16 bg-white">
+    {% include 'services/static_products/partials/related_products.html' %}
+</section>
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "{{ product.name }}",
+    "description": "{{ product.short_description }}",
+    "category": "{{ product.category.name }}",
+    "brand": {
+        "@type": "Brand",
+        "name": "Shirsti Printing"
+    },
+    "offers": {
+        "@type": "Offer",
+        "url": "{{ request.build_absolute_uri }}",
+        "priceCurrency": "INR",
+        "price": "{{ product.base_price }}",
+        "availability": "https://schema.org/InStock",
+        "seller": {
+            "@type": "Organization",
+            "name": "Shirsti Printing"
+        }
+    }
+}
+</script>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Global product data for JavaScript
+    window.productData = {
+        id: {{ product.id }},
+        name: "{{ product.name|escapejs }}",
+        basePrice: {{ product.base_price }},
+        priceUnit: "{{ product.price_unit|escapejs }}",
+        designToolEnabled: {{ product.design_tool_enabled|yesno:"true,false" }},
+        rushOrderPercentage: {{ product.rush_order_percentage|default:0 }},
+        designServicePrice: {{ product.design_service_price|default:0 }}
+    };
+</script>
+<script src="{% static 'js/products/pricing-calculator.js' %}"></script>
+<script src="{% static 'js/products/product-gallery.js' %}"></script>
+<script src="{% static 'js/products/product-options.js' %}"></script>
+{% if product.design_tool_enabled %}
+<script src="{% static 'js/products/design-tool-integration.js' %}"></script>
+{% endif %}
+{% endblock %}

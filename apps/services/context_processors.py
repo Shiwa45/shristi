@@ -10,17 +10,17 @@ def services_menu_context(request):
     menu_data = cache.get(cache_key)
     
     if menu_data is None:
-        # Fetch active categories with their products
+        # Fetch active categories with their static products
         categories = ServiceCategory.objects.filter(
             is_active=True
         ).prefetch_related(
-            'products'
+            'static_products'
         ).order_by('order', 'name')
-        
+
         menu_structure = []
         for category in categories:
-            # Get active products for this category
-            products = category.products.filter(is_active=True).order_by('order', 'name')
+            # Get active static products for this category
+            products = category.static_products.filter(is_active=True).order_by('order', 'name')
             
             if products.exists():  # Only include categories that have products
                 category_data = {

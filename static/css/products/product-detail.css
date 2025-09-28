@@ -1,0 +1,134 @@
+/* Product Detail Page Styles */
+
+/* Hero Section Enhancements */
+.hero-section {
+    background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 50%, #f3e8ff 100%);
+}
+
+/* Product Gallery Styles */
+.product-gallery {
+    position: relative;
+}
+
+.main-image-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.main-image-container:hover .zoom-indicator {
+    opacity: 1;
+}
+
+.thumbnail-nav .thumbnail-item {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.thumbnail-nav .thumbnail-item.active {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 2px #3b82f6;
+}
+
+.thumbnail-nav .thumbnail-item:hover {
+    transform: translateY(-2px);
+}
+
+/* Options Panel Styles */
+.options-panel .option-group {
+    padding: 1.5rem;
+    background: #f9fafb;
+    border-radius: 0.75rem;
+    border: 1px solid #e5e7eb;
+    transition: all 0.2s ease;
+}
+
+.options-panel .option-group:hover {
+    border-color: #d1d5db;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Quantity Options */
+.quantity-option {
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.quantity-option:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.quantity-option.active {
+    background-color: #3b82f6 !important;
+    color: white !important;
+    border-color: #3b82f6 !important;
+}
+
+.quantity-option.active .text-green-600 {
+    color: #d1fae5 !important;
+}
+
+/* Buttons */
+.btn-primary {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.btn-secondary {
+    background: white;
+    color: #374151;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.btn-secondary:hover {
+    background: #f9fafb;
+    border-color: #9ca3af;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Design Tool Section */
+.design-tool-section {
+    background: linear-gradient(135deg, #fdf4ff 0%, #f0f4ff 100%);
+    border: 1px solid #e5e7eb;
+}
+
+.design-option {
+    transition: all 0.2s ease;
+}
+
+.design-option:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 2rem 0;
+    }
+
+    .hero-section h1 {
+        font-size: 2rem;
+        line-height: 1.2;
+    }
+}

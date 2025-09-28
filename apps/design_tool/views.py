@@ -16,7 +16,7 @@ import io
 from PIL import Image
 import uuid
 
-from apps.services.models import Product
+from apps.services.models import StaticProduct
 from apps.templates_mgmt.models import DesignTemplate, TemplateCategory, UserDesign
 from .models import DesignAsset
 import requests
@@ -27,10 +27,10 @@ def design_tool_view(request, product_slug=None):
     """Main design tool interface"""
     product = None
     if product_slug:
-        product = get_object_or_404(Product, slug=product_slug, has_design_tool=True)
+        product = get_object_or_404(StaticProduct, slug=product_slug, design_tool_enabled=True)
     
     # Get all products with design tool enabled for product selector
-    products = Product.objects.filter(has_design_tool=True, is_active=True).select_related('category')
+    products = StaticProduct.objects.filter(design_tool_enabled=True, is_active=True).select_related('category')
     
     # Get template categories for dropdown
     template_categories = TemplateCategory.objects.filter(is_active=True)
@@ -48,6 +48,151 @@ def design_tool_view(request, product_slug=None):
     }
     
     return render(request, 'design_tool/designer.html', context)
+
+
+def static_product_design_editor(request, category_slug, product_slug):
+    """Design editor for static products"""
+    # Get the static product
+    static_product = get_object_or_404(
+        StaticProduct,
+        slug=product_slug,
+        category__slug=category_slug,
+        design_tool_enabled=True,
+        is_active=True
+    )
+
+    # Get design templates for this product
+    from apps.templates_mgmt.models import StaticProductTemplate
+    design_templates = StaticProductTemplate.objects.filter(
+        static_product=static_product,
+        is_active=True
+    ).order_by('order', 'name')
+
+    # Get user's saved designs for this product
+    user_designs = []
+    if request.user.is_authenticated:
+        user_designs = UserDesign.objects.filter(
+            user=request.user,
+            static_product=static_product
+        ).order_by('-updated_at')[:10]
+
+    # Calculate canvas dimensions (convert mm to pixels at 300 DPI)
+    canvas_width = int(static_product.width_mm * 11.811)  # mm to px at 300 DPI
+    canvas_height = int(static_product.height_mm * 11.811)
+
+    context = {
+        'static_product': static_product,
+        'design_templates': design_templates,
+        'user_designs': user_designs,
+        'canvas_width': canvas_width,
+        'canvas_height': canvas_height,
+        'product_options': {
+            'base_price': str(static_product.base_price),
+            'minimum_quantity': static_product.minimum_quantity,
+        }
+    }
+
+    return render(request, 'design_tool/static_product_editor.html', context)
+
+
+@login_required
+@require_http_methods(["POST"])
+def save_design_ajax(request):
+    """Save user design via AJAX"""
+    try:
+        data = json.loads(request.body)
+
+        static_product = get_object_or_404(StaticProduct, id=data.get('product_id'))
+
+        # Create or update design
+        design_id = data.get('design_id')
+        if design_id:
+            design = get_object_or_404(UserDesign, id=design_id, user=request.user)
+        else:
+            design = UserDesign(user=request.user, static_product=static_product)
+
+        design.name = data.get('name', f'Design {timezone.now().strftime("%Y%m%d_%H%M%S")}')
+        design.canvas_data = data.get('canvas_data', {})
+        design.width_mm = static_product.width_mm
+        design.height_mm = static_product.height_mm
+        design.save()
+
+        # Generate thumbnail if canvas data is provided
+        if data.get('thumbnail_data'):
+            import base64
+            from django.core.files.base import ContentFile
+
+            # Remove data URL prefix
+            format, imgstr = data['thumbnail_data'].split(';base64,')
+            ext = format.split('/')[-1]
+
+            thumbnail_data = ContentFile(
+                base64.b64decode(imgstr),
+                name=f'design_{design.id}_thumb.{ext}'
+            )
+            design.preview_image.save(
+                f'design_{design.id}_thumb.{ext}',
+                thumbnail_data,
+                save=True
+            )
+
+        return JsonResponse({
+            'success': True,
+            'design_id': design.id,
+            'message': 'Design saved successfully',
+            'thumbnail_url': design.preview_image.url if design.preview_image else None
+        })
+
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'error': str(e)
+        }, status=400)
+
+
+@login_required
+def load_design_ajax(request, design_id):
+    """Load user design via AJAX"""
+    try:
+        design = get_object_or_404(UserDesign, id=design_id, user=request.user)
+
+        return JsonResponse({
+            'success': True,
+            'design_data': design.canvas_data,
+            'name': design.name,
+            'product_id': design.static_product.id,
+            'product_name': design.static_product.name
+        })
+
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'error': str(e)
+        }, status=400)
+
+
+@require_http_methods(["GET"])
+def load_template_ajax(request, template_id):
+    """Load design template via AJAX"""
+    try:
+        from apps.templates_mgmt.models import StaticProductTemplate
+        template = get_object_or_404(StaticProductTemplate, id=template_id, is_active=True)
+
+        # Increment usage count
+        template.increment_usage()
+
+        return JsonResponse({
+            'success': True,
+            'template_data': template.template_data,
+            'name': template.name,
+            'product_id': template.static_product.id
+        })
+
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'error': str(e)
+        }, status=400)
 
 
 @login_required

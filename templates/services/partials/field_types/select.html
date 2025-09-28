@@ -1,0 +1,52 @@
+{% load dynamic_form_tags %}
+
+<div class="form-field-wrapper">
+    <label for="{{ field_id }}" class="form-label">
+        {{ field.field_label }}
+        {% if field.is_required %}<span class="required-asterisk">*</span>{% endif %}
+    </label>
+
+    {% if field.help_text %}
+        <p class="field-help-text">{{ field.help_text }}</p>
+    {% endif %}
+
+    <select id="{{ field_id }}"
+            name="{{ field.field_name }}"
+            class="form-select"
+            {% if field.is_required %}required{% endif %}
+            data-field-type="select"
+            data-price-affecting="{{ field.is_price_affecting|yesno:'true,false' }}">
+
+        {% if not field.is_required %}
+            <option value="">{{ field.placeholder|default:"Please select..." }}</option>
+        {% endif %}
+
+        {% for option in field_options %}
+            <option value="{{ option.value }}"
+                    data-price-modifier="{{ option.price_modifier|default:0 }}"
+                    {% if option.description %}data-description="{{ option.description }}"{% endif %}
+                    {% if current_value == option.value %}selected{% endif %}>
+                {{ option.label }}
+                {% if option.price_modifier and option.price_modifier != 0 %}
+                    {% if option.price_modifier > 0 %}
+                        (+₹{{ option.price_modifier }})
+                    {% else %}
+                        (₹{{ option.price_modifier }})
+                    {% endif %}
+                {% endif %}
+            </option>
+        {% endfor %}
+    </select>
+
+    {% if field|get_field_triggers %}
+        <script>
+            // Add field trigger logic
+            document.addEventListener('DOMContentLoaded', function() {
+                const field = document.getElementById('{{ field_id }}');
+                field.addEventListener('change', function() {
+                    window.handleFieldTriggers('{{ field.field_name }}', this.value, {{ field|get_field_triggers|jsonify }});
+                });
+            });
+        </script>
+    {% endif %}
+</div>

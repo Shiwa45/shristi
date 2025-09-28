@@ -1,0 +1,22 @@
+{% load dynamic_form_tags %}
+
+<div class="form-field-wrapper">
+    <label for="{{ field_id }}" class="form-label">
+        {{ field.field_label }}
+        {% if field.is_required %}<span class="required-asterisk">*</span>{% endif %}
+    </label>
+
+    {% if field.help_text %}
+        <p class="field-help-text">{{ field.help_text }}</p>
+    {% endif %}
+
+    <input type="text"
+           id="{{ field_id }}"
+           name="{{ field.field_name }}"
+           class="form-input"
+           value="{{ current_value }}"
+           {% if field.placeholder %}placeholder="{{ field.placeholder }}"{% endif %}
+           {% if field.is_required %}required{% endif %}
+           data-field-type="text"
+           data-price-affecting="{{ field.is_price_affecting|yesno:'true,false' }}">
+</div>

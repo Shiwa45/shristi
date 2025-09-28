@@ -1,0 +1,48 @@
+{% load dynamic_form_tags %}
+
+<div class="form-field-wrapper">
+    <label for="{{ field_id }}" class="form-label">
+        {{ field.field_label }}
+        {% if field.is_required %}<span class="required-asterisk">*</span>{% endif %}
+    </label>
+
+    {% if field.help_text %}
+        <p class="field-help-text">{{ field.help_text }}</p>
+    {% endif %}
+
+    <input type="number"
+           id="{{ field_id }}"
+           name="{{ field.field_name }}"
+           class="form-input"
+           value="{{ current_value }}"
+           {% if field.placeholder %}placeholder="{{ field.placeholder }}"{% endif %}
+           {% if field.min_value %}min="{{ field.min_value }}"{% endif %}
+           {% if field.max_value %}max="{{ field.max_value }}"{% endif %}
+           {% if field.is_required %}required{% endif %}
+           data-field-type="number"
+           data-price-affecting="{{ field.is_price_affecting|yesno:'true,false' }}">
+
+    {% if field.min_value or field.max_value %}
+        <div class="field-constraints">
+            {% if field.min_value and field.max_value %}
+                <small class="text-gray-600">Value should be between {{ field.min_value }} and {{ field.max_value }}</small>
+            {% elif field.min_value %}
+                <small class="text-gray-600">Minimum value: {{ field.min_value }}</small>
+            {% elif field.max_value %}
+                <small class="text-gray-600">Maximum value: {{ field.max_value }}</small>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% if field|get_field_triggers %}
+        <script>
+            // Add field trigger logic
+            document.addEventListener('DOMContentLoaded', function() {
+                const field = document.getElementById('{{ field_id }}');
+                field.addEventListener('input', function() {
+                    window.handleFieldTriggers('{{ field.field_name }}', this.value, {{ field|get_field_triggers|jsonify }});
+                });
+            });
+        </script>
+    {% endif %}
+</div>

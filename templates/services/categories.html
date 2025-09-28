@@ -27,7 +27,7 @@
             <div class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow">
                 <h4 class="font-semibold mb-2">{{ product.name }}</h4>
                 <p class="text-sm text-gray-600 mb-4">{{ product.short_description|truncatewords:15 }}</p>
-                <a href="{% url 'services:product_detail' product.slug %}"
+                <a href="{% url 'services:static_product_detail' product.category.slug product.slug %}"
                    class="inline-block bg-green-500 text-white px-3 py-1 text-sm rounded hover:bg-green-600 transition-colors">
                     View Details
                 </a>

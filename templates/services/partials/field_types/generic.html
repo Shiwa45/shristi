@@ -1,0 +1,24 @@
+{% load dynamic_form_tags %}
+
+<div class="form-field-wrapper">
+    <label for="{{ field_id }}" class="form-label">
+        {{ field.field_label }}
+        {% if field.is_required %}<span class="required-asterisk">*</span>{% endif %}
+    </label>
+
+    {% if field.help_text %}
+        <p class="field-help-text">{{ field.help_text }}</p>
+    {% endif %}
+
+    <div class="generic-field-notice">
+        <p class="text-gray-600">
+            <i class="fas fa-info-circle"></i>
+            Field type "{{ field.field_type }}" is not yet implemented. Please contact support.
+        </p>
+    </div>
+
+    <!-- Hidden input to maintain form structure -->
+    <input type="hidden"
+           name="{{ field.field_name }}"
+           value="{{ current_value }}">
+</div>

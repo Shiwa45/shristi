@@ -1,0 +1,145 @@
+<!-- Product Gallery -->
+<div class="product-gallery">
+    <!-- Main Image Display -->
+    <div class="main-image-container mb-4">
+        <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer" onclick="openLightbox(0)">
+            {% if product.gallery_images.all %}
+                <img id="main-product-image"
+                     src="{{ product.gallery_images.first.image.url }}"
+                     alt="{{ product.name }}"
+                     class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+            {% else %}
+                <!-- Placeholder for main image -->
+                <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-200">
+                    <div class="text-center text-gray-500">
+                        <svg class="w-16 h-16 mx-auto mb-3" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
+                        </svg>
+                        <p class="font-medium text-sm">{{ product.name }}</p>
+                        <p class="text-xs text-gray-400">High Quality Preview</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Zoom indicator -->
+        <div class="absolute top-2 right-2 bg-white/80 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+            <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Thumbnail Navigation -->
+    <div class="thumbnail-nav">
+        {% if product.gallery_images.all %}
+            <div class="grid grid-cols-4 gap-2">
+                {% for image in product.gallery_images.all %}
+                <div class="thumbnail-item {% if forloop.first %}active{% endif %}"
+                     onclick="changeMainImage('{{ image.image.url }}', {{ forloop.counter0 }})">
+                    <div class="aspect-square bg-gray-100 rounded-md overflow-hidden cursor-pointer border-2 border-transparent hover:border-blue-500 transition-colors">
+                        <img src="{{ image.image.url }}"
+                             alt="{{ product.name }} view {{ forloop.counter }}"
+                             class="w-full h-full object-cover">
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <!-- Placeholder thumbnails -->
+            <div class="grid grid-cols-4 gap-2">
+                {% for i in "1234" %}
+                <div class="thumbnail-item {% if forloop.first %}active{% endif %}">
+                    <div class="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 rounded-md cursor-pointer border-2 border-transparent hover:border-blue-500 transition-colors">
+                        <div class="w-full h-full flex items-center justify-center">
+                            <svg class="w-8 h-8 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Product Features -->
+    <div class="product-features mt-6 space-y-3">
+        <h3 class="font-semibold text-gray-900 mb-3">Product Features</h3>
+
+        {% if product.turnaround_time %}
+        <div class="flex items-center space-x-3 text-sm">
+            <div class="flex-shrink-0">
+                <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                </svg>
+            </div>
+            <span class="text-gray-700">{{ product.turnaround_time }} standard delivery</span>
+        </div>
+        {% endif %}
+
+        <div class="flex items-center space-x-3 text-sm">
+            <div class="flex-shrink-0">
+                <svg class="w-5 h-5 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+            <span class="text-gray-700">Premium quality materials</span>
+        </div>
+
+        <div class="flex items-center space-x-3 text-sm">
+            <div class="flex-shrink-0">
+                <svg class="w-5 h-5 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path>
+                </svg>
+            </div>
+            <span class="text-gray-700">Customizable options</span>
+        </div>
+
+        {% if product.design_tool_enabled %}
+        <div class="flex items-center space-x-3 text-sm">
+            <div class="flex-shrink-0">
+                <svg class="w-5 h-5 text-orange-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v11a3 3 0 106 0V4a2 2 0 00-2-2H4zm1 14a1 1 0 100-2 1 1 0 000 2zm5-1.757l4.9-4.9a2 2 0 000-2.828L13.485 5.1a2 2 0 00-2.828 0L10 5.757v8.486zM16 18H9.071l6-6H16a2 2 0 012 2v2a2 2 0 01-2 2z" clip-rule="evenodd"></path>
+                </svg>
+            </div>
+            <span class="text-gray-700">Online design tool available</span>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Lightbox Modal -->
+<div id="lightbox-modal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-90 flex items-center justify-center p-4">
+    <div class="relative max-w-4xl max-h-full">
+        <!-- Close button -->
+        <button onclick="closeLightbox()" class="absolute top-4 right-4 text-white hover:text-gray-300 z-10">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+
+        <!-- Image container -->
+        <div class="relative">
+            <img id="lightbox-image" src="" alt="" class="max-w-full max-h-[80vh] object-contain">
+
+            <!-- Navigation arrows -->
+            <button onclick="previousImage()" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 p-2">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+            </button>
+
+            <button onclick="nextImage()" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 p-2">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Image counter -->
+        <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white bg-black bg-opacity-50 px-3 py-1 rounded">
+            <span id="image-counter">1 / 4</span>
+        </div>
+    </div>
+</div>

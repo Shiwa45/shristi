@@ -1,0 +1,474 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Quote #{{ quote.quote_number }} - Shirsti Printing{% endblock %}
+
+{% block extra_css %}
+<style>
+.quote-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.quote-section {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-pending {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.status-accepted {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.status-rejected {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.status-expired {
+    background-color: #f3f4f6;
+    color: #374151;
+}
+
+.quote-item {
+    border-bottom: 1px solid #e5e7eb;
+    padding: 1rem 0;
+}
+
+.quote-item:last-child {
+    border-bottom: none;
+}
+
+.item-thumbnail {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+    .quote-header {
+        padding: 1rem;
+        text-align: center;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .action-buttons .btn {
+        justify-content: center;
+    }
+}
+
+.timeline {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.75rem;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #e5e7eb;
+}
+
+.timeline-item {
+    position: relative;
+    padding-bottom: 1.5rem;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -0.375rem;
+    top: 0.25rem;
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    background: #6366f1;
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px #6366f1;
+}
+
+.quote-notes {
+    background: #f8fafc;
+    border-left: 4px solid #6366f1;
+    padding: 1rem;
+    border-radius: 0 8px 8px 0;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 py-8">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Breadcrumb -->
+        <nav class="flex mb-8" aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                <li><a href="{% url 'core:home' %}" class="text-gray-500 hover:text-purple-600">Home</a></li>
+                <li><span class="text-gray-400 mx-2">/</span></li>
+                <li><a href="{% url 'orders:quotes_list' %}" class="text-gray-500 hover:text-purple-600">Quotes</a></li>
+                <li><span class="text-gray-400 mx-2">/</span></li>
+                <li><span class="text-purple-600 font-medium">#{{ quote.quote_number }}</span></li>
+            </ol>
+        </nav>
+
+        <!-- Quote Header -->
+        <div class="quote-header">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                <div>
+                    <h1 class="text-3xl font-bold mb-2">Quote #{{ quote.quote_number }}</h1>
+                    <p class="text-lg opacity-90">Professional Quote for Your Printing Needs</p>
+                </div>
+                <div class="mt-4 md:mt-0 md:text-right">
+                    <div class="status-badge status-{{ quote.status }}">
+                        {{ quote.get_status_display }}
+                    </div>
+                    <div class="text-sm opacity-75 mt-2">
+                        Created: {{ quote.created_at|date:\"M d, Y\" }}
+                    </div>
+                    <div class="text-sm opacity-75">
+                        Valid Until: {{ quote.valid_until|date:\"M d, Y\" }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Quote Details -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Quote Items -->
+                <div class="quote-section">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4">
+                        <i class="fas fa-list mr-2 text-purple-600"></i>
+                        Quote Items
+                    </h2>
+
+                    <div class="space-y-0">
+                        {% for item in quote.items.all %}\n                        <div class="quote-item">
+                            <div class="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                                {% if item.static_product.featured_image %}
+                                    <img src="{{ item.static_product.featured_image.url }}"
+                                         alt="{{ item.static_product.name }}"
+                                         class="item-thumbnail">
+                                {% else %}
+                                    <div class="item-thumbnail bg-gray-200 flex items-center justify-center">
+                                        <i class="fas fa-image text-gray-400"></i>
+                                    </div>
+                                {% endif %}
+
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-gray-900">{{ item.static_product.name }}</h3>
+                                    <p class="text-sm text-gray-600">{{ item.static_product.service.name }}</p>
+
+                                    {% if item.user_design %}
+                                        <div class="flex items-center text-sm text-purple-600 mt-1">
+                                            <i class="fas fa-palette mr-1"></i>
+                                            Custom Design: {{ item.user_design.name }}
+                                        </div>
+                                    {% endif %}
+
+                                    {% if item.specifications %}
+                                        <div class="mt-2">
+                                            <details class="text-sm">
+                                                <summary class="text-gray-600 cursor-pointer hover:text-gray-900">Specifications</summary>
+                                                <div class="mt-1 text-gray-500 pl-4">
+                                                    {% for key, value in item.specifications.items %}
+                                                        <div>{{ key|title }}: {{ value }}</div>
+                                                    {% endfor %}
+                                                </div>
+                                            </details>
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="text-right">
+                                    <div class="text-sm text-gray-500">Qty: {{ item.quantity }}</div>
+                                    <div class="text-sm text-gray-500">₹{{ item.unit_price }} each</div>
+                                    <div class="text-lg font-semibold text-gray-900">₹{{ item.total_price }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Quote Notes -->
+                {% if quote.notes %}
+                <div class="quote-section">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4">
+                        <i class="fas fa-sticky-note mr-2 text-purple-600"></i>
+                        Notes
+                    </h2>
+                    <div class="quote-notes">
+                        {{ quote.notes|linebreaks }}
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Timeline -->
+                <div class="quote-section">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4">
+                        <i class="fas fa-history mr-2 text-purple-600"></i>
+                        Quote Timeline
+                    </h2>
+
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-medium text-gray-900">Quote Created</h4>
+                                    <p class="text-sm text-gray-600">Quote #{{ quote.quote_number }} was generated</p>
+                                </div>
+                                <span class="text-sm text-gray-500">{{ quote.created_at|date:\"M d, Y H:i\" }}</span>
+                            </div>
+                        </div>
+
+                        {% if quote.accepted_at %}
+                        <div class="timeline-item">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-medium text-green-600">Quote Accepted</h4>
+                                    <p class="text-sm text-gray-600">Quote was accepted and order created</p>
+                                </div>
+                                <span class="text-sm text-gray-500">{{ quote.accepted_at|date:\"M d, Y H:i\" }}</span>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quote Summary & Actions -->
+            <div class="lg:col-span-1">
+                <!-- Quote Summary -->
+                <div class="quote-section">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4">Quote Summary</h2>
+
+                    <div class="space-y-3">
+                        <div class="flex justify-between text-gray-600">
+                            <span>Subtotal</span>
+                            <span>₹{{ quote.subtotal }}</span>
+                        </div>
+
+                        {% if quote.discount_amount %}
+                        <div class="flex justify-between text-green-600">
+                            <span>Discount</span>
+                            <span>-₹{{ quote.discount_amount }}</span>
+                        </div>
+                        {% endif %}
+
+                        <div class="flex justify-between text-gray-600">
+                            <span>GST ({{ quote.tax_rate }}%)</span>
+                            <span>₹{{ quote.tax_amount }}</span>
+                        </div>
+
+                        <div class="border-t pt-3">
+                            <div class="flex justify-between text-xl font-semibold text-gray-900">
+                                <span>Total</span>
+                                <span>₹{{ quote.total_amount }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                {% if quote.status == 'pending' and not quote.is_expired %}
+                <div class="quote-section">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4">Actions</h2>
+
+                    <div class="action-buttons">
+                        <button onclick="acceptQuote()"
+                                class="btn bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 flex items-center">
+                            <i class="fas fa-check mr-2"></i>
+                            Accept Quote
+                        </button>
+
+                        <a href="{% url 'orders:download_quote_pdf' quote.quote_number %}"
+                           class="btn bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 flex items-center">
+                            <i class="fas fa-download mr-2"></i>
+                            Download PDF
+                        </a>
+                    </div>
+
+                    <div class="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                        <div class="flex items-start">
+                            <i class="fas fa-clock text-yellow-500 mr-2 mt-0.5"></i>
+                            <div class="text-sm text-yellow-800">
+                                <strong>Quote expires on {{ quote.valid_until|date:\"M d, Y\" }}</strong><br>
+                                Accept this quote before it expires to proceed with your order.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% elif quote.status == 'accepted' %}
+                <div class="quote-section">
+                    <div class="p-4 bg-green-50 border border-green-200 rounded-lg">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                            <div>
+                                <h3 class="text-green-800 font-semibold">Quote Accepted</h3>
+                                <p class="text-sm text-green-600">Your order has been created and is being processed.</p>
+                                {% if quote.order %}
+                                    <a href="{% url 'orders:detail' quote.order.order_number %}"
+                                       class="text-green-700 hover:text-green-800 font-medium">
+                                        View Order →
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% elif quote.is_expired %}
+                <div class="quote-section">
+                    <div class="p-4 bg-gray-50 border border-gray-200 rounded-lg">
+                        <div class="flex items-center">
+                            <i class="fas fa-exclamation-triangle text-gray-500 mr-3"></i>
+                            <div>
+                                <h3 class="text-gray-800 font-semibold">Quote Expired</h3>
+                                <p class="text-sm text-gray-600">This quote expired on {{ quote.valid_until|date:\"M d, Y\" }}.</p>
+                                <p class="text-sm text-gray-600 mt-1">Please contact us for a new quote.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Contact Information -->
+                <div class="quote-section">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4">Need Help?</h2>
+
+                    <div class="space-y-3 text-sm">
+                        <div class="flex items-center">
+                            <i class="fas fa-phone text-purple-600 mr-3"></i>
+                            <div>
+                                <div class="font-medium">Call Us</div>
+                                <div class="text-gray-600">+91 98765 43210</div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope text-purple-600 mr-3"></i>
+                            <div>
+                                <div class="font-medium">Email Us</div>
+                                <div class="text-gray-600">quotes@shirsti.com</div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center">
+                            <i class="fas fa-clock text-purple-600 mr-3"></i>
+                            <div>
+                                <div class="font-medium">Business Hours</div>
+                                <div class="text-gray-600">Mon-Sat: 9 AM - 6 PM</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Accept Quote Modal -->
+<div class="modal fade" id="acceptQuoteModal" tabindex="-1" aria-labelledby="acceptQuoteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="acceptQuoteModalLabel">Accept Quote</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to accept this quote for <strong>₹{{ quote.total_amount }}</strong>?</p>
+                <p class="text-sm text-gray-600 mt-2">By accepting this quote, an order will be created and you will be redirected to the payment page.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" id="confirmAcceptQuote">Accept Quote</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function acceptQuote() {
+    const modal = new bootstrap.Modal(document.getElementById('acceptQuoteModal'));
+    modal.show();
+}
+
+document.getElementById('confirmAcceptQuote').addEventListener('click', function() {
+    fetch(`{% url 'orders:accept_quote' quote.quote_number %}`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Redirect to order page or payment
+            if (data.order_url) {
+                window.location.href = data.order_url;
+            } else {
+                location.reload();
+            }
+        } else {
+            alert('Error accepting quote: ' + data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error accepting quote. Please try again.');
+    });
+
+    const modal = bootstrap.Modal.getInstance(document.getElementById('acceptQuoteModal'));
+    modal.hide();
+});
+
+// Auto-refresh if quote is about to expire (within 24 hours)
+{% if quote.status == 'pending' and not quote.is_expired %}
+const now = new Date();
+const validUntil = new Date('{{ quote.valid_until|date:"c" }}');
+const timeUntilExpiry = validUntil - now;
+
+if (timeUntilExpiry < 24 * 60 * 60 * 1000 && timeUntilExpiry > 0) {
+    // Refresh page when quote expires
+    setTimeout(() => {
+        location.reload();
+    }, timeUntilExpiry);
+}
+{% endif %}
+</script>
+{% endblock %}

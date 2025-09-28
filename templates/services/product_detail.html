@@ -1,26 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{{ product.name }} - Professional Printing Services{% endblock %}
+{% block title %}{{ product.meta_title|default:product.name }} - {{ category.name }} - Shirsti Printing{% endblock %}
 
 {% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/products/product-detail.css' %}">
+<link rel="stylesheet" href="{% static 'css/products/pricing-calculator.css' %}">
+<link rel="stylesheet" href="{% static 'css/products/qin-style-form.css' %}">
 <style>
-/* Product Hero Section */
-.product-hero {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    position: relative;
-    overflow: hidden;
-}
-
-.product-hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3Ccircle cx='10' cy='10' r='4'/%3E%3Ccircle cx='50' cy='10' r='4'/%3E%3Ccircle cx='10' cy='50' r='4'/%3E%3Ccircle cx='50' cy='50' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-}
+/* QinPrinting-inspired modern styles */
 
 .product-hero-content {
     position: relative;
@@ -695,735 +683,123 @@
 {% endblock %}
 
 {% block content %}
-<!-- Breadcrumb -->
-<nav class="bg-gray-100 py-3">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <ol class="flex items-center space-x-2 text-sm">
-            <li><a href="/" class="text-purple-600 hover:text-purple-800 transition-colors">Home</a></li>
-            <li class="text-gray-500">/</li>
-            <li><a href="/services/" class="text-purple-600 hover:text-purple-800 transition-colors">Services</a></li>
-            <li class="text-gray-500">/</li>
-            <li><a href="/services/category/{{ product.category.slug }}/" class="text-purple-600 hover:text-purple-800 transition-colors">{{ product.category.name }}</a></li>
-            <li class="text-gray-500">/</li>
-            <li class="text-gray-900 font-medium">{{ product.name }}</li>
-        </ol>
-    </div>
-</nav>
+<!-- Main Product Section -->
+<section class="py-8 bg-gray-50 min-h-screen">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Product Header -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+            <div class="text-center">
+                <h1 class="text-4xl font-bold text-gray-900 mb-4">{{ product.name }}</h1>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">{{ product.description }}</p>
 
-<!-- Product Hero Section -->
-<section class="product-hero py-16">
-    <div class="product-hero-content">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="product-hero-grid">
-                <div>
-                    <div class="hero-badges">
-                        {% if product.has_design_tool %}
-                        <span class="hero-badge design-tool">
-                            <i class="fas fa-palette mr-2"></i>Design Tool Available
-                        </span>
-                        {% endif %}
-                        {% if product.is_featured %}
-                        <span class="hero-badge premium">
-                            <i class="fas fa-star mr-2"></i>Premium Quality
-                        </span>
-                        {% endif %}
-                        <span class="hero-badge">
-                            <i class="fas fa-boxes mr-2"></i>MOQ: {{ product.minimum_quantity }}
-                        </span>
+                <!-- Trust Indicators -->
+                <div class="flex justify-center items-center gap-8 mt-6 text-sm text-gray-500">
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-shipping-fast text-green-600"></i>
+                        <span>Free Shipping</span>
                     </div>
-
-                    <h1 class="hero-title">{{ product.hero_title|default:product.name }}</h1>
-                    <p class="hero-description">{{ product.hero_subtitle|default:product.description|truncatewords:30 }}</p>
-
-                    <div class="hero-price">
-                        <span class="price-current">Rs.{{ product.get_starting_price|floatformat:0 }}</span>
-                        <span class="price-label">Starting from</span>
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-medal text-yellow-500"></i>
+                        <span>Premium Quality</span>
                     </div>
-
-                    <div class="hero-actions">
-                        {% if product.has_design_tool %}
-                        <a href="/design-tool/{{ product.slug }}/" class="hero-btn hero-btn-primary">
-                            <i class="fas fa-palette"></i>
-                            Design Now
-                        </a>
-                        {% endif %}
-                        
-                        {% if 'business card' in product.name|lower %}
-                        <a href="{% url 'services:business_card_quote' product.slug %}" class="hero-btn hero-btn-secondary">
-                            <i class="fas fa-calculator"></i>
-                            Get Instant Quote
-                        </a>
-                        {% elif 'children' in product.name|lower %}
-                        <a href="{% url 'services:children_book_quote' product.slug %}" class="hero-btn hero-btn-secondary">
-                            <i class="fas fa-calculator"></i>
-                            🌈 Get Children's Book Quote 📚
-                        </a>
-                        {% elif 'book' in product.name|lower %}
-                        <a href="{% url 'services:book_printing_quote' product.slug %}" class="hero-btn hero-btn-secondary">
-                            <i class="fas fa-calculator"></i>
-                            Get Instant Quote
-                        </a>
-                        {% elif 'brochure' in product.name|lower or 'flyer' in product.name|lower %}
-                        <a href="{% url 'services:brochure_quote' product.slug %}" class="hero-btn hero-btn-secondary">
-                            <i class="fas fa-calculator"></i>
-                            Get Instant Quote
-                        </a>
-                        {% else %}
-                        <button onclick="scrollToCalculator()" class="hero-btn hero-btn-secondary">
-                            <i class="fas fa-calculator"></i>
-                            Get Quote
-                        </button>
-                        {% endif %}
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-clock text-blue-600"></i>
+                        <span>Quick Turnaround</span>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <div class="hero-image-wrapper">
-                    {% if product.hero_image %}
-                    <img src="{{ product.hero_image.url }}" alt="{{ product.name }}" class="hero-image">
-                    {% elif product.image %}
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="hero-image">
-                    {% else %}
-                    <div class="hero-image bg-white bg-opacity-20 flex items-center justify-center">
-                        <i class="fas fa-image text-white text-6xl opacity-50"></i>
-                    </div>
-                    {% endif %}
-                </div>
+        <!-- Main Form Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Options Panel (2/3 width) -->
+            <div class="lg:col-span-2">
+                {% include 'services/static_products/partials/options_panel.html' %}
+            </div>
+
+            <!-- Pricing Calculator (1/3 width) -->
+            <div class="lg:col-span-1">
+                {% include 'services/static_products/partials/pricing_calculator.html' %}
             </div>
         </div>
     </div>
 </section>
 
-<!-- Quote Calculator Section -->
-<section id="calculator" class="calculator-section py-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold text-gray-900 mb-4">{{ product.name }} Instant Quote</h2>
-            <p class="text-lg text-gray-600">Customize your specifications and get an instant quote</p>
-        </div>
-
-        <div class="calculator-wrapper">
-            <!-- Calculator Form -->
-            <div class="calculator-form">
-                <!-- Dynamic Form Fields -->
-                <div class="form-section">
-                    <h3 class="section-title">
-                        <i class="fas fa-layer-group"></i>
-                        Product Specifications
-                    </h3>
-                    
-
-                    
-                    <div class="form-grid">
-                        {% for field in form_fields %}
-                        <div class="form-field" data-field="{{ field.field_name }}">
-                            <label class="form-label">
-                                {{ field.field_label }}
-                                {% if field.is_required %}<span class="text-red-500">*</span>{% endif %}
-                            </label>
-                            
-                            {% if field.field_type == 'select' %}
-                                <select id="{{ field.field_name }}" name="{{ field.field_name }}" class="form-select" {% if field.is_required %}required{% endif %} onchange="updatePrice()">
-                                    {% for option in field.get_options %}
-                                    <option value="{{ option.value }}" 
-                                            data-price-modifier="{{ option.price_modifier }}"
-                                            {% if option.value == field.default_value %}selected{% endif %}>
-                                        {{ option.label }}
-                                        {% if option.price_modifier > 0 %}(+₹{{ option.price_modifier }}){% endif %}
-                                        {% if option.price_modifier < 0 and option.price_modifier > -1 %}({% widthratio option.price_modifier 1 -100 %}% off){% endif %}
-                                        {% if option.price_modifier < -1 %}(₹{{ option.price_modifier|floatformat:0 }}){% endif %}
-                                    </option>
-                                    {% endfor %}
-                                </select>
-                            
-                            {% elif field.field_type == 'radio' %}
-                                <div class="radio-group">
-                                    {% for option in field.get_options %}
-                                    <label class="radio-option">
-                                        <input type="radio" 
-                                               name="{{ field.field_name }}" 
-                                               value="{{ option.value }}"
-                                               data-price-modifier="{{ option.price_modifier }}"
-                                               {% if option.value == field.default_value %}checked{% endif %}
-                                               onchange="updatePrice()"
-                                               {% if field.is_required %}required{% endif %}>
-                                        <span class="radio-label">{{ option.label }}</span>
-                                        {% if option.price_modifier > 0 %}
-                                        <span class="price-modifier">(+Rs.{{ option.price_modifier }})</span>
-                                        {% endif %}
-                                    </label>
-                                    {% endfor %}
-                                </div>
-                            
-                            {% elif field.field_type == 'checkbox' %}
-                                <div class="checkbox-group">
-                                    {% for option in field.get_options %}
-                                    <label class="checkbox-option">
-                                        <input type="checkbox" 
-                                               name="{{ field.field_name }}" 
-                                               value="{{ option.value }}"
-                                               data-price-modifier="{{ option.price_modifier }}"
-                                               onchange="updatePrice()">
-                                        <span class="checkbox-label">{{ option.label }}</span>
-                                    </label>
-                                    {% endfor %}
-                                </div>
-                            
-                            {% elif field.field_type == 'number' %}
-                                <input type="number" 
-                                       id="{{ field.field_name }}" 
-                                       name="{{ field.field_name }}" 
-                                       class="form-input"
-                                       value="{{ field.default_value }}"
-                                       {% if field.min_value %}min="{{ field.min_value }}"{% endif %}
-                                       {% if field.max_value %}max="{{ field.max_value }}"{% endif %}
-                                       {% if field.is_required %}required{% endif %}
-                                       onchange="updatePrice()">
-                            
-                            {% else %}
-                                <input type="text" 
-                                       id="{{ field.field_name }}" 
-                                       name="{{ field.field_name }}" 
-                                       class="form-input"
-                                       value="{{ field.default_value }}"
-                                       {% if field.is_required %}required{% endif %}>
-                            {% endif %}
-                            
-                            {% if field.help_text %}
-                            <small class="text-gray-500 text-sm mt-1 block">{{ field.help_text }}</small>
-                            {% endif %}
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-
-
-            </div>
-
-            <!-- Quote Display -->
-            <div class="quote-display">
-                <div class="quote-header">
-                    <div class="quote-location">Mumbai Price: INR</div>
-                    <div class="quote-discount" id="discountBadge" style="display: none;">Save 20%</div>
-                </div>
-
-                <div class="quote-price-main">
-                    <span class="price-currency">Rs.</span>
-                    <span class="price-amount" id="totalPrice">{{ product.base_price|floatformat:0 }}</span>
-                </div>
-
-                <div class="price-details">
-                    <div class="unit-price">Unit Price: Rs.<span id="unitPrice">{{ product.base_price|floatformat:2 }}</span></div>
-                    <div class="price-note">Price includes basic setup and consultation</div>
-                    <div class="estimated-weight">
-                        <i class="fas fa-weight-hanging"></i>
-                        Estimated weight: <span id="estimatedWeight">2 kg</span>
-                    </div>
-                </div>
-
-                <div class="quote-actions">
-                    {% if product.has_design_tool %}
-                    <a href="/design-tool/{{ product.slug }}/" class="quote-btn quote-btn-primary">
-                        <i class="fas fa-palette"></i>
-                        Design Now
-                    </a>
-                    {% endif %}
-                    <button class="quote-btn quote-btn-secondary" onclick="addToCart()">
-                        <i class="fas fa-shopping-cart"></i>
-                        Add to Cart
-                    </button>
-                    <button class="quote-btn quote-btn-outline" onclick="saveQuote()">
-                        <i class="fas fa-bookmark"></i>
-                        Save Quote
-                    </button>
-                </div>
-
-                <div class="template-card" onclick="downloadTemplate()">
-                    <div class="template-icon">
-                        <i class="fas fa-download"></i>
-                    </div>
-                    <div class="template-text">
-                        <h4>Download Free Template</h4>
-                        <p>Based on your specifications</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Technical Specifications Section -->
+<!-- Product Details Tabs -->
 <section class="py-16 bg-gray-50">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold text-gray-900 mb-4">Technical Specifications</h2>
-            <p class="text-lg text-gray-600">Detailed specifications for {{ product.name }}</p>
-        </div>
-
-        <div class="bg-white rounded-lg shadow-sm overflow-hidden">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-0">
-                <div class="px-6 py-4 bg-gray-50 border-b md:border-b-0 md:border-r border-gray-200">
-                    <strong class="text-gray-900">Dimensions:</strong>
-                </div>
-                <div class="px-6 py-4 border-b border-gray-200">
-                    {{ product.width_mm }}mm × {{ product.height_mm }}mm
-                </div>
-
-                <div class="px-6 py-4 bg-gray-50 border-b md:border-b-0 md:border-r border-gray-200">
-                    <strong class="text-gray-900">Print Resolution:</strong>
-                </div>
-                <div class="px-6 py-4 border-b border-gray-200">
-                    {{ product.dpi }} DPI
-                </div>
-
-                <div class="px-6 py-4 bg-gray-50 border-b md:border-b-0 md:border-r border-gray-200">
-                    <strong class="text-gray-900">Bleed Area:</strong>
-                </div>
-                <div class="px-6 py-4 border-b border-gray-200">
-                    {{ product.bleed_mm }}mm all sides
-                </div>
-
-                <div class="px-6 py-4 bg-gray-50 border-b md:border-b-0 md:border-r border-gray-200">
-                    <strong class="text-gray-900">Safe Zone:</strong>
-                </div>
-                <div class="px-6 py-4 border-b border-gray-200">
-                    {{ product.safe_zone_mm }}mm from edges
-                </div>
-
-                <div class="px-6 py-4 bg-gray-50 border-b md:border-b-0 md:border-r border-gray-200">
-                    <strong class="text-gray-900">Minimum Quantity:</strong>
-                </div>
-                <div class="px-6 py-4 border-b border-gray-200">
-                    {{ product.minimum_quantity }} pieces
-                </div>
-
-                <div class="px-6 py-4 bg-gray-50 md:border-r border-gray-200">
-                    <strong class="text-gray-900">Design Tool:</strong>
-                </div>
-                <div class="px-6 py-4">
-                    {% if product.has_design_tool %}
-                    <span class="text-green-600 font-semibold">Available</span>
-                    {% else %}
-                    <span class="text-gray-500">Upload Design Only</span>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-    </div>
+    {% include 'services/static_products/partials/product_tabs.html' %}
 </section>
 
-<!-- Call to Action Section -->
-<section class="py-16 bg-gradient-to-r from-purple-600 to-purple-800">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-3xl font-bold text-white mb-4">Ready to Get Started?</h2>
-        <p class="text-xl text-purple-200 mb-8">
-            Get your {{ product.name }} printed with professional quality and fast delivery
-        </p>
-
-        <div class="flex flex-col sm:flex-row justify-center gap-4">
-            {% if product.has_design_tool %}
-            <a href="/design-tool/{{ product.slug }}/"
-               class="inline-flex items-center bg-yellow-400 text-purple-800 px-8 py-4 rounded-full font-bold hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105">
-                <i class="fas fa-palette mr-2"></i>
-                Start Designing
-            </a>
-            {% endif %}
-            <a href="/contact/?product={{ product.slug }}"
-               class="inline-flex items-center bg-white text-purple-600 px-8 py-4 rounded-full font-bold hover:bg-gray-100 transition-all duration-300">
-                <i class="fas fa-envelope mr-2"></i>
-                Get Free Quote
-            </a>
-            <a href="tel:+919876543210"
-               class="inline-flex items-center border-2 border-white text-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-purple-600 transition-all duration-300">
-                <i class="fas fa-phone mr-2"></i>
-                Call Expert
-            </a>
-        </div>
-    </div>
+<!-- Related Products -->
+{% if related_products %}
+<section class="py-16 bg-white">
+    {% include 'services/static_products/partials/related_products.html' %}
 </section>
+{% endif %}
+
+<!-- JSON Data for JavaScript -->
+<script id="product-data" type="application/json">
+{
+    "id": {{ product.id }},
+    "name": "{{ product.name|escapejs }}",
+    "basePrice": {{ product.base_price }},
+    "priceUnit": "{{ product.price_unit|escapejs }}",
+    "availableSizes": {{ product.available_sizes|safe }},
+    "availablePapers": {{ product.available_papers|safe }},
+    "availableFinishes": {{ product.available_finishes|safe }},
+    "availableBindings": {{ product.available_bindings|safe }},
+    "colorOptions": {{ product.color_options|safe }},
+    "quantityTiers": {{ product.quantity_tiers|safe }},
+    "rushOrderAvailable": {{ product.rush_order_available|yesno:"true,false" }},
+    "rushOrderPercentage": {{ product.rush_order_percentage }},
+    "designServiceAvailable": {{ product.design_service_available|yesno:"true,false" }},
+    "designServicePrice": {{ product.design_service_price }},
+    "keyFeatures": {{ product.key_features|safe }},
+    "specifications": {{ product.specifications|safe }}
+}
+</script>
 {% endblock %}
 
 {% block extra_js %}
+<script src="{% static 'js/products/pricing-calculator.js' %}"></script>
+<script src="{% static 'js/products/product-gallery.js' %}"></script>
+<script src="{% static 'js/products/product-options.js' %}"></script>
+<script src="{% static 'js/products/dynamic-form-handler.js' %}"></script>
+{% if product.design_tool_enabled %}
+<script src="{% static 'js/products/design-tool-integration.js' %}"></script>
+{% endif %}
 <script>
-// Dynamic Quote Calculator Functionality
-let basePrice = {{ product.base_price }};
-let currentConfig = {};
+    // Initialize product page functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const productData = JSON.parse(document.getElementById('product-data').textContent);
 
-function updatePrice() {
-    let totalPrice = basePrice;
-    let quantity = 1;
-    let priceModifiers = [];
-    
-    // Get all form fields
-    const formFields = document.querySelectorAll('[data-field]');
-    
-    formFields.forEach(field => {
-        const fieldName = field.getAttribute('data-field');
-        let fieldValue = null;
-        let priceModifier = 0;
-        
-        // Handle different field types
-        const select = field.querySelector('select');
-        const radioChecked = field.querySelector('input[type="radio"]:checked');
-        const checkboxes = field.querySelectorAll('input[type="checkbox"]:checked');
-        const numberInput = field.querySelector('input[type="number"]');
-        const textInput = field.querySelector('input[type="text"]');
-        
-        if (select) {
-            fieldValue = select.value;
-            const selectedOption = select.options[select.selectedIndex];
-            priceModifier = parseFloat(selectedOption.getAttribute('data-price-modifier') || 0);
-            
+        // Initialize pricing calculator
+        window.pricingCalculator = new PricingCalculator(productData);
 
-            
-            // Special handling for quantity
-            if (fieldName === 'quantity') {
-                quantity = parseInt(fieldValue);
-                // Apply percentage discount for bulk orders (values between -1 and 0)
-                if (priceModifier < 0 && priceModifier > -1) {
-                    // This is a percentage discount
-                    totalPrice = basePrice * (1 + priceModifier); // priceModifier is negative
-                } else {
-                    totalPrice = basePrice + priceModifier;
-                }
-            } else {
-                totalPrice += priceModifier;
-            }
-            
-        } else if (radioChecked) {
-            fieldValue = radioChecked.value;
-            priceModifier = parseFloat(radioChecked.getAttribute('data-price-modifier') || 0);
-            totalPrice += priceModifier;
+        // Initialize dynamic form handler
+        window.dynamicFormHandler = new DynamicFormHandler(productData, window.pricingCalculator);
 
-            
-        } else if (checkboxes.length > 0) {
-            let checkboxModifier = 0;
-            checkboxes.forEach(checkbox => {
-                checkboxModifier += parseFloat(checkbox.getAttribute('data-price-modifier') || 0);
-            });
-            totalPrice += checkboxModifier;
-            priceModifier = checkboxModifier;
-
-            
-        } else if (numberInput) {
-            fieldValue = numberInput.value;
-            
-        } else if (textInput) {
-            fieldValue = textInput.value;
+        // Initialize product gallery
+        const galleryContainer = document.querySelector('.product-gallery');
+        if (galleryContainer) {
+            window.productGallery = new ProductGallery(galleryContainer);
         }
-        
-        // Store in config
-        currentConfig[fieldName] = fieldValue;
-        
-        // Add to modifiers for display
-        if (priceModifier !== 0) {
-            priceModifiers.push({
-                field: fieldName,
-                modifier: priceModifier,
-                label: field.querySelector('.form-label').textContent.trim()
+
+        // Initialize product options handler (for fallback compatibility)
+        if (typeof ProductOptions !== 'undefined') {
+            window.productOptions = new ProductOptions(productData, window.pricingCalculator);
+        }
+
+        // Initialize design tool integration if enabled
+        {% if product.design_tool_enabled %}
+        if (typeof DesignToolIntegration !== 'undefined') {
+            window.designToolIntegration = new DesignToolIntegration({
+                productId: {{ product.id }},
+                canvasWidth: {{ product.canvas_width|default:800 }},
+                canvasHeight: {{ product.canvas_height|default:600 }}
             });
         }
+        {% endif %}
     });
-    
-    // Calculate final price
-    const finalPrice = totalPrice * quantity;
-    const unitPrice = totalPrice;
-    
-
-    
-    // Update display elements
-    const totalPriceElement = document.getElementById('totalPrice');
-    const unitPriceElement = document.getElementById('unitPrice');
-    const estimatedWeightElement = document.getElementById('estimatedWeight');
-    
-    if (totalPriceElement) {
-        totalPriceElement.textContent = Math.round(finalPrice).toLocaleString();
-    }
-    
-    if (unitPriceElement) {
-        unitPriceElement.textContent = unitPrice.toFixed(2);
-    }
-    
-    // Update estimated weight (rough calculation)
-    const estimatedWeight = Math.max(0.5, quantity * 0.1);
-    if (estimatedWeightElement) {
-        estimatedWeightElement.textContent = estimatedWeight.toFixed(1) + ' kg';
-    }
-    
-    // Show/hide discount badge
-    const discountBadge = document.getElementById('discountBadge');
-    if (discountBadge) {
-        const hasDiscount = priceModifiers.some(m => m.modifier < 0);
-        if (hasDiscount && quantity >= 250) {
-            discountBadge.style.display = 'block';
-        } else {
-            discountBadge.style.display = 'none';
-        }
-    }
-}
-
-// Initialize price calculation on page load
-document.addEventListener('DOMContentLoaded', function() {
-    updatePrice();
-    
-    // Add event listeners to all form elements
-    const formFields = document.querySelectorAll('[data-field]');
-    
-    formFields.forEach(field => {
-        const select = field.querySelector('select');
-        const radios = field.querySelectorAll('input[type="radio"]');
-        const checkboxes = field.querySelectorAll('input[type="checkbox"]');
-        const numberInput = field.querySelector('input[type="number"]');
-        const textInput = field.querySelector('input[type="text"]');
-        
-        if (select) {
-            select.addEventListener('change', updatePrice);
-        }
-        
-        radios.forEach(radio => {
-            radio.addEventListener('change', updatePrice);
-        });
-        
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', updatePrice);
-        });
-        
-        if (numberInput) {
-            numberInput.addEventListener('input', updatePrice);
-        }
-        
-        if (textInput) {
-            textInput.addEventListener('input', updatePrice);
-        }
-    });
-});
-let currentConfig = {
-    quantity: 50,
-    pages: 100,
-    paper: 'bw_standard',
-    binding: 'spiral',
-    delivery: 'standard',
-    finishing: 'standard',
-    designService: false,
-    isbnService: false
-};
-
-// Initialize calculator
-document.addEventListener('DOMContentLoaded', function() {
-    calculatePrice();
-    setupEventListeners();
-});
-
-function setupEventListeners() {
-    // Real-time price updates
-    const inputs = document.querySelectorAll('select, input[type="checkbox"]');
-    inputs.forEach(input => {
-        input.addEventListener('change', function() {
-            updateConfig();
-            calculatePrice();
-        });
-    });
-}
-
-function updateConfig() {
-    currentConfig.quantity = parseInt(document.getElementById('quantity').value) || 50;
-    currentConfig.pages = parseInt(document.getElementById('pages')?.value) || 100;
-    currentConfig.binding = document.getElementById('binding')?.value || 'spiral';
-    currentConfig.delivery = document.getElementById('delivery')?.value || 'standard';
-    currentConfig.finishing = document.getElementById('finishing')?.value || 'standard';
-    currentConfig.designService = document.getElementById('designService')?.checked || false;
-    currentConfig.isbnService = document.getElementById('isbnService')?.checked || false;
-    currentConfig.paper = selectedPaper;
-}
-
-function selectPaper(element, paperType) {
-    // Remove selected class from all options
-    document.querySelectorAll('.paper-option').forEach(option => {
-        option.classList.remove('selected');
-    });
-
-    // Add selected class to clicked option
-    element.classList.add('selected');
-
-    // Check the radio button
-    const radio = element.querySelector('input[type="radio"]');
-    if (radio) {
-        radio.checked = true;
-    }
-
-    selectedPaper = paperType;
-    currentConfig.paper = paperType;
-    calculatePrice();
-
-    // Visual feedback
-    element.style.transform = 'scale(0.98)';
-    setTimeout(() => {
-        element.style.transform = '';
-    }, 150);
-}
-
-async function calculatePrice() {
-    updateConfig();
-
-    const basePrice = {{ product.get_starting_price|default:10 }};
-    let total = basePrice * currentConfig.quantity;
-    let unitPrice = basePrice;
-
-    // Paper type adjustments
-    const paperPrices = {
-        'bw_standard': 0,
-        'bw_premium': 2,
-        'color_premium': 8
-    };
-
-    const paperAddon = paperPrices[currentConfig.paper] || 0;
-    total += paperAddon * currentConfig.quantity;
-    unitPrice += paperAddon;
-
-    // Page adjustments for books
-    if (currentConfig.pages > 100) {
-        const pageMultiplier = Math.ceil(currentConfig.pages / 100);
-        total *= pageMultiplier;
-        unitPrice *= pageMultiplier;
-    }
-
-    // Delivery speed adjustments
-    if (currentConfig.delivery === 'express') {
-        total += 50;
-    } else if (currentConfig.delivery === 'rush') {
-        total += 150;
-    }
-
-    // Finishing adjustments
-    const finishingPrices = {
-        'standard': 0,
-        'lamination': 25,
-        'spot_uv': 75,
-        'embossing': 100
-    };
-
-    const finishingCost = finishingPrices[currentConfig.finishing] || 0;
-    if (finishingCost > 0) {
-        total += finishingCost * currentConfig.quantity;
-        unitPrice += finishingCost;
-    }
-
-    // Additional services
-    if (currentConfig.designService) {
-        total += 1500;
-    }
-    if (currentConfig.isbnService) {
-        total += 500;
-    }
-
-    // Apply quantity discounts
-    let discount = 0;
-    if (currentConfig.quantity >= 1000) discount = 0.15;
-    else if (currentConfig.quantity >= 500) discount = 0.12;
-    else if (currentConfig.quantity >= 250) discount = 0.08;
-    else if (currentConfig.quantity >= 100) discount = 0.05;
-
-    const discountBadge = document.getElementById('discountBadge');
-    if (discount > 0) {
-        total = total * (1 - discount);
-        unitPrice = unitPrice * (1 - discount);
-        discountBadge.style.display = 'block';
-        discountBadge.textContent = `Save ${Math.round(discount * 100)}%`;
-    } else {
-        discountBadge.style.display = 'none';
-    }
-
-    // Update display
-    animateNumber('totalPrice', Math.round(total));
-    animateNumber('unitPrice', unitPrice);
-
-    // Update estimated weight
-    const weight = Math.max(1, Math.ceil(currentConfig.quantity * 0.05 + (currentConfig.pages * 0.001 * currentConfig.quantity)));
-    document.getElementById('estimatedWeight').textContent = weight + ' kg';
-}
-
-function animateNumber(elementId, targetValue) {
-    const element = document.getElementById(elementId);
-    if (!element) return;
-
-    const startValue = parseFloat(element.textContent.replace(/[Rs.,]/g, '')) || 0;
-    const difference = targetValue - startValue;
-    const duration = 300;
-    const steps = 20;
-    const stepValue = difference / steps;
-    const stepDuration = duration / steps;
-
-    let currentStep = 0;
-    const timer = setInterval(() => {
-        currentStep++;
-        const currentValue = startValue + (stepValue * currentStep);
-
-        if (elementId === 'totalPrice') {
-            element.textContent = Math.round(currentValue).toLocaleString('en-IN');
-        } else {
-            element.textContent = currentValue.toFixed(2);
-        }
-
-        if (currentStep >= steps) {
-            clearInterval(timer);
-            if (elementId === 'totalPrice') {
-                element.textContent = Math.round(targetValue).toLocaleString('en-IN');
-            } else {
-                element.textContent = targetValue.toFixed(2);
-            }
-        }
-    }, stepDuration);
-}
-
-function saveQuote() {
-    const quoteData = {
-        product: '{{ product.name }}',
-        totalPrice: document.getElementById('totalPrice').textContent,
-        unitPrice: document.getElementById('unitPrice').textContent,
-        config: currentConfig,
-        timestamp: new Date().toISOString()
-    };
-
-    localStorage.setItem('savedQuote_{{ product.id }}', JSON.stringify(quoteData));
-
-    // Visual feedback
-    const btn = event.target;
-    const originalText = btn.innerHTML;
-    btn.innerHTML = '<i class="fas fa-check mr-2"></i>Quote Saved!';
-    btn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
-
-    setTimeout(() => {
-        btn.innerHTML = originalText;
-        btn.style.background = '';
-    }, 2000);
-}
-
-function addToCart() {
-    // Simulate add to cart
-    const btn = event.target;
-    const originalText = btn.innerHTML;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Adding...';
-
-    setTimeout(() => {
-        btn.innerHTML = '<i class="fas fa-check mr-2"></i>Added to Cart!';
-        btn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
-
-        setTimeout(() => {
-            btn.innerHTML = originalText;
-            btn.style.background = '';
-        }, 2000);
-    }, 1000);
-}
-
-function downloadTemplate() {
-    // Simulate template download
-    alert('Template download will be available soon! Our team is preparing customized templates for this product.');
-}
-
-function scrollToCalculator() {
-    document.getElementById('calculator').scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-    });
-}
 </script>
 {% endblock %}

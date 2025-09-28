@@ -580,7 +580,7 @@
                                 Get Quote
                                 {% endif %}
                             </span>
-                            <a href="{% url 'services:product_detail' related.slug %}" 
+                            <a href="{% url 'services:static_product_detail' related.category.slug related.slug %}"
                                class="text-purple-600 hover:text-purple-700 font-medium">
                                 View →
                             </a>

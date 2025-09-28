@@ -1,0 +1,64 @@
+{% load dynamic_form_tags %}
+
+<div class="form-field-wrapper">
+    <fieldset>
+        <legend class="form-label">
+            {{ field.field_label }}
+            {% if field.is_required %}<span class="required-asterisk">*</span>{% endif %}
+        </legend>
+
+        {% if field.help_text %}
+            <p class="field-help-text">{{ field.help_text }}</p>
+        {% endif %}
+
+        <div class="radio-group">
+            {% for option in field_options %}
+                <div class="radio-option">
+                    <input type="radio"
+                           id="{{ field_id }}_{{ forloop.counter }}"
+                           name="{{ field.field_name }}"
+                           value="{{ option.value }}"
+                           {% if current_value == option.value %}checked{% endif %}
+                           {% if field.is_required and forloop.first and not current_value %}checked{% endif %}
+                           data-price-modifier="{{ option.price_modifier|default:0 }}"
+                           {% if option.description %}data-description="{{ option.description }}"{% endif %}
+                           data-field-type="radio"
+                           data-price-affecting="{{ field.is_price_affecting|yesno:'true,false' }}"
+                           {% if field.is_required %}required{% endif %}>
+
+                    <label for="{{ field_id }}_{{ forloop.counter }}" class="radio-label">
+                        <span class="radio-text">{{ option.label }}</span>
+                        {% if option.price_modifier and option.price_modifier != 0 %}
+                            <span class="price-modifier">
+                                {% if option.price_modifier > 0 %}
+                                    +₹{{ option.price_modifier }}
+                                {% else %}
+                                    ₹{{ option.price_modifier }}
+                                {% endif %}
+                            </span>
+                        {% endif %}
+                        {% if option.description %}
+                            <span class="option-description">{{ option.description }}</span>
+                        {% endif %}
+                    </label>
+                </div>
+            {% endfor %}
+        </div>
+    </fieldset>
+
+    {% if field|get_field_triggers %}
+        <script>
+            // Add field trigger logic
+            document.addEventListener('DOMContentLoaded', function() {
+                const radioInputs = document.querySelectorAll('input[name="{{ field.field_name }}"]');
+                radioInputs.forEach(function(input) {
+                    input.addEventListener('change', function() {
+                        if (this.checked) {
+                            window.handleFieldTriggers('{{ field.field_name }}', this.value, {{ field|get_field_triggers|jsonify }});
+                        }
+                    });
+                });
+            });
+        </script>
+    {% endif %}
+</div>

@@ -1,0 +1,193 @@
+Book printing:-
+
+Interior Color
+1. Black & White Premium
+2.Black & White Standard
+3.Color Premium
+4.Color Standard
+5. Combine Color
+
+Page count
+if color is combined then
+black and white page count=?
+color page count=?
+else page count=?
+
+Book Size And Page Count
+options:-1.A4,letter,Excuutive,A5
+
+Paper type:-
+options:-75GSM,100gsm,100gsm Art paper,120Gsm art paper
+
+Binding Type:-
+options:-Saddle Stitch,Spiral Binding,Paperback (Perfect),Hardcover
+
+Cover finish
+1.Glossy
+2.Matte
+
+Designing And Formatting
+1.not required
+2.yes you can
+Rs.1500/- Extra Per Cover Page And Rs. 50 Extra Per Inner Page
+
+ISBN Allocation
+not apply
+yes assign a uniq ISBN number
+
+Number of Copies Min. 25
+
+
+
+
+Document Printing
+
+Interior Color:-
+1. Black & White
+2. Color
+3. Combine Color
+
+Document Size And Page Count
+1.A4
+2.Leagal
+3.A3
+
+Page count:-
+if color is combined then
+black and white page count=?
+color page count=?
+else page count=?
+
+
+Paper Type:-
+ 75 Gsm
+100 Gsm
+
+Binding Type:-
+ Spiral Binding
+Paperback (Perfect)
+ Hardcover
+
+Cover Finish:-
+ Glossy
+Matte
+
+Upload Your Files.
+Cover Page: (PDF, Word File & Excel)
+Inner Page: (PDF, Word File & Excel)
+
+
+Number of Copies Min. 25
+
+
+
+Business card
+Printing Side:-
+front or back
+Lamination :-matt,Glossy
+
+Quantities
+Prices
+2 business days
+Tuesday
+30 Sep
+4 business days
+Wednesday
+1 Oct
+100	
+₹340.00
+₹3.40 per item
+₹290.00
+₹2.90 per item
+200	
+₹666.40
+₹3.33 per item
+₹568.40
+₹2.84 per item
+300	
+₹979.20
+₹3.26 per item
+₹835.20
+₹2.78 per item
+400	
+₹1,278.40
+₹3.20 per item
+₹1,090.40
+₹2.73 per item
+500	
+₹1,564.00
+₹3.13 per item
+₹1,334.00
+₹2.67 per item
+600	
+₹1,836.00
+₹3.06 per item
+₹1,566.00
+₹2.61 per item
+700	
+₹2,094.40
+₹2.99 per item
+₹1,786.40
+₹2.55 per item
+800	
+₹2,339.20
+₹2.92 per item
+₹1,995.20
+₹2.49 per item
+900	
+₹2,570.40
+₹2.86 per item
+₹2,192.40
+₹2.44 per item
+1000	
+₹2,788.00
+₹2.79 per item
+₹2,378.00
+₹2.38 per item
+1500	
+₹3,672.00
+₹2.45 per item
+₹3,132.00
+₹2.09 per item
+2000	
+₹4,216.00
+₹2.11 per item
+₹3,596.00
+₹1.80 per item
+Add custom qty
+
+
+
+
+
+
+
+
+Latter head
+Paper Type :-jk exel bond paper Do paper 100 GSM
+
+Quantities
+Prices
+2 Business Days
+Tuesday
+30 Sep
+200	
+₹840.00
+₹4.20 per item
+400	
+₹1,596.00
+₹3.99 per item
+500	
+₹1,932.00
+₹3.86 per item
+800	
+₹2,856.00
+₹3.57 per item
+1000	
+₹3,360.00
+₹3.36 per item
+1500	
+₹4,725.00
+₹3.15 per item
+Add custom quantity
+

@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
     dependencies = [
         ("templates_mgmt", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ("services", "0007_product_hero_image_product_hero_quote_and_more"),
+        ("services", "0001_initial"),
     ]
 
     operations = [

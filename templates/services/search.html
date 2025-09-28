@@ -1,0 +1,755 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% if query %}Search: {{ query }}{% else %}All Products{% endif %} - Shirsti Printing{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/products/product-detail.css' %}">
+<style>
+/* Search-specific styles */
+.search-hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: relative;
+    overflow: hidden;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+}
+
+.search-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3Ccircle cx='10' cy='10' r='4'/%3E%3Ccircle cx='50' cy='10' r='4'/%3E%3Ccircle cx='10' cy='50' r='4'/%3E%3Ccircle cx='50' cy='50' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.3;
+}
+
+.search-content {
+    position: relative;
+    z-index: 2;
+}
+
+.search-form-container {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.search-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 50px;
+    padding: 0.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 1rem 1.5rem;
+    font-size: 1.1rem;
+    background: transparent;
+    color: #374151;
+}
+
+.search-input::placeholder {
+    color: #9ca3af;
+}
+
+.search-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 40px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.search-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.search-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    justify-content: center;
+}
+
+.filter-chip {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.filter-chip:hover,
+.filter-chip.active {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+/* Results Section */
+.results-header {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+.results-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.results-count {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #374151;
+}
+
+.results-query {
+    color: #667eea;
+    font-weight: 600;
+}
+
+.sort-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.sort-select {
+    padding: 0.75rem 1rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    background: white;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.sort-select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.view-toggle {
+    display: flex;
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 0.25rem;
+    border: 1px solid #e5e7eb;
+}
+
+.view-btn {
+    padding: 0.5rem;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #6b7280;
+}
+
+.view-btn.active {
+    background: white;
+    color: #667eea;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Products Grid */
+.search-products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+.search-product-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+}
+
+.search-product-card:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+}
+
+.product-match-score {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    z-index: 3;
+}
+
+/* No Results */
+.no-results {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.no-results-icon {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2rem;
+}
+
+.suggestions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+}
+
+.suggestion-card {
+    background: #f8fafc;
+    padding: 1.5rem;
+    border-radius: 16px;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid #e5e7eb;
+}
+
+.suggestion-card:hover {
+    background: white;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* List View */
+.list-view .search-products-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.list-view .search-product-card {
+    display: flex;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.list-view .product-image-wrapper {
+    width: 200px;
+    height: 150px;
+    flex-shrink: 0;
+}
+
+.list-view .product-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .search-hero {
+        min-height: 300px;
+        padding: 2rem 0;
+    }
+
+    .search-form-container {
+        padding: 1.5rem;
+        margin: 0 1rem;
+    }
+
+    .search-input-wrapper {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .search-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .results-stats {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .search-products-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .list-view .search-product-card {
+        flex-direction: column;
+    }
+
+    .list-view .product-image-wrapper {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Search Hero Section -->
+<section class="search-hero">
+    <div class="search-content w-full">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-8">
+                <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                    {% if query %}
+                        Search Results
+                    {% else %}
+                        Explore All Products
+                    {% endif %}
+                </h1>
+                <p class="text-xl text-purple-200 max-w-2xl mx-auto">
+                    {% if query %}
+                        Finding the perfect printing solution for "{{ query }}"
+                    {% else %}
+                        Discover our complete range of professional printing services
+                    {% endif %}
+                </p>
+            </div>
+
+            <!-- Advanced Search Form -->
+            <div class="search-form-container">
+                <form method="GET" action="{% url 'services:search' %}" class="space-y-4">
+                    <div class="search-input-wrapper">
+                        <input type="text"
+                               name="q"
+                               value="{{ query }}"
+                               placeholder="Search for business cards, brochures, banners..."
+                               class="search-input"
+                               autocomplete="off">
+                        <button type="submit" class="search-btn">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
+                            Search
+                        </button>
+                    </div>
+
+                    <!-- Quick Filters -->
+                    <div class="search-filters">
+                        <input type="radio" name="category" value="" id="all" {% if not request.GET.category %}checked{% endif %} class="sr-only">
+                        <label for="all" class="filter-chip {% if not request.GET.category %}active{% endif %}">All Categories</label>
+
+                        {% for category in service_categories %}
+                        <input type="radio" name="category" value="{{ category.slug }}" id="cat-{{ category.slug }}" {% if request.GET.category == category.slug %}checked{% endif %} class="sr-only">
+                        <label for="cat-{{ category.slug }}" class="filter-chip {% if request.GET.category == category.slug %}active{% endif %}">
+                            {{ category.name }}
+                        </label>
+                        {% endfor %}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Results Section -->
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- Results Header -->
+        <div class="results-header">
+            <div class="results-stats">
+                <div>
+                    <div class="results-count">
+                        {{ products.paginator.count }} Products Found
+                    </div>
+                    {% if query %}
+                    <div class="text-gray-600 mt-1">
+                        Search results for <span class="results-query">"{{ query }}"</span>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="sort-controls">
+                    <form method="GET" class="flex items-center gap-3">
+                        {% if query %}<input type="hidden" name="q" value="{{ query }}">{% endif %}
+                        {% if request.GET.category %}<input type="hidden" name="category" value="{{ request.GET.category }}">{% endif %}
+
+                        <select name="sort" class="sort-select" onchange="this.form.submit()">
+                            <option value="relevance" {% if request.GET.sort == 'relevance' %}selected{% endif %}>Most Relevant</option>
+                            <option value="name" {% if request.GET.sort == 'name' %}selected{% endif %}>Name (A-Z)</option>
+                            <option value="-name" {% if request.GET.sort == '-name' %}selected{% endif %}>Name (Z-A)</option>
+                            <option value="base_price" {% if request.GET.sort == 'base_price' %}selected{% endif %}>Price (Low to High)</option>
+                            <option value="-base_price" {% if request.GET.sort == '-base_price' %}selected{% endif %}>Price (High to Low)</option>
+                            <option value="-created_at" {% if request.GET.sort == '-created_at' %}selected{% endif %}>Newest First</option>
+                        </select>
+                    </form>
+
+                    <div class="view-toggle">
+                        <button class="view-btn active" data-view="grid">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+                            </svg>
+                        </button>
+                        <button class="view-btn" data-view="list">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 8a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 12a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 16a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Products Grid -->
+        {% if products %}
+        <div id="productsContainer" class="search-products-grid">
+            {% for product in products %}
+            <div class="search-product-card fade-in-up">
+                <div class="product-image-wrapper relative aspect-square bg-gradient-to-br from-gray-100 to-gray-200">
+                    {% if product.hero_image %}
+                    <img src="{{ product.hero_image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover transition-all duration-500">
+                    {% else %}
+                    <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+                        <svg class="w-16 h-16 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    {% endif %}
+
+                    <!-- Match Score for search results -->
+                    {% if query %}
+                    <div class="product-match-score">
+                        <svg class="w-3 h-3 mr-1 inline" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        Best Match
+                    </div>
+                    {% endif %}
+
+                    {% if product.has_design_tool %}
+                    <div class="absolute top-4 right-4 bg-gradient-to-r from-green-500 to-green-600 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                        <svg class="w-3 h-3 mr-1 inline" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v11a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2H4zm3 7a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h.01a1 1 0 100-2H10zm3 0a1 1 0 000 2h.01a1 1 0 100-2H13z" clip-rule="evenodd"/>
+                        </svg>
+                        Design Tool
+                    </div>
+                    {% endif %}
+
+                    <!-- Hover Overlay -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                        <div class="flex gap-2 w-full">
+                            {% if product.has_design_tool %}
+                            <a href="{% url 'design_tool:product' product.slug %}" class="flex-1 bg-white/20 backdrop-blur-sm text-white py-2 px-4 rounded-lg text-center font-semibold hover:bg-white/30 transition-all">
+                                <svg class="w-4 h-4 mr-1 inline" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v11a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2H4zm3 7a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h.01a1 1 0 100-2H10zm3 0a1 1 0 000 2h.01a1 1 0 100-2H13z" clip-rule="evenodd"/>
+                                </svg>
+                                Design
+                            </a>
+                            {% endif %}
+                            <a href="{% url 'services:static_product_detail' product.category.slug product.slug %}" class="flex-1 bg-white/20 backdrop-blur-sm text-white py-2 px-4 rounded-lg text-center font-semibold hover:bg-white/30 transition-all">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-6">
+                    <div class="flex items-start justify-between mb-3">
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">
+                                {{ product.name }}
+                            </h3>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H6zm4 14a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/>
+                                </svg>
+                                {{ product.category.name }}
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-2xl font-bold text-indigo-600">₹{{ product.base_price }}</div>
+                            <div class="text-sm text-gray-500">starting from</div>
+                        </div>
+                    </div>
+
+                    <p class="text-gray-600 mb-4 line-clamp-2">{{ product.short_description|truncatewords:20 }}</p>
+
+                    <!-- Product Features -->
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        {% if product.has_design_tool %}
+                        <span class="px-2 py-1 bg-green-100 text-green-700 rounded-lg text-xs font-medium">
+                            <svg class="w-3 h-3 mr-1 inline" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v11a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2H4zm3 7a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h.01a1 1 0 100-2H10zm3 0a1 1 0 000 2h.01a1 1 0 100-2H13z" clip-rule="evenodd"/>
+                            </svg>
+                            Design Tool
+                        </span>
+                        {% endif %}
+                        {% if product.allows_custom_size %}
+                        <span class="px-2 py-1 bg-blue-100 text-blue-700 rounded-lg text-xs font-medium">
+                            Custom Size
+                        </span>
+                        {% endif %}
+                        {% if product.allows_upload %}
+                        <span class="px-2 py-1 bg-purple-100 text-purple-700 rounded-lg text-xs font-medium">
+                            Upload Design
+                        </span>
+                        {% endif %}
+                        <span class="px-2 py-1 bg-orange-100 text-orange-700 rounded-lg text-xs font-medium">
+                            Fast Delivery
+                        </span>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex gap-3">
+                        {% if product.has_design_tool %}
+                        <a href="{% url 'design_tool:product' product.slug %}" class="flex-1 bg-gradient-to-r from-indigo-500 to-purple-600 text-white py-3 px-4 rounded-xl font-semibold text-center hover:shadow-lg hover:scale-105 transition-all">
+                            <svg class="w-4 h-4 mr-2 inline" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v11a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2H4zm3 7a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h.01a1 1 0 100-2H10zm3 0a1 1 0 000 2h.01a1 1 0 100-2H13z" clip-rule="evenodd"/>
+                            </svg>
+                            Design Now
+                        </a>
+                        {% endif %}
+                        <a href="{% url 'services:static_product_detail' product.category.slug product.slug %}" class="{% if product.has_design_tool %}flex-1{% else %}w-full{% endif %} bg-white border-2 border-gray-300 text-gray-700 py-3 px-4 rounded-xl font-semibold text-center hover:border-indigo-300 hover:text-indigo-600 transition-all">
+                            View Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% if products.has_other_pages %}
+        <div class="flex justify-center mt-12">
+            <nav class="flex items-center space-x-1 bg-white rounded-full shadow-lg px-2 py-2">
+                {% if products.has_previous %}
+                <a href="?{% if query %}q={{ query }}&{% endif %}{% if request.GET.category %}category={{ request.GET.category }}&{% endif %}page=1" class="px-3 py-2 rounded-full text-gray-500 hover:text-indigo-600 hover:bg-gray-100">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                    </svg>
+                </a>
+                <a href="?{% if query %}q={{ query }}&{% endif %}{% if request.GET.category %}category={{ request.GET.category }}&{% endif %}page={{ products.previous_page_number }}" class="px-3 py-2 rounded-full text-gray-500 hover:text-indigo-600 hover:bg-gray-100">Previous</a>
+                {% endif %}
+
+                {% for num in products.paginator.page_range %}
+                {% if products.number == num %}
+                <span class="px-4 py-2 bg-indigo-600 text-white rounded-full font-semibold">{{ num }}</span>
+                {% elif num > products.number|add:'-3' and num < products.number|add:'3' %}
+                <a href="?{% if query %}q={{ query }}&{% endif %}{% if request.GET.category %}category={{ request.GET.category }}&{% endif %}page={{ num }}" class="px-3 py-2 rounded-full text-gray-500 hover:text-indigo-600 hover:bg-gray-100">{{ num }}</a>
+                {% endif %}
+                {% endfor %}
+
+                {% if products.has_next %}
+                <a href="?{% if query %}q={{ query }}&{% endif %}{% if request.GET.category %}category={{ request.GET.category }}&{% endif %}page={{ products.next_page_number }}" class="px-3 py-2 rounded-full text-gray-500 hover:text-indigo-600 hover:bg-gray-100">Next</a>
+                <a href="?{% if query %}q={{ query }}&{% endif %}{% if request.GET.category %}category={{ request.GET.category }}&{% endif %}page={{ products.paginator.num_pages }}" class="px-3 py-2 rounded-full text-gray-500 hover:text-indigo-600 hover:bg-gray-100">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                    </svg>
+                </a>
+                {% endif %}
+            </nav>
+        </div>
+        {% endif %}
+
+        {% else %}
+        <!-- No Results -->
+        <div class="no-results">
+            <div class="no-results-icon">
+                <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+            </div>
+
+            <h3 class="text-3xl font-bold text-gray-900 mb-4">
+                {% if query %}
+                    No results for "{{ query }}"
+                {% else %}
+                    No products found
+                {% endif %}
+            </h3>
+
+            <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+                {% if query %}
+                    We couldn't find any products matching your search. Try different keywords or browse our categories below.
+                {% else %}
+                    It seems there are no products available at the moment.
+                {% endif %}
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="{% url 'services:search' %}" class="btn-primary">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                    Browse All Products
+                </a>
+                <a href="{% url 'core:home' %}" class="btn-secondary">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                    </svg>
+                    Go to Homepage
+                </a>
+            </div>
+
+            <!-- Search Suggestions -->
+            {% if query %}
+            <div class="suggestions-grid">
+                <div class="suggestion-card">
+                    <svg class="w-8 h-8 text-indigo-500 mx-auto mb-3" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+                        <path fill-rule="evenodd" d="M4 5a2 2 0 012-2v1a2 2 0 012 2v6.5a7.5 7.5 0 00.943 3.697A1 1 0 018 18h.5c.5 0 1 .5 1 1v1a1 1 0 11-2 0v-1H6a2 2 0 01-2-2V5z" clip-rule="evenodd"/>
+                    </svg>
+                    <h4 class="font-semibold text-gray-900 mb-2">Business Cards</h4>
+                    <p class="text-sm text-gray-600">Professional business cards with custom designs</p>
+                </div>
+                <div class="suggestion-card">
+                    <svg class="w-8 h-8 text-green-500 mx-auto mb-3" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"/>
+                    </svg>
+                    <h4 class="font-semibold text-gray-900 mb-2">Brochures</h4>
+                    <p class="text-sm text-gray-600">Marketing brochures and promotional materials</p>
+                </div>
+                <div class="suggestion-card">
+                    <svg class="w-8 h-8 text-blue-500 mx-auto mb-3" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 8a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 12a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 16a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                    </svg>
+                    <h4 class="font-semibold text-gray-900 mb-2">Banners</h4>
+                    <p class="text-sm text-gray-600">Large format banners and signage</p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // View Toggle Functionality
+    const viewBtns = document.querySelectorAll('.view-btn');
+    const productsContainer = document.getElementById('productsContainer');
+
+    viewBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            viewBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const view = btn.dataset.view;
+            if (view === 'list') {
+                productsContainer.classList.add('list-view');
+            } else {
+                productsContainer.classList.remove('list-view');
+            }
+        });
+    });
+
+    // Filter Chip Functionality
+    const filterChips = document.querySelectorAll('.filter-chip');
+    filterChips.forEach(chip => {
+        chip.addEventListener('click', () => {
+            const radio = document.querySelector(`#${chip.getAttribute('for')}`);
+            if (radio) {
+                radio.checked = true;
+                // Auto-submit form
+                setTimeout(() => {
+                    radio.closest('form').submit();
+                }, 200);
+            }
+        });
+    });
+
+    // Search Input Auto-complete (basic implementation)
+    const searchInput = document.querySelector('.search-input');
+    if (searchInput) {
+        const suggestions = [
+            'business cards', 'brochures', 'banners', 'flyers',
+            'posters', 'stickers', 'letterheads', 'envelopes',
+            'booklets', 'catalogs', 'invitations', 'greeting cards'
+        ];
+
+        let currentSuggestions = [];
+
+        searchInput.addEventListener('input', function() {
+            const value = this.value.toLowerCase();
+            if (value.length > 1) {
+                currentSuggestions = suggestions.filter(s =>
+                    s.toLowerCase().includes(value)
+                );
+                // Here you could show suggestions dropdown
+            }
+        });
+    }
+
+    // Intersection Observer for animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    // Observe search result cards for entrance animations
+    document.querySelectorAll('.search-product-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        card.style.transition = 'all 0.6s ease';
+        observer.observe(card);
+    });
+
+    // Search Analytics (if available)
+    if (typeof gtag !== 'undefined' && '{{ query }}') {
+        gtag('event', 'search', {
+            search_term: '{{ query }}',
+            content_type: 'product'
+        });
+    }
+});
+</script>
+{% endblock %}

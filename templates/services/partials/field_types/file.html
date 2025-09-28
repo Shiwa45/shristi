@@ -1,0 +1,101 @@
+{% load dynamic_form_tags %}
+
+<div class="form-field-wrapper">
+    <label for="{{ field_id }}" class="form-label">
+        {{ field.field_label }}
+        {% if field.is_required %}<span class="required-asterisk">*</span>{% endif %}
+    </label>
+
+    {% if field.help_text %}
+        <p class="field-help-text">{{ field.help_text }}</p>
+    {% endif %}
+
+    <div class="file-upload-wrapper">
+        <input type="file"
+               id="{{ field_id }}"
+               name="{{ field.field_name }}"
+               class="form-input file-input"
+               {% if field.is_required %}required{% endif %}
+               data-field-type="file"
+               accept=".pdf,.doc,.docx,.xls,.xlsx"
+               data-price-affecting="{{ field.is_price_affecting|yesno:'true,false' }}">
+
+        <div class="file-upload-display">
+            <div class="file-upload-icon">
+                <i class="fas fa-cloud-upload-alt"></i>
+            </div>
+            <div class="file-upload-text">
+                <span class="upload-main-text">Click to upload or drag and drop</span>
+                <span class="upload-sub-text">PDF, Word, or Excel files (Max 10MB)</span>
+            </div>
+        </div>
+
+        <div class="file-preview" style="display: none;">
+            <div class="file-info">
+                <i class="fas fa-file"></i>
+                <span class="file-name"></span>
+                <span class="file-size"></span>
+                <button type="button" class="remove-file" aria-label="Remove file">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileInput = document.getElementById('{{ field_id }}');
+            const uploadDisplay = fileInput.parentElement.querySelector('.file-upload-display');
+            const filePreview = fileInput.parentElement.querySelector('.file-preview');
+            const fileName = filePreview.querySelector('.file-name');
+            const fileSize = filePreview.querySelector('.file-size');
+            const removeBtn = filePreview.querySelector('.remove-file');
+
+            fileInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    // Show file preview
+                    fileName.textContent = file.name;
+                    fileSize.textContent = formatFileSize(file.size);
+                    uploadDisplay.style.display = 'none';
+                    filePreview.style.display = 'block';
+                }
+            });
+
+            removeBtn.addEventListener('click', function() {
+                fileInput.value = '';
+                uploadDisplay.style.display = 'block';
+                filePreview.style.display = 'none';
+            });
+
+            // Drag and drop functionality
+            uploadDisplay.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                uploadDisplay.classList.add('drag-over');
+            });
+
+            uploadDisplay.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                uploadDisplay.classList.remove('drag-over');
+            });
+
+            uploadDisplay.addEventListener('drop', function(e) {
+                e.preventDefault();
+                uploadDisplay.classList.remove('drag-over');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    fileInput.files = files;
+                    fileInput.dispatchEvent(new Event('change'));
+                }
+            });
+
+            function formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+        });
+    </script>
+</div>

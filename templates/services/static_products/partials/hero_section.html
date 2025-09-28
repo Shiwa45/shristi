@@ -1,0 +1,154 @@
+<!-- Hero Section -->
+<section class="hero-section bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 relative overflow-hidden">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 opacity-30">
+        <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+            <defs>
+                <pattern id="heroPattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <circle cx="10" cy="10" r="1.5" fill="currentColor" class="text-indigo-200"/>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#heroPattern)"/>
+        </svg>
+    </div>
+
+    <div class="container mx-auto px-4 py-16 lg:py-24 relative z-10">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <!-- Hero Content -->
+            <div class="space-y-6 lg:space-y-8">
+                <!-- Breadcrumbs -->
+                <div class="flex items-center space-x-2 text-sm text-gray-600">
+                    <a href="{% url 'core:home' %}" class="hover:text-indigo-600 transition-colors">Home</a>
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 111.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                    </svg>
+                    <a href="{% url 'services:home' %}" class="hover:text-indigo-600 transition-colors">Services</a>
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 111.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                    </svg>
+                    <a href="{% url 'services:category' category.slug %}" class="hover:text-indigo-600 transition-colors">{{ category.name }}</a>
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 111.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                    </svg>
+                    <span class="text-gray-500">{{ product.name }}</span>
+                </div>
+
+                <!-- Product Badges -->
+                <div class="flex flex-wrap gap-3">
+                    {% if product.design_tool_enabled %}
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v11a2 2 0 002 2V4a2 2 0 012-2h11a2 2 0 00-2-2H4z" clip-rule="evenodd"/>
+                            <path fill-rule="evenodd" d="M6 4a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 01-2 2H8a2 2 0 01-2-2V4zm2 0h8v10H8V4z" clip-rule="evenodd"/>
+                        </svg>
+                        Design Tool Available
+                    </span>
+                    {% endif %}
+                    {% if product.is_featured %}
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
+                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        Premium Quality
+                    </span>
+                    {% endif %}
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 2L3 7v11a1 1 0 001 1h12a1 1 0 001-1V7l-7-5zM9 9a1 1 0 012 0v4a1 1 0 11-2 0V9z" clip-rule="evenodd"/>
+                        </svg>
+                        Fast Delivery
+                    </span>
+                </div>
+
+                <!-- Main Title -->
+                <h1 class="text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-tight">
+                    {{ product.name }}
+                </h1>
+
+                <!-- Description -->
+                <p class="text-xl lg:text-2xl text-gray-600 leading-relaxed">
+                    {{ product.short_description|default:product.description|truncatewords:25 }}
+                </p>
+
+                <!-- Key Features -->
+                {% if product.key_features %}
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {% for feature in product.key_features %}
+                    <div class="flex items-center space-x-3">
+                        <div class="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                            <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <span class="text-gray-700 font-medium">{{ feature.title }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <!-- Price -->
+                <div class="flex items-baseline space-x-2">
+                    <span class="text-3xl lg:text-4xl font-bold text-indigo-600">₹{{ product.base_price|floatformat:0 }}</span>
+                    <span class="text-lg text-gray-500">{{ product.price_unit }}</span>
+                    <span class="text-sm text-gray-400">(starting from)</span>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button onclick="scrollToCalculator()" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H6zm1 2a1 1 0 000 2h6a1 1 0 100-2H7zm6 7H7a1 1 0 000 2h6a1 1 0 100-2zm0 4H7a1 1 0 000 2h6a1 1 0 100-2z" clip-rule="evenodd"/>
+                        </svg>
+                        Get Instant Quote
+                    </button>
+                    {% if product.design_tool_enabled %}
+                    <a href="{% url 'design_tool:designer' %}?product={{ product.id }}" class="inline-flex items-center justify-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"/>
+                        </svg>
+                        Design Online
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Hero Image -->
+            <div class="relative">
+                <div class="relative z-10">
+                    {% if product.featured_image %}
+                    <img src="{{ product.featured_image.url }}" alt="{{ product.name }}" class="w-full h-auto rounded-2xl shadow-2xl">
+                    {% elif product.hero_image %}
+                    <img src="{{ product.hero_image.url }}" alt="{{ product.name }}" class="w-full h-auto rounded-2xl shadow-2xl">
+                    {% else %}
+                    <!-- Placeholder Image -->
+                    <div class="w-full h-80 lg:h-96 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl shadow-2xl flex items-center justify-center">
+                        <div class="text-center">
+                            <svg class="w-16 h-16 mx-auto text-gray-400 mb-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"/>
+                            </svg>
+                            <p class="text-gray-500 font-medium">{{ product.name }}</p>
+                            <p class="text-gray-400 text-sm">Professional Quality Printing</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Decorative Elements -->
+                <div class="absolute -top-4 -right-4 w-32 h-32 bg-gradient-to-br from-indigo-200 to-purple-200 rounded-full blur-xl opacity-70"></div>
+                <div class="absolute -bottom-8 -left-8 w-24 h-24 bg-gradient-to-br from-blue-200 to-indigo-200 rounded-full blur-lg opacity-60"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+function scrollToCalculator() {
+    const calculatorSection = document.querySelector('.pricing-calculator');
+    if (calculatorSection) {
+        calculatorSection.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+}
+</script>

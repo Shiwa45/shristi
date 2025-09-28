@@ -1,0 +1,2159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Children&#x27;s Book Printing - Custom Printing Services - Book Printing - Shirsti Printing</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom CSS -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .service-card {
+            transition: all 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .hero-animation {
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+    
+    
+<link rel="stylesheet" href="/static/css/products/product-detail.css">
+<link rel="stylesheet" href="/static/css/products/pricing-calculator.css">
+<link rel="stylesheet" href="/static/css/products/qin-style-form.css">
+<style>
+/* QinPrinting-inspired modern styles */
+
+.product-hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.product-hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.hero-image-wrapper {
+    position: relative;
+}
+
+.hero-image {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    margin: 0 auto;
+    display: block;
+}
+
+.hero-badges {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.hero-badge {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.hero-badge.design-tool {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.hero-badge.premium {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.hero-description {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.hero-price {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.price-current {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #fbbf24;
+}
+
+.price-label {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.1rem;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.hero-btn {
+    padding: 16px 32px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 180px;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+}
+
+.hero-btn-primary {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    color: #92400e;
+    box-shadow: 0 10px 25px rgba(251, 191, 36, 0.4);
+}
+
+.hero-btn-primary:hover {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(251, 191, 36, 0.6);
+    color: white;
+    text-decoration: none;
+}
+
+.hero-btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.hero-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+    color: white;
+    text-decoration: none;
+}
+
+/* Quote Calculator Section */
+.calculator-section {
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+}
+
+.calculator-wrapper {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.calculator-form {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e2e8f0;
+}
+
+.form-section {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.form-section:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.section-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.section-title i {
+    color: #667eea;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.form-field {
+    position: relative;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.5rem;
+}
+
+.form-input,
+.form-select {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.form-input:focus,
+.form-select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/path%3e%3c/svg%3e");
+    background-position: right 12px center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+    padding-right: 40px;
+}
+
+/* Dynamic Form Elements */
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.radio-option:hover {
+    border-color: #667eea;
+    background: rgba(102, 126, 234, 0.02);
+}
+
+.radio-option input[type="radio"] {
+    margin-right: 12px;
+    accent-color: #667eea;
+}
+
+.radio-option input[type="radio"]:checked + .radio-label {
+    font-weight: 600;
+    color: #667eea;
+}
+
+.radio-label {
+    flex: 1;
+    font-size: 0.95rem;
+}
+
+.price-modifier {
+    font-size: 0.85rem;
+    color: #059669;
+    font-weight: 600;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.checkbox-option {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.checkbox-option:hover {
+    border-color: #667eea;
+    background: rgba(102, 126, 234, 0.02);
+}
+
+.checkbox-option input[type="checkbox"] {
+    margin-right: 12px;
+    accent-color: #667eea;
+}
+
+.checkbox-option input[type="checkbox"]:checked + .checkbox-label {
+    font-weight: 600;
+    color: #667eea;
+}
+
+.checkbox-label {
+    flex: 1;
+    font-size: 0.95rem;
+}
+
+/* Paper Selection Grid */
+.paper-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.paper-option {
+    border: 2px solid #e5e7eb;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: white;
+    position: relative;
+}
+
+.paper-option:hover {
+    border-color: #667eea;
+    transform: translateY(-4px);
+    box-shadow: 0 12px 25px rgba(102, 126, 234, 0.15);
+}
+
+.paper-option.selected {
+    border-color: #667eea;
+    background: rgba(102, 126, 234, 0.02);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
+}
+
+.paper-option input[type="radio"] {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    width: 20px;
+    height: 20px;
+    accent-color: #667eea;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.paper-preview {
+    width: 100%;
+    height: 140px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.paper-bw-standard {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.paper-bw-premium {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.05);
+}
+
+.paper-color-premium {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.paper-preview-icon {
+    font-size: 2.5rem;
+    opacity: 0.4;
+    color: #6b7280;
+    z-index: 1;
+}
+
+.paper-info {
+    padding: 1rem;
+}
+
+.paper-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.paper-description {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+}
+
+.paper-specs {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.paper-spec {
+    background: #f1f5f9;
+    color: #475569;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.paper-price-overlay {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    z-index: 2;
+}
+
+/* Quote Display */
+.quote-display {
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    color: white;
+    border-radius: 20px;
+    padding: 2rem;
+    position: sticky;
+    top: 120px;
+    height: fit-content;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.quote-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+}
+
+.quote-location {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.quote-discount {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.quote-price-main {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.price-currency {
+    font-size: 1.5rem;
+    font-weight: 600;
+    opacity: 0.8;
+    vertical-align: top;
+}
+
+.price-amount {
+    font-size: 4rem;
+    font-weight: 800;
+    line-height: 1;
+    color: #fbbf24;
+}
+
+.price-details {
+    margin-bottom: 2rem;
+}
+
+.unit-price {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 0.5rem;
+}
+
+.price-note {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 1rem;
+}
+
+.estimated-weight {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.quote-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.quote-btn {
+    width: 100%;
+    padding: 16px 20px;
+    border-radius: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+}
+
+.quote-btn-primary {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    color: #92400e;
+    box-shadow: 0 8px 20px rgba(251, 191, 36, 0.3);
+}
+
+.quote-btn-primary:hover {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(251, 191, 36, 0.5);
+    color: white;
+    text-decoration: none;
+}
+
+.quote-btn-secondary {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+}
+
+.quote-btn-secondary:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+    color: white;
+    text-decoration: none;
+}
+
+.quote-btn-outline {
+    background: transparent;
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.quote-btn-outline:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+    color: white;
+    text-decoration: none;
+}
+
+/* Template Card */
+.template-card {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.template-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(79, 70, 229, 0.3);
+}
+
+.template-icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.template-text h4 {
+    color: white;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.template-text p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.85rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .product-hero-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        text-align: center;
+    }
+
+    .calculator-wrapper {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .quote-display {
+        position: static;
+        order: -1;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .paper-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-description {
+        font-size: 1rem;
+    }
+
+    .price-current {
+        font-size: 2.5rem;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+    }
+
+    .hero-btn {
+        min-width: auto;
+    }
+
+    .calculator-form {
+        padding: 1.5rem;
+    }
+
+    .quote-display {
+        padding: 1.5rem;
+    }
+}
+</style>
+
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="/" class="flex-shrink-0 flex items-center">
+                        <img class="h-8 w-auto" src="/static/images/logo.png" alt="Shirsti Printing" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <span class="ml-3 text-xl font-bold text-gray-900 hidden">Shirsti Printing</span>
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-medium transition duration-300">Home</a>
+                    <a href="/services/categories/" class="text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-medium transition duration-300">Services</a>
+                    <a href="/about/" class="text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-medium transition duration-300">About</a>
+                    <a href="/contact/" class="text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-medium transition duration-300">Contact</a>
+                    
+                    
+                        
+                        
+                    
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button type="button" class="mobile-menu-button text-gray-700 hover:text-purple-600 focus:outline-none focus:text-purple-600" aria-label="toggle menu">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation -->
+        <div class="mobile-menu hidden md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 bg-white shadow-lg">
+                <a href="/" class="block px-3 py-2 text-gray-700 hover:text-purple-600">Home</a>
+                <a href="/services/categories/" class="block px-3 py-2 text-gray-700 hover:text-purple-600">Services</a>
+                <a href="/about/" class="block px-3 py-2 text-gray-700 hover:text-purple-600">About</a>
+                <a href="/contact/" class="block px-3 py-2 text-gray-700 hover:text-purple-600">Contact</a>
+                
+                
+                    <div class="border-t border-gray-200 pt-2">
+                        
+                        
+                    </div>
+                
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="pt-16">
+        
+<!-- Main Product Section -->
+<section class="py-8 bg-gray-50 min-h-screen">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Product Header -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+            <div class="text-center">
+                <h1 class="text-4xl font-bold text-gray-900 mb-4">Children&#x27;s Book Printing</h1>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Default description for Children&#x27;s Book Printing.</p>
+
+                <!-- Trust Indicators -->
+                <div class="flex justify-center items-center gap-8 mt-6 text-sm text-gray-500">
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-shipping-fast text-green-600"></i>
+                        <span>Free Shipping</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-medal text-yellow-500"></i>
+                        <span>Premium Quality</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-clock text-blue-600"></i>
+                        <span>Quick Turnaround</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Form Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Options Panel (2/3 width) -->
+            <div class="lg:col-span-2">
+                
+
+<!-- Options Panel with Dynamic Form System -->
+<div class="options-panel space-y-8">
+    <h2 class="text-2xl font-semibold text-gray-900">Customize Your Children&#x27;s Book Printing</h2>
+
+    <!-- Dynamic Form Fields -->
+    
+
+<div class="dynamic-form-container" data-product-id="1">
+    
+        
+            <div class="form-section" data-section="printing_options">
+                <div class="section-header">
+    <h3 class="section-title">
+        
+            <i class="fas fa-print"></i>
+        
+        Printing Options
+    </h3>
+</div>
+
+                <div class="form-grid" data-section-grid="printing_options">
+                    
+                        <div class="form-field  required"
+                             data-field="interior_color"
+                             
+                             data-triggers="["bw_page_count", "color_page_count"]">
+                            
+
+<div class="form-field-wrapper">
+    <fieldset>
+        <legend class="form-label">
+            Interior Color
+            <span class="required-asterisk">*</span>
+        </legend>
+
+        
+            <p class="field-help-text">Select the color option for your book interior</p>
+        
+
+        <div class="radio-group">
+            
+                <div class="radio-option">
+                    <input type="radio"
+                           id="product_form_interior_color_1"
+                           name="interior_color"
+                           value="bw_premium"
+                           
+                           checked
+                           data-price-modifier="0"
+                           
+                           data-field-type="radio"
+                           data-price-affecting="true"
+                           required>
+
+                    <label for="product_form_interior_color_1" class="radio-label">
+                        <span class="radio-text">Black &amp; White Premium</span>
+                        
+                        
+                    </label>
+                </div>
+            
+                <div class="radio-option">
+                    <input type="radio"
+                           id="product_form_interior_color_2"
+                           name="interior_color"
+                           value="bw_standard"
+                           
+                           
+                           data-price-modifier="-20"
+                           
+                           data-field-type="radio"
+                           data-price-affecting="true"
+                           required>
+
+                    <label for="product_form_interior_color_2" class="radio-label">
+                        <span class="radio-text">Black &amp; White Standard</span>
+                        
+                            <span class="price-modifier">
+                                
+                                    ₹-20
+                                
+                            </span>
+                        
+                        
+                    </label>
+                </div>
+            
+                <div class="radio-option">
+                    <input type="radio"
+                           id="product_form_interior_color_3"
+                           name="interior_color"
+                           value="color_premium"
+                           
+                           
+                           data-price-modifier="150"
+                           
+                           data-field-type="radio"
+                           data-price-affecting="true"
+                           required>
+
+                    <label for="product_form_interior_color_3" class="radio-label">
+                        <span class="radio-text">Color Premium</span>
+                        
+                            <span class="price-modifier">
+                                
+                                    +₹150
+                                
+                            </span>
+                        
+                        
+                    </label>
+                </div>
+            
+                <div class="radio-option">
+                    <input type="radio"
+                           id="product_form_interior_color_4"
+                           name="interior_color"
+                           value="color_standard"
+                           
+                           
+                           data-price-modifier="100"
+                           
+                           data-field-type="radio"
+                           data-price-affecting="true"
+                           required>
+
+                    <label for="product_form_interior_color_4" class="radio-label">
+                        <span class="radio-text">Color Standard</span>
+                        
+                            <span class="price-modifier">
+                                
+                                    +₹100
+                                
+                            </span>
+                        
+                        
+                    </label>
+                </div>
+            
+                <div class="radio-option">
+                    <input type="radio"
+                           id="product_form_interior_color_5"
+                           name="interior_color"
+                           value="combine_color"
+                           
+                           
+                           data-price-modifier="75"
+                           
+                           data-field-type="radio"
+                           data-price-affecting="true"
+                           required>
+
+                    <label for="product_form_interior_color_5" class="radio-label">
+                        <span class="radio-text">Combined Color</span>
+                        
+                            <span class="price-modifier">
+                                
+                                    +₹75
+                                
+                            </span>
+                        
+                        
+                    </label>
+                </div>
+            
+        </div>
+    </fieldset>
+
+    
+        <script>
+            // Add field trigger logic
+            document.addEventListener('DOMContentLoaded', function() {
+                const radioInputs = document.querySelectorAll('input[name="interior_color"]');
+                radioInputs.forEach(function(input) {
+                    input.addEventListener('change', function() {
+                        if (this.checked) {
+                            window.handleFieldTriggers('interior_color', this.value, ["bw_page_count", "color_page_count"]);
+                        }
+                    });
+                });
+            });
+        </script>
+    
+</div>
+                        </div>
+                    
+                </div>
+            </div>
+        
+    
+        
+            <div class="form-section" data-section="product_specs">
+                <div class="section-header">
+    <h3 class="section-title">
+        
+            <i class="fas fa-cog"></i>
+        
+        Product Specifications
+    </h3>
+</div>
+
+                <div class="form-grid" data-section-grid="product_specs">
+                    
+                        <div class="form-field  required"
+                             data-field="book_size"
+                             
+                             >
+                            
+
+<div class="form-field-wrapper">
+    <label for="product_form_book_size" class="form-label">
+        Book Size
+        <span class="required-asterisk">*</span>
+    </label>
+
+    
+        <p class="field-help-text">Select the size for your book</p>
+    
+
+    <select id="product_form_book_size"
+            name="book_size"
+            class="form-select"
+            required
+            data-field-type="select"
+            data-price-affecting="true">
+
+        
+
+        
+            <option value="a4"
+                    data-price-modifier="0"
+                    
+                    >
+                A4 (210 x 297 mm)
+                
+            </option>
+        
+            <option value="letter"
+                    data-price-modifier="5"
+                    
+                    >
+                Letter (216 x 279 mm)
+                
+                    
+                        (+₹5)
+                    
+                
+            </option>
+        
+            <option value="executive"
+                    data-price-modifier="-10"
+                    
+                    >
+                Executive (184 x 267 mm)
+                
+                    
+                        (₹-10)
+                    
+                
+            </option>
+        
+            <option value="a5"
+                    data-price-modifier="-25"
+                    
+                    >
+                A5 (148 x 210 mm)
+                
+                    
+                        (₹-25)
+                    
+                
+            </option>
+        
+    </select>
+
+    
+</div>
+                        </div>
+                    
+                        <div class="form-field  required"
+                             data-field="paper_type"
+                             
+                             >
+                            
+
+<div class="form-field-wrapper">
+    <label for="product_form_paper_type" class="form-label">
+        Paper Type
+        <span class="required-asterisk">*</span>
+    </label>
+
+    
+        <p class="field-help-text">Select the paper quality</p>
+    
+
+    <select id="product_form_paper_type"
+            name="paper_type"
+            class="form-select"
+            required
+            data-field-type="select"
+            data-price-affecting="true">
+
+        
+
+        
+            <option value="75gsm"
+                    data-price-modifier="0"
+                    
+                    >
+                75 GSM
+                
+            </option>
+        
+            <option value="100gsm"
+                    data-price-modifier="25"
+                    
+                    >
+                100 GSM
+                
+                    
+                        (+₹25)
+                    
+                
+            </option>
+        
+            <option value="100gsm_art"
+                    data-price-modifier="50"
+                    
+                    >
+                100 GSM Art Paper
+                
+                    
+                        (+₹50)
+                    
+                
+            </option>
+        
+            <option value="120gsm_art"
+                    data-price-modifier="75"
+                    
+                    >
+                120 GSM Art Paper
+                
+                    
+                        (+₹75)
+                    
+                
+            </option>
+        
+    </select>
+
+    
+</div>
+                        </div>
+                    
+                </div>
+            </div>
+        
+    
+        
+            <div class="form-section" data-section="finishing_options">
+                <div class="section-header">
+    <h3 class="section-title">
+        
+            <i class="fas fa-magic"></i>
+        
+        Finishing Options
+    </h3>
+</div>
+
+                <div class="form-grid" data-section-grid="finishing_options">
+                    
+                        <div class="form-field  required"
+                             data-field="binding_type"
+                             
+                             >
+                            
+
+<div class="form-field-wrapper">
+    <label for="product_form_binding_type" class="form-label">
+        Binding Type
+        <span class="required-asterisk">*</span>
+    </label>
+
+    
+        <p class="field-help-text">Select the binding method</p>
+    
+
+    <select id="product_form_binding_type"
+            name="binding_type"
+            class="form-select"
+            required
+            data-field-type="select"
+            data-price-affecting="true">
+
+        
+
+        
+            <option value="saddle_stitch"
+                    data-price-modifier="0"
+                    
+                    >
+                Saddle Stitch
+                
+            </option>
+        
+            <option value="spiral_binding"
+                    data-price-modifier="30"
+                    
+                    >
+                Spiral Binding
+                
+                    
+                        (+₹30)
+                    
+                
+            </option>
+        
+            <option value="paperback"
+                    data-price-modifier="50"
+                    
+                    >
+                Paperback (Perfect)
+                
+                    
+                        (+₹50)
+                    
+                
+            </option>
+        
+            <option value="hardcover"
+                    data-price-modifier="150"
+                    
+                    >
+                Hardcover
+                
+                    
+                        (+₹150)
+                    
+                
+            </option>
+        
+    </select>
+
+    
+</div>
+                        </div>
+                    
+                        <div class="form-field  required"
+                             data-field="cover_finish"
+                             
+                             >
+                            
+
+<div class="form-field-wrapper">
+    <fieldset>
+        <legend class="form-label">
+            Cover Finish
+            <span class="required-asterisk">*</span>
+        </legend>
+
+        
+            <p class="field-help-text">Select the cover finish</p>
+        
+
+        <div class="radio-group">
+            
+                <div class="radio-option">
+                    <input type="radio"
+                           id="product_form_cover_finish_1"
+                           name="cover_finish"
+                           value="matte"
+                           
+                           checked
+                           data-price-modifier="0"
+                           
+                           data-field-type="radio"
+                           data-price-affecting="true"
+                           required>
+
+                    <label for="product_form_cover_finish_1" class="radio-label">
+                        <span class="radio-text">Matte</span>
+                        
+                        
+                    </label>
+                </div>
+            
+                <div class="radio-option">
+                    <input type="radio"
+                           id="product_form_cover_finish_2"
+                           name="cover_finish"
+                           value="glossy"
+                           
+                           
+                           data-price-modifier="20"
+                           
+                           data-field-type="radio"
+                           data-price-affecting="true"
+                           required>
+
+                    <label for="product_form_cover_finish_2" class="radio-label">
+                        <span class="radio-text">Glossy</span>
+                        
+                            <span class="price-modifier">
+                                
+                                    +₹20
+                                
+                            </span>
+                        
+                        
+                    </label>
+                </div>
+            
+        </div>
+    </fieldset>
+
+    
+</div>
+                        </div>
+                    
+                </div>
+            </div>
+        
+    
+        
+            <div class="form-section" data-section="quantity_pricing">
+                <div class="section-header">
+    <h3 class="section-title">
+        
+            <i class="fas fa-calculator"></i>
+        
+        Quantity &amp; Pricing
+    </h3>
+</div>
+
+                <div class="form-grid" data-section-grid="quantity_pricing">
+                    
+                        <div class="form-field  required"
+                             data-field="copies"
+                             
+                             >
+                            
+
+<div class="form-field-wrapper">
+    <label for="product_form_copies" class="form-label">
+        Number of Copies
+        <span class="required-asterisk">*</span>
+    </label>
+
+    
+        <p class="field-help-text">Minimum 25 copies required</p>
+    
+
+    <input type="number"
+           id="product_form_copies"
+           name="copies"
+           class="form-input"
+           value="25"
+           
+           min="25.00"
+           max="10000.00"
+           required
+           data-field-type="number"
+           data-price-affecting="true">
+
+    
+        <div class="field-constraints">
+            
+                <small class="text-gray-600">Value should be between 25.00 and 10000.00</small>
+            
+        </div>
+    
+
+    
+</div>
+                        </div>
+                    
+                </div>
+            </div>
+        
+    
+</div>
+
+<!-- JavaScript data for conditional logic -->
+<script id="conditional-fields-data" type="application/json">
+{"page_count": {"condition": {"field": "interior_color", "value": "combine_color", "operator": "not_equals"}, "triggers": []}, "bw_page_count": {"condition": {"field": "interior_color", "value": "combine_color", "operator": "equals"}, "triggers": []}, "color_page_count": {"condition": {"field": "interior_color", "value": "combine_color", "operator": "equals"}, "triggers": []}}
+</script>
+
+    <!-- Fallback to static fields if no dynamic fields exist -->
+    
+</div>
+            </div>
+
+            <!-- Pricing Calculator (1/3 width) -->
+            <div class="lg:col-span-1">
+                <!-- QinPrinting-Style Pricing Calculator -->
+<div class="pricing-calculator bg-white rounded-2xl shadow-lg p-6 sticky top-6 border border-gray-100">
+    <div class="text-center mb-6">
+        <h3 class="text-lg font-bold text-gray-900 mb-2 uppercase tracking-wide">Instant Quote</h3>
+        <div class="w-16 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto rounded"></div>
+    </div>
+
+    <!-- Total Price Display -->
+    <div class="text-center mb-6 p-4 bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl border border-blue-100">
+        <div class="text-sm text-gray-600 mb-1">Total Price</div>
+        <div class="text-4xl font-bold text-gray-900" id="total-price">₹150.00</div>
+        <div class="text-sm text-gray-500" id="price-per-unit">₹150.00 per piece</div>
+    </div>
+
+    <!-- Price Breakdown -->
+    <div class="price-breakdown space-y-3 mb-6">
+        <!-- Base Price -->
+        <div class="flex justify-between items-center">
+            <span class="text-gray-700">Base Price</span>
+            <span id="base-price" class="font-medium text-gray-900">₹150.00</span>
+        </div>
+
+        <!-- Quantity -->
+        <div class="flex justify-between items-center">
+            <span class="text-gray-700">Quantity</span>
+            <span id="quantity-display" class="font-medium text-gray-900">100 pieces</span>
+        </div>
+
+        <!-- Size Upgrade -->
+        <div id="size-cost-row" class="flex justify-between items-center hidden">
+            <span class="text-gray-700">Size Upgrade</span>
+            <span id="size-cost" class="font-medium text-orange-600">+₹0</span>
+        </div>
+
+        <!-- Paper Upgrade -->
+        <div id="paper-cost-row" class="flex justify-between items-center hidden">
+            <span class="text-gray-700">Paper Upgrade</span>
+            <span id="paper-cost" class="font-medium text-orange-600">+₹0</span>
+        </div>
+
+        <!-- Color Options -->
+        <div id="color-cost-row" class="flex justify-between items-center hidden">
+            <span class="text-gray-700">Color Options</span>
+            <span id="color-cost" class="font-medium text-orange-600">+₹0</span>
+        </div>
+
+        <!-- Finish -->
+        <div id="finish-cost-row" class="flex justify-between items-center hidden">
+            <span class="text-gray-700">Finish</span>
+            <span id="finish-cost" class="font-medium text-orange-600">+₹0</span>
+        </div>
+
+        <!-- Subtotal -->
+        <div class="flex justify-between items-center pt-2 border-t border-gray-200">
+            <span class="text-gray-700">Subtotal</span>
+            <span id="subtotal-price" class="font-medium text-gray-900">₹150.00</span>
+        </div>
+
+        <!-- Quantity Discount -->
+        <div id="quantity-discount-row" class="flex justify-between items-center hidden">
+            <span class="text-green-600">Quantity Discount</span>
+            <span id="quantity-discount" class="font-medium text-green-600">-₹0</span>
+        </div>
+
+        <!-- Rush Order -->
+        <div id="rush-order-row" class="flex justify-between items-center hidden">
+            <span class="text-orange-600">Rush Order</span>
+            <span id="rush-order-cost" class="font-medium text-orange-600">+₹0</span>
+        </div>
+
+        <!-- Design Service -->
+        <div id="design-service-row" class="flex justify-between items-center hidden">
+            <span class="text-blue-600">Design Service</span>
+            <span id="design-service-cost" class="font-medium text-blue-600">+₹0</span>
+        </div>
+
+        <!-- Total -->
+        <div class="flex justify-between items-center pt-3 border-t-2 border-gray-300">
+            <span class="text-lg font-semibold text-gray-900">Total</span>
+            <span id="total-price" class="text-lg font-bold text-blue-600">₹150.00</span>
+        </div>
+
+        <!-- Price Per Unit -->
+        <div class="text-center">
+            <span class="text-sm text-gray-600">
+                <span id="price-per-unit">₹150.00</span> per piece
+            </span>
+        </div>
+    </div>
+
+    <!-- Quantity Tiers Display -->
+    
+
+    <!-- Action Buttons -->
+    <div class="space-y-3">
+        <button id="add-to-cart-btn" class="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" onclick="addToCart()">
+            <span class="flex items-center justify-center">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h12"></path>
+                </svg>
+                Add to Cart
+            </span>
+        </button>
+
+        <button id="get-quote-btn" class="w-full bg-white text-blue-600 py-3 px-4 rounded-lg font-semibold border border-blue-600 hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" onclick="getQuote()">
+            <span class="flex items-center justify-center">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+                Get Custom Quote
+            </span>
+        </button>
+    </div>
+
+    <!-- Additional Services -->
+    <div class="additional-services mt-6 pt-6 border-t border-gray-200">
+        <h4 class="font-medium text-gray-900 mb-3">Additional Services</h4>
+
+        <!-- Rush Order -->
+        <label class="flex items-center space-x-3 mb-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer">
+            <input type="checkbox" id="rush-order" class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded" onchange="toggleRushOrder(this.checked)">
+            <div class="flex-1">
+                <span class="font-medium text-gray-900">Rush Order</span>
+                <div class="text-sm text-gray-600">Get your order faster</div>
+            </div>
+            <span class="text-sm font-medium text-orange-600">+25%</span>
+        </label>
+
+        <!-- Design Service -->
+        
+
+        <!-- Proof Service -->
+        <label class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer">
+            <input type="checkbox" id="proof-service" class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded" onchange="toggleProofService(this.checked)">
+            <div class="flex-1">
+                <span class="font-medium text-gray-900">Digital Proof</span>
+                <div class="text-sm text-gray-600">Preview before printing</div>
+            </div>
+            <span class="text-sm font-medium text-blue-600">Free</span>
+        </label>
+    </div>
+
+    <!-- Delivery Information -->
+    <div class="delivery-info mt-6 pt-6 border-t border-gray-200">
+        <h4 class="font-medium text-gray-900 mb-3">Delivery Information</h4>
+
+        <div class="space-y-2 text-sm">
+            
+
+            <div class="flex items-center space-x-2">
+                <svg class="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"></path>
+                    <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1V8a1 1 0 00-1-1h-3z"></path>
+                </svg>
+                <span class="text-gray-700">Free shipping on orders over ₹2000</span>
+            </div>
+
+            <div class="flex items-center space-x-2">
+                <svg class="w-4 h-4 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span class="text-gray-700">100% quality guarantee</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Support -->
+    <div class="support-info mt-6 pt-6 border-t border-gray-200 text-center">
+        <p class="text-sm text-gray-600 mb-2">Need help with pricing?</p>
+        <button class="text-blue-600 hover:text-blue-800 font-medium text-sm" onclick="contactSupport()">
+            Contact Our Experts
+        </button>
+    </div>
+</div>
+
+<!-- Loading State -->
+<div id="pricing-loader" class="hidden absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center rounded-lg">
+    <div class="flex items-center space-x-2">
+        <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+        <span class="text-gray-600">Calculating price...</span>
+    </div>
+</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Product Details Tabs -->
+<section class="py-16 bg-gray-50">
+    <!-- Product Details Tabs -->
+<div class="container mx-auto px-4">
+    <div class="product-tabs">
+        <!-- Tab Navigation -->
+        <div class="flex space-x-1 rounded-xl bg-blue-900/20 p-1 mb-8">
+            <button onclick="switchTab('specifications')" id="tab-specifications" class="tab-button w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 bg-white shadow active">
+                Specifications
+            </button>
+            <button onclick="switchTab('samples')" id="tab-samples" class="tab-button w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-100 hover:bg-white/[0.12] hover:text-white focus:outline-none focus:ring-2">
+                Samples
+            </button>
+            <button onclick="switchTab('reviews')" id="tab-reviews" class="tab-button w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-100 hover:bg-white/[0.12] hover:text-white focus:outline-none focus:ring-2">
+                Reviews
+            </button>
+            <button onclick="switchTab('faq')" id="tab-faq" class="tab-button w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-100 hover:bg-white/[0.12] hover:text-white focus:outline-none focus:ring-2">
+                FAQ
+            </button>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="tab-content">
+            <!-- Specifications Tab -->
+            <div id="content-specifications" class="tab-panel">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Technical Specifications</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-medium text-gray-700 mb-2">Description</h4>
+                                <p class="text-gray-600">Default description for Children&#x27;s Book Printing.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-700 mb-2">Quality Features</h4>
+                                <ul class="list-disc list-inside text-gray-600 space-y-1">
+                                    <li>Premium quality materials</li>
+                                    <li>Professional printing technology</li>
+                                    <li>Expert quality control</li>
+                                    <li>Fast turnaround time</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Product Details</h3>
+                        <div class="space-y-4">
+                            
+                            <div>
+                                <h4 class="font-medium text-gray-700 mb-2">File Requirements</h4>
+                                <ul class="list-disc list-inside text-gray-600 space-y-1">
+                                    <li>PDF files with 300 DPI resolution</li>
+                                    <li>CMYK color mode for best results</li>
+                                    <li>Include 3mm bleed area</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Samples Tab -->
+            <div id="content-samples" class="tab-panel hidden">
+                <div class="text-center mb-8">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Sample Gallery</h3>
+                    <p class="text-gray-600">Browse through our sample works to see the quality and options available</p>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    
+                    <div class="sample-item group cursor-pointer">
+                        <div class="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg overflow-hidden">
+                            <div class="w-full h-full flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                                <div class="text-center text-gray-500">
+                                    <svg class="w-12 h-12 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    <p class="text-sm font-medium">Sample 1</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="sample-item group cursor-pointer">
+                        <div class="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg overflow-hidden">
+                            <div class="w-full h-full flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                                <div class="text-center text-gray-500">
+                                    <svg class="w-12 h-12 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    <p class="text-sm font-medium">Sample 2</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="sample-item group cursor-pointer">
+                        <div class="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg overflow-hidden">
+                            <div class="w-full h-full flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                                <div class="text-center text-gray-500">
+                                    <svg class="w-12 h-12 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    <p class="text-sm font-medium">Sample 3</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="sample-item group cursor-pointer">
+                        <div class="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg overflow-hidden">
+                            <div class="w-full h-full flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                                <div class="text-center text-gray-500">
+                                    <svg class="w-12 h-12 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    <p class="text-sm font-medium">Sample 4</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <!-- Reviews Tab -->
+            <div id="content-reviews" class="tab-panel hidden">
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Customer Reviews</h3>
+                    <div class="flex items-center space-x-4 mb-6">
+                        <div class="text-4xl font-bold text-gray-900">4.8</div>
+                        <div>
+                            <div class="flex items-center space-x-1 mb-1">
+                                
+                                <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                </svg>
+                                
+                                <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                </svg>
+                                
+                                <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                </svg>
+                                
+                                <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                </svg>
+                                
+                                <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                </svg>
+                                
+                            </div>
+                            <p class="text-sm text-gray-600">Based on 247 reviews</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-6">
+                    <div class="border border-gray-200 rounded-lg p-6">
+                        <p class="text-gray-600">Excellent quality children&#x27;s book printing! Professional service and timely delivery.</p>
+                        <p class="text-sm text-gray-500 mt-2">- Rajesh Kumar</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Tab -->
+            <div id="content-faq" class="tab-panel hidden">
+                <div class="space-y-4">
+                    <div class="faq-item border border-gray-200 rounded-lg">
+                        <button class="w-full text-left p-4 focus:outline-none" onclick="toggleFAQ(this)">
+                            <div class="flex justify-between items-center">
+                                <h4 class="font-medium text-gray-900">What file formats do you accept?</h4>
+                                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </div>
+                        </button>
+                        <div class="faq-answer hidden p-4 pt-0 text-gray-600">
+                            We accept PDF, AI, PSD, PNG, and JPG files. For best results, please provide high-resolution files (300 DPI).
+                        </div>
+                    </div>
+                    <div class="faq-item border border-gray-200 rounded-lg">
+                        <button class="w-full text-left p-4 focus:outline-none" onclick="toggleFAQ(this)">
+                            <div class="flex justify-between items-center">
+                                <h4 class="font-medium text-gray-900">How long does production take?</h4>
+                                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </div>
+                        </button>
+                        <div class="faq-answer hidden p-4 pt-0 text-gray-600">
+                            Standard production time is 3-5 business days. Rush orders available.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+<!-- Related Products -->
+
+<section class="py-16 bg-white">
+    <!-- Related Products -->
+<div class="container mx-auto px-4">
+    <div class="related-products">
+        <h2 class="text-2xl font-semibold text-gray-900 mb-8 text-center">Related Products</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <div class="product-card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                <div class="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 relative group">
+                    
+                        <div class="w-full h-full flex items-center justify-center">
+                            <div class="text-center text-gray-500">
+                                <svg class="w-12 h-12 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
+                                </svg>
+                                <p class="text-sm font-medium">Annual Reports</p>
+                            </div>
+                        </div>
+                    
+
+                    <!-- Quick View Button -->
+                    <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <button class="bg-white text-gray-900 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors" onclick="quickView('annual-reports')">
+                            Quick View
+                        </button>
+                    </div>
+                </div>
+
+                <div class="p-4">
+                    <h3 class="font-semibold text-gray-900 mb-2 line-clamp-2">Annual Reports</h3>
+                    <p class="text-gray-600 text-sm mb-3 line-clamp-2">Default description for Annual Reports.</p>
+
+                    <div class="flex items-center justify-between">
+                        <div class="pricing">
+                            <span class="text-lg font-bold text-blue-600">₹150.00</span>
+                            <span class="text-sm text-gray-500">starting</span>
+                        </div>
+
+                        <a href="/services/book-printing/annual-reports/static/"
+                           class="bg-blue-600 text-white px-3 py-1 rounded text-sm font-medium hover:bg-blue-700 transition-colors">
+                            View
+                        </a>
+                    </div>
+
+                    <!-- Features -->
+                    <div class="mt-3 flex flex-wrap gap-1">
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                <div class="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 relative group">
+                    
+                        <div class="w-full h-full flex items-center justify-center">
+                            <div class="text-center text-gray-500">
+                                <svg class="w-12 h-12 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
+                                </svg>
+                                <p class="text-sm font-medium">Art Book Printing</p>
+                            </div>
+                        </div>
+                    
+
+                    <!-- Quick View Button -->
+                    <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <button class="bg-white text-gray-900 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors" onclick="quickView('art-book-printing')">
+                            Quick View
+                        </button>
+                    </div>
+                </div>
+
+                <div class="p-4">
+                    <h3 class="font-semibold text-gray-900 mb-2 line-clamp-2">Art Book Printing</h3>
+                    <p class="text-gray-600 text-sm mb-3 line-clamp-2">Default description for Art Book Printing.</p>
+
+                    <div class="flex items-center justify-between">
+                        <div class="pricing">
+                            <span class="text-lg font-bold text-blue-600">₹150.00</span>
+                            <span class="text-sm text-gray-500">starting</span>
+                        </div>
+
+                        <a href="/services/book-printing/art-book-printing/static/"
+                           class="bg-blue-600 text-white px-3 py-1 rounded text-sm font-medium hover:bg-blue-700 transition-colors">
+                            View
+                        </a>
+                    </div>
+
+                    <!-- Features -->
+                    <div class="mt-3 flex flex-wrap gap-1">
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                <div class="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 relative group">
+                    
+                        <div class="w-full h-full flex items-center justify-center">
+                            <div class="text-center text-gray-500">
+                                <svg class="w-12 h-12 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
+                                </svg>
+                                <p class="text-sm font-medium">Coffee Table Books</p>
+                            </div>
+                        </div>
+                    
+
+                    <!-- Quick View Button -->
+                    <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <button class="bg-white text-gray-900 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors" onclick="quickView('coffee-table-books')">
+                            Quick View
+                        </button>
+                    </div>
+                </div>
+
+                <div class="p-4">
+                    <h3 class="font-semibold text-gray-900 mb-2 line-clamp-2">Coffee Table Books</h3>
+                    <p class="text-gray-600 text-sm mb-3 line-clamp-2">Default description for Coffee Table Books.</p>
+
+                    <div class="flex items-center justify-between">
+                        <div class="pricing">
+                            <span class="text-lg font-bold text-blue-600">₹150.00</span>
+                            <span class="text-sm text-gray-500">starting</span>
+                        </div>
+
+                        <a href="/services/book-printing/coffee-table-books/static/"
+                           class="bg-blue-600 text-white px-3 py-1 rounded text-sm font-medium hover:bg-blue-700 transition-colors">
+                            View
+                        </a>
+                    </div>
+
+                    <!-- Features -->
+                    <div class="mt-3 flex flex-wrap gap-1">
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                <div class="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 relative group">
+                    
+                        <div class="w-full h-full flex items-center justify-center">
+                            <div class="text-center text-gray-500">
+                                <svg class="w-12 h-12 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
+                                </svg>
+                                <p class="text-sm font-medium">Coloring Book Printing</p>
+                            </div>
+                        </div>
+                    
+
+                    <!-- Quick View Button -->
+                    <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <button class="bg-white text-gray-900 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors" onclick="quickView('coloring-book-printing')">
+                            Quick View
+                        </button>
+                    </div>
+                </div>
+
+                <div class="p-4">
+                    <h3 class="font-semibold text-gray-900 mb-2 line-clamp-2">Coloring Book Printing</h3>
+                    <p class="text-gray-600 text-sm mb-3 line-clamp-2">Default description for Coloring Book Printing.</p>
+
+                    <div class="flex items-center justify-between">
+                        <div class="pricing">
+                            <span class="text-lg font-bold text-blue-600">₹150.00</span>
+                            <span class="text-sm text-gray-500">starting</span>
+                        </div>
+
+                        <a href="/services/book-printing/coloring-book-printing/static/"
+                           class="bg-blue-600 text-white px-3 py-1 rounded text-sm font-medium hover:bg-blue-700 transition-colors">
+                            View
+                        </a>
+                    </div>
+
+                    <!-- Features -->
+                    <div class="mt-3 flex flex-wrap gap-1">
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- View All Button -->
+        <div class="text-center mt-8">
+            <a href="/services/book-printing/"
+               class="inline-flex items-center px-6 py-3 border border-blue-600 text-blue-600 rounded-lg font-medium hover:bg-blue-50 transition-colors">
+                <span>View All Book Printing</span>
+                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                </svg>
+            </a>
+        </div>
+    </div>
+</div>
+</section>
+
+
+<!-- JSON Data for JavaScript -->
+<script id="product-data" type="application/json">
+{
+    "id": 1,
+    "name": "Children\u0027s Book Printing",
+    "basePrice": 150.00,
+    "priceUnit": "",
+    "availableSizes": ,
+    "availablePapers": ,
+    "availableFinishes": ,
+    "availableBindings": ,
+    "colorOptions": ,
+    "quantityTiers": ,
+    "rushOrderAvailable": false,
+    "rushOrderPercentage": ,
+    "designServiceAvailable": false,
+    "designServicePrice": ,
+    "keyFeatures": ,
+    "specifications": services.ProductSpecification.None
+}
+</script>
+
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <h3 class="text-xl font-bold mb-4">Shirsti Printing Company</h3>
+                    <p class="text-gray-300 mb-4">Your trusted partner for professional printing services. From business cards to large format printing, we deliver quality results that make an impression.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Services</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="/services/books-publications/" class="hover:text-white transition duration-300">Books & Publications</a></li>
+                        <li><a href="/services/packaging/" class="hover:text-white transition duration-300">Packaging Solutions</a></li>
+                        <li><a href="/services/marketing/" class="hover:text-white transition duration-300">Marketing Materials</a></li>
+                        <li><a href="/services/stationery/" class="hover:text-white transition duration-300">Stationery Items</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li class="flex items-center">
+                            <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                            </svg>
+                            +91 123 456 7890
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                            info@shirstiprinting.com
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            123 Print Street<br>
+                            New Delhi, India
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Shirsti Printing Company. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.querySelector('.mobile-menu-button');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Update cart count
+        // function updateCartCount() {
+        //     fetch('')
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             document.getElementById('cart-count').textContent = data.count;
+        //         });
+        // }
+        
+        // Update cart count on page load
+        // 
+    </script>
+     
+    
+<script src="/static/js/products/pricing-calculator.js"></script>
+<script src="/static/js/products/product-gallery.js"></script>
+<script src="/static/js/products/product-options.js"></script>
+<script src="/static/js/products/dynamic-form-handler.js"></script>
+
+<script>
+    // Initialize product page functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const productData = JSON.parse(document.getElementById('product-data').textContent);
+
+        // Initialize pricing calculator
+        window.pricingCalculator = new PricingCalculator(productData);
+
+        // Initialize dynamic form handler
+        window.dynamicFormHandler = new DynamicFormHandler(productData, window.pricingCalculator);
+
+        // Initialize product gallery
+        const galleryContainer = document.querySelector('.product-gallery');
+        if (galleryContainer) {
+            window.productGallery = new ProductGallery(galleryContainer);
+        }
+
+        // Initialize product options handler (for fallback compatibility)
+        if (typeof ProductOptions !== 'undefined') {
+            window.productOptions = new ProductOptions(productData, window.pricingCalculator);
+        }
+
+        // Initialize design tool integration if enabled
+        
+    });
+</script>
+
+</body>
+</html>

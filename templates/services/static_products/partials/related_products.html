@@ -1,0 +1,147 @@
+<!-- Related Products -->
+<div class="container mx-auto px-4">
+    <div class="related-products">
+        <h2 class="text-2xl font-semibold text-gray-900 mb-8 text-center">Related Products</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {% for related_product in related_products|slice:":4" %}
+            <div class="product-card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                <div class="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 relative group">
+                    {% if related_product.hero_image %}
+                        <img src="{{ related_product.hero_image.url }}" alt="{{ related_product.name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                    {% else %}
+                        <div class="w-full h-full flex items-center justify-center">
+                            <div class="text-center text-gray-500">
+                                <svg class="w-12 h-12 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
+                                </svg>
+                                <p class="text-sm font-medium">{{ related_product.name }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <!-- Quick View Button -->
+                    <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <button class="bg-white text-gray-900 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors" onclick="quickView('{{ related_product.slug }}')">
+                            Quick View
+                        </button>
+                    </div>
+                </div>
+
+                <div class="p-4">
+                    <h3 class="font-semibold text-gray-900 mb-2 line-clamp-2">{{ related_product.name }}</h3>
+                    <p class="text-gray-600 text-sm mb-3 line-clamp-2">{{ related_product.short_description }}</p>
+
+                    <div class="flex items-center justify-between">
+                        <div class="pricing">
+                            <span class="text-lg font-bold text-blue-600">₹{{ related_product.base_price }}</span>
+                            <span class="text-sm text-gray-500">starting</span>
+                        </div>
+
+                        <a href="{% url 'services:static_product_detail' related_product.category.slug related_product.slug %}"
+                           class="bg-blue-600 text-white px-3 py-1 rounded text-sm font-medium hover:bg-blue-700 transition-colors">
+                            View
+                        </a>
+                    </div>
+
+                    <!-- Features -->
+                    <div class="mt-3 flex flex-wrap gap-1">
+                        {% if related_product.turnaround_time %}
+                        <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">
+                            {{ related_product.turnaround_time }}
+                        </span>
+                        {% endif %}
+                        {% if related_product.design_tool_enabled %}
+                        <span class="px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded-full">
+                            Design Tool
+                        </span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <!-- Default related products when no specific related products are available -->
+            {% for i in "1234" %}
+            <div class="product-card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                <div class="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 relative group">
+                    <div class="w-full h-full flex items-center justify-center">
+                        <div class="text-center text-gray-500">
+                            <svg class="w-12 h-12 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
+                            </svg>
+                            <p class="text-sm font-medium">
+                                {% if forloop.counter == 1 %}Business Cards
+                                {% elif forloop.counter == 2 %}Brochures
+                                {% elif forloop.counter == 3 %}Flyers
+                                {% else %}Stickers{% endif %}
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Quick View Button -->
+                    <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <button class="bg-white text-gray-900 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors">
+                            Quick View
+                        </button>
+                    </div>
+                </div>
+
+                <div class="p-4">
+                    <h3 class="font-semibold text-gray-900 mb-2">
+                        {% if forloop.counter == 1 %}Professional Business Cards
+                        {% elif forloop.counter == 2 %}Marketing Brochures
+                        {% elif forloop.counter == 3 %}Promotional Flyers
+                        {% else %}Custom Stickers{% endif %}
+                    </h3>
+                    <p class="text-gray-600 text-sm mb-3">
+                        {% if forloop.counter == 1 %}Premium quality business cards for professional networking
+                        {% elif forloop.counter == 2 %}Eye-catching brochures for marketing campaigns
+                        {% elif forloop.counter == 3 %}Effective flyers for promotions and events
+                        {% else %}Durable stickers for branding and decoration{% endif %}
+                    </p>
+
+                    <div class="flex items-center justify-between">
+                        <div class="pricing">
+                            <span class="text-lg font-bold text-blue-600">₹
+                                {% if forloop.counter == 1 %}299
+                                {% elif forloop.counter == 2 %}499
+                                {% elif forloop.counter == 3 %}199
+                                {% else %}149{% endif %}
+                            </span>
+                            <span class="text-sm text-gray-500">starting</span>
+                        </div>
+
+                        <button class="bg-blue-600 text-white px-3 py-1 rounded text-sm font-medium hover:bg-blue-700 transition-colors">
+                            View
+                        </button>
+                    </div>
+
+                    <!-- Features -->
+                    <div class="mt-3 flex flex-wrap gap-1">
+                        <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">
+                            3-5 days
+                        </span>
+                        {% if forloop.counter <= 2 %}
+                        <span class="px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded-full">
+                            Design Tool
+                        </span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% endfor %}
+        </div>
+
+        <!-- View All Button -->
+        <div class="text-center mt-8">
+            <a href="{% url 'services:category' product.category.slug %}"
+               class="inline-flex items-center px-6 py-3 border border-blue-600 text-blue-600 rounded-lg font-medium hover:bg-blue-50 transition-colors">
+                <span>View All {{ product.category.name }}</span>
+                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                </svg>
+            </a>
+        </div>
+    </div>
+</div>

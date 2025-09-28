@@ -1,41 +1,25 @@
-# apps/services/urls.py - Complete Updated Version
+# ===== URLs Configuration =====
+
+# apps/services/urls.py - Updated for Static Products
 
 from django.urls import path
 from . import views
-from . import views_product_types
 
 app_name = 'services'
 
 urlpatterns = [
-    # Main service pages
-    path('', views.service_categories_view, name='categories'),
-    path('category/<slug:slug>/', views.category_products_view, name='category'),
-    path('product/<slug:slug>/', views.product_detail_view, name='product_detail'),
+    # Main services pages
+    path('', views.services_home, name='home'),
+    path('categories/', views.services_home, name='categories'),
+    path('search/', views.product_search, name='search'),
     
-    # Search functionality
-    path('search/', views.product_search, name='product_search'),
+    # Category pages
+    path('<slug:slug>/', views.category_detail, name='category'),
     
-    # API endpoints for dynamic pricing and options
-    path('api/pricing/<int:product_id>/', views.api_product_pricing, name='api_pricing'),
-    path('api/options/<int:product_id>/', views.api_product_options, name='api_options'),
-    path('api/paper-options/<int:product_id>/', views.get_paper_options, name='api_paper_options'),
-    path('api/color-options/<int:product_id>/', views.get_color_options, name='api_color_options'),
+    # Product pages
+    path('<slug:category_slug>/<slug:product_slug>/', views.product_detail, name='product_detail'),
+    path('<slug:category_slug>/<slug:product_slug>/static/', views.static_product_detail, name='static_product_detail'),
     
-    # Bulk pricing calculator
-    path('api/bulk-pricing/<int:product_id>/', views.api_bulk_pricing, name='api_bulk_pricing'),
-    
-    # Quote request handling
-    path('api/quote-request/', views.api_quote_request, name='api_quote_request'),
-    
-    # Shipping calculation
-    path('api/shipping-cost/', views.api_shipping_cost, name='api_shipping_cost'),
-    
-    # Product-specific quote forms
-    path('quote/book/<slug:product_slug>/', views_product_types.book_printing_quote_view, name='book_printing_quote'),
-    path('quote/business-card/<slug:product_slug>/', views_product_types.business_card_quote_view, name='business_card_quote'),
-    path('quote/brochure/<slug:product_slug>/', views_product_types.brochure_quote_view, name='brochure_quote'),
-    path('quote/children-book/<slug:product_slug>/', views_product_types.children_book_quote_view, name='children_book_quote'),
-    
-    # AJAX price calculation
-    path('api/calculate-price/', views_product_types.ajax_calculate_price, name='ajax_calculate_price'),
+    # API endpoints
+    path('api/pricing/<int:product_id>/', views.product_pricing_api, name='pricing_api'),
 ]

@@ -43,7 +43,7 @@ class Cart(models.Model):
 class CartItem(models.Model):
     """Individual items in the shopping cart"""
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name='items')
-    product = models.ForeignKey('services.Product', on_delete=models.CASCADE)
+    static_product = models.ForeignKey('services.StaticProduct', on_delete=models.CASCADE, null=True, blank=True)
     
     # Design integration
     user_design = models.ForeignKey(
@@ -66,10 +66,10 @@ class CartItem(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        unique_together = ['cart', 'product', 'user_design']
+        unique_together = ['cart', 'static_product', 'user_design']
 
     def __str__(self):
-        return f"{self.product.name} x {self.quantity}"
+        return f"{self.static_product.name} x {self.quantity}"
 
     @property
     def total_price(self):
@@ -77,7 +77,7 @@ class CartItem(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.unit_price:
-            self.unit_price = self.product.base_price
+            self.unit_price = self.static_product.base_price
         super().save(*args, **kwargs)
 
 
@@ -188,7 +188,7 @@ class Order(models.Model):
 class OrderItem(models.Model):
     """Individual items in an order"""
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
-    product = models.ForeignKey('services.Product', on_delete=models.CASCADE)
+    static_product = models.ForeignKey('services.StaticProduct', on_delete=models.CASCADE, null=True, blank=True)
     
     # Design reference
     user_design = models.ForeignKey(
@@ -221,7 +221,7 @@ class OrderItem(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.product_name:
-            self.product_name = self.product.name
+            self.product_name = self.static_product.name
         if not self.total_price:
             self.total_price = self.unit_price * self.quantity
         super().save(*args, **kwargs)
@@ -306,7 +306,7 @@ class QuoteRequest(models.Model):
 class QuoteRequestItem(models.Model):
     """Individual items in a quote request"""
     quote_request = models.ForeignKey(QuoteRequest, on_delete=models.CASCADE, related_name='items')
-    product = models.ForeignKey('services.Product', on_delete=models.CASCADE, null=True, blank=True)
+    static_product = models.ForeignKey('services.StaticProduct', on_delete=models.CASCADE, null=True, blank=True)
     
     description = models.CharField(max_length=255)
     quantity = models.PositiveIntegerField()
@@ -371,6 +371,78 @@ class Coupon(models.Model):
             return amount * (self.discount_value / 100)
         else:  # fixed_amount
             return min(self.discount_value, amount)
+
+
+class Quote(models.Model):
+    """Professional quotes generated from cart"""
+    STATUS_CHOICES = [
+        ('draft', 'Draft'),
+        ('sent', 'Sent to Customer'),
+        ('viewed', 'Viewed by Customer'),
+        ('accepted', 'Accepted'),
+        ('rejected', 'Rejected'),
+        ('expired', 'Expired'),
+    ]
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='quotes')
+    quote_number = models.CharField(max_length=20, unique=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='draft')
+
+    # Cart snapshot at time of quote generation
+    cart_snapshot = models.JSONField(help_text="Complete cart state when quote was generated")
+
+    # Quote totals
+    subtotal = models.DecimalField(max_digits=12, decimal_places=2)
+    tax_amount = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+    shipping_cost = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+    discount_amount = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+    total_amount = models.DecimalField(max_digits=12, decimal_places=2)
+
+    # Quote validity
+    valid_until = models.DateTimeField()
+
+    # Notes and communication
+    customer_notes = models.TextField(blank=True, help_text="Customer requirements or notes")
+    internal_notes = models.TextField(blank=True, help_text="Internal notes for production")
+
+    # Timestamps
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    sent_at = models.DateTimeField(null=True, blank=True)
+    viewed_at = models.DateTimeField(null=True, blank=True)
+    responded_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['user', '-created_at']),
+            models.Index(fields=['quote_number']),
+            models.Index(fields=['status']),
+        ]
+
+    def __str__(self):
+        return f"Quote {self.quote_number}"
+
+    def save(self, *args, **kwargs):
+        if not self.quote_number:
+            self.quote_number = self.generate_quote_number()
+        super().save(*args, **kwargs)
+
+    def generate_quote_number(self):
+        """Generate unique quote number"""
+        from datetime import datetime
+        timestamp = datetime.now().strftime('%Y%m%d')
+        random_part = str(uuid.uuid4().hex)[:6].upper()
+        return f"QT{timestamp}{random_part}"
+
+    @property
+    def is_valid(self):
+        from django.utils import timezone
+        return timezone.now() <= self.valid_until and self.status not in ['expired', 'rejected']
+
+    @property
+    def can_accept(self):
+        return self.status in ['sent', 'viewed'] and self.is_valid
 
 
 class CouponUsage(models.Model):

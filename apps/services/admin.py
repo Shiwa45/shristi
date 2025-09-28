@@ -1,370 +1,199 @@
-# apps/services/admin.py - Enhanced admin interface
 
+from django import forms
 from django.contrib import admin
 from django.utils.html import format_html
-from django.db.models import Count, Min, Max
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from .models import (
-    ServiceCategory, Product, ProductPricing, 
-    ProductImage, ProductSpecification, PricingTier, ProductFormField
+    ServiceCategory, StaticProduct, StaticProductImage,
+    StaticProductFAQ, StaticProductSample, StaticProductTestimonial
 )
-from .models_product_types import BookPrintingQuote, BusinessCardQuote, BrochureQuote, ChildrenBookQuote
+
+# apps/services/admin.py - Updated for Static Products
+
+class StaticProductForm(forms.ModelForm):
+    class Meta:
+        model = StaticProduct
+        fields = [
+            'name', 'slug', 'category', 'description', 'short_description',
+            'design_tool_enabled', 'canvas_width', 'canvas_height',
+            'featured_image', 'hero_image', 'meta_title', 'meta_description',
+            'base_price', 'price_unit', 'available_sizes', 'available_papers',
+            'available_finishes', 'available_bindings', 'color_options',
+            'quantity_tiers', 'rush_order_available', 'rush_order_percentage',
+            'design_service_available', 'design_service_price',
+            'key_features', 'specifications', 'is_active', 'is_featured', 'order'
+        ]
+
 
 @admin.register(ServiceCategory)
 class ServiceCategoryAdmin(admin.ModelAdmin):
-    list_display = ['name', 'slug', 'product_count', 'is_active', 'is_featured', 'order']
-    list_filter = ['is_active', 'is_featured', 'created_at']
-    search_fields = ['name', 'description']
+    list_display = ('name', 'slug', 'is_active', 'is_featured', 'order', 'product_count')
+    list_filter = ('is_active', 'is_featured')
+    search_fields = ('name', 'description')
     prepopulated_fields = {'slug': ('name',)}
-    list_editable = ['is_active', 'is_featured', 'order']
-    
+    list_editable = ('is_active', 'is_featured', 'order')
+
     def product_count(self, obj):
-        count = obj.products.filter(is_active=True).count()
+        count = obj.static_products.filter(is_active=True).count()
         if count > 0:
-            url = reverse('admin:services_product_changelist') + f'?category__id__exact={obj.id}'
-            return format_html('<a href="{}">{} products</a>', url, count)
+            url = reverse('admin:services_staticproduct_changelist')
+            return format_html('<a href="{}?category__id__exact={}">{} products</a>', url, obj.id, count)
         return '0 products'
     product_count.short_description = 'Active Products'
 
+
 class ProductImageInline(admin.TabularInline):
-    model = ProductImage
+    model = StaticProductImage
     extra = 1
-    fields = ['image', 'alt_text', 'caption', 'order', 'is_featured']
-    readonly_fields = ['image_preview']
-    
+    fields = ('image', 'alt_text', 'caption', 'order', 'is_featured')
+    readonly_fields = ('image_preview',)
+
     def image_preview(self, obj):
         if obj.image:
-            return format_html('<img src="{}" style="max-height: 50px; max-width: 100px;" />', obj.image.url)
-        return 'No image'
+            return format_html('<img src="{}" style="max-height: 50px;" />', obj.image.url)
+        return "No image"
     image_preview.short_description = 'Preview'
 
-class ProductSpecificationInline(admin.TabularInline):
-    model = ProductSpecification
-    extra = 1
-    fields = ['name', 'value', 'icon', 'order', 'is_highlighted']
 
-class ProductPricingInline(admin.TabularInline):
-    model = ProductPricing
+class ProductFAQInline(admin.TabularInline):
+    model = StaticProductFAQ
     extra = 1
-    fields = [
-        'size', 'paper_type', 'finish', 'colors', 
-        'min_quantity', 'price_per_unit', 'setup_cost',
-        'volume_discount_percentage', 'turnaround_days', 'is_active'
-    ]
-    readonly_fields = ['created_at']
+    fields = ('question', 'answer', 'order', 'is_active')
 
-@admin.register(Product)
-class ProductAdmin(admin.ModelAdmin):
-    list_display = [
-        'name', 'category', 'price_range_display', 'has_design_tool', 
-        'is_active', 'is_featured', 'pricing_tiers_count', 'created_at'
-    ]
-    list_filter = [
-        'category', 'has_design_tool', 'allows_upload', 
-        'is_active', 'is_featured', 'created_at'
-    ]
-    search_fields = ['name', 'description', 'keywords']
+
+class ProductSampleInline(admin.TabularInline):
+    model = StaticProductSample
+    extra = 1
+    fields = ('title', 'description', 'image', 'file', 'order', 'is_active')
+
+
+class ProductTestimonialInline(admin.TabularInline):
+    model = StaticProductTestimonial
+    extra = 1
+    fields = ('customer_name', 'customer_company', 'content', 'rating', 'order', 'is_active')
+
+@admin.register(StaticProduct)
+class StaticProductAdmin(admin.ModelAdmin):
+    form = StaticProductForm
+    list_display = (
+        'name', 'category', 'base_price', 'price_unit', 
+        'design_tool_enabled', 'is_active', 'is_featured', 'order'
+    )
+    list_filter = (
+        'category', 'design_tool_enabled', 'is_active', 
+        'is_featured', 'rush_order_available', 'design_service_available'
+    )
+    search_fields = ('name', 'description', 'short_description')
     prepopulated_fields = {'slug': ('name',)}
-    list_editable = ['is_active', 'is_featured']
-    readonly_fields = ['created_at', 'updated_at', 'price_summary']
+    list_editable = ('is_active', 'is_featured', 'order')
     
     fieldsets = (
         ('Basic Information', {
-            'fields': ('name', 'slug', 'category', 'description', 'short_description', 'image')
+            'fields': ('name', 'slug', 'category', 'description', 'short_description')
         }),
-        ('Hero Section', {
-            'fields': ('hero_title', 'hero_subtitle', 'hero_image', 'hero_quote'),
+        ('Images', {
+            'fields': ('featured_image', 'hero_image')
+        }),
+        ('Design Tool Configuration', {
+            'fields': ('design_tool_enabled', 'canvas_width', 'canvas_height'),
             'classes': ('collapse',)
         }),
-        ('Design Specifications', {
-            'fields': ('width_mm', 'height_mm', 'bleed_mm', 'safe_zone_mm', 'dpi'),
+        ('SEO Settings', {
+            'fields': ('meta_title', 'meta_description'),
             'classes': ('collapse',)
         }),
-        ('Features', {
-            'fields': ('has_design_tool', 'allows_upload', 'allows_custom_size')
+        ('Pricing Configuration', {
+            'fields': (
+                'base_price', 'price_unit', 'available_sizes', 'available_papers',
+                'available_finishes', 'available_bindings', 'color_options', 'quantity_tiers'
+            ),
+            'description': 'Configure static pricing options. Use JSON format for lists.'
         }),
-        ('Media', {
-            'fields': ('video_url', 'datasheet_file', 'sample_file', 'og_image', 'sample_paper_image', 'sample_color_image')
+        ('Additional Services', {
+            'fields': (
+                'rush_order_available', 'rush_order_percentage',
+                'design_service_available', 'design_service_price'
+            )
         }),
-        ('Default Pricing', {
-            'fields': ('base_price', 'price_per_unit', 'minimum_quantity'),
-            'description': 'These are fallback values used when no specific pricing exists.'
-        }),
-        ('SEO & Meta', {
-            'fields': ('meta_title', 'meta_description', 'keywords'),
+        ('Product Details', {
+            'fields': ('key_features', 'specifications'),
             'classes': ('collapse',)
         }),
-        ('Status & Organization', {
+        ('Status and Ordering', {
             'fields': ('is_active', 'is_featured', 'order')
         }),
-        ('Timestamps', {
-            'fields': ('created_at', 'updated_at'),
-            'classes': ('collapse',)
-        }),
-        ('Pricing Summary', {
-            'fields': ('price_summary',),
-            'classes': ('collapse',)
-        })
     )
     
-    inlines = [ProductImageInline, ProductSpecificationInline, ProductPricingInline]
+    inlines = [ProductImageInline, ProductFAQInline, ProductSampleInline, ProductTestimonialInline]
     
-    def price_range_display(self, obj):
-        price_range = obj.get_price_range()
-        if price_range['min'] == price_range['max']:
-            return f"₹{price_range['min']}"
-        return f"₹{price_range['min']} - ₹{price_range['max']}"
-    price_range_display.short_description = 'Price Range'
+    # Temporarily remove readonly fields to debug
+    # def get_readonly_fields(self, request, obj=None):
+    #     if obj:  # editing an existing object
+    #         return ('slug',)
+    #     return ()
     
-    def pricing_tiers_count(self, obj):
-        count = obj.pricings.filter(is_active=True).count()
-        if count > 0:
-            return format_html(
-                '<span style="color: green;">{} tiers</span>', count
-            )
-        return format_html('<span style="color: red;">No pricing</span>')
-    pricing_tiers_count.short_description = 'Pricing Tiers'
-    
-    def price_summary(self, obj):
-        pricings = obj.pricings.filter(is_active=True).order_by('min_quantity')
-        if not pricings.exists():
-            return "No pricing configured"
-        
-        html = "<table style='width: 100%; border-collapse: collapse;'>"
-        html += "<tr style='background: #f0f0f0;'><th style='border: 1px solid #ddd; padding: 8px;'>Specs</th><th style='border: 1px solid #ddd; padding: 8px;'>Min Qty</th><th style='border: 1px solid #ddd; padding: 8px;'>Price/Unit</th><th style='border: 1px solid #ddd; padding: 8px;'>Setup</th></tr>"
-        
-        for pricing in pricings[:10]:  # Show first 10 pricing tiers
-            specs = []
-            if pricing.size: specs.append(pricing.size)
-            if pricing.paper_type: specs.append(pricing.paper_type)
-            if pricing.finish: specs.append(pricing.finish)
-            if pricing.colors: specs.append(pricing.colors)
-            
-            spec_text = " | ".join(specs) if specs else "Standard"
-            
-            html += f"<tr><td style='border: 1px solid #ddd; padding: 8px;'>{spec_text}</td>"
-            html += f"<td style='border: 1px solid #ddd; padding: 8px; text-align: center;'>{pricing.min_quantity}</td>"
-            html += f"<td style='border: 1px solid #ddd; padding: 8px; text-align: right;'>₹{pricing.price_per_unit}</td>"
-            html += f"<td style='border: 1px solid #ddd; padding: 8px; text-align: right;'>₹{pricing.setup_cost}</td></tr>"
-        
-        if pricings.count() > 10:
-            html += f"<tr><td colspan='4' style='border: 1px solid #ddd; padding: 8px; text-align: center; font-style: italic;'>... and {pricings.count() - 10} more pricing tiers</td></tr>"
-        
-        html += "</table>"
-        return mark_safe(html)
-    price_summary.short_description = 'Pricing Overview'
+    class Media:
+        css = {
+            'all': ('admin/css/custom_admin.css',)
+        }
+        js = ('admin/js/json_editor.js',)
 
-@admin.register(ProductPricing)
-class ProductPricingAdmin(admin.ModelAdmin):
-    list_display = [
-        'product', 'specifications_display', 'min_quantity', 'max_quantity',
-        'price_per_unit', 'setup_cost', 'volume_discount_percentage', 
-        'turnaround_days', 'is_active', 'is_featured'
-    ]
-    list_filter = [
-        'product__category', 'size', 'paper_type', 'finish', 'colors',
-        'is_active', 'is_featured', 'turnaround_days'
-    ]
-    search_fields = [
-        'product__name', 'size', 'paper_type', 'binding_type', 
-        'finish', 'colors', 'notes'
-    ]
-    list_editable = ['is_active', 'is_featured', 'price_per_unit']
-    readonly_fields = ['created_at', 'updated_at', 'pricing_calculator']
-    
-    fieldsets = (
-        ('Product & Specifications', {
-            'fields': ('product', 'size', 'paper_type', 'binding_type', 'finish', 'colors')
-        }),
-        ('Quantity & Pricing', {
-            'fields': ('min_quantity', 'max_quantity', 'price_per_unit', 'setup_cost')
-        }),
-        ('Discounts & Modifiers', {
-            'fields': ('volume_discount_percentage', 'rush_order_multiplier')
-        }),
-        ('Service Details', {
-            'fields': ('turnaround_days', 'notes')
-        }),
-        ('Status & Features', {
-            'fields': ('is_active', 'is_featured')
-        }),
-        ('Pricing Calculator', {
-            'fields': ('pricing_calculator',),
-            'classes': ('collapse',)
-        }),
-        ('Timestamps', {
-            'fields': ('created_at', 'updated_at'),
-            'classes': ('collapse',)
-        })
-    )
-    
-    def specifications_display(self, obj):
-        specs = []
-        if obj.size: specs.append(obj.size)
-        if obj.paper_type: specs.append(obj.paper_type)
-        if obj.finish: specs.append(obj.finish)
-        if obj.colors: specs.append(obj.colors)
-        return " | ".join(specs) if specs else "Standard"
-    specifications_display.short_description = 'Specifications'
-    
-    def pricing_calculator(self, obj):
-        if not obj.id:
-            return "Save the pricing first to see calculator"
-        
-        quantities = [100, 250, 500, 1000, 2500, 5000]
-        html = "<div style='background: #f9f9f9; padding: 15px; border-radius: 5px;'>"
-        html += "<h4>Price Calculator Preview</h4>"
-        html += "<table style='width: 100%; border-collapse: collapse;'>"
-        html += "<tr style='background: #e9e9e9;'><th style='border: 1px solid #ddd; padding: 8px;'>Quantity</th><th style='border: 1px solid #ddd; padding: 8px;'>Unit Price</th><th style='border: 1px solid #ddd; padding: 8px;'>Total Price</th><th style='border: 1px solid #ddd; padding: 8px;'>Savings</th></tr>"
-        
-        for qty in quantities:
-            if qty >= obj.min_quantity and (not obj.max_quantity or qty <= obj.max_quantity):
-                calc = obj.calculate_total_price(qty)
-                if calc:
-                    savings_color = "green" if calc['savings'] > 0 else "black"
-                    html += f"<tr>"
-                    html += f"<td style='border: 1px solid #ddd; padding: 8px; text-align: center;'>{qty:,}</td>"
-                    html += f"<td style='border: 1px solid #ddd; padding: 8px; text-align: right;'>₹{calc['unit_price']}</td>"
-                    html += f"<td style='border: 1px solid #ddd; padding: 8px; text-align: right;'>₹{calc['total_price']:,}</td>"
-                    html += f"<td style='border: 1px solid #ddd; padding: 8px; text-align: right; color: {savings_color};'>₹{calc['savings']:,}</td>"
-                    html += f"</tr>"
-        
-        html += "</table></div>"
-        return mark_safe(html)
-    pricing_calculator.short_description = 'Price Calculator'
 
-@admin.register(ProductImage)
-class ProductImageAdmin(admin.ModelAdmin):
-    list_display = ['product', 'image_preview', 'alt_text', 'order', 'is_featured']
-    list_filter = ['product__category', 'is_featured']
-    search_fields = ['product__name', 'alt_text', 'caption']
-    list_editable = ['order', 'is_featured']
-    readonly_fields = ['image_preview']
+@admin.register(StaticProductImage)
+class StaticProductImageAdmin(admin.ModelAdmin):
+    list_display = ('product', 'alt_text', 'order', 'is_featured', 'image_preview')
+    list_filter = ('product__category', 'is_featured')
+    search_fields = ('product__name', 'alt_text', 'caption')
+    list_editable = ('order', 'is_featured')
     
     def image_preview(self, obj):
         if obj.image:
-            return format_html(
-                '<img src="{}" style="max-height: 100px; max-width: 150px; object-fit: cover;" />',
-                obj.image.url
-            )
-        return 'No image'
+            return format_html('<img src="{}" style="max-height: 60px;" />', obj.image.url)
+        return "No image"
     image_preview.short_description = 'Preview'
 
-@admin.register(ProductSpecification)
-class ProductSpecificationAdmin(admin.ModelAdmin):
-    list_display = ['product', 'name', 'value', 'icon', 'order', 'is_highlighted']
-    list_filter = ['product__category', 'is_highlighted']
-    search_fields = ['product__name', 'name', 'value']
-    list_editable = ['order', 'is_highlighted']
 
-@admin.register(PricingTier)
-class PricingTierAdmin(admin.ModelAdmin):
-    list_display = ['name', 'color_preview', 'description', 'order', 'is_active']
-    list_editable = ['order', 'is_active']
-    
-    def color_preview(self, obj):
-        return format_html(
-            '<div style="width: 20px; height: 20px; background-color: {}; border: 1px solid #ccc; border-radius: 3px;"></div>',
-            obj.color
-        )
-    color_preview.short_description = 'Color'
-
-# Custom admin actions
-@admin.action(description='Duplicate selected pricing rules')
-def duplicate_pricing_rules(modeladmin, request, queryset):
-    for pricing in queryset:
-        pricing.pk = None
-        pricing.is_active = False  # Make duplicates inactive by default
-        pricing.save()
-
-ProductPricingAdmin.actions = [duplicate_pricing_rules]
-
-@admin.register(ProductFormField)
-class ProductFormFieldAdmin(admin.ModelAdmin):
-    list_display = ('product', 'field_label', 'field_type', 'is_required', 'order', 'is_active')
-    list_filter = ('field_type', 'is_required', 'is_active', 'product__category')
+@admin.register(StaticProductFAQ)
+class StaticProductFAQAdmin(admin.ModelAdmin):
+    list_display = ('product', 'question_short', 'order', 'is_active')
+    list_filter = ('product__category', 'is_active')
+    search_fields = ('product__name', 'question', 'answer')
     list_editable = ('order', 'is_active')
-    search_fields = ('field_label', 'field_name', 'product__name')
     
-    fieldsets = (
-        ('Basic Info', {
-            'fields': ('product', 'field_name', 'field_label', 'field_type')
-        }),
-        ('Configuration', {
-            'fields': ('is_required', 'order', 'help_text', 'default_value')
-        }),
-        ('Options (JSON)', {
-            'fields': ('options',),
-            'description': 'For select/radio/checkbox fields. Format: [{"value": "option1", "label": "Option 1", "price_modifier": 0}]'
-        }),
-        ('Validation', {
-            'fields': ('min_value', 'max_value'),
-            'classes': ('collapse',)
-        }),
-        ('Advanced', {
-            'fields': ('show_condition', 'is_active'),
-            'classes': ('collapse',)
-        }),
-    )
+    def question_short(self, obj):
+        return obj.question[:50] + '...' if len(obj.question) > 50 else obj.question
+    question_short.short_description = 'Question'
 
-# Register quote models
-@admin.register(BookPrintingQuote)
-class BookPrintingQuoteAdmin(admin.ModelAdmin):
-    list_display = ('customer_name', 'quantity', 'book_size', 'page_count', 'total_price', 'created_at')
-    list_filter = ('book_size', 'binding_type', 'cover_finish', 'created_at')
-    search_fields = ('customer_name', 'customer_email', 'customer_phone')
-    readonly_fields = ('unit_price', 'total_price', 'created_at', 'updated_at')
 
-@admin.register(BusinessCardQuote)
-class BusinessCardQuoteAdmin(admin.ModelAdmin):
-    list_display = ('customer_name', 'quantity', 'card_size', 'paper_type', 'total_price', 'created_at')
-    list_filter = ('card_size', 'paper_type', 'finishing', 'created_at')
-    search_fields = ('customer_name', 'customer_email', 'customer_phone')
-    readonly_fields = ('unit_price', 'total_price', 'created_at')
-
-@admin.register(BrochureQuote)
-class BrochureQuoteAdmin(admin.ModelAdmin):
-    list_display = ('customer_name', 'quantity', 'size', 'paper_type', 'total_price', 'created_at')
-    list_filter = ('size', 'paper_type', 'folding', 'created_at')
-    search_fields = ('customer_name', 'customer_email', 'customer_phone')
-    readonly_fields = ('unit_price', 'total_price', 'created_at')
-
-@admin.register(ChildrenBookQuote)
-class ChildrenBookQuoteAdmin(admin.ModelAdmin):
-    list_display = ('customer_name', 'book_title', 'quantity', 'age_group', 'total_price', 'created_at')
-    list_filter = ('age_group', 'book_size', 'binding_type', 'design_service', 'created_at')
-    search_fields = ('customer_name', 'customer_email', 'customer_phone', 'book_title')
-    readonly_fields = ('unit_price', 'total_price', 'created_at', 'updated_at')
+@admin.register(StaticProductSample)
+class StaticProductSampleAdmin(admin.ModelAdmin):
+    list_display = ('product', 'title', 'order', 'is_active', 'image_preview')
+    list_filter = ('product__category', 'is_active')
+    search_fields = ('product__name', 'title', 'description')
+    list_editable = ('order', 'is_active')
     
-    fieldsets = (
-        ('Customer Information', {
-            'fields': ('customer_name', 'customer_email', 'customer_phone', 'book_title')
-        }),
-        ('Book Specifications', {
-            'fields': ('quantity', 'book_size', 'page_count', 'age_group')
-        }),
-        ('Paper & Printing', {
-            'fields': ('inner_paper', 'inner_printing', 'cover_paper', 'binding_type', 'cover_finish')
-        }),
-        ('Special Features', {
-            'fields': ('rounded_corners', 'scratch_sniff', 'pop_up_elements', 'texture_pages', 'glow_in_dark', 'sound_module'),
-            'classes': ('collapse',)
-        }),
-        ('Services', {
-            'fields': ('design_service', 'writing_service', 'publishing_service')
-        }),
-        ('Pricing', {
-            'fields': ('unit_price', 'total_price'),
-            'classes': ('collapse',)
-        }),
-        ('Timestamps', {
-            'fields': ('created_at', 'updated_at'),
-            'classes': ('collapse',)
-        }),
-    )
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" style="max-height: 50px;" />', obj.image.url)
+        return "No image"
+    image_preview.short_description = 'Preview'
 
-# Admin site customization
-admin.site.site_header = "Shirsti Printing Administration"
-admin.site.site_title = "Shirsti Printing Admin"
+
+@admin.register(StaticProductTestimonial)
+class StaticProductTestimonialAdmin(admin.ModelAdmin):
+    list_display = ('product', 'customer_name', 'customer_company', 'rating', 'order', 'is_active')
+    list_filter = ('product__category', 'rating', 'is_active')
+    search_fields = ('product__name', 'customer_name', 'customer_company', 'content')
+    list_editable = ('order', 'is_active')
+    
+    def get_readonly_fields(self, request, obj=None):
+        if obj:  # editing
+            return ('created_at',)
+        return ()
+
+
+# Custom admin site configuration
+admin.site.site_header = "Shirsti Printing Admin"
+admin.site.site_title = "Shirsti Printing"
 admin.site.index_title = "Welcome to Shirsti Printing Administration"

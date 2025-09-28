@@ -5,7 +5,7 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
-from apps.services.models import Product
+from apps.services.models import StaticProduct
 from .utils import CartManager
 import json
 
@@ -15,7 +15,7 @@ class AddToCartView(LoginRequiredMixin, View):
     
     def post(self, request, product_id):
         try:
-            product = get_object_or_404(Product, id=product_id)
+            product = get_object_or_404(StaticProduct, id=product_id)
             
             # Parse request data
             if request.content_type == 'application/json':

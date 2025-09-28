@@ -1,0 +1,408 @@
+/**
+ * Pricing Calculator Styles
+ * Sticky calculator with real-time pricing updates
+ */
+
+/* ===== MAIN CALCULATOR CONTAINER ===== */
+.pricing-calculator {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+    position: sticky;
+    top: 1.5rem;
+    max-height: calc(100vh - 3rem);
+    overflow-y: auto;
+}
+
+/* ===== CALCULATOR HEADER ===== */
+.pricing-calculator .bg-gradient-to-r {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: relative;
+}
+
+.pricing-calculator .bg-gradient-to-r::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='20' cy='20' r='2'/%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+}
+
+/* ===== PRICE DISPLAY ===== */
+.pricing-calculator #total-price {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #1f2937;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.pricing-calculator #total-price.updating {
+    color: #667eea;
+    transform: scale(1.05);
+}
+
+/* ===== PRICE BREAKDOWN ===== */
+.price-breakdown-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f1f5f9;
+    transition: all 0.3s ease;
+}
+
+.price-breakdown-line:last-child {
+    border-bottom: none;
+}
+
+.price-breakdown-line.hidden {
+    opacity: 0;
+    max-height: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.price-breakdown-line:not(.hidden) {
+    opacity: 1;
+    max-height: 3rem;
+}
+
+/* ===== QUANTITY DISCOUNTS ===== */
+.quantity-discounts {
+    background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+    border: 1px solid #bbf7d0;
+    border-radius: 0.75rem;
+    padding: 1rem;
+}
+
+.discount-tier {
+    background: white;
+    border: 1px solid #d1fae5;
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.discount-tier:hover {
+    border-color: #10b981;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+}
+
+.discount-tier.active {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border-color: #047857;
+}
+
+/* ===== ACTION BUTTONS ===== */
+.calculator-button {
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.calculator-button-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.calculator-button-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+}
+
+.calculator-button-secondary {
+    background: white;
+    color: #667eea;
+    border: 2px solid #667eea;
+}
+
+.calculator-button-secondary:hover {
+    background: #667eea;
+    color: white;
+    transform: translateY(-1px);
+}
+
+.calculator-button-success {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+}
+
+.calculator-button-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
+}
+
+/* ===== LOADING STATES ===== */
+.calculator-button.loading {
+    opacity: 0.7;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.calculator-button.loading svg {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ===== ADDITIONAL INFO SECTION ===== */
+.calculator-info {
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border: 1px solid #bfdbfe;
+    border-radius: 0.75rem;
+    padding: 1rem;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: #1e40af;
+    margin-bottom: 0.5rem;
+}
+
+.info-item:last-child {
+    margin-bottom: 0;
+}
+
+.info-item svg {
+    color: #3b82f6;
+}
+
+/* ===== ESTIMATED WEIGHT ===== */
+.estimated-weight-card {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border: 1px solid #f59e0b;
+    border-radius: 0.75rem;
+    padding: 0.75rem;
+    text-align: center;
+}
+
+.weight-display {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #92400e;
+}
+
+/* ===== SAVE QUOTE BUTTON ===== */
+.save-quote-button {
+    background: transparent;
+    border: none;
+    color: #6b7280;
+    font-size: 0.875rem;
+    padding: 0.5rem 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.save-quote-button:hover {
+    color: #374151;
+    background: #f9fafb;
+    border-radius: 0.5rem;
+}
+
+.save-quote-button.saved {
+    color: #10b981;
+}
+
+/* ===== DISCOUNT BADGE ===== */
+#discount-badge {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 1024px) {
+    .pricing-calculator {
+        position: static;
+        max-height: none;
+        margin-bottom: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .pricing-calculator {
+        border-radius: 0.75rem;
+        margin: 0 -1rem 2rem -1rem;
+    }
+
+    .pricing-calculator #total-price {
+        font-size: 2rem;
+    }
+
+    .calculator-button {
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+    }
+
+    .discount-tier {
+        padding: 0.5rem;
+        font-size: 0.875rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .pricing-calculator {
+        border-radius: 0.5rem;
+    }
+
+    .quantity-discounts {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .pricing-calculator #total-price {
+        font-size: 1.75rem;
+    }
+}
+
+/* ===== DARK MODE SUPPORT ===== */
+@media (prefers-color-scheme: dark) {
+    .pricing-calculator {
+        background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+        color: white;
+        border-color: #374151;
+    }
+
+    .price-breakdown-line {
+        border-color: #374151;
+    }
+
+    .calculator-button-secondary {
+        background: #374151;
+        color: #d1d5db;
+        border-color: #6b7280;
+    }
+
+    .calculator-info {
+        background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+        border-color: #3b82f6;
+        color: #dbeafe;
+    }
+}
+
+/* ===== HIGH CONTRAST MODE ===== */
+@media (prefers-contrast: high) {
+    .pricing-calculator {
+        border-width: 2px;
+        border-color: #000;
+    }
+
+    .calculator-button {
+        border-width: 2px;
+    }
+
+    .price-breakdown-line {
+        border-color: #000;
+        border-width: 1px;
+    }
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+    .pricing-calculator *,
+    .pricing-calculator *::before,
+    .pricing-calculator *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .calculator-button:hover {
+        transform: none;
+    }
+}
+
+/* ===== FOCUS STYLES ===== */
+.calculator-button:focus {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+}
+
+.save-quote-button:focus {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+    border-radius: 0.5rem;
+}
+
+/* ===== SMOOTH ANIMATIONS ===== */
+.price-update-animation {
+    animation: priceUpdate 0.5s ease-out;
+}
+
+@keyframes priceUpdate {
+    0% {
+        transform: scale(1);
+        color: #1f2937;
+    }
+    50% {
+        transform: scale(1.1);
+        color: #667eea;
+    }
+    100% {
+        transform: scale(1);
+        color: #1f2937;
+    }
+}
+
+/* ===== STICKY BEHAVIOR IMPROVEMENTS ===== */
+@supports (position: sticky) {
+    .pricing-calculator {
+        position: sticky;
+        top: 1.5rem;
+    }
+}
+
+/* Fallback for browsers that don't support sticky */
+@supports not (position: sticky) {
+    .pricing-calculator {
+        position: relative;
+    }
+}

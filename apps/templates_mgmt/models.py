@@ -51,7 +51,7 @@ class DesignTemplate(models.Model):
 class UserDesign(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='designs')
     name = models.CharField(max_length=200)
-    product = models.ForeignKey('services.Product', on_delete=models.CASCADE)
+    static_product = models.ForeignKey('services.StaticProduct', on_delete=models.CASCADE, null=True, blank=True)
     
     # Design data
     canvas_data = models.JSONField(help_text="Fabric.js canvas JSON")
@@ -73,5 +73,45 @@ class UserDesign(models.Model):
 
     def __str__(self):
         return f"{self.name} by {self.user.email}"
+
+
+class StaticProductTemplate(models.Model):
+    """Design templates specific to static products"""
+    static_product = models.ForeignKey('services.StaticProduct', on_delete=models.CASCADE, related_name='design_templates')
+    name = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+
+    # Template data
+    template_data = models.JSONField(help_text="Fabric.js template JSON")
+    thumbnail = models.ImageField(upload_to='static_product_templates/thumbnails/')
+    preview_image = models.ImageField(upload_to='static_product_templates/previews/', blank=True)
+
+    # Category for organization
+    category = models.CharField(max_length=100, blank=True, help_text="Template category (e.g., Corporate, Creative)")
+    tags = models.CharField(max_length=500, blank=True, help_text="Comma-separated tags")
+
+    # Settings
+    is_active = models.BooleanField(default=True)
+    is_premium = models.BooleanField(default=False)
+    is_featured = models.BooleanField(default=False)
+    usage_count = models.PositiveIntegerField(default=0)
+    order = models.IntegerField(default=0, help_text="Display order")
+
+    # Timestamps
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['order', '-created_at']
+
+    def __str__(self):
+        return f"{self.name} for {self.static_product.name}"
+
+    def get_tags_list(self):
+        return [tag.strip() for tag in self.tags.split(',') if tag.strip()]
+
+    def increment_usage(self):
+        self.usage_count += 1
+        self.save(update_fields=['usage_count'])
 
 

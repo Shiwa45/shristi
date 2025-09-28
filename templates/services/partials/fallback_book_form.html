@@ -1,0 +1,472 @@
+<!-- Fallback Book Form for Products without Dynamic Fields -->
+<div class="dynamic-form-container fallback-form" data-product-id="{{ product.id }}">
+    <!-- Product Specifications Section -->
+    <div class="form-section" data-section="product_specs">
+        <div class="section-header">
+            <h3 class="section-title">
+                <i class="fas fa-cog"></i>
+                Product Specifications
+            </h3>
+        </div>
+
+        <div class="form-grid">
+            <!-- Interior Color -->
+            <div class="form-field">
+                <div class="form-field-wrapper">
+                    <fieldset>
+                        <legend class="form-label">
+                            Interior Color Options
+                            <span class="required-asterisk">*</span>
+                        </legend>
+                        <p class="field-help-text">Choose your preferred printing style</p>
+
+                        <div class="color-selection-grid">
+                            <div class="color-option" onclick="selectColorOption('bw_premium')">
+                                <input type="radio" id="interior_color_bw_premium" name="interior_color" value="bw_premium" checked
+                                       data-price-modifier="0" data-field-type="radio" data-price-affecting="true">
+                                <div class="color-preview bw">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                                <div class="color-info">
+                                    <div class="color-name">B&W Premium</div>
+                                    <div class="color-price">Included</div>
+                                </div>
+                            </div>
+
+                            <div class="color-option" onclick="selectColorOption('bw_standard')">
+                                <input type="radio" id="interior_color_bw_standard" name="interior_color" value="bw_standard"
+                                       data-price-modifier="-20" data-field-type="radio" data-price-affecting="true">
+                                <div class="color-preview bw">
+                                    <i class="fas fa-file"></i>
+                                </div>
+                                <div class="color-info">
+                                    <div class="color-name">B&W Standard</div>
+                                    <div class="color-price">Save ₹20</div>
+                                </div>
+                            </div>
+
+                            <div class="color-option" onclick="selectColorOption('color_premium')">
+                                <input type="radio" id="interior_color_color_premium" name="interior_color" value="color_premium"
+                                       data-price-modifier="150" data-field-type="radio" data-price-affecting="true">
+                                <div class="color-preview color">
+                                    <i class="fas fa-palette"></i>
+                                </div>
+                                <div class="color-info">
+                                    <div class="color-name">Color Premium</div>
+                                    <div class="color-price">+₹150</div>
+                                </div>
+                            </div>
+
+                            <div class="color-option" onclick="selectColorOption('color_standard')">
+                                <input type="radio" id="interior_color_color_standard" name="interior_color" value="color_standard"
+                                       data-price-modifier="100" data-field-type="radio" data-price-affecting="true">
+                                <div class="color-preview color">
+                                    <i class="fas fa-paint-brush"></i>
+                                </div>
+                                <div class="color-info">
+                                    <div class="color-name">Color Standard</div>
+                                    <div class="color-price">+₹100</div>
+                                </div>
+                            </div>
+
+                            <div class="color-option" onclick="selectColorOption('combine_color')">
+                                <input type="radio" id="interior_color_combine" name="interior_color" value="combine_color"
+                                       data-price-modifier="75" data-field-type="radio" data-price-affecting="true"
+                                       data-triggers='["bw_page_count", "color_page_count"]'>
+                                <div class="color-preview premium">
+                                    <i class="fas fa-layer-group"></i>
+                                </div>
+                                <div class="color-info">
+                                    <div class="color-name">Mixed Pages</div>
+                                    <div class="color-price">+₹75</div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+
+            <!-- Page Count -->
+            <div class="form-field" data-field="page_count">
+                <div class="form-field-wrapper">
+                    <label for="page_count" class="form-label">
+                        Total Page Count
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <p class="field-help-text">Total number of pages in your book</p>
+                    <input type="number" id="page_count" name="page_count" class="form-input"
+                           value="50" min="4" max="1000" required
+                           data-field-type="number" data-price-affecting="true">
+                    <div class="field-constraints">
+                        <small class="text-gray-600">Value should be between 4 and 1000</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conditional Page Count Fields (hidden by default) -->
+            <div class="form-field hidden" data-field="bw_page_count" data-conditional="true">
+                <div class="form-field-wrapper">
+                    <label for="bw_page_count" class="form-label">
+                        Black & White Page Count
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <p class="field-help-text">Number of black and white pages</p>
+                    <input type="number" id="bw_page_count" name="bw_page_count" class="form-input"
+                           value="0" min="0" max="1000" disabled
+                           data-field-type="number" data-price-affecting="true">
+                </div>
+            </div>
+
+            <div class="form-field hidden" data-field="color_page_count" data-conditional="true">
+                <div class="form-field-wrapper">
+                    <label for="color_page_count" class="form-label">
+                        Color Page Count
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <p class="field-help-text">Number of color pages</p>
+                    <input type="number" id="color_page_count" name="color_page_count" class="form-input"
+                           value="0" min="0" max="1000" disabled
+                           data-field-type="number" data-price-affecting="true">
+                </div>
+            </div>
+
+            <!-- Book Size -->
+            <div class="form-field">
+                <div class="form-field-wrapper">
+                    <label for="book_size" class="form-label">
+                        Book Size
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <p class="field-help-text">Select the size for your book</p>
+                    <select id="book_size" name="book_size" class="form-select" required
+                            data-field-type="select" data-price-affecting="true">
+                        <option value="">Please select...</option>
+                        <option value="a4" data-price-modifier="0">A4 (210 x 297 mm)</option>
+                        <option value="letter" data-price-modifier="5">Letter (216 x 279 mm) (+₹5)</option>
+                        <option value="executive" data-price-modifier="-10">Executive (184 x 267 mm) (₹-10)</option>
+                        <option value="a5" data-price-modifier="-25">A5 (148 x 210 mm) (₹-25)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Printing Options Section -->
+    <div class="form-section" data-section="printing_options">
+        <div class="section-header">
+            <h3 class="section-title">
+                <i class="fas fa-print"></i>
+                Printing Options
+            </h3>
+        </div>
+
+        <div class="form-grid">
+            <!-- Paper Type -->
+            <div class="form-field">
+                <div class="form-field-wrapper">
+                    <fieldset>
+                        <legend class="form-label">
+                            Paper Quality
+                            <span class="required-asterisk">*</span>
+                        </legend>
+                        <p class="field-help-text">Choose your paper type and quality</p>
+
+                        <div class="paper-grid">
+                            <div class="paper-option" onclick="selectPaperOption('75gsm')">
+                                <input type="radio" id="paper_75gsm" name="paper_type" value="75gsm" checked
+                                       data-price-modifier="0" data-field-type="radio" data-price-affecting="true">
+                                <div class="paper-weight">75 GSM</div>
+                                <div class="paper-type">Standard</div>
+                                <div class="paper-price">Included</div>
+                            </div>
+
+                            <div class="paper-option" onclick="selectPaperOption('100gsm')">
+                                <input type="radio" id="paper_100gsm" name="paper_type" value="100gsm"
+                                       data-price-modifier="25" data-field-type="radio" data-price-affecting="true">
+                                <div class="paper-weight">100 GSM</div>
+                                <div class="paper-type">Premium</div>
+                                <div class="paper-price">+₹25</div>
+                            </div>
+
+                            <div class="paper-option" onclick="selectPaperOption('100gsm_art')">
+                                <input type="radio" id="paper_100gsm_art" name="paper_type" value="100gsm_art"
+                                       data-price-modifier="50" data-field-type="radio" data-price-affecting="true">
+                                <div class="paper-weight">100 GSM</div>
+                                <div class="paper-type">Art Paper</div>
+                                <div class="paper-price">+₹50</div>
+                            </div>
+
+                            <div class="paper-option" onclick="selectPaperOption('120gsm_art')">
+                                <input type="radio" id="paper_120gsm_art" name="paper_type" value="120gsm_art"
+                                       data-price-modifier="75" data-field-type="radio" data-price-affecting="true">
+                                <div class="paper-weight">120 GSM</div>
+                                <div class="paper-type">Art Paper</div>
+                                <div class="paper-price">+₹75</div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Finishing Options Section -->
+    <div class="form-section" data-section="finishing_options">
+        <div class="section-header">
+            <h3 class="section-title">
+                <i class="fas fa-magic"></i>
+                Finishing Options
+            </h3>
+        </div>
+
+        <div class="form-grid">
+            <!-- Binding Type -->
+            <div class="form-field">
+                <div class="form-field-wrapper">
+                    <label for="binding_type" class="form-label">
+                        Binding Type
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <p class="field-help-text">Select the binding method</p>
+                    <select id="binding_type" name="binding_type" class="form-select" required
+                            data-field-type="select" data-price-affecting="true">
+                        <option value="">Please select...</option>
+                        <option value="saddle_stitch" data-price-modifier="0">Saddle Stitch</option>
+                        <option value="spiral_binding" data-price-modifier="30">Spiral Binding (+₹30)</option>
+                        <option value="paperback" data-price-modifier="50">Paperback (Perfect) (+₹50)</option>
+                        <option value="hardcover" data-price-modifier="150">Hardcover (+₹150)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Cover Finish -->
+            <div class="form-field">
+                <div class="form-field-wrapper">
+                    <fieldset>
+                        <legend class="form-label">
+                            Cover Finish
+                            <span class="required-asterisk">*</span>
+                        </legend>
+                        <p class="field-help-text">Select the cover finish</p>
+
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="cover_finish_matte" name="cover_finish" value="matte" checked
+                                       data-price-modifier="0" data-field-type="radio" data-price-affecting="true">
+                                <label for="cover_finish_matte" class="radio-label">
+                                    <span class="radio-text">Matte</span>
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="cover_finish_glossy" name="cover_finish" value="glossy"
+                                       data-price-modifier="20" data-field-type="radio" data-price-affecting="true">
+                                <label for="cover_finish_glossy" class="radio-label">
+                                    <span class="radio-text">Glossy</span>
+                                    <span class="price-modifier">+₹20</span>
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional Services Section -->
+    <div class="form-section" data-section="additional_services">
+        <div class="section-header">
+            <h3 class="section-title">
+                <i class="fas fa-plus-circle"></i>
+                Additional Services
+            </h3>
+        </div>
+
+        <div class="form-grid">
+            <!-- Design Service -->
+            <div class="form-field">
+                <div class="form-field-wrapper">
+                    <fieldset>
+                        <legend class="form-label">Design and Formatting</legend>
+                        <p class="field-help-text">Do you need design and formatting services?</p>
+
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="design_service_no" name="design_service" value="not_required" checked
+                                       data-price-modifier="0" data-field-type="radio" data-price-affecting="true">
+                                <label for="design_service_no" class="radio-label">
+                                    <span class="radio-text">Not Required</span>
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="design_service_yes" name="design_service" value="yes_required"
+                                       data-price-modifier="1500" data-field-type="radio" data-price-affecting="true">
+                                <label for="design_service_yes" class="radio-label">
+                                    <span class="radio-text">Yes, Please Design</span>
+                                    <span class="price-modifier">+₹1500</span>
+                                    <span class="option-description">₹1500 per cover + ₹50 per inner page</span>
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quantity & Pricing Section -->
+    <div class="form-section" data-section="quantity_pricing">
+        <div class="section-header">
+            <h3 class="section-title">
+                <i class="fas fa-calculator"></i>
+                Quantity & Pricing
+            </h3>
+        </div>
+
+        <div class="form-grid">
+            <!-- Number of Copies -->
+            <div class="form-field">
+                <div class="form-field-wrapper">
+                    <label for="copies" class="form-label">
+                        Number of Copies
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <p class="field-help-text">Minimum 25 copies required</p>
+                    <input type="number" id="copies" name="copies" class="form-input"
+                           value="25" min="25" max="10000" required
+                           data-field-type="number" data-price-affecting="true">
+                    <div class="field-constraints">
+                        <small class="text-gray-600">Minimum value: 25</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript data for conditional logic -->
+<script id="conditional-fields-data" type="application/json">
+{
+    "bw_page_count": {
+        "condition": {"field": "interior_color", "value": "combine_color", "operator": "equals"},
+        "triggers": []
+    },
+    "color_page_count": {
+        "condition": {"field": "interior_color", "value": "combine_color", "operator": "equals"},
+        "triggers": []
+    },
+    "page_count": {
+        "condition": {"field": "interior_color", "value": "combine_color", "operator": "not_equals"},
+        "triggers": []
+    }
+}
+</script>
+
+<script>
+// QinPrinting-style selection functions
+function selectColorOption(value) {
+    // Remove selected class from all options
+    document.querySelectorAll('.color-option').forEach(option => {
+        option.classList.remove('selected');
+    });
+
+    // Add selected class to clicked option and check radio
+    const radio = document.getElementById('interior_color_' + value) ||
+                  document.querySelector(`input[name="interior_color"][value="${value}"]`);
+    if (radio) {
+        radio.checked = true;
+        radio.closest('.color-option').classList.add('selected');
+        radio.dispatchEvent(new Event('change'));
+    }
+}
+
+function selectPaperOption(value) {
+    // Remove selected class from all options
+    document.querySelectorAll('.paper-option').forEach(option => {
+        option.classList.remove('selected');
+    });
+
+    // Add selected class to clicked option and check radio
+    const radio = document.getElementById('paper_' + value) ||
+                  document.querySelector(`input[name="paper_type"][value="${value}"]`);
+    if (radio) {
+        radio.checked = true;
+        radio.closest('.paper-option').classList.add('selected');
+        radio.dispatchEvent(new Event('change'));
+    }
+}
+
+// Handle conditional logic for fallback form
+document.addEventListener('DOMContentLoaded', function() {
+    const interiorColorInputs = document.querySelectorAll('input[name="interior_color"]');
+
+    function handleInteriorColorChange() {
+        const selectedValue = document.querySelector('input[name="interior_color"]:checked')?.value;
+        const isCombined = selectedValue === 'combine_color';
+
+        // Toggle page count fields
+        const pageCountField = document.querySelector('[data-field="page_count"]');
+        const bwPageField = document.querySelector('[data-field="bw_page_count"]');
+        const colorPageField = document.querySelector('[data-field="color_page_count"]');
+
+        if (pageCountField && bwPageField && colorPageField) {
+            if (isCombined) {
+                // Hide regular page count, show conditional fields
+                pageCountField.style.display = 'none';
+                pageCountField.querySelector('input').disabled = true;
+                pageCountField.querySelector('input').required = false;
+
+                bwPageField.style.display = '';
+                bwPageField.classList.remove('hidden');
+                bwPageField.querySelector('input').disabled = false;
+                bwPageField.querySelector('input').required = true;
+
+                colorPageField.style.display = '';
+                colorPageField.classList.remove('hidden');
+                colorPageField.querySelector('input').disabled = false;
+                colorPageField.querySelector('input').required = true;
+            } else {
+                // Show regular page count, hide conditional fields
+                pageCountField.style.display = '';
+                pageCountField.querySelector('input').disabled = false;
+                pageCountField.querySelector('input').required = true;
+
+                bwPageField.style.display = 'none';
+                bwPageField.classList.add('hidden');
+                bwPageField.querySelector('input').disabled = true;
+                bwPageField.querySelector('input').required = false;
+                bwPageField.querySelector('input').value = '0';
+
+                colorPageField.style.display = 'none';
+                colorPageField.classList.add('hidden');
+                colorPageField.querySelector('input').disabled = true;
+                colorPageField.querySelector('input').required = false;
+                colorPageField.querySelector('input').value = '0';
+            }
+        }
+
+        // Update pricing if window.dynamicFormHandler exists
+        if (window.dynamicFormHandler) {
+            window.dynamicFormHandler.refreshForm();
+        }
+    }
+
+    // Bind event listeners
+    interiorColorInputs.forEach(input => {
+        input.addEventListener('change', handleInteriorColorChange);
+    });
+
+    // Initial state
+    handleInteriorColorChange();
+
+    // Set initial selected states for grid options
+    const checkedColorOption = document.querySelector('input[name="interior_color"]:checked');
+    if (checkedColorOption) {
+        checkedColorOption.closest('.color-option')?.classList.add('selected');
+    }
+
+    const checkedPaperOption = document.querySelector('input[name="paper_type"]:checked');
+    if (checkedPaperOption) {
+        checkedPaperOption.closest('.paper-option')?.classList.add('selected');
+    }
+});
+</script>

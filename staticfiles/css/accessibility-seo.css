@@ -1,0 +1,679 @@
+/**
+ * Accessibility and SEO Enhancement Styles
+ * Ensures WCAG 2.1 compliance and improved SEO
+ */
+
+/* ===== SCREEN READER ONLY CONTENT ===== */
+.sr-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+.sr-only-focusable:focus,
+.sr-only-focusable:active {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    padding: inherit !important;
+    margin: inherit !important;
+    overflow: visible !important;
+    clip: auto !important;
+    white-space: inherit !important;
+}
+
+/* ===== SKIP NAVIGATION ===== */
+.skip-nav {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    background: #667eea;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 0 0 8px 0;
+    font-weight: 600;
+    text-decoration: none;
+    z-index: 9999;
+    transition: top 0.3s ease;
+}
+
+.skip-nav:focus {
+    top: 0;
+    outline: 3px solid #fbbf24;
+    outline-offset: 2px;
+}
+
+/* ===== FOCUS INDICATORS ===== */
+/* Enhanced focus styles for better visibility */
+*:focus {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* Specific focus styles for interactive elements */
+a:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus,
+[tabindex]:focus {
+    outline: 3px solid #667eea;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 5px rgba(102, 126, 234, 0.2);
+}
+
+/* Focus styles for custom components */
+.product-card:focus-within,
+.filter-option:focus-within,
+.thumbnail-btn:focus,
+.action-btn:focus {
+    outline: 3px solid #667eea;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 5px rgba(102, 126, 234, 0.2);
+}
+
+/* Remove focus outline for mouse users but keep for keyboard users */
+.js-focus-visible *:focus:not(.focus-visible) {
+    outline: none;
+    box-shadow: none;
+}
+
+/* ===== HIGH CONTRAST MODE SUPPORT ===== */
+@media (prefers-contrast: high) {
+    /* Ensure sufficient contrast in high contrast mode */
+    .product-card,
+    .filter-card,
+    .pricing-calculator {
+        border: 2px solid #000;
+    }
+
+    .btn-primary,
+    .calculator-button-primary {
+        background: #000;
+        color: #fff;
+        border: 2px solid #fff;
+    }
+
+    .btn-secondary,
+    .calculator-button-secondary {
+        background: #fff;
+        color: #000;
+        border: 2px solid #000;
+    }
+
+    /* Enhanced borders for better definition */
+    input,
+    select,
+    textarea {
+        border: 3px solid #000;
+    }
+
+    /* High contrast focus indicators */
+    *:focus {
+        outline: 4px solid #000;
+        outline-offset: 2px;
+        background: #ff0;
+        color: #000;
+    }
+}
+
+/* ===== REDUCED MOTION SUPPORT ===== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    /* Disable hover animations in reduced motion mode */
+    .product-card:hover,
+    .btn-primary:hover,
+    .thumbnail-btn:hover {
+        transform: none !important;
+    }
+
+    /* Keep essential animations for functionality */
+    .loading-spinner {
+        animation-duration: 1s !important;
+    }
+}
+
+/* ===== FONT SIZE PREFERENCES ===== */
+/* Support for user font size preferences */
+@media (min-width: 320px) {
+    html {
+        font-size: calc(16px + 6 * ((100vw - 320px) / 680));
+    }
+}
+
+@media (min-width: 1000px) {
+    html {
+        font-size: 22px;
+    }
+}
+
+/* Ensure text remains readable at larger sizes */
+.text-responsive {
+    font-size: clamp(0.875rem, 2.5vw, 1.125rem);
+    line-height: 1.6;
+}
+
+/* ===== KEYBOARD NAVIGATION ENHANCEMENTS ===== */
+/* Visible focus indicators for keyboard navigation */
+.keyboard-nav *:focus {
+    outline: 3px solid #fbbf24;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 6px rgba(251, 191, 36, 0.3);
+}
+
+/* Tab order improvements */
+.tab-order-1 { order: 1; }
+.tab-order-2 { order: 2; }
+.tab-order-3 { order: 3; }
+
+/* Enhanced keyboard navigation for complex components */
+.gallery-container:focus-within .thumbnail-btn,
+.pricing-calculator:focus-within .form-input {
+    outline: 2px solid rgba(102, 126, 234, 0.5);
+}
+
+/* ===== ARIA LIVE REGIONS ===== */
+.aria-live-polite {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+.status-message {
+    background: #10b981;
+    color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    border-left: 4px solid #059669;
+}
+
+.error-message {
+    background: #ef4444;
+    color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    border-left: 4px solid #dc2626;
+}
+
+.warning-message {
+    background: #f59e0b;
+    color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    border-left: 4px solid #d97706;
+}
+
+/* ===== COLOR ACCESSIBILITY ===== */
+/* Ensure sufficient color contrast ratios */
+.text-contrast-aa {
+    color: #374151; /* 4.5:1 contrast ratio on white */
+}
+
+.text-contrast-aaa {
+    color: #1f2937; /* 7:1 contrast ratio on white */
+}
+
+.bg-accessible-primary {
+    background-color: #5b21b6; /* Purple with sufficient contrast */
+    color: white;
+}
+
+.bg-accessible-secondary {
+    background-color: #f3f4f6;
+    color: #1f2937;
+}
+
+/* Link contrast improvements */
+a {
+    color: #5b21b6;
+    text-decoration: underline;
+}
+
+a:hover,
+a:focus {
+    color: #4c1d95;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+}
+
+/* ===== FORM ACCESSIBILITY ===== */
+/* Enhanced form styling for accessibility */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #374151;
+}
+
+.form-label[for] {
+    cursor: pointer;
+}
+
+.required::after {
+    content: " *";
+    color: #ef4444;
+    font-weight: bold;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+    border-color: #667eea;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-error {
+    border-color: #ef4444;
+    background-color: #fef2f2;
+}
+
+.form-error:focus {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.error-text {
+    color: #dc2626;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.error-text::before {
+    content: "⚠";
+    font-weight: bold;
+}
+
+/* ===== BUTTON ACCESSIBILITY ===== */
+/* Enhanced button styles for accessibility */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-height: 44px; /* Minimum touch target size */
+    min-width: 44px;
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Loading state for buttons */
+.btn-loading {
+    position: relative;
+    color: transparent;
+}
+
+.btn-loading::after {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* ===== TABLE ACCESSIBILITY ===== */
+.accessible-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.accessible-table th,
+.accessible-table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.accessible-table th {
+    background-color: #f9fafb;
+    font-weight: 600;
+    color: #374151;
+}
+
+.accessible-table caption {
+    caption-side: top;
+    text-align: left;
+    font-weight: 600;
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+    color: #374151;
+}
+
+/* ===== IMAGE ACCESSIBILITY ===== */
+/* Ensures images have proper alt text styling */
+img[alt=""] {
+    outline: 2px dashed #ef4444;
+}
+
+img:not([alt]) {
+    outline: 3px solid #ef4444;
+}
+
+.decorative-img {
+    /* Images that are purely decorative */
+    pointer-events: none;
+    user-select: none;
+}
+
+/* ===== LANDMARK REGIONS ===== */
+/* Visual indication of landmark regions for testing */
+.debug-landmarks main {
+    outline: 2px solid #10b981;
+}
+
+.debug-landmarks nav {
+    outline: 2px solid #3b82f6;
+}
+
+.debug-landmarks aside {
+    outline: 2px solid #f59e0b;
+}
+
+.debug-landmarks section {
+    outline: 2px solid #8b5cf6;
+}
+
+.debug-landmarks header {
+    outline: 2px solid #ef4444;
+}
+
+.debug-landmarks footer {
+    outline: 2px solid #6b7280;
+}
+
+/* ===== HEADING HIERARCHY ===== */
+/* Visual indication of heading levels for testing */
+.debug-headings h1 { border-left: 5px solid #ef4444; }
+.debug-headings h2 { border-left: 5px solid #f59e0b; }
+.debug-headings h3 { border-left: 5px solid #eab308; }
+.debug-headings h4 { border-left: 5px solid #22c55e; }
+.debug-headings h5 { border-left: 5px solid #3b82f6; }
+.debug-headings h6 { border-left: 5px solid #8b5cf6; }
+
+/* ===== PRINT ACCESSIBILITY ===== */
+@media print {
+    /* Ensure good contrast and readability in print */
+    * {
+        background: transparent !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+        text-decoration: underline;
+        color: #000 !important;
+    }
+
+    /* Show URLs for links */
+    a[href^="http"]:after {
+        content: " (" attr(href) ")";
+        font-size: smaller;
+    }
+
+    /* Hide non-essential elements */
+    .no-print,
+    nav,
+    .sidebar,
+    .modal,
+    .tooltip {
+        display: none !important;
+    }
+
+    /* Improve readability */
+    body {
+        font-size: 12pt;
+        line-height: 1.4;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        page-break-after: avoid;
+        break-after: avoid;
+    }
+
+    p, li {
+        orphans: 3;
+        widows: 3;
+    }
+
+    /* Add page breaks before major sections */
+    .page-break {
+        page-break-before: always;
+        break-before: page;
+    }
+}
+
+/* ===== ANIMATION UTILITIES ===== */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== RESPONSIVE TEXT SIZING ===== */
+/* Ensures text remains readable across all devices */
+.text-base {
+    font-size: clamp(1rem, 2.5vw, 1.125rem);
+}
+
+.text-lg {
+    font-size: clamp(1.125rem, 3vw, 1.25rem);
+}
+
+.text-xl {
+    font-size: clamp(1.25rem, 3.5vw, 1.5rem);
+}
+
+.text-2xl {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+}
+
+.text-3xl {
+    font-size: clamp(1.875rem, 5vw, 2.5rem);
+}
+
+/* ===== UTILITY CLASSES ===== */
+.visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+.focus-trap {
+    /* Container for focus trapping in modals */
+    position: relative;
+}
+
+.focus-trap:focus {
+    outline: none;
+}
+
+/* ===== SEMANTIC ENHANCEMENTS ===== */
+/* Better semantic styling */
+mark {
+    background-color: #fef3c7;
+    color: #92400e;
+    padding: 0.125rem 0.25rem;
+    border-radius: 3px;
+}
+
+kbd {
+    background-color: #f3f4f6;
+    border: 1px solid #d1d5db;
+    border-radius: 3px;
+    color: #374151;
+    font-family: monospace;
+    font-size: 0.875rem;
+    padding: 0.125rem 0.25rem;
+}
+
+code {
+    background-color: #f3f4f6;
+    color: #be185d;
+    font-family: monospace;
+    font-size: 0.875rem;
+    padding: 0.125rem 0.25rem;
+    border-radius: 3px;
+}
+
+pre {
+    background-color: #1f2937;
+    color: #f9fafb;
+    overflow-x: auto;
+    padding: 1rem;
+    border-radius: 6px;
+}
+
+pre code {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+}
+
+/* ===== PROGRESS INDICATORS ===== */
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: #e5e7eb;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: #667eea;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+/* ===== TOOLTIP ACCESSIBILITY ===== */
+[data-tooltip] {
+    position: relative;
+}
+
+[data-tooltip]:before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1f2937;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 1000;
+}
+
+[data-tooltip]:hover:before,
+[data-tooltip]:focus:before {
+    opacity: 1;
+}
+
+/* ===== ERROR HANDLING ===== */
+.error-boundary {
+    padding: 2rem;
+    text-align: center;
+    background-color: #fef2f2;
+    border: 2px solid #fecaca;
+    border-radius: 8px;
+    color: #991b1b;
+}
+
+.error-boundary h2 {
+    margin-bottom: 1rem;
+    color: #dc2626;
+}
+
+.error-boundary button {
+    background-color: #dc2626;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.error-boundary button:hover {
+    background-color: #b91c1c;
+}

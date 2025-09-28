@@ -1,0 +1,27 @@
+{% load dynamic_form_tags %}
+
+<div class="dynamic-form-container" data-product-id="{{ product.id }}">
+    {% for section_key, section_data in sections %}
+        {% if section_data.fields %}
+            <div class="form-section" data-section="{{ section_key }}">
+                {% render_field_section_header section_key section_data.name section_data.order %}
+
+                <div class="form-grid" data-section-grid="{{ section_key }}">
+                    {% for field in section_data.fields %}
+                        <div class="form-field {% if field.css_classes %}{{ field.css_classes }}{% endif %}{% if field.grid_columns > 1 %} col-span-{{ field.grid_columns }}{% endif %}{% if field.is_required %} required{% endif %}"
+                             data-field="{{ field.field_name }}"
+                             {% if field|field_has_conditional_logic %}data-conditional="true"{% endif %}
+                             {% if field|get_field_triggers %}data-triggers="{{ field|get_field_triggers|jsonify }}"{% endif %}>
+                            {% render_form_field field form_data "product_form_" %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
+
+<!-- JavaScript data for conditional logic -->
+<script id="conditional-fields-data" type="application/json">
+{{ product|get_conditional_fields_data|jsonify }}
+</script>

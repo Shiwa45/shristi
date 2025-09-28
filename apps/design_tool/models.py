@@ -11,7 +11,7 @@ class DesignSession(models.Model):
     """Track design sessions for analytics"""
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     session_id = models.UUIDField(default=uuid.uuid4, unique=True)
-    product = models.ForeignKey('services.Product', on_delete=models.CASCADE, null=True, blank=True)
+    product = models.ForeignKey('services.StaticProduct', on_delete=models.CASCADE, null=True, blank=True)
     started_at = models.DateTimeField(auto_now_add=True)
     ended_at = models.DateTimeField(null=True, blank=True)
     duration_seconds = models.IntegerField(default=0)

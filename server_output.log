@@ -1,0 +1,985 @@
+Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+September 28, 2025 - 01:42:55
+Django version 4.2.7, using settings 'shirsti_printing.settings'
+Starting development server at http://127.0.0.1:8001/
+Quit the server with CTRL-BREAK.
+
+DEBUG: Looking for category_slug='book-printing', product_slug='childrens-book-printing'
+DEBUG: Found category: Book Printing
+DEBUG: Found product: Children's Book Printing
+"GET /services/book-printing/childrens-book-printing/ HTTP/1.1" 200 80037
+DEBUG: Looking for category_slug='book-printing', product_slug='childrens-book-printing'
+DEBUG: Found category: Book Printing
+DEBUG: Found product: Children's Book Printing
+"GET /services/book-printing/childrens-book-printing/ HTTP/1.1" 200 82911
+"GET /static/css/products/product-detail.css HTTP/1.1" 304 0
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /static/css/products/qin-style-form.css HTTP/1.1" 200 8375
+"GET /static/js/products/dynamic-form-handler.js HTTP/1.1" 200 16221
+"GET / HTTP/1.1" 200 71731
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 1962
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 1929
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 1929
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 1935
+"GET /services/book-printing/ HTTP/1.1" 200 48854
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 95985
+"GET /static/css/products/pricing-calculator.css HTTP/1.1" 304 0
+"GET /static/css/products/product-gallery.css HTTP/1.1" 304 0
+"GET /static/css/products/responsive-products.css HTTP/1.1" 304 0
+"GET /static/js/products/pricing-calculator.js HTTP/1.1" 304 0
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /static/js/products/product-gallery.js HTTP/1.1" 304 0
+"GET /static/js/products/product-options.js HTTP/1.1" 304 0
+"GET /services/api/pricing/1/?quantity=100&rush_order=false&design_service=false HTTP/1.1" 200 419
+C:\Users\shiwansh\shirsti_printing\apps\services\views.py changed, reloading.
+Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+September 28, 2025 - 01:53:39
+Django version 4.2.7, using settings 'shirsti_printing.settings'
+Starting development server at http://127.0.0.1:8001/
+Quit the server with CTRL-BREAK.
+
+C:\Users\shiwansh\shirsti_printing\apps\services\views.py changed, reloading.
+Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+September 28, 2025 - 01:53:59
+Django version 4.2.7, using settings 'shirsti_printing.settings'
+Starting development server at http://127.0.0.1:8001/
+Quit the server with CTRL-BREAK.
+
+C:\Users\shiwansh\shirsti_printing\apps\services\models.py changed, reloading.
+Watching for file changes with StatReloader
+Performing system checks...
+
+Exception in thread django-main-thread:
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 1043, in _bootstrap_inner
+    self.run()
+    ~~~~~~~~^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 994, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\utils\autoreload.py", line 64, in wrapper
+    fn(*args, **kwargs)
+    ~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\management\commands\runserver.py", line 133, in inner_run
+    self.check(display_num_errors=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\management\base.py", line 485, in check
+    all_issues = checks.run_checks(
+        app_configs=app_configs,
+    ...<2 lines>...
+        databases=databases,
+    )
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\checks\registry.py", line 88, in run_checks
+    new_errors = check(app_configs=app_configs, databases=databases)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\checks\urls.py", line 14, in check_url_config
+    return check_resolver(resolver)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\checks\urls.py", line 24, in check_resolver
+    return check_method()
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\resolvers.py", line 494, in check
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\utils\functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\resolvers.py", line 715, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\utils\functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\resolvers.py", line 708, in urlconf_module
+    return import_module(self.urlconf_name)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\shiwansh\shirsti_printing\shirsti_printing\urls.py", line 9, in <module>
+    path('', include('apps.core.urls')),
+             ~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\conf.py", line 38, in include
+    urlconf_module = import_module(urlconf_module)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\shiwansh\shirsti_printing\apps\core\urls.py", line 3, in <module>
+    from . import views
+  File "C:\Users\shiwansh\shirsti_printing\apps\core\views.py", line 11, in <module>
+    from apps.services.models import ServiceCategory, Product
+ImportError: cannot import name 'Product' from 'apps.services.models' (C:\Users\shiwansh\shirsti_printing\apps\services\models.py)
+C:\Users\shiwansh\shirsti_printing\apps\services\templatetags\dynamic_form_tags.py changed, reloading.
+Watching for file changes with StatReloader
+Performing system checks...
+
+Exception in thread django-main-thread:
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 1043, in _bootstrap_inner
+    self.run()
+    ~~~~~~~~^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 994, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\utils\autoreload.py", line 64, in wrapper
+    fn(*args, **kwargs)
+    ~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\management\commands\runserver.py", line 133, in inner_run
+    self.check(display_num_errors=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\management\base.py", line 485, in check
+    all_issues = checks.run_checks(
+        app_configs=app_configs,
+    ...<2 lines>...
+        databases=databases,
+    )
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\checks\registry.py", line 88, in run_checks
+    new_errors = check(app_configs=app_configs, databases=databases)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\checks\urls.py", line 14, in check_url_config
+    return check_resolver(resolver)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\checks\urls.py", line 24, in check_resolver
+    return check_method()
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\resolvers.py", line 494, in check
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\utils\functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\resolvers.py", line 715, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\utils\functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\resolvers.py", line 708, in urlconf_module
+    return import_module(self.urlconf_name)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\shiwansh\shirsti_printing\shirsti_printing\urls.py", line 9, in <module>
+    path('', include('apps.core.urls')),
+             ~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\conf.py", line 38, in include
+    urlconf_module = import_module(urlconf_module)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\shiwansh\shirsti_printing\apps\core\urls.py", line 3, in <module>
+    from . import views
+  File "C:\Users\shiwansh\shirsti_printing\apps\core\views.py", line 11, in <module>
+    from apps.services.models import ServiceCategory, Product
+ImportError: cannot import name 'Product' from 'apps.services.models' (C:\Users\shiwansh\shirsti_printing\apps\services\models.py)
+C:\Users\shiwansh\shirsti_printing\apps\core\views.py changed, reloading.
+Watching for file changes with StatReloader
+Performing system checks...
+
+Exception in thread django-main-thread:
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 1043, in _bootstrap_inner
+    self.run()
+    ~~~~~~~~^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 994, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\utils\autoreload.py", line 64, in wrapper
+    fn(*args, **kwargs)
+    ~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\management\commands\runserver.py", line 133, in inner_run
+    self.check(display_num_errors=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\management\base.py", line 485, in check
+    all_issues = checks.run_checks(
+        app_configs=app_configs,
+    ...<2 lines>...
+        databases=databases,
+    )
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\checks\registry.py", line 88, in run_checks
+    new_errors = check(app_configs=app_configs, databases=databases)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\checks\urls.py", line 14, in check_url_config
+    return check_resolver(resolver)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\checks\urls.py", line 24, in check_resolver
+    return check_method()
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\resolvers.py", line 494, in check
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\utils\functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\resolvers.py", line 715, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\utils\functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\resolvers.py", line 708, in urlconf_module
+    return import_module(self.urlconf_name)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\shiwansh\shirsti_printing\shirsti_printing\urls.py", line 13, in <module>
+    path('design-tool/', include('apps.design_tool.urls')),
+                         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\conf.py", line 38, in include
+    urlconf_module = import_module(urlconf_module)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\shiwansh\shirsti_printing\apps\design_tool\urls.py", line 3, in <module>
+    from . import views
+  File "C:\Users\shiwansh\shirsti_printing\apps\design_tool\views.py", line 19, in <module>
+    from apps.services.models import Product, StaticProduct
+ImportError: cannot import name 'Product' from 'apps.services.models' (C:\Users\shiwansh\shirsti_printing\apps\services\models.py)
+C:\Users\shiwansh\shirsti_printing\apps\core\views.py changed, reloading.
+Watching for file changes with StatReloader
+Performing system checks...
+
+Exception in thread django-main-thread:
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 1043, in _bootstrap_inner
+    self.run()
+    ~~~~~~~~^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 994, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\utils\autoreload.py", line 64, in wrapper
+    fn(*args, **kwargs)
+    ~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\management\commands\runserver.py", line 133, in inner_run
+    self.check(display_num_errors=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\management\base.py", line 485, in check
+    all_issues = checks.run_checks(
+        app_configs=app_configs,
+    ...<2 lines>...
+        databases=databases,
+    )
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\checks\registry.py", line 88, in run_checks
+    new_errors = check(app_configs=app_configs, databases=databases)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\checks\urls.py", line 14, in check_url_config
+    return check_resolver(resolver)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\checks\urls.py", line 24, in check_resolver
+    return check_method()
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\resolvers.py", line 494, in check
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\utils\functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\resolvers.py", line 715, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\utils\functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\resolvers.py", line 708, in urlconf_module
+    return import_module(self.urlconf_name)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\shiwansh\shirsti_printing\shirsti_printing\urls.py", line 13, in <module>
+    path('design-tool/', include('apps.design_tool.urls')),
+                         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\conf.py", line 38, in include
+    urlconf_module = import_module(urlconf_module)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\shiwansh\shirsti_printing\apps\design_tool\urls.py", line 3, in <module>
+    from . import views
+  File "C:\Users\shiwansh\shirsti_printing\apps\design_tool\views.py", line 19, in <module>
+    from apps.services.models import Product, StaticProduct
+ImportError: cannot import name 'Product' from 'apps.services.models' (C:\Users\shiwansh\shirsti_printing\apps\services\models.py)
+C:\Users\shiwansh\shirsti_printing\apps\design_tool\views.py changed, reloading.
+Watching for file changes with StatReloader
+Performing system checks...
+
+Exception in thread django-main-thread:
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 1043, in _bootstrap_inner
+    self.run()
+    ~~~~~~~~^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 994, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\utils\autoreload.py", line 64, in wrapper
+    fn(*args, **kwargs)
+    ~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\management\commands\runserver.py", line 133, in inner_run
+    self.check(display_num_errors=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\management\base.py", line 485, in check
+    all_issues = checks.run_checks(
+        app_configs=app_configs,
+    ...<2 lines>...
+        databases=databases,
+    )
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\checks\registry.py", line 88, in run_checks
+    new_errors = check(app_configs=app_configs, databases=databases)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\checks\urls.py", line 14, in check_url_config
+    return check_resolver(resolver)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\checks\urls.py", line 24, in check_resolver
+    return check_method()
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\resolvers.py", line 494, in check
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\utils\functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\resolvers.py", line 715, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\utils\functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\resolvers.py", line 708, in urlconf_module
+    return import_module(self.urlconf_name)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\shiwansh\shirsti_printing\shirsti_printing\urls.py", line 14, in <module>
+    path('orders/', include('apps.orders.urls')),
+                    ~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\conf.py", line 38, in include
+    urlconf_module = import_module(urlconf_module)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\shiwansh\shirsti_printing\apps\orders\urls.py", line 3, in <module>
+    from . import views
+  File "C:\Users\shiwansh\shirsti_printing\apps\orders\views.py", line 13, in <module>
+    from apps.services.models import Product, StaticProduct
+ImportError: cannot import name 'Product' from 'apps.services.models' (C:\Users\shiwansh\shirsti_printing\apps\services\models.py)
+C:\Users\shiwansh\shirsti_printing\apps\design_tool\views.py changed, reloading.
+Watching for file changes with StatReloader
+Performing system checks...
+
+Exception in thread django-main-thread:
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 1043, in _bootstrap_inner
+    self.run()
+    ~~~~~~~~^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 994, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\utils\autoreload.py", line 64, in wrapper
+    fn(*args, **kwargs)
+    ~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\management\commands\runserver.py", line 133, in inner_run
+    self.check(display_num_errors=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\management\base.py", line 485, in check
+    all_issues = checks.run_checks(
+        app_configs=app_configs,
+    ...<2 lines>...
+        databases=databases,
+    )
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\checks\registry.py", line 88, in run_checks
+    new_errors = check(app_configs=app_configs, databases=databases)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\checks\urls.py", line 14, in check_url_config
+    return check_resolver(resolver)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\checks\urls.py", line 24, in check_resolver
+    return check_method()
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\resolvers.py", line 494, in check
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\utils\functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\resolvers.py", line 715, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\utils\functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\resolvers.py", line 708, in urlconf_module
+    return import_module(self.urlconf_name)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\shiwansh\shirsti_printing\shirsti_printing\urls.py", line 14, in <module>
+    path('orders/', include('apps.orders.urls')),
+                    ~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\conf.py", line 38, in include
+    urlconf_module = import_module(urlconf_module)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\shiwansh\shirsti_printing\apps\orders\urls.py", line 3, in <module>
+    from . import views
+  File "C:\Users\shiwansh\shirsti_printing\apps\orders\views.py", line 13, in <module>
+    from apps.services.models import Product, StaticProduct
+ImportError: cannot import name 'Product' from 'apps.services.models' (C:\Users\shiwansh\shirsti_printing\apps\services\models.py)
+C:\Users\shiwansh\shirsti_printing\apps\design_tool\views.py changed, reloading.
+Watching for file changes with StatReloader
+Performing system checks...
+
+Exception in thread django-main-thread:
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 1043, in _bootstrap_inner
+    self.run()
+    ~~~~~~~~^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 994, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\utils\autoreload.py", line 64, in wrapper
+    fn(*args, **kwargs)
+    ~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\management\commands\runserver.py", line 133, in inner_run
+    self.check(display_num_errors=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\management\base.py", line 485, in check
+    all_issues = checks.run_checks(
+        app_configs=app_configs,
+    ...<2 lines>...
+        databases=databases,
+    )
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\checks\registry.py", line 88, in run_checks
+    new_errors = check(app_configs=app_configs, databases=databases)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\checks\urls.py", line 14, in check_url_config
+    return check_resolver(resolver)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\checks\urls.py", line 24, in check_resolver
+    return check_method()
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\resolvers.py", line 494, in check
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\utils\functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\resolvers.py", line 715, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\utils\functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\resolvers.py", line 708, in urlconf_module
+    return import_module(self.urlconf_name)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\shiwansh\shirsti_printing\shirsti_printing\urls.py", line 14, in <module>
+    path('orders/', include('apps.orders.urls')),
+                    ~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\conf.py", line 38, in include
+    urlconf_module = import_module(urlconf_module)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\shiwansh\shirsti_printing\apps\orders\urls.py", line 3, in <module>
+    from . import views
+  File "C:\Users\shiwansh\shirsti_printing\apps\orders\views.py", line 13, in <module>
+    from apps.services.models import Product, StaticProduct
+ImportError: cannot import name 'Product' from 'apps.services.models' (C:\Users\shiwansh\shirsti_printing\apps\services\models.py)
+C:\Users\shiwansh\shirsti_printing\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+Performing system checks...
+
+Exception in thread django-main-thread:
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 1043, in _bootstrap_inner
+    self.run()
+    ~~~~~~~~^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 994, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\utils\autoreload.py", line 64, in wrapper
+    fn(*args, **kwargs)
+    ~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\management\commands\runserver.py", line 133, in inner_run
+    self.check(display_num_errors=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\management\base.py", line 485, in check
+    all_issues = checks.run_checks(
+        app_configs=app_configs,
+    ...<2 lines>...
+        databases=databases,
+    )
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\checks\registry.py", line 88, in run_checks
+    new_errors = check(app_configs=app_configs, databases=databases)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\checks\urls.py", line 14, in check_url_config
+    return check_resolver(resolver)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\checks\urls.py", line 24, in check_resolver
+    return check_method()
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\resolvers.py", line 494, in check
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\utils\functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\resolvers.py", line 715, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\utils\functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\resolvers.py", line 708, in urlconf_module
+    return import_module(self.urlconf_name)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\shiwansh\shirsti_printing\shirsti_printing\urls.py", line 14, in <module>
+    path('orders/', include('apps.orders.urls')),
+                    ~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\urls\conf.py", line 38, in include
+    urlconf_module = import_module(urlconf_module)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\shiwansh\shirsti_printing\apps\orders\urls.py", line 4, in <module>
+    from .cart_views import AddToCartView
+  File "C:\Users\shiwansh\shirsti_printing\apps\orders\cart_views.py", line 8, in <module>
+    from apps.services.models import Product
+ImportError: cannot import name 'Product' from 'apps.services.models' (C:\Users\shiwansh\shirsti_printing\apps\services\models.py)
+C:\Users\shiwansh\shirsti_printing\apps\orders\cart_views.py changed, reloading.
+Watching for file changes with StatReloader
+Performing system checks...
+
+Exception in thread django-main-thread:
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 1043, in _bootstrap_inner
+    self.run()
+    ~~~~~~~~^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 994, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\utils\autoreload.py", line 64, in wrapper
+    fn(*args, **kwargs)
+    ~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\management\commands\runserver.py", line 133, in inner_run
+    self.check(display_num_errors=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\management\base.py", line 556, in check
+    raise SystemCheckError(msg)
+django.core.management.base.SystemCheckError: SystemCheckError: System check identified some issues:
+
+ERRORS:
+<class 'apps.services.admin.StaticProductSampleAdmin'>: (admin.E108) The value of 'list_display[2]' refers to 'order', which is not a callable, an attribute of 'StaticProductSampleAdmin', or an attribute or method on 'services.StaticProductSample'.
+<class 'apps.services.admin.StaticProductSampleAdmin'>: (admin.E108) The value of 'list_display[3]' refers to 'is_active', which is not a callable, an attribute of 'StaticProductSampleAdmin', or an attribute or method on 'services.StaticProductSample'.
+<class 'apps.services.admin.StaticProductSampleAdmin'>: (admin.E116) The value of 'list_filter[1]' refers to 'is_active', which does not refer to a Field.
+<class 'apps.services.admin.StaticProductSampleAdmin'>: (admin.E121) The value of 'list_editable[0]' refers to 'order', which is not a field of 'services.StaticProductSample'.
+<class 'apps.services.admin.StaticProductSampleAdmin'>: (admin.E121) The value of 'list_editable[1]' refers to 'is_active', which is not a field of 'services.StaticProductSample'.
+<class 'apps.services.admin.StaticProductTestimonialAdmin'>: (admin.E108) The value of 'list_display[4]' refers to 'order', which is not a callable, an attribute of 'StaticProductTestimonialAdmin', or an attribute or method on 'services.StaticProductTestimonial'.
+<class 'apps.services.admin.StaticProductTestimonialAdmin'>: (admin.E108) The value of 'list_display[5]' refers to 'is_active', which is not a callable, an attribute of 'StaticProductTestimonialAdmin', or an attribute or method on 'services.StaticProductTestimonial'.
+<class 'apps.services.admin.StaticProductTestimonialAdmin'>: (admin.E116) The value of 'list_filter[2]' refers to 'is_active', which does not refer to a Field.
+<class 'apps.services.admin.StaticProductTestimonialAdmin'>: (admin.E121) The value of 'list_editable[0]' refers to 'order', which is not a field of 'services.StaticProductTestimonial'.
+<class 'apps.services.admin.StaticProductTestimonialAdmin'>: (admin.E121) The value of 'list_editable[1]' refers to 'is_active', which is not a field of 'services.StaticProductTestimonial'.
+design_tool.DesignSession.product: (fields.E300) Field defines a relation with model 'services.Product', which is either not installed, or is abstract.
+design_tool.DesignSession.product: (fields.E307) The field design_tool.DesignSession.product was declared with a lazy reference to 'services.product', but app 'services' doesn't provide model 'product'.
+
+System check identified 12 issues (0 silenced).
+C:\Users\shiwansh\shirsti_printing\apps\orders\cart_views.py changed, reloading.
+Watching for file changes with StatReloader
+Performing system checks...
+
+Exception in thread django-main-thread:
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 1043, in _bootstrap_inner
+    self.run()
+    ~~~~~~~~^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 994, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\utils\autoreload.py", line 64, in wrapper
+    fn(*args, **kwargs)
+    ~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\management\commands\runserver.py", line 133, in inner_run
+    self.check(display_num_errors=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\management\base.py", line 556, in check
+    raise SystemCheckError(msg)
+django.core.management.base.SystemCheckError: SystemCheckError: System check identified some issues:
+
+ERRORS:
+<class 'apps.services.admin.StaticProductSampleAdmin'>: (admin.E108) The value of 'list_display[2]' refers to 'order', which is not a callable, an attribute of 'StaticProductSampleAdmin', or an attribute or method on 'services.StaticProductSample'.
+<class 'apps.services.admin.StaticProductSampleAdmin'>: (admin.E108) The value of 'list_display[3]' refers to 'is_active', which is not a callable, an attribute of 'StaticProductSampleAdmin', or an attribute or method on 'services.StaticProductSample'.
+<class 'apps.services.admin.StaticProductSampleAdmin'>: (admin.E116) The value of 'list_filter[1]' refers to 'is_active', which does not refer to a Field.
+<class 'apps.services.admin.StaticProductSampleAdmin'>: (admin.E121) The value of 'list_editable[0]' refers to 'order', which is not a field of 'services.StaticProductSample'.
+<class 'apps.services.admin.StaticProductSampleAdmin'>: (admin.E121) The value of 'list_editable[1]' refers to 'is_active', which is not a field of 'services.StaticProductSample'.
+<class 'apps.services.admin.StaticProductTestimonialAdmin'>: (admin.E108) The value of 'list_display[4]' refers to 'order', which is not a callable, an attribute of 'StaticProductTestimonialAdmin', or an attribute or method on 'services.StaticProductTestimonial'.
+<class 'apps.services.admin.StaticProductTestimonialAdmin'>: (admin.E108) The value of 'list_display[5]' refers to 'is_active', which is not a callable, an attribute of 'StaticProductTestimonialAdmin', or an attribute or method on 'services.StaticProductTestimonial'.
+<class 'apps.services.admin.StaticProductTestimonialAdmin'>: (admin.E116) The value of 'list_filter[2]' refers to 'is_active', which does not refer to a Field.
+<class 'apps.services.admin.StaticProductTestimonialAdmin'>: (admin.E121) The value of 'list_editable[0]' refers to 'order', which is not a field of 'services.StaticProductTestimonial'.
+<class 'apps.services.admin.StaticProductTestimonialAdmin'>: (admin.E121) The value of 'list_editable[1]' refers to 'is_active', which is not a field of 'services.StaticProductTestimonial'.
+design_tool.DesignSession.product: (fields.E300) Field defines a relation with model 'services.Product', which is either not installed, or is abstract.
+design_tool.DesignSession.product: (fields.E307) The field design_tool.DesignSession.product was declared with a lazy reference to 'services.product', but app 'services' doesn't provide model 'product'.
+
+System check identified 12 issues (0 silenced).
+C:\Users\shiwansh\shirsti_printing\apps\services\models.py changed, reloading.
+Watching for file changes with StatReloader
+Performing system checks...
+
+Exception in thread django-main-thread:
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 1043, in _bootstrap_inner
+    self.run()
+    ~~~~~~~~^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 994, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\utils\autoreload.py", line 64, in wrapper
+    fn(*args, **kwargs)
+    ~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\management\commands\runserver.py", line 133, in inner_run
+    self.check(display_num_errors=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\management\base.py", line 556, in check
+    raise SystemCheckError(msg)
+django.core.management.base.SystemCheckError: SystemCheckError: System check identified some issues:
+
+ERRORS:
+<class 'apps.services.admin.StaticProductTestimonialAdmin'>: (admin.E108) The value of 'list_display[4]' refers to 'order', which is not a callable, an attribute of 'StaticProductTestimonialAdmin', or an attribute or method on 'services.StaticProductTestimonial'.
+<class 'apps.services.admin.StaticProductTestimonialAdmin'>: (admin.E108) The value of 'list_display[5]' refers to 'is_active', which is not a callable, an attribute of 'StaticProductTestimonialAdmin', or an attribute or method on 'services.StaticProductTestimonial'.
+<class 'apps.services.admin.StaticProductTestimonialAdmin'>: (admin.E116) The value of 'list_filter[2]' refers to 'is_active', which does not refer to a Field.
+<class 'apps.services.admin.StaticProductTestimonialAdmin'>: (admin.E121) The value of 'list_editable[0]' refers to 'order', which is not a field of 'services.StaticProductTestimonial'.
+<class 'apps.services.admin.StaticProductTestimonialAdmin'>: (admin.E121) The value of 'list_editable[1]' refers to 'is_active', which is not a field of 'services.StaticProductTestimonial'.
+design_tool.DesignSession.product: (fields.E300) Field defines a relation with model 'services.Product', which is either not installed, or is abstract.
+design_tool.DesignSession.product: (fields.E307) The field design_tool.DesignSession.product was declared with a lazy reference to 'services.product', but app 'services' doesn't provide model 'product'.
+
+System check identified 7 issues (0 silenced).
+C:\Users\shiwansh\shirsti_printing\apps\services\models.py changed, reloading.
+Watching for file changes with StatReloader
+Performing system checks...
+
+Exception in thread django-main-thread:
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 1043, in _bootstrap_inner
+    self.run()
+    ~~~~~~~~^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 994, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\utils\autoreload.py", line 64, in wrapper
+    fn(*args, **kwargs)
+    ~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\management\commands\runserver.py", line 133, in inner_run
+    self.check(display_num_errors=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\management\base.py", line 556, in check
+    raise SystemCheckError(msg)
+django.core.management.base.SystemCheckError: SystemCheckError: System check identified some issues:
+
+ERRORS:
+design_tool.DesignSession.product: (fields.E300) Field defines a relation with model 'services.Product', which is either not installed, or is abstract.
+design_tool.DesignSession.product: (fields.E307) The field design_tool.DesignSession.product was declared with a lazy reference to 'services.product', but app 'services' doesn't provide model 'product'.
+
+System check identified 2 issues (0 silenced).
+C:\Users\shiwansh\shirsti_printing\apps\design_tool\models.py changed, reloading.
+Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+September 28, 2025 - 02:02:00
+Django version 4.2.7, using settings 'shirsti_printing.settings'
+Starting development server at http://127.0.0.1:8001/
+Quit the server with CTRL-BREAK.
+
+Internal Server Error: /services/book-printing/childrens-book-printing/
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such column: services_staticproduct.turnaround_time
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\services\views.py", line 97, in product_detail
+    return static_product_detail(request, category_slug, product_slug)
+  File "C:\Users\shiwansh\shirsti_printing\apps\services\views.py", line 62, in static_product_detail
+    product = get_object_or_404(
+        StaticProduct,
+    ...<2 lines>...
+        is_active=True
+    )
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\shortcuts.py", line 85, in get_object_or_404
+    return queryset.get(*args, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\query.py", line 633, in get
+    num = len(clone)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\query.py", line 380, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such column: services_staticproduct.turnaround_time
+"GET /services/book-printing/childrens-book-printing/ HTTP/1.1" 500 176954
+Internal Server Error: /services/book-printing/childrens-book-printing/
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such column: services_staticproduct.turnaround_time
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\services\views.py", line 97, in product_detail
+    return static_product_detail(request, category_slug, product_slug)
+  File "C:\Users\shiwansh\shirsti_printing\apps\services\views.py", line 62, in static_product_detail
+    product = get_object_or_404(
+        StaticProduct,
+    ...<2 lines>...
+        is_active=True
+    )
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\shortcuts.py", line 85, in get_object_or_404
+    return queryset.get(*args, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\query.py", line 633, in get
+    num = len(clone)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\query.py", line 380, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such column: services_staticproduct.turnaround_time
+"GET /services/book-printing/childrens-book-printing/ HTTP/1.1" 500 176954
+Not Found: /services/book-printing/childrens-book-printing/
+"GET /services/book-printing/childrens-book-printing/ HTTP/1.1" 404 4501
+Internal Server Error: /services/book-printing/childrens-books/
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\services\views.py", line 97, in product_detail
+    return static_product_detail(request, category_slug, product_slug)
+  File "C:\Users\shiwansh\shirsti_printing\apps\services\views.py", line 93, in static_product_detail
+    return render(request, 'services/static_products/product_detail.html', context)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\base.py", line 173, in render
+    with context.bind_template(self):
+         ~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\template\context.py", line 254, in bind_template
+    updates.update(processor(self.request))
+                   ~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\apps\services\context_processors.py", line 21, in services_menu_context
+    for category in categories:
+                    ^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\query.py", line 398, in __iter__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\query.py", line 1883, in _fetch_all
+    self._prefetch_related_objects()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\query.py", line 1273, in _prefetch_related_objects
+    prefetch_related_objects(self._result_cache, *self._prefetch_related_lookups)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\shirsti_printing\venv\Lib\site-packages\django\db\models\query.py", line 2296, in prefetch_related_objects
+    raise AttributeError(
+    ...<7 lines>...
+    )
+AttributeError: Cannot find 'products' on ServiceCategory object, 'products' is an invalid parameter to prefetch_related()
+"GET /services/book-printing/childrens-books/ HTTP/1.1" 500 142716
+C:\Users\shiwansh\shirsti_printing\apps\services\context_processors.py changed, reloading.
+Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+September 28, 2025 - 02:04:59
+Django version 4.2.7, using settings 'shirsti_printing.settings'
+Starting development server at http://127.0.0.1:8001/
+Quit the server with CTRL-BREAK.
+
+"GET /services/book-printing/childrens-books/ HTTP/1.1" 200 93104
+"GET / HTTP/1.1" 200 69077
+"GET / HTTP/1.1" 200 71951
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 1962
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 1935
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 1929
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 1929
+"GET /services/book-printing/ HTTP/1.1" 200 48854
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 95985
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /services/api/pricing/1/?quantity=100&rush_order=false&design_service=false HTTP/1.1" 200 419
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 95985
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /services/api/pricing/1/?quantity=100&rush_order=false&design_service=false HTTP/1.1" 200 419

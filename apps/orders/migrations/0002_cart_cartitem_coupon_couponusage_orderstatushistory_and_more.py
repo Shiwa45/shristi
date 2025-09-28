@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('orders', '0001_initial'),
-        ('services', '0002_productspecification_productimage'),
+        ('services', '0001_initial'),
         ('templates_mgmt', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]

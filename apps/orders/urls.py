@@ -37,4 +37,17 @@ urlpatterns = [
     
     # API endpoints
     path('api/cart-count/', views.cart_count_api, name='api_cart_count'),
+
+    # ENHANCED CART AJAX ENDPOINTS (Phase 3)
+    path('api/static-product/add/<int:product_id>/', views.add_static_product_to_cart, name='add_static_product'),
+    path('api/cart/update/<int:item_id>/', views.update_cart_item_ajax, name='update_cart_ajax'),
+    path('api/cart/remove/<int:item_id>/', views.remove_cart_item_ajax, name='remove_cart_ajax'),
+    path('api/cart/apply-coupon/', views.apply_coupon_ajax, name='apply_coupon_ajax'),
+    path('api/cart/summary/', views.cart_summary_ajax, name='cart_summary_ajax'),
+
+    # QUOTE GENERATION SYSTEM (Phase 3)
+    path('api/quote/generate/', views.generate_quote_from_cart, name='generate_quote'),
+    path('quote/<str:quote_number>/', views.quote_detail_view, name='quote_detail_new'),
+    path('api/quote/<str:quote_number>/accept/', views.accept_quote, name='accept_quote'),
+    path('quote/<str:quote_number>/download/', views.download_quote_pdf, name='download_quote_pdf'),
 ]

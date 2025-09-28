@@ -1,0 +1,22 @@
+<div class="section-header">
+    <h3 class="section-title">
+        {% if section_name == 'product_specs' %}
+            <i class="fas fa-cog"></i>
+        {% elif section_name == 'design_options' %}
+            <i class="fas fa-paint-brush"></i>
+        {% elif section_name == 'printing_options' %}
+            <i class="fas fa-print"></i>
+        {% elif section_name == 'finishing_options' %}
+            <i class="fas fa-magic"></i>
+        {% elif section_name == 'additional_services' %}
+            <i class="fas fa-plus-circle"></i>
+        {% elif section_name == 'file_uploads' %}
+            <i class="fas fa-upload"></i>
+        {% elif section_name == 'quantity_pricing' %}
+            <i class="fas fa-calculator"></i>
+        {% else %}
+            <i class="fas fa-list"></i>
+        {% endif %}
+        {{ section_display_name }}
+    </h3>
+</div>

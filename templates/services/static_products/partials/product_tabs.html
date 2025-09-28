@@ -1,0 +1,148 @@
+<!-- Product Details Tabs -->
+<div class="container mx-auto px-4">
+    <div class="product-tabs">
+        <!-- Tab Navigation -->
+        <div class="flex space-x-1 rounded-xl bg-blue-900/20 p-1 mb-8">
+            <button onclick="switchTab('specifications')" id="tab-specifications" class="tab-button w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 bg-white shadow active">
+                Specifications
+            </button>
+            <button onclick="switchTab('samples')" id="tab-samples" class="tab-button w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-100 hover:bg-white/[0.12] hover:text-white focus:outline-none focus:ring-2">
+                Samples
+            </button>
+            <button onclick="switchTab('reviews')" id="tab-reviews" class="tab-button w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-100 hover:bg-white/[0.12] hover:text-white focus:outline-none focus:ring-2">
+                Reviews
+            </button>
+            <button onclick="switchTab('faq')" id="tab-faq" class="tab-button w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-100 hover:bg-white/[0.12] hover:text-white focus:outline-none focus:ring-2">
+                FAQ
+            </button>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="tab-content">
+            <!-- Specifications Tab -->
+            <div id="content-specifications" class="tab-panel">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Technical Specifications</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-medium text-gray-700 mb-2">Description</h4>
+                                <p class="text-gray-600">{{ product.description|default:"Professional printing service with high-quality materials and expert craftsmanship." }}</p>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-700 mb-2">Quality Features</h4>
+                                <ul class="list-disc list-inside text-gray-600 space-y-1">
+                                    <li>Premium quality materials</li>
+                                    <li>Professional printing technology</li>
+                                    <li>Expert quality control</li>
+                                    <li>Fast turnaround time</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Product Details</h3>
+                        <div class="space-y-4">
+                            {% if product.turnaround_time %}
+                            <div>
+                                <h4 class="font-medium text-gray-700 mb-2">Turnaround Time</h4>
+                                <p class="text-gray-600">{{ product.turnaround_time }} standard delivery</p>
+                            </div>
+                            {% endif %}
+                            <div>
+                                <h4 class="font-medium text-gray-700 mb-2">File Requirements</h4>
+                                <ul class="list-disc list-inside text-gray-600 space-y-1">
+                                    <li>PDF files with 300 DPI resolution</li>
+                                    <li>CMYK color mode for best results</li>
+                                    <li>Include 3mm bleed area</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Samples Tab -->
+            <div id="content-samples" class="tab-panel hidden">
+                <div class="text-center mb-8">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Sample Gallery</h3>
+                    <p class="text-gray-600">Browse through our sample works to see the quality and options available</p>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    {% for i in "1234" %}
+                    <div class="sample-item group cursor-pointer">
+                        <div class="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg overflow-hidden">
+                            <div class="w-full h-full flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                                <div class="text-center text-gray-500">
+                                    <svg class="w-12 h-12 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    <p class="text-sm font-medium">Sample {{ forloop.counter }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Reviews Tab -->
+            <div id="content-reviews" class="tab-panel hidden">
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Customer Reviews</h3>
+                    <div class="flex items-center space-x-4 mb-6">
+                        <div class="text-4xl font-bold text-gray-900">4.8</div>
+                        <div>
+                            <div class="flex items-center space-x-1 mb-1">
+                                {% for i in "12345" %}
+                                <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                </svg>
+                                {% endfor %}
+                            </div>
+                            <p class="text-sm text-gray-600">Based on 247 reviews</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-6">
+                    <div class="border border-gray-200 rounded-lg p-6">
+                        <p class="text-gray-600">Excellent quality {{ product.name|lower }}! Professional service and timely delivery.</p>
+                        <p class="text-sm text-gray-500 mt-2">- Rajesh Kumar</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Tab -->
+            <div id="content-faq" class="tab-panel hidden">
+                <div class="space-y-4">
+                    <div class="faq-item border border-gray-200 rounded-lg">
+                        <button class="w-full text-left p-4 focus:outline-none" onclick="toggleFAQ(this)">
+                            <div class="flex justify-between items-center">
+                                <h4 class="font-medium text-gray-900">What file formats do you accept?</h4>
+                                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </div>
+                        </button>
+                        <div class="faq-answer hidden p-4 pt-0 text-gray-600">
+                            We accept PDF, AI, PSD, PNG, and JPG files. For best results, please provide high-resolution files (300 DPI).
+                        </div>
+                    </div>
+                    <div class="faq-item border border-gray-200 rounded-lg">
+                        <button class="w-full text-left p-4 focus:outline-none" onclick="toggleFAQ(this)">
+                            <div class="flex justify-between items-center">
+                                <h4 class="font-medium text-gray-900">How long does production take?</h4>
+                                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </div>
+                        </button>
+                        <div class="faq-answer hidden p-4 pt-0 text-gray-600">
+                            {% if product.turnaround_time %}Standard production time is {{ product.turnaround_time }}.{% else %}Standard production time is 3-5 business days.{% endif %} Rush orders available.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

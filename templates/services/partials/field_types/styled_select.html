@@ -1,0 +1,261 @@
+<!-- templates/services/partials/field_types/styled_select.html -->
+{% load dynamic_form_tags %}
+
+<div class="styled-select-wrapper">
+    <div class="select-container">
+        <select id="{{ field.field_name }}" 
+                name="{{ field.field_name }}" 
+                class="styled-select"
+                {% if field.is_required %}required{% endif %}
+                data-field-type="select"
+                data-price-affecting="{{ field.is_price_affecting|yesno:'true,false' }}"
+                onchange="handleFieldChange(this)">
+            
+            {% if not field.is_required or not field.get_options %}
+                <option value="">{{ field.placeholder|default:"Please select..." }}</option>
+            {% endif %}
+
+            {% for option in field.get_options %}
+                <option value="{{ option.value }}"
+                        data-price-modifier="{{ option.price_modifier|default:0 }}"
+                        data-description="{{ option.description|default:'' }}"
+                        {% if form_data and form_data|get_item:field.field_name == option.value %}selected{% endif %}
+                        {% if not form_data and option.value == field.default_value %}selected{% endif %}>
+                    {{ option.label }}
+                    {% if option.price_modifier and option.price_modifier != 0 %}
+                        {% if option.price_modifier > 0 %}
+                            (+₹{{ option.price_modifier }})
+                        {% else %}
+                            (₹{{ option.price_modifier }})
+                        {% endif %}
+                    {% endif %}
+                </option>
+            {% endfor %}
+        </select>
+        
+        <!-- Custom dropdown arrow -->
+        <div class="select-arrow">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </div>
+
+    <!-- Option descriptions (if any) -->
+    {% for option in field.get_options %}
+        {% if option.description %}
+            <div class="option-description hidden" data-option="{{ option.value }}">
+                <div class="description-bubble">
+                    <i class="fas fa-info-circle text-blue-500 mr-2"></i>
+                    {{ option.description }}
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
+
+<style>
+.styled-select-wrapper {
+    position: relative;
+}
+
+.select-container {
+    position: relative;
+}
+
+.styled-select {
+    width: 100%;
+    padding: 0.75rem 3rem 0.75rem 1rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    background-color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.styled-select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.styled-select:hover {
+    border-color: #9ca3af;
+}
+
+.select-arrow {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #6b7280;
+    transition: transform 0.3s ease;
+}
+
+.styled-select:focus + .select-arrow {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.option-description {
+    margin-top: 0.75rem;
+    animation: slideDown 0.3s ease;
+}
+
+.option-description.hidden {
+    display: none;
+}
+
+.description-bubble {
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border: 1px solid #bfdbfe;
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+    font-size: 0.875rem;
+    color: #1e40af;
+    display: flex;
+    align-items: flex-start;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Enhanced select styles for different states */
+.styled-select option {
+    padding: 0.75rem;
+    background: white;
+    color: #374151;
+}
+
+.styled-select option:checked {
+    background: #3b82f6;
+    color: white;
+}
+
+/* Mobile responsive improvements */
+@media (max-width: 768px) {
+    .styled-select {
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+}
+</style>
+
+<script>
+function handleFieldChange(selectElement) {
+    const selectedOption = selectElement.options[selectElement.selectedIndex];
+    const wrapper = selectElement.closest('.styled-select-wrapper');
+    
+    // Hide all descriptions
+    wrapper.querySelectorAll('.option-description').forEach(desc => {
+        desc.classList.add('hidden');
+    });
+    
+    // Show description for selected option
+    if (selectedOption.dataset.description) {
+        const description = wrapper.querySelector(`[data-option="${selectedOption.value}"]`);
+        if (description) {
+            description.classList.remove('hidden');
+        }
+    }
+    
+    // Handle price changes
+    if (selectElement.dataset.priceAffecting === 'true') {
+        const priceModifier = parseFloat(selectedOption.dataset.priceModifier) || 0;
+        updateFieldPricing(selectElement, priceModifier);
+    }
+    
+    // Trigger conditional field logic
+    handleConditionalFields(selectElement);
+}
+
+function updateFieldPricing(fieldElement, priceModifier) {
+    const wrapper = fieldElement.closest('.styled-field-wrapper');
+    const priceImpact = wrapper.querySelector('.price-impact');
+    
+    if (priceImpact) {
+        const priceChange = priceImpact.querySelector('.price-change');
+        
+        if (priceModifier !== 0) {
+            priceChange.textContent = priceModifier > 0 ? `+₹${priceModifier}` : `₹${priceModifier}`;
+            priceImpact.classList.remove('hidden');
+            priceImpact.classList.toggle('positive', priceModifier > 0);
+            priceImpact.classList.toggle('negative', priceModifier < 0);
+        } else {
+            priceImpact.classList.add('hidden');
+        }
+    }
+    
+    // Dispatch event for pricing calculator
+    document.dispatchEvent(new CustomEvent('fieldPriceChange', {
+        detail: {
+            fieldName: fieldElement.name,
+            priceModifier: priceModifier,
+            fieldElement: fieldElement
+        }
+    }));
+}
+
+function handleConditionalFields(triggerField) {
+    const fieldName = triggerField.name;
+    const fieldValue = triggerField.value;
+    
+    // Find all fields with show conditions
+    document.querySelectorAll('[data-show-condition]').forEach(fieldWrapper => {
+        const condition = JSON.parse(fieldWrapper.dataset.showCondition || '{}');
+        
+        if (condition.field === fieldName) {
+            const shouldShow = checkCondition(condition, fieldValue);
+            fieldWrapper.classList.toggle('hidden', !shouldShow);
+            
+            // Enable/disable required validation
+            const input = fieldWrapper.querySelector('input, select, textarea');
+            if (input) {
+                input.toggleAttribute('required', shouldShow && input.dataset.originalRequired === 'true');
+            }
+        }
+    });
+}
+
+function checkCondition(condition, value) {
+    const operator = condition.operator || 'equals';
+    const targetValue = condition.value;
+    
+    switch (operator) {
+        case 'equals':
+            return value === targetValue;
+        case 'not_equals':
+            return value !== targetValue;
+        case 'contains':
+            return value.includes(targetValue);
+        case 'greater_than':
+            return parseFloat(value) > parseFloat(targetValue);
+        case 'less_than':
+            return parseFloat(value) < parseFloat(targetValue);
+        default:
+            return true;
+    }
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    // Store original required states
+    document.querySelectorAll('input[required], select[required], textarea[required]').forEach(input => {
+        input.dataset.originalRequired = 'true';
+    });
+    
+    // Initialize conditional fields
+    document.querySelectorAll('select[data-field-type="select"]').forEach(select => {
+        handleFieldChange(select);
+    });
+});
+</script>

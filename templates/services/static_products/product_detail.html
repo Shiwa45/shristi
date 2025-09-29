@@ -1,201 +1,486 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{{ product.name }} - Professional Printing Services | Shirsti Printing{% endblock %}
+{% block title %}{{ product.name }} - {{ category.name }} | {{ block.super }}{% endblock %}
 
-{% block meta_description %}
-{{ product.short_description }} Professional printing services with instant pricing. Starting from ₹{{ product.base_price }}. Fast delivery, high quality guaranteed.
-{% endblock %}
+{% block meta_description %}{{ product.meta_description|default:product.short_description|truncatewords:20 }} Professional printing services with quality guaranteed.{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/products/product-detail.css' %}">
-<link rel="stylesheet" href="{% static 'css/products/pricing-calculator.css' %}">
-<link rel="stylesheet" href="{% static 'css/products/product-gallery.css' %}">
-<link rel="stylesheet" href="{% static 'css/products/responsive-products.css' %}">
+<style>
+/* QinPrinting Style Enhancements */
+.hero-gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-gradient::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3Ccircle cx='10' cy='10' r='4'/%3E%3Ccircle cx='50' cy='10' r='4'/%3E%3Ccircle cx='10' cy='50' r='4'/%3E%3Ccircle cx='50' cy='50' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.breadcrumb-nav {
+    background: white;
+    padding: 1rem 0;
+    border-bottom: 1px solid #e5e7eb;
+    margin-top: 80px; /* Account for fixed header */
+}
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.breadcrumb a {
+    color: #6b7280;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.breadcrumb a:hover {
+    color: #667eea;
+}
+
+.pricing-card {
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.pricing-card:hover {
+    border-color: #667eea;
+    transform: translateY(-2px);
+}
+
+.specification-grid {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+.trust-indicator {
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.trust-indicator:hover {
+    transform: scale(1.05);
+}
+
+.cta-gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.feature-icon {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.tab-button {
+    transition: all 0.3s ease;
+}
+
+.tab-button.active {
+    border-color: #667eea !important;
+    color: #667eea !important;
+}
+
+.product-gallery img {
+    transition: transform 0.3s ease;
+}
+
+.product-gallery img:hover {
+    transform: scale(1.05);
+}
+
+/* QinPrinting style table for pricing */
+.pricing-table {
+    border-collapse: collapse;
+    width: 100%;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.pricing-table th,
+.pricing-table td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.pricing-table th {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-weight: 600;
+}
+
+.pricing-table tr:last-child td {
+    border-bottom: none;
+}
+
+.pricing-table tr:hover {
+    background: #f8fafc;
+}
+
+.instant-quote-btn {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.instant-quote-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+    text-decoration: none;
+    color: white;
+}
+</style>
 {% endblock %}
 
 {% block content %}
+<!-- Breadcrumb Navigation -->
+<nav class="breadcrumb-nav">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <ol class="breadcrumb">
+            <li><a href="{% url 'core:home' %}">Home</a></li>
+            <li><i class="fas fa-chevron-right text-xs text-gray-400"></i></li>
+            <li><a href="{% url 'services:home' %}">Services</a></li>
+            <li><i class="fas fa-chevron-right text-xs text-gray-400"></i></li>
+            <li><a href="{% url 'services:category' category.slug %}">{{ category.name }}</a></li>
+            <li><i class="fas fa-chevron-right text-xs text-gray-400"></i></li>
+            <li class="text-gray-900 font-medium">{{ product.name }}</li>
+        </ol>
+    </div>
+</nav>
+
 <!-- Hero Section -->
-<section class="hero-section bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-16">
-    <div class="container mx-auto px-4">
+<section class="hero-gradient text-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="grid lg:grid-cols-2 gap-12 items-center">
-            <!-- Hero Content -->
-            <div class="space-y-6">
-                <!-- Breadcrumbs -->
-                <nav class="flex items-center space-x-2 text-sm text-gray-600" aria-label="Breadcrumb">
-                    <a href="{% url 'services:home' %}" class="hover:text-blue-600 transition-colors">Home</a>
-                    <span>/</span>
-                    <a href="{% url 'services:category' product.category.slug %}" class="hover:text-blue-600 transition-colors">{{ product.category.name }}</a>
-                    <span>/</span>
-                    <span class="text-gray-900">{{ product.name }}</span>
-                </nav>
-
-                <!-- Product Title -->
-                <h1 class="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
-                    {{ product.name }}
-                </h1>
-
-                <!-- Short Description -->
-                <p class="text-xl text-gray-600 leading-relaxed">
-                    {{ product.short_description }}
+            <!-- Product Info -->
+            <div>
+                {% if product.is_featured %}
+                <div class="inline-flex items-center bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
+                    <i class="fas fa-star text-yellow-300 mr-2"></i>
+                    <span class="text-sm font-medium">Featured Product</span>
+                </div>
+                {% endif %}
+                
+                <h1 class="text-4xl lg:text-5xl font-bold mb-6">{{ product.name }}</h1>
+                <p class="text-xl mb-8 text-white/90 leading-relaxed">
+                    {{ product.description|default:product.short_description }}
                 </p>
-
-                <!-- Key Features -->
-                <div class="flex flex-wrap gap-3">
-                    {% if product.turnaround_time %}
-                    <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
-                        ⚡ {{ product.turnaround_time }} delivery
-                    </span>
-                    {% endif %}
-                    <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
-                        💎 Premium Quality
-                    </span>
-                    <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">
-                        📏 Custom Sizes
-                    </span>
-                    {% if product.design_tool_enabled %}
-                    <span class="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm font-medium">
-                        🎨 Design Tool
-                    </span>
-                    {% endif %}
-                </div>
-
-                <!-- CTA Buttons -->
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <button class="btn-primary px-8 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors">
-                        Get Quote Now
-                    </button>
-                    <button class="btn-secondary px-8 py-3 border border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-colors">
-                        View Samples
-                    </button>
-                </div>
-
+                
                 <!-- Trust Indicators -->
-                <div class="flex items-center space-x-6 text-sm text-gray-600">
-                    <div class="flex items-center space-x-1">
-                        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                        </svg>
-                        <span>Money Back Guarantee</span>
+                <div class="grid grid-cols-3 gap-4 mb-8">
+                    <div class="trust-indicator bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center">
+                        <i class="fas fa-shipping-fast text-2xl mb-2 text-green-300"></i>
+                        <div class="text-sm font-medium">Free Shipping</div>
+                        <div class="text-xs text-white/80">Orders over ₹2000</div>
                     </div>
-                    <div class="flex items-center space-x-1">
-                        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                        </svg>
-                        <span>Free Shipping Available</span>
+                    <div class="trust-indicator bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center">
+                        <i class="fas fa-medal text-2xl mb-2 text-yellow-300"></i>
+                        <div class="text-sm font-medium">Premium Quality</div>
+                        <div class="text-xs text-white/80">25+ years experience</div>
                     </div>
+                    <div class="trust-indicator bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center">
+                        <i class="fas fa-clock text-2xl mb-2 text-blue-300"></i>
+                        <div class="text-sm font-medium">Quick Turnaround</div>
+                        <div class="text-xs text-white/80">3-5 business days</div>
+                    </div>
+                </div>
+
+                <!-- Starting Price -->
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 inline-block">
+                    <div class="text-3xl font-bold mb-1">₹{{ product.base_price }}</div>
+                    <div class="text-sm text-white/80">Starting price {{ product.price_unit }}</div>
+                    {% if product.minimum_quantity %}
+                    <div class="text-xs text-white/70 mt-1">Minimum order: {{ product.minimum_quantity }} pieces</div>
+                    {% endif %}
                 </div>
             </div>
 
-            <!-- Hero Image -->
+            <!-- Product Image -->
             <div class="relative">
-                <div class="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl overflow-hidden shadow-2xl">
+                <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8">
                     {% if product.hero_image %}
-                        <img src="{{ product.hero_image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover">
+                        <img src="{{ product.hero_image.url }}" 
+                             alt="{{ product.name }}" 
+                             class="w-full h-80 object-cover rounded-lg shadow-2xl">
                     {% else %}
-                        <div class="w-full h-full flex items-center justify-center">
-                            <div class="text-center text-gray-500">
-                                <svg class="w-20 h-20 mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
-                                </svg>
+                        <div class="w-full h-80 bg-white/20 rounded-lg flex items-center justify-center">
+                            <div class="text-center">
+                                <i class="fas fa-print text-6xl mb-4 text-white/60"></i>
                                 <p class="text-lg font-medium">{{ product.name }}</p>
-                                <p class="text-sm">Professional Quality</p>
+                                <p class="text-sm text-white/80">Professional Quality</p>
                             </div>
                         </div>
                     {% endif %}
                 </div>
-                <!-- Floating stats -->
-                <div class="absolute -bottom-4 -right-4 bg-white rounded-lg shadow-lg p-4">
+                
+                {% if product.design_tool_enabled %}
+                <!-- Floating Design Feature -->
+                <div class="absolute -bottom-6 -left-6 bg-white rounded-lg shadow-xl p-4">
                     <div class="text-center">
-                        <div class="text-2xl font-bold text-blue-600">₹{{ product.base_price }}</div>
-                        <div class="text-sm text-gray-600">Starting from</div>
+                        <i class="fas fa-palette text-purple-600 text-2xl mb-2"></i>
+                        <div class="text-sm font-semibold text-gray-900">Custom Design</div>
+                        <div class="text-xs text-gray-600">Tool Available</div>
                     </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main Content -->
+<section class="bg-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-3 gap-12">
+            <!-- Product Options & Gallery (2/3 width) -->
+            <div class="lg:col-span-2">
+                <!-- Product Gallery -->
+                {% if product.gallery_images.exists or product.featured_image %}
+                <div class="mb-12">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                        <i class="fas fa-images text-blue-600 mr-3"></i>
+                        Product Gallery
+                    </h2>
+                    <div class="product-gallery grid grid-cols-2 md:grid-cols-3 gap-4">
+                        {% if product.featured_image %}
+                        <img src="{{ product.featured_image.url }}" 
+                             alt="{{ product.name }} - Featured" 
+                             class="w-full h-32 object-cover rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer">
+                        {% endif %}
+                        
+                        {% for image in product.gallery_images.all %}
+                        <img src="{{ image.image.url }}" 
+                             alt="{{ product.name }} - Gallery {{ forloop.counter }}" 
+                             class="w-full h-32 object-cover rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer">
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Product Options Panel -->
+                <div class="specification-grid rounded-2xl p-8">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-8 flex items-center">
+                        <i class="fas fa-cogs text-purple-600 mr-3"></i>
+                        Customize Your Order
+                    </h2>
+
+                    <!-- Include your existing options panel -->
+                    {% include 'services/static_products/partials/options_panel.html' %}
+
+
+                </div>
+            </div>
+
+            <!-- Pricing Calculator (1/3 width) -->
+            <div class="lg:col-span-1">
+                <div class="sticky top-8">
+                    <!-- Include your existing pricing calculator -->
+                    {% include 'services/static_products/partials/pricing_calculator.html' %}
+
+                    <!-- Contact Support -->
+                    <div class="bg-blue-50 rounded-xl p-6 mt-8">
+                        <h4 class="font-bold text-blue-900 mb-3 flex items-center">
+                            <i class="fas fa-headset text-blue-600 mr-2"></i>
+                            Need Help?
+                        </h4>
+                        <p class="text-blue-800 text-sm mb-4">Our printing experts are here to assist you with your order.</p>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex items-center text-blue-700">
+                                <i class="fas fa-phone w-4 mr-2"></i>
+                                <span>+91 98765 43210</span>
+                            </div>
+                            <div class="flex items-center text-blue-700">
+                                <i class="fas fa-envelope w-4 mr-2"></i>
+                                <span>info@drishthiprinting.com</span>
+                            </div>
+                            <div class="flex items-center text-blue-700">
+                                <i class="fas fa-clock w-4 mr-2"></i>
+                                <span>Mon-Fri: 9AM-6PM</span>
+                            </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Main Product Section -->
-<section class="py-16 bg-white">
-    <div class="container mx-auto px-4">
-        <div class="grid lg:grid-cols-12 gap-8">
-            <!-- Product Gallery (cols 1-4) -->
-            <div class="lg:col-span-4">
-                {% include 'services/static_products/partials/product_gallery.html' %}
+<!-- QinPrinting Style Pricing Table -->
+{% if product.quantity_tiers %}
+<section class="bg-gray-50 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Instant Online Pricing</h2>
+            <p class="text-xl text-gray-600">Get immediate quotes based on your quantity needs</p>
+        </div>
+        
+        <div class="max-w-4xl mx-auto">
+            <table class="pricing-table">
+                <thead>
+                    <tr>
+                        <th>Quantity</th>
+                        <th>Price Per Unit</th>
+                        <th>Total Cost</th>
+                        <th>You Save</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tier in product.quantity_tiers %}
+                    <tr>
+                        <td class="font-semibold">{{ tier.min_quantity }}{% if tier.max_quantity %} - {{ tier.max_quantity }}{% else %}+{% endif %} pcs</td>
+                        <td class="text-green-600 font-bold">₹{{ tier.price_per_unit }}</td>
+                        <td class="font-semibold">₹{{ tier.total_cost }}</td>
+                        <td class="text-red-600">
+                            {% if tier.savings %}{{ tier.savings }}%{% else %}-{% endif %}
+                        </td>
+                        <td>
+                            <a href="#" class="instant-quote-btn text-sm">
+                                <i class="fas fa-calculator mr-1"></i>
+                                Get Quote
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            <div class="text-center mt-8">
+                <p class="text-gray-600 mb-4">Need a custom quantity? Get a personalized quote!</p>
+                <a href="{% url 'orders:quote_request' %}" class="cta-gradient text-white font-bold py-4 px-8 rounded-lg hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02] inline-block">
+                    <i class="fas fa-calculator mr-2"></i>
+                    Get Custom Quote
+                </a>
             </div>
+        </div>
+    </div>
+</section>
+{% endif %}
 
-            <!-- Options Panel (cols 5-8) -->
-            <div class="lg:col-span-5">
-                {% include 'services/static_products/partials/options_panel.html' %}
+<!-- Product Information Tabs -->
+<section class="bg-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Include your existing product tabs -->
+        {% include 'services/static_products/partials/product_tabs.html' %}
+    </div>
+</section>
 
-                {% if product.design_tool_enabled %}
-                    {% include 'services/static_products/partials/design_tool_section.html' %}
-                {% endif %}
+<!-- Features Section -->
+<section class="bg-gray-50 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Why Choose Our {{ product.name }}?</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">We combine premium quality materials, advanced printing technology, and exceptional customer service to deliver outstanding results.</p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="text-center">
+                <div class="feature-icon w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-award text-2xl text-white"></i>
+                </div>
+                <h3 class="font-bold text-gray-900 mb-2">Premium Quality</h3>
+                <p class="text-gray-600 text-sm">25+ years of printing excellence with state-of-the-art equipment</p>
             </div>
-
-            <!-- Pricing Calculator (cols 9-12) -->
-            <div class="lg:col-span-3">
-                {% include 'services/static_products/partials/pricing_calculator.html' %}
+            
+            <div class="text-center">
+                <div class="feature-icon w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-shipping-fast text-2xl text-white"></i>
+                </div>
+                <h3 class="font-bold text-gray-900 mb-2">Fast Delivery</h3>
+                <p class="text-gray-600 text-sm">Quick turnaround times with reliable shipping nationwide</p>
+            </div>
+            
+            <div class="text-center">
+                <div class="feature-icon w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-palette text-2xl text-white"></i>
+                </div>
+                <h3 class="font-bold text-gray-900 mb-2">Custom Design</h3>
+                <p class="text-gray-600 text-sm">Professional design services and unlimited customization options</p>
+            </div>
+            
+            <div class="text-center">
+                <div class="feature-icon w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-headset text-2xl text-white"></i>
+                </div>
+                <h3 class="font-bold text-gray-900 mb-2">Expert Support</h3>
+                <p class="text-gray-600 text-sm">Dedicated customer support to guide you through every step</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Product Details Tabs -->
-<section class="py-16 bg-gray-50">
-    {% include 'services/static_products/partials/product_tabs.html' %}
-</section>
-
 <!-- Related Products -->
-<section class="py-16 bg-white">
-    {% include 'services/static_products/partials/related_products.html' %}
+{% if related_products %}
+<section class="bg-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Include your existing related products -->
+        {% include 'services/static_products/partials/related_products.html' %}
+    </div>
 </section>
+{% endif %}
 
-<!-- JSON-LD Structured Data -->
-<script type="application/ld+json">
+<!-- JSON Data for JavaScript -->
+<script id="product-data" type="application/json">
 {
-    "@context": "https://schema.org/",
-    "@type": "Product",
-    "name": "{{ product.name }}",
-    "description": "{{ product.short_description }}",
-    "category": "{{ product.category.name }}",
-    "brand": {
-        "@type": "Brand",
-        "name": "Shirsti Printing"
-    },
-    "offers": {
-        "@type": "Offer",
-        "url": "{{ request.build_absolute_uri }}",
-        "priceCurrency": "INR",
-        "price": "{{ product.base_price }}",
-        "availability": "https://schema.org/InStock",
-        "seller": {
-            "@type": "Organization",
-            "name": "Shirsti Printing"
-        }
-    }
+    "id": {{ product.id }},
+    "name": "{{ product.name|escapejs }}",
+    "basePrice": {{ product.base_price }},
+    "priceUnit": "{{ product.price_unit|escapejs }}",
+    "availableSizes": {{ product.available_sizes|safe }},
+    "availablePapers": {{ product.available_papers|safe }},
+    "availableFinishes": {{ product.available_finishes|safe }},
+    "availableBindings": {{ product.available_bindings|safe }},
+    "colorOptions": {{ product.color_options|safe }},
+    "quantityTiers": {{ product.quantity_tiers|safe }},
+    "minimumQuantity": {{ product.minimum_quantity|default:1 }},
+    "designToolEnabled": {{ product.design_tool_enabled|yesno:"true,false" }}
 }
 </script>
-{% endblock %}
 
-{% block extra_js %}
 <script>
-    // Global product data for JavaScript
-    window.productData = {
-        id: {{ product.id }},
-        name: "{{ product.name|escapejs }}",
-        basePrice: {{ product.base_price }},
-        priceUnit: "{{ product.price_unit|escapejs }}",
-        designToolEnabled: {{ product.design_tool_enabled|yesno:"true,false" }},
-        rushOrderPercentage: {{ product.rush_order_percentage|default:0 }},
-        designServicePrice: {{ product.design_service_price|default:0 }}
-    };
+// Tab functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const targetTab = this.getAttribute('data-tab');
+            
+            // Remove active class from all buttons and contents
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.add('hidden'));
+            
+            // Add active class to clicked button and show corresponding content
+            this.classList.add('active');
+            document.getElementById(targetTab).classList.remove('hidden');
+        });
+    });
+    
+    // Gallery image click functionality
+    const galleryImages = document.querySelectorAll('.product-gallery img');
+    galleryImages.forEach(img => {
+        img.addEventListener('click', function() {
+            // You can implement a lightbox or modal here
+            console.log('Gallery image clicked:', this.src);
+        });
+    });
+});
 </script>
-<script src="{% static 'js/products/pricing-calculator.js' %}"></script>
-<script src="{% static 'js/products/product-gallery.js' %}"></script>
-<script src="{% static 'js/products/product-options.js' %}"></script>
-{% if product.design_tool_enabled %}
-<script src="{% static 'js/products/design-tool-integration.js' %}"></script>
-{% endif %}
-{% endblock %}
+<script src="{% static 'js/products/dynamic-pricing-calculator.js' %}"></script>
+
+{% endblock %} 

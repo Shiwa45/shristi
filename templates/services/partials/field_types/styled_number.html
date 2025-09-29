@@ -1,0 +1,624 @@
+{% load dynamic_form_tags %}
+<!-- templates/services/partials/field_types/styled_number.html -->
+<div class="styled-number-wrapper">
+    <div class="number-input-container">
+        <input type="number" 
+               id="{{ field.field_name }}" 
+               name="{{ field.field_name }}" 
+               class="styled-number-input"
+               placeholder="{{ field.placeholder }}"
+               {% if field.min_value %}min="{{ field.min_value }}"{% endif %}
+               {% if field.max_value %}max="{{ field.max_value }}"{% endif %}
+               {% if field.default_value %}value="{{ field.default_value }}"{% endif %}
+               {% if form_data and form_data|get_item:field.field_name %}value="{{ form_data|get_item:field.field_name }}"{% endif %}
+               {% if field.is_required %}required{% endif %}
+               data-field-type="number"
+               data-price-affecting="{{ field.is_price_affecting|yesno:'true,false' }}"
+               oninput="handleNumberChange(this)">
+        
+        <!-- Increment/Decrement buttons -->
+        <div class="number-controls">
+            <button type="button" class="number-btn increment" onclick="incrementNumber('{{ field.field_name }}')">
+                <i class="fas fa-plus"></i>
+            </button>
+            <button type="button" class="number-btn decrement" onclick="decrementNumber('{{ field.field_name }}')">
+                <i class="fas fa-minus"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Range indicator -->
+    {% if field.min_value and field.max_value %}
+    <div class="range-indicator">
+        <span class="range-text">Range: {{ field.min_value }} - {{ field.max_value }}</span>
+    </div>
+    {% endif %}
+</div>
+
+<!-- templates/services/partials/field_types/styled_text.html -->
+<div class="styled-text-wrapper">
+    <div class="text-input-container">
+        <input type="text" 
+               id="{{ field.field_name }}" 
+               name="{{ field.field_name }}" 
+               class="styled-text-input"
+               placeholder="{{ field.placeholder }}"
+               {% if field.default_value %}value="{{ field.default_value }}"{% endif %}
+               {% if form_data and form_data|get_item:field.field_name %}value="{{ form_data|get_item:field.field_name }}"{% endif %}
+               {% if field.is_required %}required{% endif %}
+               data-field-type="text"
+               oninput="handleTextChange(this)">
+        
+        <!-- Input icon -->
+        <div class="input-icon">
+            <i class="fas fa-edit"></i>
+        </div>
+        
+        <!-- Character counter (if max length is set) -->
+        {% if field.max_value %}
+        <div class="char-counter">
+            <span class="current-count">0</span>/<span class="max-count">{{ field.max_value }}</span>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- templates/services/partials/field_types/styled_file.html -->
+<div class="styled-file-wrapper">
+    <div class="file-upload-area" 
+         ondrop="handleFileDrop(event, '{{ field.field_name }}')" 
+         ondragover="handleDragOver(event)"
+         ondragenter="handleDragEnter(event)"
+         ondragleave="handleDragLeave(event)">
+        
+        <input type="file" 
+               id="{{ field.field_name }}" 
+               name="{{ field.field_name }}" 
+               class="file-input"
+               {% if field.is_required %}required{% endif %}
+               {% if 'multiple' in field.field_name %}multiple{% endif %}
+               accept=".pdf,.ai,.png,.jpg,.jpeg,.svg"
+               onchange="handleFileSelect(this)">
+        
+        <div class="upload-content">
+            <div class="upload-icon">
+                <i class="fas fa-cloud-upload-alt"></i>
+            </div>
+            <div class="upload-text">
+                <p class="upload-title">Drop files here or <span class="browse-link">browse</span></p>
+                <p class="upload-subtitle">Supported: PDF, AI, PNG, JPG (min 300 DPI)</p>
+            </div>
+        </div>
+        
+        <!-- File preview area -->
+        <div class="file-preview-area hidden">
+            <div class="file-list"></div>
+            <button type="button" class="clear-files-btn" onclick="clearFiles('{{ field.field_name }}')">
+                <i class="fas fa-times mr-2"></i>Clear Files
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- templates/services/partials/field_types/styled_range.html -->
+<div class="styled-range-wrapper">
+    <div class="range-input-container">
+        <input type="range" 
+               id="{{ field.field_name }}" 
+               name="{{ field.field_name }}" 
+               class="styled-range-input"
+               min="{{ field.min_value|default:0 }}"
+               max="{{ field.max_value|default:100 }}"
+               step="1"
+               {% if field.default_value %}value="{{ field.default_value }}"{% endif %}
+               {% if form_data and form_data|get_item:field.field_name %}value="{{ form_data|get_item:field.field_name }}"{% endif %}
+               data-field-type="range"
+               data-price-affecting="{{ field.is_price_affecting|yesno:'true,false' }}"
+               oninput="handleRangeChange(this)">
+        
+        <!-- Range value display -->
+        <div class="range-value-display">
+            <span class="range-value">{{ field.default_value|default:field.min_value|default:0 }}</span>
+            {% if field.price_unit %}
+            <span class="range-unit">{{ field.price_unit }}</span>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Range labels -->
+    <div class="range-labels">
+        <span class="range-min">{{ field.min_value|default:0 }}</span>
+        <span class="range-max">{{ field.max_value|default:100 }}</span>
+    </div>
+</div>
+
+<style>
+/* Number Input Styles */
+.styled-number-wrapper {
+    position: relative;
+}
+
+.number-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.styled-number-input {
+    width: 100%;
+    padding: 0.75rem 4rem 0.75rem 1rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    background-color: white;
+    transition: all 0.3s ease;
+    -moz-appearance: textfield;
+}
+
+.styled-number-input::-webkit-outer-spin-button,
+.styled-number-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.styled-number-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.number-controls {
+    position: absolute;
+    right: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.number-btn {
+    width: 24px;
+    height: 20px;
+    border: 1px solid #d1d5db;
+    background: white;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 10px;
+    color: #6b7280;
+}
+
+.number-btn:hover {
+    background: #f3f4f6;
+    border-color: #9ca3af;
+}
+
+.number-btn:active {
+    background: #e5e7eb;
+}
+
+.range-indicator {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+/* Text Input Styles */
+.styled-text-wrapper {
+    position: relative;
+}
+
+.text-input-container {
+    position: relative;
+}
+
+.styled-text-input {
+    width: 100%;
+    padding: 0.75rem 3rem 0.75rem 1rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    background-color: white;
+    transition: all 0.3s ease;
+}
+
+.styled-text-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.input-icon {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+    pointer-events: none;
+}
+
+.char-counter {
+    position: absolute;
+    right: 1rem;
+    bottom: -1.5rem;
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+
+/* File Upload Styles */
+.styled-file-wrapper {
+    position: relative;
+}
+
+.file-upload-area {
+    border: 2px dashed #d1d5db;
+    border-radius: 1rem;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+}
+
+.file-upload-area:hover,
+.file-upload-area.drag-over {
+    border-color: #3b82f6;
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+}
+
+.file-input {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.upload-content {
+    pointer-events: none;
+}
+
+.upload-icon {
+    font-size: 3rem;
+    color: #9ca3af;
+    margin-bottom: 1rem;
+}
+
+.upload-title {
+    font-size: 1rem;
+    color: #374151;
+    margin-bottom: 0.5rem;
+}
+
+.browse-link {
+    color: #3b82f6;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.upload-subtitle {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.file-preview-area {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 0.5rem;
+    border: 1px solid #e5e7eb;
+}
+
+.file-list {
+    margin-bottom: 1rem;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+    background: #f8fafc;
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.file-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.file-icon {
+    width: 32px;
+    height: 32px;
+    background: #e5e7eb;
+    border-radius: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+}
+
+.clear-files-btn {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.clear-files-btn:hover {
+    background: #dc2626;
+}
+
+/* Range Input Styles */
+.styled-range-wrapper {
+    position: relative;
+}
+
+.range-input-container {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.styled-range-input {
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: #e5e7eb;
+    outline: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+}
+
+.styled-range-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #3b82f6;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.styled-range-input::-webkit-slider-thumb:hover {
+    background: #2563eb;
+    transform: scale(1.1);
+}
+
+.styled-range-input::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #3b82f6;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.range-value-display {
+    position: absolute;
+    top: -2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #374151;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.range-value-display::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid #374151;
+}
+
+.range-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-top: 0.5rem;
+}
+</style>
+
+<script>
+// Number field functions
+function handleNumberChange(numberInput) {
+    const value = parseFloat(numberInput.value) || 0;
+    
+    // Validate min/max
+    if (numberInput.min && value < parseFloat(numberInput.min)) {
+        numberInput.value = numberInput.min;
+    }
+    if (numberInput.max && value > parseFloat(numberInput.max)) {
+        numberInput.value = numberInput.max;
+    }
+    
+    // Handle pricing if applicable
+    if (numberInput.dataset.priceAffecting === 'true') {
+        updateFieldPricing(numberInput, value);
+    }
+    
+    dispatchFieldChange(numberInput);
+}
+
+function incrementNumber(fieldName) {
+    const input = document.getElementById(fieldName);
+    const step = parseFloat(input.step) || 1;
+    const newValue = (parseFloat(input.value) || 0) + step;
+    
+    if (!input.max || newValue <= parseFloat(input.max)) {
+        input.value = newValue;
+        handleNumberChange(input);
+    }
+}
+
+function decrementNumber(fieldName) {
+    const input = document.getElementById(fieldName);
+    const step = parseFloat(input.step) || 1;
+    const newValue = (parseFloat(input.value) || 0) - step;
+    
+    if (!input.min || newValue >= parseFloat(input.min)) {
+        input.value = newValue;
+        handleNumberChange(input);
+    }
+}
+
+// Text field functions
+function handleTextChange(textInput) {
+    const charCounter = textInput.parentElement.querySelector('.char-counter .current-count');
+    if (charCounter) {
+        charCounter.textContent = textInput.value.length;
+    }
+    
+    dispatchFieldChange(textInput);
+}
+
+// File upload functions
+function handleFileDrop(event, fieldName) {
+    event.preventDefault();
+    const uploadArea = event.currentTarget;
+    uploadArea.classList.remove('drag-over');
+    
+    const files = event.dataTransfer.files;
+    const input = document.getElementById(fieldName);
+    input.files = files;
+    
+    displayFiles(files, fieldName);
+}
+
+function handleDragOver(event) {
+    event.preventDefault();
+}
+
+function handleDragEnter(event) {
+    event.preventDefault();
+    event.currentTarget.classList.add('drag-over');
+}
+
+function handleDragLeave(event) {
+    event.preventDefault();
+    if (!event.currentTarget.contains(event.relatedTarget)) {
+        event.currentTarget.classList.remove('drag-over');
+    }
+}
+
+function handleFileSelect(fileInput) {
+    displayFiles(fileInput.files, fileInput.id);
+}
+
+function displayFiles(files, fieldName) {
+    const wrapper = document.getElementById(fieldName).closest('.styled-file-wrapper');
+    const previewArea = wrapper.querySelector('.file-preview-area');
+    const fileList = wrapper.querySelector('.file-list');
+    
+    if (files.length > 0) {
+        previewArea.classList.remove('hidden');
+        fileList.innerHTML = '';
+        
+        Array.from(files).forEach((file, index) => {
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-item';
+            fileItem.innerHTML = `
+                <div class="file-info">
+                    <div class="file-icon">
+                        <i class="fas fa-file"></i>
+                    </div>
+                    <div>
+                        <div class="file-name">${file.name}</div>
+                        <div class="file-size">${formatFileSize(file.size)}</div>
+                    </div>
+                </div>
+                <button type="button" onclick="removeFile(${index}, '${fieldName}')" class="text-red-500 hover:text-red-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            fileList.appendChild(fileItem);
+        });
+    }
+}
+
+function clearFiles(fieldName) {
+    const input = document.getElementById(fieldName);
+    input.value = '';
+    
+    const wrapper = input.closest('.styled-file-wrapper');
+    const previewArea = wrapper.querySelector('.file-preview-area');
+    previewArea.classList.add('hidden');
+}
+
+function formatFileSize(bytes) {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
+
+// Range field functions
+function handleRangeChange(rangeInput) {
+    const valueDisplay = rangeInput.parentElement.querySelector('.range-value');
+    if (valueDisplay) {
+        valueDisplay.textContent = rangeInput.value;
+    }
+    
+    // Update slider position for value display
+    const percent = ((rangeInput.value - rangeInput.min) / (rangeInput.max - rangeInput.min)) * 100;
+    const valueDisplayContainer = rangeInput.parentElement.querySelector('.range-value-display');
+    if (valueDisplayContainer) {
+        valueDisplayContainer.style.left = `${percent}%`;
+    }
+    
+    if (rangeInput.dataset.priceAffecting === 'true') {
+        updateFieldPricing(rangeInput, parseFloat(rangeInput.value));
+    }
+    
+    dispatchFieldChange(rangeInput);
+}
+
+// Common dispatch function
+function dispatchFieldChange(fieldElement) {
+    document.dispatchEvent(new CustomEvent('fieldChange', {
+        detail: {
+            fieldName: fieldElement.name,
+            value: fieldElement.value,
+            fieldType: fieldElement.dataset.fieldType,
+            fieldElement: fieldElement
+        }
+    }));
+}
+
+// Initialize all fields on page load
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize range sliders
+    document.querySelectorAll('.styled-range-input').forEach(handleRangeChange);
+    
+    // Initialize character counters
+    document.querySelectorAll('.styled-text-input').forEach(handleTextChange);
+    
+    // Setup file upload click handlers
+    document.querySelectorAll('.file-upload-area').forEach(area => {
+        area.addEventListener('click', function() {
+            const input = this.querySelector('.file-input');
+            input.click();
+        });
+    });
+});
+</script>

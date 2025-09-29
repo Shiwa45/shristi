@@ -1,0 +1,117 @@
+<!-- templates/services/partials/field_types/styled_field.html -->
+{% load dynamic_form_tags %}
+
+<div class="styled-field-wrapper">
+    <!-- Field Label -->
+    <label for="{{ field.field_name }}" class="field-label">
+        {{ field.field_label }}
+        {% if field.is_required %}
+            <span class="required-asterisk">*</span>
+        {% endif %}
+    </label>
+
+    <!-- Field Help Text -->
+    {% if field.help_text %}
+        <p class="field-help-text">{{ field.help_text }}</p>
+    {% endif %}
+
+    <!-- Field Input Based on Type -->
+    <div class="field-input-container">
+        {% if field.field_type == 'select' %}
+            {% include 'services/partials/field_types/styled_select.html' %}
+        {% elif field.field_type == 'radio' %}
+            {% include 'services/partials/field_types/styled_radio.html' %}
+        {% elif field.field_type == 'checkbox' %}
+            {% include 'services/partials/field_types/styled_checkbox.html' %}
+        {% elif field.field_type == 'number' %}
+            {% include 'services/partials/field_types/styled_number.html' %}
+        {% elif field.field_type == 'text' %}
+            {% include 'services/partials/field_types/styled_text.html' %}
+        {% elif field.field_type == 'range' %}
+            {% include 'services/partials/field_types/styled_range.html' %}
+        {% elif field.field_type == 'file' %}
+            {% include 'services/partials/field_types/styled_file.html' %}
+        {% else %}
+            <!-- Fallback for unknown field types -->
+            <input type="text" 
+                   id="{{ field.field_name }}" 
+                   name="{{ field.field_name }}" 
+                   class="styled-input"
+                   placeholder="{{ field.placeholder }}"
+                   {% if field.is_required %}required{% endif %}>
+        {% endif %}
+    </div>
+
+    <!-- Price Impact Display -->
+    {% if field.is_price_affecting %}
+        <div class="price-impact hidden">
+            <span class="price-change text-sm font-medium"></span>
+        </div>
+    {% endif %}
+</div>
+
+<style>
+.styled-field-wrapper {
+    position: relative;
+}
+
+.field-label {
+    display: block;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.required-asterisk {
+    color: #ef4444;
+    margin-left: 2px;
+}
+
+.field-help-text {
+    color: #6b7280;
+    font-size: 0.875rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+}
+
+.field-input-container {
+    position: relative;
+}
+
+.styled-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: white;
+}
+
+.styled-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.styled-input:hover {
+    border-color: #9ca3af;
+}
+
+.price-impact {
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background: #f0f9ff;
+    border-radius: 0.5rem;
+    border-left: 4px solid #3b82f6;
+}
+
+.price-impact.positive .price-change {
+    color: #059669;
+}
+
+.price-impact.negative .price-change {
+    color: #dc2626;
+}
+</style>

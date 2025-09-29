@@ -1,110 +1,321 @@
 {% load dynamic_form_tags %}
 
-<!-- Options Panel with Dynamic Form System -->
-<div class="options-panel space-y-8">
-    <h2 class="text-2xl font-semibold text-gray-900">Customize Your {{ product.name }}</h2>
-
-    <!-- Dynamic Form Fields -->
-    {% render_product_form_fields product %}
-
-    <!-- Fallback to static fields if no dynamic fields exist -->
-    {% if not product.form_fields.exists %}
-        <!-- Quantity Selection -->
-        <div class="option-group">
-            <label class="block text-sm font-medium text-gray-700 mb-3">
-                Quantity
-            </label>
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-3">
-                {% if product.quantity_tiers %}
-                    {% for tier in product.quantity_tiers %}
-                    <button class="quantity-option p-3 border border-gray-300 rounded-lg text-center hover:border-blue-500 hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            data-quantity="{{ tier.min_qty }}"
-                            data-discount="{{ tier.discount_percent }}"
-                            onclick="selectQuantity({{ tier.min_qty }}, {{ tier.discount_percent }})">
-                        <div class="font-semibold text-gray-900">{{ tier.min_qty }}+</div>
-                        {% if tier.discount_percent > 0 %}
-                        <div class="text-sm text-green-600 font-medium">{{ tier.discount_percent }}% off</div>
-                        {% endif %}
-                    </button>
-                    {% endfor %}
-                {% else %}
-                    <!-- Default quantity options -->
-                    <button class="quantity-option p-3 border border-gray-300 rounded-lg text-center hover:border-blue-500 hover:bg-blue-50 transition-colors active"
-                            data-quantity="100"
-                            onclick="selectQuantity(100, 0)">
-                        <div class="font-semibold text-gray-900">100+</div>
-                    </button>
-                    <button class="quantity-option p-3 border border-gray-300 rounded-lg text-center hover:border-blue-500 hover:bg-blue-50 transition-colors"
-                            data-quantity="500"
-                            onclick="selectQuantity(500, 5)">
-                        <div class="font-semibold text-gray-900">500+</div>
-                        <div class="text-sm text-green-600 font-medium">5% off</div>
-                    </button>
-                    <button class="quantity-option p-3 border border-gray-300 rounded-lg text-center hover:border-blue-500 hover:bg-blue-50 transition-colors"
-                            data-quantity="1000"
-                            onclick="selectQuantity(1000, 10)">
-                        <div class="font-semibold text-gray-900">1000+</div>
-                        <div class="text-sm text-green-600 font-medium">10% off</div>
-                    </button>
-                {% endif %}
-            </div>
-
-            <!-- Custom Quantity Input -->
-            <div class="mt-3">
-                <label for="custom-quantity" class="block text-sm text-gray-600 mb-1">Or enter custom quantity:</label>
-                <input type="number"
-                       id="custom-quantity"
-                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                       placeholder="Enter quantity"
-                       min="1"
-                       onchange="selectCustomQuantity(this.value)">
-            </div>
+<!-- Clean Options Panel - Uses ONLY Backend Fields -->
+<div class="options-panel-wrapper">
+    <!-- Dynamic Form Fields from Backend -->
+    {% if product.form_fields.exists %}
+        <div class="backend-form-container">
+            {% render_product_form_fields product %}
         </div>
-
-        <!-- Size Options -->
-        {% if product.available_sizes %}
-        <div class="option-group">
-            <label class="block text-sm font-medium text-gray-700 mb-3">
-                Size Options
-            </label>
-            <div class="space-y-3">
-                {% for size in product.available_sizes %}
-                <button class="size-option w-full p-4 border border-gray-300 rounded-lg text-left hover:border-blue-500 hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 {% if forloop.first %}active border-blue-500 bg-blue-50{% endif %}"
-                        data-size="{{ size.name }}"
-                        data-modifier="{{ size.price_modifier }}"
-                        onclick="selectSize('{{ size.name }}', {{ size.price_modifier }})">
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <div class="font-medium text-gray-900">{{ size.name }}</div>
-                            {% if size.dimensions %}
-                            <div class="text-sm text-gray-600">{{ size.dimensions }}</div>
-                            {% endif %}
-                        </div>
-                        {% if size.price_modifier != 0 %}
-                        <span class="text-sm font-medium {% if size.price_modifier > 0 %}text-orange-600{% else %}text-green-600{% endif %}">
-                            {% if size.price_modifier > 0 %}+₹{{ size.price_modifier }}{% else %}₹{{ size.price_modifier }}{% endif %}
-                        </span>
-                        {% endif %}
-                    </div>
-                </button>
-                {% endfor %}
-            </div>
-        </div>
-        {% endif %}
-
-        <!-- Static fallback options continue here... -->
-        <!-- (keeping the existing static template structure for backward compatibility) -->
-
-        <!-- Special Instructions -->
-        <div class="option-group">
-            <label for="special-instructions" class="block text-sm font-medium text-gray-700 mb-3">
-                Special Instructions (Optional)
-            </label>
-            <textarea id="special-instructions"
-                      rows="3"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      placeholder="Any special requirements or instructions for your order..."
-                      onchange="updateSpecialInstructions(this.value)"></textarea>
+    {% else %}
+        <!-- Fallback message if no fields exist -->
+        <div class="no-fields-message bg-gray-50 rounded-xl p-8 text-center">
+            <i class="fas fa-cogs text-4xl text-gray-400 mb-4"></i>
+            <h3 class="text-lg font-semibold text-gray-700 mb-2">Product Configuration</h3>
+            <p class="text-gray-600 mb-4">This product doesn't have custom options configured yet.</p>
+            <a href="{% url 'orders:quote_request' %}" class="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                <i class="fas fa-quote-right mr-2"></i>
+                Request Custom Quote
+            </a>
         </div>
     {% endif %}
+
+    <!-- Design Upload Section -->
+    {% if product.design_tool_enabled %}
+    <div class="design-section bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-6 mt-8 border border-purple-200">
+        <div class="design-section-header mb-6">
+            <h3 class="text-lg font-semibold text-gray-900 flex items-center">
+                <i class="fas fa-palette text-purple-600 mr-3"></i>
+                Design Your Product
+            </h3>
+            <p class="text-sm text-gray-600 mt-1">Choose how you want to provide your design</p>
+        </div>
+        
+        <div class="design-options grid md:grid-cols-2 gap-4">
+            <!-- Upload Design -->
+            <div class="design-option">
+                <div class="design-card bg-white border-2 border-gray-200 rounded-xl p-6 text-center hover:border-blue-400 hover:shadow-md transition-all duration-300 cursor-pointer group">
+                    <div class="design-icon w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-200 transition-colors">
+                        <i class="fas fa-cloud-upload-alt text-blue-600 text-2xl"></i>
+                    </div>
+                    <h4 class="font-bold text-gray-900 mb-2">Upload Your Design</h4>
+                    <p class="text-sm text-gray-600 mb-4">Upload ready-to-print files</p>
+                    <div class="file-formats">
+                        <span class="inline-block bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs mr-1">PDF</span>
+                        <span class="inline-block bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs mr-1">AI</span>
+                        <span class="inline-block bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">PNG</span>
+                    </div>
+                    <!-- Hidden file input -->
+                    <input type="file" class="hidden" accept=".pdf,.ai,.png,.jpg,.jpeg" multiple id="design-upload">
+                </div>
+            </div>
+            
+            <!-- Design Tool -->
+            <a href="{% url 'design_tool:editor' category.slug product.slug %}" class="design-option block">
+                <div class="design-card bg-white border-2 border-gray-200 rounded-xl p-6 text-center hover:border-purple-400 hover:shadow-md transition-all duration-300 group">
+                    <div class="design-icon w-16 h-16 bg-purple-100 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-200 transition-colors">
+                        <i class="fas fa-paint-brush text-purple-600 text-2xl"></i>
+                    </div>
+                    <h4 class="font-bold text-gray-900 mb-2">Use Design Tool</h4>
+                    <p class="text-sm text-gray-600 mb-4">Create custom designs online</p>
+                    <div class="features">
+                        <span class="inline-block bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs mr-1">Templates</span>
+                        <span class="inline-block bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs mr-1">Fonts</span>
+                        <span class="inline-block bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">Images</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        
+        <!-- File Upload Area (Hidden by default) -->
+        <div id="upload-dropzone" class="hidden mt-6">
+            <div class="upload-zone border-2 border-dashed border-purple-300 rounded-xl p-8 text-center bg-white/50 hover:border-purple-400 transition-colors">
+                <i class="fas fa-cloud-upload-alt text-4xl text-purple-400 mb-4"></i>
+                <p class="text-gray-600 mb-2">Drag & drop your files here or <span class="text-purple-600 font-medium cursor-pointer">browse files</span></p>
+                <p class="text-sm text-gray-500">Supported formats: PDF, AI, PNG, JPG (min 300 DPI)</p>
+            </div>
+            
+            <!-- File Preview -->
+            <div id="file-preview" class="hidden mt-4">
+                <div class="bg-white rounded-lg p-4 border border-gray-200">
+                    <h4 class="font-semibold text-gray-900 mb-3 flex items-center">
+                        <i class="fas fa-file-alt text-blue-600 mr-2"></i>
+                        Uploaded Files
+                    </h4>
+                    <div id="file-list" class="space-y-2"></div>
+                    <button type="button" id="clear-files" class="mt-3 text-red-600 hover:text-red-800 text-sm font-medium">
+                        <i class="fas fa-trash mr-1"></i>Clear All Files
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 </div>
+
+<style>
+.options-panel-wrapper {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.backend-form-container {
+    /* This will be styled by the dynamic form sections template */
+}
+
+.no-fields-message {
+    border: 2px dashed #d1d5db;
+}
+
+.design-section {
+    position: relative;
+}
+
+.design-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.upload-zone {
+    transition: all 0.3s ease;
+}
+
+.upload-zone:hover {
+    background-color: rgba(139, 92, 246, 0.05);
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    justify-content: between;
+    padding: 0.75rem;
+    background: #f8fafc;
+    border-radius: 0.5rem;
+    border: 1px solid #e2e8f0;
+}
+
+.file-info {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.file-icon {
+    width: 32px;
+    height: 32px;
+    background: #e2e8f0;
+    border-radius: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.75rem;
+    color: #64748b;
+}
+
+.file-details {
+    flex: 1;
+}
+
+.file-name {
+    font-weight: 500;
+    color: #1f2937;
+    font-size: 0.875rem;
+}
+
+.file-size {
+    color: #6b7280;
+    font-size: 0.75rem;
+}
+
+.file-remove {
+    color: #ef4444;
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 0.25rem;
+    transition: background-color 0.2s;
+}
+
+.file-remove:hover {
+    background-color: #fee2e2;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .design-options {
+        grid-template-columns: 1fr;
+    }
+    
+    .design-card {
+        padding: 1rem;
+    }
+    
+    .design-icon {
+        width: 48px;
+        height: 48px;
+        margin-bottom: 1rem;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle design option clicks
+    const uploadCard = document.querySelector('.design-option:first-child .design-card');
+    const uploadZone = document.getElementById('upload-dropzone');
+    const fileInput = document.getElementById('design-upload');
+    const filePreview = document.getElementById('file-preview');
+    const fileList = document.getElementById('file-list');
+    const clearFilesBtn = document.getElementById('clear-files');
+
+    if (uploadCard && uploadZone) {
+        uploadCard.addEventListener('click', function() {
+            uploadZone.classList.toggle('hidden');
+            if (!uploadZone.classList.contains('hidden')) {
+                uploadZone.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        });
+    }
+
+    // File upload functionality
+    if (fileInput) {
+        // Click to upload
+        uploadCard?.addEventListener('click', function() {
+            fileInput.click();
+        });
+
+        // Drag and drop
+        const dropZone = document.querySelector('.upload-zone');
+        if (dropZone) {
+            dropZone.addEventListener('click', () => fileInput.click());
+            
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.classList.add('border-purple-400', 'bg-purple-50');
+            });
+            
+            dropZone.addEventListener('dragleave', () => {
+                dropZone.classList.remove('border-purple-400', 'bg-purple-50');
+            });
+            
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('border-purple-400', 'bg-purple-50');
+                
+                const files = e.dataTransfer.files;
+                handleFiles(files);
+            });
+        }
+
+        fileInput.addEventListener('change', function() {
+            handleFiles(this.files);
+        });
+    }
+
+    function handleFiles(files) {
+        if (files.length > 0) {
+            displayFiles(files);
+            filePreview?.classList.remove('hidden');
+        }
+    }
+
+    function displayFiles(files) {
+        if (!fileList) return;
+        
+        fileList.innerHTML = '';
+        
+        Array.from(files).forEach((file, index) => {
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-item';
+            fileItem.innerHTML = `
+                <div class="file-info">
+                    <div class="file-icon">
+                        <i class="fas ${getFileIcon(file.type)}"></i>
+                    </div>
+                    <div class="file-details">
+                        <div class="file-name">${file.name}</div>
+                        <div class="file-size">${formatFileSize(file.size)}</div>
+                    </div>
+                </div>
+                <button type="button" class="file-remove" onclick="removeFile(${index})">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            fileList.appendChild(fileItem);
+        });
+    }
+
+    function getFileIcon(fileType) {
+        if (fileType.includes('pdf')) return 'fa-file-pdf';
+        if (fileType.includes('image')) return 'fa-file-image';
+        return 'fa-file';
+    }
+
+    function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+    // Clear files
+    clearFilesBtn?.addEventListener('click', function() {
+        if (fileInput) fileInput.value = '';
+        filePreview?.classList.add('hidden');
+        fileList.innerHTML = '';
+    });
+
+    // Remove individual file
+    window.removeFile = function(index) {
+        // Note: Removing individual files from FileList is complex
+        // For simplicity, we'll clear all and let user re-upload
+        if (confirm('Remove all uploaded files?')) {
+            clearFilesBtn?.click();
+        }
+    };
+});
+</script>

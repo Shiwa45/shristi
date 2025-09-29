@@ -1,0 +1,318 @@
+<!-- templates/services/partials/field_types/styled_radio.html -->
+{% load dynamic_form_tags %}
+
+<div class="styled-radio-wrapper">
+    <div class="radio-options grid gap-3" 
+         style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+        
+        {% for option in field.get_options %}
+            <div class="radio-option-card">
+                <input type="radio" 
+                       id="{{ field.field_name }}_{{ option.value }}" 
+                       name="{{ field.field_name }}" 
+                       value="{{ option.value }}"
+                       class="radio-input"
+                       data-price-modifier="{{ option.price_modifier|default:0 }}"
+                       data-description="{{ option.description|default:'' }}"
+                       {% if form_data and form_data|get_item:field.field_name == option.value %}checked{% endif %}
+                       {% if not form_data and option.value == field.default_value %}checked{% endif %}
+                       {% if field.is_required %}required{% endif %}
+                       onchange="handleRadioChange(this)">
+                
+                <label for="{{ field.field_name }}_{{ option.value }}" class="radio-label">
+                    <div class="radio-card">
+                        <!-- Custom radio indicator -->
+                        <div class="radio-indicator">
+                            <div class="radio-dot"></div>
+                        </div>
+                        
+                        <!-- Option content -->
+                        <div class="radio-content">
+                            <div class="radio-title">{{ option.label }}</div>
+                            
+                            {% if option.description %}
+                                <div class="radio-description">{{ option.description }}</div>
+                            {% endif %}
+                            
+                            {% if option.price_modifier and option.price_modifier != 0 %}
+                                <div class="radio-price">
+                                    {% if option.price_modifier > 0 %}
+                                        <span class="price-increase">+₹{{ option.price_modifier }}</span>
+                                    {% else %}
+                                        <span class="price-decrease">₹{{ option.price_modifier }}</span>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Selection checkmark -->
+                        <div class="selection-check">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </div>
+                </label>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+.styled-radio-wrapper {
+    position: relative;
+}
+
+.radio-option-card {
+    position: relative;
+}
+
+.radio-input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.radio-label {
+    display: block;
+    cursor: pointer;
+}
+
+.radio-card {
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 1rem;
+    padding: 1rem;
+    transition: all 0.3s ease;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    min-height: 80px;
+}
+
+.radio-card:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+    transform: translateY(-2px);
+}
+
+.radio-input:checked + .radio-label .radio-card {
+    border-color: #3b82f6;
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+.radio-indicator {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #d1d5db;
+    border-radius: 50%;
+    position: relative;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+    margin-top: 2px;
+}
+
+.radio-input:checked + .radio-label .radio-indicator {
+    border-color: #3b82f6;
+    background: #3b82f6;
+}
+
+.radio-dot {
+    width: 8px;
+    height: 8px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.3s ease;
+}
+
+.radio-input:checked + .radio-label .radio-dot {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.radio-content {
+    flex: 1;
+}
+
+.radio-title {
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.25rem;
+    font-size: 0.95rem;
+}
+
+.radio-input:checked + .radio-label .radio-title {
+    color: #1e40af;
+}
+
+.radio-description {
+    font-size: 0.875rem;
+    color: #6b7280;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+}
+
+.radio-price {
+    margin-top: 0.5rem;
+}
+
+.price-increase {
+    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+    color: #dc2626;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.price-decrease {
+    background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+    color: #059669;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.selection-check {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 24px;
+    height: 24px;
+    background: #3b82f6;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.3s ease;
+}
+
+.radio-input:checked + .radio-label .selection-check {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+    .radio-options {
+        grid-template-columns: 1fr;
+    }
+    
+    .radio-card {
+        min-height: auto;
+        padding: 0.75rem;
+    }
+}
+
+/* Animation for selection */
+@keyframes radioSelect {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.radio-input:checked + .radio-label .radio-card {
+    animation: radioSelect 0.3s ease;
+}
+
+/* Special styling for options with images or icons */
+.radio-card.with-icon {
+    padding-left: 3rem;
+}
+
+.radio-card.with-icon::before {
+    content: '';
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Different color schemes for different option types */
+.radio-option-card[data-category="premium"] .radio-input:checked + .radio-label .radio-card {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border-color: #d97706;
+}
+
+.radio-option-card[data-category="premium"] .radio-input:checked + .radio-label .radio-indicator {
+    border-color: #d97706;
+    background: #d97706;
+}
+
+.radio-option-card[data-category="premium"] .radio-input:checked + .radio-label .selection-check {
+    background: #d97706;
+}
+</style>
+
+<script>
+function handleRadioChange(radioElement) {
+    const wrapper = radioElement.closest('.styled-radio-wrapper');
+    const fieldName = radioElement.name;
+    const priceModifier = parseFloat(radioElement.dataset.priceModifier) || 0;
+    
+    // Update price impact
+    if (radioElement.closest('[data-price-affecting="true"]')) {
+        updateFieldPricing(radioElement, priceModifier);
+    }
+    
+    // Handle conditional field logic
+    handleConditionalFields(radioElement);
+    
+    // Dispatch custom event for pricing calculator
+    document.dispatchEvent(new CustomEvent('fieldChange', {
+        detail: {
+            fieldName: fieldName,
+            value: radioElement.value,
+            priceModifier: priceModifier,
+            fieldType: 'radio'
+        }
+    }));
+    
+    // Analytics tracking (optional)
+    if (typeof gtag !== 'undefined') {
+        gtag('event', 'form_field_change', {
+            'field_name': fieldName,
+            'field_value': radioElement.value,
+            'field_type': 'radio'
+        });
+    }
+}
+
+// Enhanced accessibility
+document.addEventListener('DOMContentLoaded', function() {
+    // Add keyboard navigation
+    document.querySelectorAll('.radio-input').forEach(radio => {
+        radio.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.checked = true;
+                handleRadioChange(this);
+            }
+        });
+    });
+    
+    // Initialize any pre-selected radio buttons
+    document.querySelectorAll('.radio-input:checked').forEach(radio => {
+        handleRadioChange(radio);
+    });
+});
+</script>

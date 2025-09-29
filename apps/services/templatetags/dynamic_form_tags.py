@@ -167,3 +167,42 @@ def get_field_validation_rules(field):
         # You can add file type restrictions here
 
     return rules
+
+
+
+# Additional template tags
+
+@register.filter
+def get_item(dictionary, key):
+    """Get item from dictionary using key - useful for form data access"""
+    if isinstance(dictionary, dict):
+        return dictionary.get(key, '')
+    return ''
+
+@register.simple_tag
+def get_section_icon(section_key):
+    """Get appropriate icon for form section"""
+    icons = {
+        'product_specs': 'fas fa-cogs',
+        'design_options': 'fas fa-palette', 
+        'printing_options': 'fas fa-print',
+        'finishing_options': 'fas fa-magic',
+        'additional_services': 'fas fa-plus-circle',
+        'file_uploads': 'fas fa-upload',
+        'quantity_pricing': 'fas fa-calculator'
+    }
+    return icons.get(section_key, 'fas fa-list')
+
+@register.simple_tag
+def get_section_color(section_key):
+    """Get appropriate color class for form section"""
+    colors = {
+        'product_specs': 'blue-600',
+        'design_options': 'purple-600',
+        'printing_options': 'green-600', 
+        'finishing_options': 'pink-600',
+        'additional_services': 'orange-600',
+        'file_uploads': 'indigo-600',
+        'quantity_pricing': 'red-600'
+    }
+    return colors.get(section_key, 'gray-600')

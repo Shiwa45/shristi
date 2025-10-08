@@ -1,5 +1,5 @@
 <!-- QinPrinting-Style Pricing Calculator -->
-<div class="pricing-calculator bg-white rounded-2xl shadow-lg p-6 sticky top-6 border border-gray-100">
+<div class="pricing-calculator bg-blue-500 rounded-2xl shadow-lg p-6 sticky top-6 border border-gray-100">
     <div class="text-center mb-6">
         <h3 class="text-lg font-bold text-gray-900 mb-2 uppercase tracking-wide">Instant Quote</h3>
         <div class="w-16 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto rounded"></div>
@@ -122,43 +122,6 @@
                 Get Custom Quote
             </span>
         </button>
-    </div>
-
-    <!-- Additional Services -->
-    <div class="additional-services mt-6 pt-6 border-t border-gray-200">
-        <h4 class="font-medium text-gray-900 mb-3">Additional Services</h4>
-
-        <!-- Rush Order -->
-        <label class="flex items-center space-x-3 mb-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer">
-            <input type="checkbox" id="rush-order" class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded" onchange="toggleRushOrder(this.checked)">
-            <div class="flex-1">
-                <span class="font-medium text-gray-900">Rush Order</span>
-                <div class="text-sm text-gray-600">Get your order faster</div>
-            </div>
-            <span class="text-sm font-medium text-orange-600">+{{ product.rush_order_percentage|default:25 }}%</span>
-        </label>
-
-        <!-- Design Service -->
-        {% if product.design_service_available %}
-        <label class="flex items-center space-x-3 mb-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer">
-            <input type="checkbox" id="design-service" class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded" onchange="toggleDesignService(this.checked)">
-            <div class="flex-1">
-                <span class="font-medium text-gray-900">Professional Design</span>
-                <div class="text-sm text-gray-600">Let our experts design for you</div>
-            </div>
-            <span class="text-sm font-medium text-blue-600">+₹{{ product.design_service_price|default:500 }}</span>
-        </label>
-        {% endif %}
-
-        <!-- Proof Service -->
-        <label class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer">
-            <input type="checkbox" id="proof-service" class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded" onchange="toggleProofService(this.checked)">
-            <div class="flex-1">
-                <span class="font-medium text-gray-900">Digital Proof</span>
-                <div class="text-sm text-gray-600">Preview before printing</div>
-            </div>
-            <span class="text-sm font-medium text-blue-600">Free</span>
-        </label>
     </div>
 
     <!-- Delivery Information -->

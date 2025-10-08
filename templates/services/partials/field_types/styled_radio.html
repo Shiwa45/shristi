@@ -2,9 +2,290 @@
 {% load dynamic_form_tags %}
 
 <div class="styled-radio-wrapper">
-    <div class="radio-options grid gap-3" 
+    {% if field.field_name == 'interior_color' %}
+    <!-- VISUAL GRID FOR INTERIOR COLOR -->
+    <div class="radio-options grid gap-3" style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+        {% for option in field.get_options %}
+            <div class="radio-option-card" onclick="selectRadioCard(this)">
+                <input type="radio"
+                       id="{{ field.field_name }}_{{ option.value }}"
+                       name="{{ field.field_name }}"
+                       value="{{ option.value }}"
+                       class="radio-input"
+                       data-price-modifier="{{ option.price_modifier|default:0 }}"
+                       {% if form_data and form_data|get_item:field.field_name == option.value %}checked{% endif %}
+                       {% if not form_data and option.value == field.default_value %}checked{% endif %}
+                       {% if field.is_required %}required{% endif %}
+                       onchange="handleRadioChange(this)">
+
+                <label for="{{ field.field_name }}_{{ option.value }}" class="radio-label">
+                    <div class="radio-card" style="min-height: 140px; padding: 1rem; text-align: center;">
+                        <!-- SVG Preview -->
+                        <div style="height: 70px; margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: center;">
+                            {% if 'bw_premium' in option.value %}
+                            <svg viewBox="0 0 100 100" style="width: 100%; height: 100%; max-width: 80px;">
+                                <rect x="10" y="10" width="80" height="80" fill="#f8f9fa" stroke="#dee2e6" stroke-width="2" rx="5"/>
+                                <text x="50" y="50" font-size="24" text-anchor="middle" dominant-baseline="middle" fill="#495057">B&W</text>
+                                <rect x="20" y="20" width="60" height="4" fill="#6c757d" opacity="0.8"/>
+                            </svg>
+                            {% elif 'bw_standard' in option.value %}
+                            <svg viewBox="0 0 100 100" style="width: 100%; height: 100%; max-width: 80px;">
+                                <rect x="10" y="10" width="80" height="80" fill="#e9ecef" stroke="#adb5bd" stroke-width="2" rx="5"/>
+                                <text x="50" y="50" font-size="20" text-anchor="middle" dominant-baseline="middle" fill="#6c757d">B&W</text>
+                            </svg>
+                            {% elif 'color_premium' in option.value %}
+                            <svg viewBox="0 0 100 100" style="width: 100%; height: 100%; max-width: 80px;">
+                                <defs>
+                                    <linearGradient id="colorGrad{{ forloop.counter }}" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <rect x="10" y="10" width="80" height="80" fill="url(#colorGrad{{ forloop.counter }})" rx="5"/>
+                                <circle cx="35" cy="35" r="8" fill="#FFD700" opacity="0.9"/>
+                                <circle cx="65" cy="35" r="8" fill="#FF6B6B" opacity="0.9"/>
+                            </svg>
+                            {% elif 'color_standard' in option.value %}
+                            <svg viewBox="0 0 100 100" style="width: 100%; height: 100%; max-width: 80px;">
+                                <rect x="10" y="10" width="80" height="80" fill="#667eea" rx="5"/>
+                                <rect x="20" y="20" width="25" height="25" fill="#FF6B6B" opacity="0.8"/>
+                                <rect x="55" y="20" width="25" height="25" fill="#4ECDC4" opacity="0.8"/>
+                            </svg>
+                            {% elif 'combine_color' in option.value or 'Combine' in option.label %}
+                            <svg viewBox="0 0 100 100" style="width: 100%; height: 100%; max-width: 80px;">
+                                <defs>
+                                    <linearGradient id="combineGrad{{ forloop.counter }}" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" style="stop-color:#f8f9fa;stop-opacity:1" />
+                                        <stop offset="50%" style="stop-color:#e9ecef;stop-opacity:1" />
+                                        <stop offset="50%" style="stop-color:#667eea;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <rect x="10" y="10" width="80" height="80" fill="url(#combineGrad{{ forloop.counter }})" stroke="#667eea" stroke-width="2" rx="5"/>
+                                <line x1="50" y1="10" x2="50" y2="90" stroke="#6c757d" stroke-width="1.5" stroke-dasharray="3,3"/>
+                                <text x="30" y="50" font-size="12" text-anchor="middle" dominant-baseline="middle" fill="#495057">B&W</text>
+                                <circle cx="70" cy="40" r="5" fill="#FFD700" opacity="0.9"/>
+                                <circle cx="70" cy="60" r="5" fill="#FF6B6B" opacity="0.9"/>
+                            </svg>
+                            {% else %}
+                            <i class="fas fa-palette" style="font-size: 2.5rem; color: #667eea;"></i>
+                            {% endif %}
+                        </div>
+
+                        <div class="radio-title" style="font-size: 0.9rem; margin-bottom: 0.25rem;">{{ option.label }}</div>
+
+                        {% if option.price_modifier and option.price_modifier != 0 %}
+                            <div class="radio-price">
+                                {% if option.price_modifier > 0 %}
+                                    <span class="price-increase">+₹{{ option.price_modifier }}</span>
+                                {% else %}
+                                    <span class="price-decrease">₹{{ option.price_modifier }}</span>
+                                {% endif %}
+                            </div>
+                        {% else %}
+                            <div style="font-size: 0.8rem; color: #059669; font-weight: 600;">Included</div>
+                        {% endif %}
+
+                        <div class="selection-check">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </div>
+                </label>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% elif field.field_name == 'binding_type' or field.field_name == 'binding' %}
+    <!-- VISUAL GRID FOR BINDING TYPE -->
+    <div class="radio-options grid gap-3" style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+        {% for option in field.get_options %}
+            <div class="radio-option-card">
+                <input type="radio"
+                       id="{{ field.field_name }}_{{ option.value }}"
+                       name="{{ field.field_name }}"
+                       value="{{ option.value }}"
+                       class="radio-input"
+                       data-price-modifier="{{ option.price_modifier|default:0 }}"
+                       {% if form_data and form_data|get_item:field.field_name == option.value %}checked{% endif %}
+                       {% if not form_data and option.value == field.default_value %}checked{% endif %}
+                       {% if field.is_required %}required{% endif %}
+                       onchange="handleRadioChange(this)">
+
+                <label for="{{ field.field_name }}_{{ option.value }}" class="radio-label">
+                    <div class="radio-card" style="min-height: 140px; padding: 1rem; text-align: center;">
+                        <!-- SVG Preview for Binding Types -->
+                        <div style="height: 70px; margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: center;">
+                            {% if 'perfect' in option.value or 'Perfect' in option.label %}
+                            <svg viewBox="0 0 100 100" style="width: 100%; height: 100%; max-width: 80px;">
+                                <rect x="20" y="15" width="60" height="70" fill="#fff" stroke="#667eea" stroke-width="2" rx="2"/>
+                                <rect x="20" y="15" width="8" height="70" fill="#667eea"/>
+                                <line x1="32" y1="30" x2="70" y2="30" stroke="#adb5bd" stroke-width="1.5"/>
+                                <line x1="32" y1="40" x2="70" y2="40" stroke="#adb5bd" stroke-width="1.5"/>
+                                <line x1="32" y1="50" x2="65" y2="50" stroke="#adb5bd" stroke-width="1.5"/>
+                            </svg>
+                            {% elif 'saddle' in option.value or 'Saddle' in option.label %}
+                            <svg viewBox="0 0 100 100" style="width: 100%; height: 100%; max-width: 80px;">
+                                <path d="M30,15 Q50,20 70,15 L70,85 Q50,90 30,85 Z" fill="#fff" stroke="#10b981" stroke-width="2"/>
+                                <line x1="50" y1="15" x2="50" y2="85" stroke="#10b981" stroke-width="2"/>
+                                <circle cx="50" cy="30" r="2" fill="#10b981"/>
+                                <circle cx="50" cy="50" r="2" fill="#10b981"/>
+                                <circle cx="50" cy="70" r="2" fill="#10b981"/>
+                            </svg>
+                            {% elif 'spiral' in option.value or 'Spiral' in option.label %}
+                            <svg viewBox="0 0 100 100" style="width: 100%; height: 100%; max-width: 80px;">
+                                <rect x="25" y="15" width="50" height="70" fill="#fff" stroke="#f59e0b" stroke-width="2" rx="2"/>
+                                <circle cx="20" cy="25" r="3" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+                                <circle cx="20" cy="35" r="3" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+                                <circle cx="20" cy="45" r="3" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+                                <circle cx="20" cy="55" r="3" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+                                <circle cx="20" cy="65" r="3" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+                                <circle cx="20" cy="75" r="3" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+                            </svg>
+                            {% elif 'wire' in option.value or 'Wire' in option.label %}
+                            <svg viewBox="0 0 100 100" style="width: 100%; height: 100%; max-width: 80px;">
+                                <rect x="25" y="15" width="50" height="70" fill="#fff" stroke="#8b5cf6" stroke-width="2" rx="2"/>
+                                <rect x="18" y="25" width="4" height="3" fill="#8b5cf6" rx="1"/>
+                                <rect x="18" y="35" width="4" height="3" fill="#8b5cf6" rx="1"/>
+                                <rect x="18" y="45" width="4" height="3" fill="#8b5cf6" rx="1"/>
+                                <rect x="18" y="55" width="4" height="3" fill="#8b5cf6" rx="1"/>
+                                <rect x="18" y="65" width="4" height="3" fill="#8b5cf6" rx="1"/>
+                                <rect x="18" y="75" width="4" height="3" fill="#8b5cf6" rx="1"/>
+                            </svg>
+                            {% elif 'hardcover' in option.value or 'Hardcover' in option.label or 'Hard' in option.label %}
+                            <svg viewBox="0 0 100 100" style="width: 100%; height: 100%; max-width: 80px;">
+                                <rect x="22" y="12" width="56" height="76" fill="#4b5563" stroke="#1f2937" stroke-width="2" rx="3"/>
+                                <rect x="26" y="16" width="48" height="68" fill="#fff" stroke="#9ca3af" stroke-width="1"/>
+                                <rect x="22" y="12" width="6" height="76" fill="#1f2937"/>
+                            </svg>
+                            {% else %}
+                            <i class="fas fa-book" style="font-size: 2.5rem; color: #667eea;"></i>
+                            {% endif %}
+                        </div>
+
+                        <div class="radio-title" style="font-size: 0.9rem; margin-bottom: 0.25rem;">{{ option.label }}</div>
+
+                        {% if option.price_modifier and option.price_modifier != 0 %}
+                            <div class="radio-price">
+                                {% if option.price_modifier > 0 %}
+                                    <span class="price-increase">+₹{{ option.price_modifier }}</span>
+                                {% else %}
+                                    <span class="price-decrease">₹{{ option.price_modifier }}</span>
+                                {% endif %}
+                            </div>
+                        {% else %}
+                            <div style="font-size: 0.8rem; color: #059669; font-weight: 600;">Included</div>
+                        {% endif %}
+
+                        <div class="selection-check">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </div>
+                </label>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% elif field.field_name == 'paper_type' or field.field_name == 'paper' %}
+    <!-- VISUAL GRID FOR PAPER TYPE -->
+    <div class="radio-options grid gap-3" style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+        {% for option in field.get_options %}
+            <div class="radio-option-card">
+                <input type="radio"
+                       id="{{ field.field_name }}_{{ option.value }}"
+                       name="{{ field.field_name }}"
+                       value="{{ option.value }}"
+                       class="radio-input"
+                       data-price-modifier="{{ option.price_modifier|default:0 }}"
+                       {% if form_data and form_data|get_item:field.field_name == option.value %}checked{% endif %}
+                       {% if not form_data and option.value == field.default_value %}checked{% endif %}
+                       {% if field.is_required %}required{% endif %}
+                       onchange="handleRadioChange(this)">
+
+                <label for="{{ field.field_name }}_{{ option.value }}" class="radio-label">
+                    <div class="radio-card" style="min-height: 140px; padding: 1rem; text-align: center;">
+                        <!-- SVG Preview for Paper Types -->
+                        <div style="height: 70px; margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: center;">
+                            {% if 'glossy' in option.value or 'Glossy' in option.label %}
+                            <svg viewBox="0 0 100 100" style="width: 100%; height: 100%; max-width: 80px;">
+                                <defs>
+                                    <linearGradient id="glossyGrad{{ forloop.counter }}" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#f0f9ff;stop-opacity:1" />
+                                        <stop offset="50%" style="stop-color:#e0f2fe;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#bae6fd;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <rect x="15" y="15" width="70" height="70" fill="url(#glossyGrad{{ forloop.counter }})" stroke="#0ea5e9" stroke-width="2" rx="3"/>
+                                <ellipse cx="35" cy="35" rx="8" ry="12" fill="#fff" opacity="0.6"/>
+                                <path d="M20,25 Q30,20 40,25" stroke="#38bdf8" stroke-width="1" fill="none" opacity="0.5"/>
+                            </svg>
+                            {% elif 'matte' in option.value or 'Matte' in option.label %}
+                            <svg viewBox="0 0 100 100" style="width: 100%; height: 100%; max-width: 80px;">
+                                <rect x="15" y="15" width="70" height="70" fill="#f8fafc" stroke="#94a3b8" stroke-width="2" rx="3"/>
+                                <line x1="25" y1="30" x2="75" y2="30" stroke="#cbd5e1" stroke-width="1.5"/>
+                                <line x1="25" y1="42" x2="70" y2="42" stroke="#cbd5e1" stroke-width="1.5"/>
+                                <line x1="25" y1="54" x2="75" y2="54" stroke="#cbd5e1" stroke-width="1.5"/>
+                                <line x1="25" y1="66" x2="65" y2="66" stroke="#cbd5e1" stroke-width="1.5"/>
+                            </svg>
+                            {% elif 'premium' in option.value or 'Premium' in option.label %}
+                            <svg viewBox="0 0 100 100" style="width: 100%; height: 100%; max-width: 80px;">
+                                <defs>
+                                    <linearGradient id="premiumGrad{{ forloop.counter }}" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#fef3c7;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#fde047;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <rect x="15" y="15" width="70" height="70" fill="url(#premiumGrad{{ forloop.counter }})" stroke="#eab308" stroke-width="2" rx="3"/>
+                                <path d="M50,30 L55,42 L68,43 L58,52 L61,65 L50,58 L39,65 L42,52 L32,43 L45,42 Z" fill="#f59e0b" opacity="0.7"/>
+                            </svg>
+                            {% elif 'recycled' in option.value or 'Recycled' in option.label %}
+                            <svg viewBox="0 0 100 100" style="width: 100%; height: 100%; max-width: 80px;">
+                                <rect x="15" y="15" width="70" height="70" fill="#f0fdf4" stroke="#22c55e" stroke-width="2" rx="3"/>
+                                <path d="M50,35 L45,45 L50,48 L50,35 M50,48 L55,45 L50,35" stroke="#16a34a" stroke-width="2" fill="none"/>
+                                <path d="M40,55 L45,65 L50,62 L40,55 M50,62 L50,50 L40,55" stroke="#16a34a" stroke-width="2" fill="none"/>
+                                <path d="M60,55 L55,65 L60,68 L60,55 M55,50 L60,55 L60,68" stroke="#16a34a" stroke-width="2" fill="none"/>
+                                <circle cx="50" cy="50" r="5" fill="none" stroke="#22c55e" stroke-width="1.5"/>
+                            </svg>
+                            {% elif 'art' in option.value or 'Art' in option.label %}
+                            <svg viewBox="0 0 100 100" style="width: 100%; height: 100%; max-width: 80px;">
+                                <rect x="15" y="15" width="70" height="70" fill="#fefce8" stroke="#ca8a04" stroke-width="2" rx="3"/>
+                                <rect x="25" y="25" width="20" height="15" fill="#fbbf24" opacity="0.6"/>
+                                <rect x="50" y="25" width="25" height="15" fill="#f59e0b" opacity="0.6"/>
+                                <rect x="25" y="45" width="50" height="10" fill="#fb923c" opacity="0.5"/>
+                                <rect x="25" y="60" width="35" height="15" fill="#fdba74" opacity="0.6"/>
+                            </svg>
+                            {% else %}
+                            <i class="fas fa-file-alt" style="font-size: 2.5rem; color: #667eea;"></i>
+                            {% endif %}
+                        </div>
+
+                        <div class="radio-title" style="font-size: 0.9rem; margin-bottom: 0.25rem;">{{ option.label }}</div>
+
+                        {% if option.price_modifier and option.price_modifier != 0 %}
+                            <div class="radio-price">
+                                {% if option.price_modifier > 0 %}
+                                    <span class="price-increase">+₹{{ option.price_modifier }}</span>
+                                {% else %}
+                                    <span class="price-decrease">₹{{ option.price_modifier }}</span>
+                                {% endif %}
+                            </div>
+                        {% else %}
+                            <div style="font-size: 0.8rem; color: #059669; font-weight: 600;">Included</div>
+                        {% endif %}
+
+                        <div class="selection-check">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </div>
+                </label>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% else %}
+    <!-- DEFAULT RADIO LAYOUT -->
+    <div class="radio-options grid gap-3"
          style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
-        
+
         {% for option in field.get_options %}
             <div class="radio-option-card">
                 <input type="radio" 
@@ -54,6 +335,7 @@
             </div>
         {% endfor %}
     </div>
+    {% endif %}
 </div>
 
 <style>
@@ -83,10 +365,24 @@
     padding: 1rem;
     transition: all 0.3s ease;
     position: relative;
+    min-height: 80px;
+}
+
+/* Special styling for visual grid cards */
+.styled-radio-wrapper .radio-options[style*="repeat(auto-fit"] .radio-card {
+    display: block !important;
+    text-align: center;
+}
+
+.styled-radio-wrapper .radio-options[style*="repeat(auto-fit"] .radio-card > div {
+    width: 100%;
+}
+
+/* Default card layout */
+.styled-radio-wrapper .radio-options:not([style*="repeat(auto-fit"]) .radio-card {
     display: flex;
     align-items: flex-start;
     gap: 0.75rem;
-    min-height: 80px;
 }
 
 .radio-card:hover {
@@ -264,6 +560,15 @@
 </style>
 
 <script>
+// Function to handle clicking on visual radio cards
+function selectRadioCard(card) {
+    const radioInput = card.querySelector('.radio-input');
+    if (radioInput) {
+        radioInput.checked = true;
+        handleRadioChange(radioInput);
+    }
+}
+
 function handleRadioChange(radioElement) {
     const wrapper = radioElement.closest('.styled-radio-wrapper');
     const fieldName = radioElement.name;

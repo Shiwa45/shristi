@@ -16889,3 +16889,2347 @@ django.core.exceptions.FieldError: Invalid field name(s) given in select_related
 "GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 180083
 "GET /static/js/products/dynamic-pricing-calculator.js HTTP/1.1" 304 0
 "GET /static/images/logo.png HTTP/1.1" 404 1972
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /media/sliders/hero-book_reVocCn.png HTTP/1.1" 200 1493235
+"GET /media/sliders/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_l0hEaGV.png HTTP/1.1" 200 128368
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2029
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2002
+"GET /media/sliders/vecteezy_3d-backpack-with-various-school-stationery-illustration_48557422_OrE0IpD.png HTTP/1.1" 200 14001639
+"GET /media/categories/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_I4HUQtR.png HTTP/1.1" 200 128368
+"GET /media/categories/OV14KD0_SfKT8t6.jpg HTTP/1.1" 200 684371
+"GET /media/categories/hero-book_T5aF2VE.png HTTP/1.1" 200 1493235
+"GET /media/categories/vecteezy_3d-backpack-with-various-school-stationery-illustration_48557422_cTPT9o6.png HTTP/1.1" 200 14001639
+Not Found: /services/books/
+"GET /services/books/ HTTP/1.1" 404 5189
+"GET /services/book-printing/ HTTP/1.1" 200 45980
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/ HTTP/1.1" 200 42161
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2029
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2002
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 1996
+"GET /services/book-printing/ HTTP/1.1" 200 42161
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 177209
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /static/js/products/dynamic-pricing-calculator.js HTTP/1.1" 200 8043
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 177209
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 177280
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /static/css/products/qin-style-form.css HTTP/1.1" 200 11375
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 177280
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /static/css/products/qin-style-form.css HTTP/1.1" 200 11375
+"GET /static/js/products/dynamic-pricing-calculator.js HTTP/1.1" 200 8043
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4858
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 177280
+"GET /static/css/products/qin-style-form.css HTTP/1.1" 304 0
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+Internal Server Error: /services/book-printing/childrens-books/static/
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\services\views.py", line 93, in static_product_detail
+    return render(request, 'services/static_products/product_detail.html', context)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader_tags.py", line 210, in render
+    return template.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 173, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\defaulttags.py", line 327, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\library.py", line 321, in render
+    output = self.func(*resolved_args, **resolved_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\services\templatetags\dynamic_form_tags.py", line 54, in render_product_form_fields
+    return render_to_string('services/partials/dynamic_form_sections.html', {
+        'sections': sorted_sections,
+        'form_data': form_data,
+        'product': product
+    })
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\defaulttags.py", line 243, in render
+    nodelist.append(node.render_annotated(context))
+                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\defaulttags.py", line 243, in render
+    nodelist.append(node.render_annotated(context))
+                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader_tags.py", line 210, in render
+    return template.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 173, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\defaulttags.py", line 327, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader_tags.py", line 199, in render
+    template = context.template.engine.select_template(template_name)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\engine.py", line 208, in select_template
+    return self.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\defaulttags.py", line 976, in do_if
+    nodelist = parser.parse(("endif",))
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 523, in parse
+    self.unclosed_block_tag(parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 590, in unclosed_block_tag
+    raise self.error(token, msg)
+django.template.exceptions.TemplateSyntaxError: Unclosed tag on line 5: 'if'. Looking for one of: endif.
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 500 425263
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 187254
+"GET /static/css/products/qin-style-form.css HTTP/1.1" 304 0
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 168176
+"GET /static/css/products/qin-style-form.css HTTP/1.1" 304 0
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 168175
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 168178
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 168176
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 168807
+"GET /static/css/products/qin-style-form.css HTTP/1.1" 304 0
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 168642
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /static/css/products/qin-style-form.css HTTP/1.1" 200 11373
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2029
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2002
+"GET /services/paper-boxes/ HTTP/1.1" 200 40303
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/paper-boxes/cosmetic-boxes/static/ HTTP/1.1" 200 59399
+"GET /static/css/products/qin-style-form.css HTTP/1.1" 304 0
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2029
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2002
+"GET /services/book-printing/ HTTP/1.1" 200 42161
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 168642
+"GET /static/css/products/qin-style-form.css HTTP/1.1" 304 0
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 168621
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 168642
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 168620
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 168670
+"GET /static/css/products/qin-style-form.css HTTP/1.1" 304 0
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 168670
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 168550
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 169141
+"GET /static/css/products/qin-style-form.css HTTP/1.1" 304 0
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 169141
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 169141
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 169141
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /static/js/products/dynamic-pricing-calculator.js HTTP/1.1" 200 8043
+"GET /static/css/products/qin-style-form.css HTTP/1.1" 200 11373
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4858
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 169141
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /static/css/products/qin-style-form.css HTTP/1.1" 200 11373
+"GET /static/js/products/dynamic-pricing-calculator.js HTTP/1.1" 200 8043
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4858
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 169141
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /static/css/products/qin-style-form.css HTTP/1.1" 200 11373
+"GET /static/js/products/dynamic-pricing-calculator.js HTTP/1.1" 200 8043
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4858
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 169141
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /static/js/products/dynamic-pricing-calculator.js HTTP/1.1" 200 8043
+"GET /static/css/products/qin-style-form.css HTTP/1.1" 200 11373
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 169141
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /static/css/products/qin-style-form.css HTTP/1.1" 200 11373
+"GET /static/js/products/dynamic-pricing-calculator.js HTTP/1.1" 200 8043
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 169141
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /static/css/products/qin-style-form.css HTTP/1.1" 200 11373
+"GET /static/js/products/dynamic-pricing-calculator.js HTTP/1.1" 200 8043
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4858
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 169700
+"GET /static/css/products/qin-style-form.css HTTP/1.1" 304 0
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 169701
+"GET /static/css/products/qin-style-form.css HTTP/1.1" 304 0
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 169700
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 169700
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 169735
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 169079
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /static/css/products/qin-style-form.css HTTP/1.1" 200 11373
+"GET /static/js/products/dynamic-pricing-calculator.js HTTP/1.1" 200 8043
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4858
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2029
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2002
+"GET /services/paper-boxes/ HTTP/1.1" 200 40303
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/paper-boxes/medical-boxes/static/ HTTP/1.1" 200 54520
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/ HTTP/1.1" 200 42161
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 169079
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 169079
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 169087
+"GET /static/css/products/qin-style-form.css HTTP/1.1" 200 11446
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2029
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2002
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 1996
+"GET /services/marketing-materials/flyers/static/ HTTP/1.1" 200 59858
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2029
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2002
+"GET /services/book-printing/ HTTP/1.1" 200 42161
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 169014
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 169284
+"GET /static/css/products/qin-style-form.css HTTP/1.1" 304 0
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 169724
+"GET /static/css/products/qin-style-form.css HTTP/1.1" 304 0
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 169355
+"GET /static/css/products/qin-style-form.css HTTP/1.1" 304 0
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 167634
+"GET /static/css/products/qin-style-form.css HTTP/1.1" 304 0
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 177209
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 177209
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+Internal Server Error: /services/book-printing/childrens-books/static/
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\services\views.py", line 93, in static_product_detail
+    return render(request, 'services/static_products/product_detail.html', context)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader_tags.py", line 210, in render
+    return template.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 173, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\defaulttags.py", line 327, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\library.py", line 321, in render
+    output = self.func(*resolved_args, **resolved_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\services\templatetags\dynamic_form_tags.py", line 54, in render_product_form_fields
+    return render_to_string('services/partials/dynamic_form_sections.html', {
+        'sections': sorted_sections,
+        'form_data': form_data,
+        'product': product
+    })
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\defaulttags.py", line 243, in render
+    nodelist.append(node.render_annotated(context))
+                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\defaulttags.py", line 243, in render
+    nodelist.append(node.render_annotated(context))
+                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader_tags.py", line 210, in render
+    return template.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 173, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\defaulttags.py", line 327, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader_tags.py", line 199, in render
+    template = context.template.engine.select_template(template_name)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\engine.py", line 208, in select_template
+    return self.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\defaulttags.py", line 976, in do_if
+    nodelist = parser.parse(("endif",))
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 523, in parse
+    self.unclosed_block_tag(parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 590, in unclosed_block_tag
+    raise self.error(token, msg)
+django.template.exceptions.TemplateSyntaxError: Unclosed tag on line 5: 'if'. Looking for one of: endif.
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 500 423081
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /media/sliders/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_l0hEaGV.png HTTP/1.1" 200 128368
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /media/sliders/hero-book_reVocCn.png HTTP/1.1" 200 1493235
+"GET /media/categories/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_I4HUQtR.png HTTP/1.1" 200 128368
+"GET /media/categories/hero-book_T5aF2VE.png HTTP/1.1" 200 1493235
+"GET /media/sliders/vecteezy_3d-backpack-with-various-school-stationery-illustration_48557422_OrE0IpD.png HTTP/1.1" 200 14001639
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /media/categories/OV14KD0_SfKT8t6.jpg HTTP/1.1" 200 684371
+"GET /media/sliders/vecteezy_3d-backpack-with-various-school-stationery-illustration_48557422_OrE0IpD.png HTTP/1.1" 200 14001639
+"GET /media/categories/vecteezy_3d-backpack-with-various-school-stationery-illustration_48557422_cTPT9o6.png HTTP/1.1" 200 14001639
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4871
+Not Found: /cart/data/
+"GET /cart/data/ HTTP/1.1" 404 4868
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2029
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2002
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4858
+"GET /services/book-printing/ HTTP/1.1" 200 42161
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+Internal Server Error: /services/book-printing/childrens-books/static/
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\services\views.py", line 93, in static_product_detail
+    return render(request, 'services/static_products/product_detail.html', context)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader_tags.py", line 210, in render
+    return template.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 173, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\defaulttags.py", line 327, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\library.py", line 321, in render
+    output = self.func(*resolved_args, **resolved_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\services\templatetags\dynamic_form_tags.py", line 54, in render_product_form_fields
+    return render_to_string('services/partials/dynamic_form_sections.html', {
+        'sections': sorted_sections,
+        'form_data': form_data,
+        'product': product
+    })
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\defaulttags.py", line 243, in render
+    nodelist.append(node.render_annotated(context))
+                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\defaulttags.py", line 243, in render
+    nodelist.append(node.render_annotated(context))
+                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader_tags.py", line 210, in render
+    return template.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 173, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\defaulttags.py", line 327, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader_tags.py", line 199, in render
+    template = context.template.engine.select_template(template_name)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\engine.py", line 208, in select_template
+    return self.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\defaulttags.py", line 976, in do_if
+    nodelist = parser.parse(("endif",))
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 523, in parse
+    self.unclosed_block_tag(parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 590, in unclosed_block_tag
+    raise self.error(token, msg)
+django.template.exceptions.TemplateSyntaxError: Unclosed tag on line 5: 'if'. Looking for one of: endif.
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 500 423844
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 178906
+"GET /static/js/products/dynamic-pricing-calculator.js HTTP/1.1" 304 0
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 178906
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 178906
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 178906
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 178906
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 178906
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 193617
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 196965
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 199312
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 199527
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 200824
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 200824
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 200824
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201824
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201824
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201824
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /static/js/products/dynamic-pricing-calculator.js HTTP/1.1" 200 8043
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4858
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201824
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /static/js/products/dynamic-pricing-calculator.js HTTP/1.1" 200 8043
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201824
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /static/js/products/dynamic-pricing-calculator.js HTTP/1.1" 200 8043
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201824
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /static/js/products/dynamic-pricing-calculator.js HTTP/1.1" 200 8043
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201824
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /static/js/products/dynamic-pricing-calculator.js HTTP/1.1" 200 8043
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201824
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /static/js/products/dynamic-pricing-calculator.js HTTP/1.1" 200 8043
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201824
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /static/js/products/dynamic-pricing-calculator.js HTTP/1.1" 200 8043
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4858
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201824
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 203400
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /static/js/products/dynamic-pricing-calculator.js HTTP/1.1" 200 8043
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4858
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 208900
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 69077
+"GET /media/sliders/hero-book_reVocCn.png HTTP/1.1" 304 0
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /media/sliders/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_l0hEaGV.png HTTP/1.1" 304 0
+"GET /media/sliders/vecteezy_3d-backpack-with-various-school-stationery-illustration_48557422_OrE0IpD.png HTTP/1.1" 304 0
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2029
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2002
+"GET /media/categories/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_I4HUQtR.png HTTP/1.1" 304 0
+"GET /media/categories/OV14KD0_SfKT8t6.jpg HTTP/1.1" 304 0
+"GET /media/categories/hero-book_T5aF2VE.png HTTP/1.1" 304 0
+"GET /media/categories/vecteezy_3d-backpack-with-various-school-stationery-illustration_48557422_cTPT9o6.png HTTP/1.1" 304 0
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4858
+"GET /services/book-printing/ HTTP/1.1" 200 42161
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 208900
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 204241
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 204241
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 204241
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 204243
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 204244
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 204244
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 203575
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 203575
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 203575
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 203575
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 203575
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 203575
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 203575
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 203571
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 203572
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /admin/ HTTP/1.1" 302 0
+"GET /admin/login/?next=/admin/ HTTP/1.1" 200 4174
+"POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+"GET /admin/ HTTP/1.1" 200 23607
+"GET /admin/services/staticproduct/ HTTP/1.1" 200 52589
+"GET /static/admin/js/json_editor.js HTTP/1.1" 404 1996
+"GET /static/admin/css/custom_admin.css HTTP/1.1" 404 2005
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /static/admin/img/icon-no.svg HTTP/1.1" 200 560
+"GET /static/admin/img/sorting-icons.svg HTTP/1.1" 200 1097
+Internal Server Error: /admin/services/staticproduct/1/change/
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\contrib\admin\options.py", line 719, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\contrib\admin\sites.py", line 246, in inner
+    return view(request, *args, **kwargs)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\contrib\admin\options.py", line 1987, in change_view
+    return self.changeform_view(request, object_id, form_url, extra_context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\contrib\admin\options.py", line 1840, in changeform_view
+    return self._changeform_view(request, object_id, form_url, extra_context)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\contrib\admin\options.py", line 1916, in _changeform_view
+    formsets, inline_instances = self._create_formsets(
+                                 ~~~~~~~~~~~~~~~~~~~~~^
+        request, obj, change=True
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\contrib\admin\options.py", line 2358, in _create_formsets
+    for FormSet, inline in self.get_formsets_with_inlines(*get_formsets_args):
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\contrib\admin\options.py", line 938, in get_formsets_with_inlines
+    yield inline.get_formset(request, obj), inline
+          ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\contrib\admin\options.py", line 2535, in get_formset
+    return inlineformset_factory(self.parent_model, self.model, **defaults)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\forms\models.py", line 1343, in inlineformset_factory
+    FormSet = modelformset_factory(model, **kwargs)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\forms\models.py", line 1051, in modelformset_factory
+    form = modelform_factory(
+        model,
+    ...<9 lines>...
+        field_classes=field_classes,
+    )
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\forms\models.py", line 654, in modelform_factory
+    return type(form)(class_name, (form,), form_class_attrs)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\forms\models.py", line 334, in __new__
+    raise FieldError(message)
+django.core.exceptions.FieldError: Unknown field(s) (file, image) specified for StaticProductSample
+"GET /admin/services/staticproduct/1/change/ HTTP/1.1" 500 178419
+C:\Users\shiwansh\shirsti_printing\apps\services\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\shiwansh\shirsti_printing\apps\services\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\shiwansh\shirsti_printing\apps\services\admin.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /admin/services/staticproduct/1/change/ HTTP/1.1" 200 72497
+"GET /static/admin/js/json_editor.js HTTP/1.1" 404 1996
+"GET /static/admin/css/custom_admin.css HTTP/1.1" 404 2005
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /static/admin/js/inlines.js HTTP/1.1" 200 15628
+"GET /static/admin/js/prepopulate_init.js HTTP/1.1" 200 586
+"GET /static/admin/img/tooltag-arrowright.svg HTTP/1.1" 200 280
+"GET /static/admin/img/icon-unknown.svg HTTP/1.1" 200 655
+"GET /static/admin/js/change_form.js HTTP/1.1" 200 606
+"GET /static/admin/img/inline-delete.svg HTTP/1.1" 200 537
+"POST /admin/services/staticproduct/1/change/ HTTP/1.1" 302 0
+"GET /admin/services/staticproduct/ HTTP/1.1" 200 52821
+"GET /static/admin/js/json_editor.js HTTP/1.1" 404 1996
+"GET /static/admin/css/custom_admin.css HTTP/1.1" 404 2005
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 206199
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /media/products/hero/serious-little-girl-with-open-book-his-lap.jpg HTTP/1.1" 200 8330010
+"GET /admin/services/staticproduct/1/change/ HTTP/1.1" 200 72853
+"GET /static/admin/css/custom_admin.css HTTP/1.1" 404 2005
+"GET /static/admin/js/json_editor.js HTTP/1.1" 404 1996
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"POST /admin/services/staticproduct/1/change/ HTTP/1.1" 200 73127
+"GET /static/admin/js/json_editor.js HTTP/1.1" 404 1996
+"GET /static/admin/css/custom_admin.css HTTP/1.1" 404 2005
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"POST /admin/services/staticproduct/1/change/ HTTP/1.1" 302 0
+"GET /admin/services/staticproduct/ HTTP/1.1" 200 52821
+"GET /static/admin/css/custom_admin.css HTTP/1.1" 404 2005
+"GET /static/admin/js/json_editor.js HTTP/1.1" 404 1996
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 206162
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /media/products/hero/25330.jpg HTTP/1.1" 200 4556325
+C:\Users\shiwansh\shirsti_printing\apps\services\admin.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 206136
+"GET /media/products/hero/25330.jpg HTTP/1.1" 304 0
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 206120
+"GET /media/products/hero/25330.jpg HTTP/1.1" 304 0
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 206162
+"GET /media/products/hero/25330.jpg HTTP/1.1" 304 0
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 206116
+"GET /media/products/hero/25330.jpg HTTP/1.1" 304 0
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 206105
+"GET /media/products/hero/25330.jpg HTTP/1.1" 304 0
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 206105
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 206108
+"GET /media/products/hero/25330.jpg HTTP/1.1" 304 0
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 206105
+"GET /media/products/hero/25330.jpg HTTP/1.1" 304 0
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+Watching for file changes with StatReloader
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 211801
+"GET /media/products/hero/25330.jpg HTTP/1.1" 304 0
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 209627
+"GET /media/products/hero/25330.jpg HTTP/1.1" 304 0
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 209627
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 206105
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 206102
+"GET /media/products/hero/25330.jpg HTTP/1.1" 304 0
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /media/sliders/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_l0hEaGV.png HTTP/1.1" 200 128368
+"GET /media/categories/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_I4HUQtR.png HTTP/1.1" 200 128368
+"GET /media/categories/OV14KD0_SfKT8t6.jpg HTTP/1.1" 200 684371
+"GET /media/sliders/hero-book_reVocCn.png HTTP/1.1" 200 1493235
+"GET /media/categories/hero-book_T5aF2VE.png HTTP/1.1" 200 1493235
+"GET /media/sliders/vecteezy_3d-backpack-with-various-school-stationery-illustration_48557422_OrE0IpD.png HTTP/1.1" 200 14001639
+"GET /media/categories/vecteezy_3d-backpack-with-various-school-stationery-illustration_48557422_cTPT9o6.png HTTP/1.1" 200 14001639
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4871
+"GET / HTTP/1.1" 200 69077
+"GET /services/book-printing/ HTTP/1.1" 200 42161
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 203228
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/js/products/dynamic-pricing-calculator.js HTTP/1.1" 200 8043
+"GET /media/products/hero/25330.jpg HTTP/1.1" 200 4556325
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201187
+"GET /media/products/hero/25330.jpg HTTP/1.1" 304 0
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /media/sliders/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_l0hEaGV.png HTTP/1.1" 200 128368
+"GET /media/sliders/hero-book_reVocCn.png HTTP/1.1" 200 1493235
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /media/categories/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_I4HUQtR.png HTTP/1.1" 200 128368
+"GET /media/categories/OV14KD0_SfKT8t6.jpg HTTP/1.1" 200 684371
+"GET /media/categories/hero-book_T5aF2VE.png HTTP/1.1" 200 1493235
+"GET /services/book-printing/ HTTP/1.1" 200 42161
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4871
+- Broken pipe from ('127.0.0.1', 54362)
+- Broken pipe from ('127.0.0.1', 54346)
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201187
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/js/products/dynamic-pricing-calculator.js HTTP/1.1" 200 8043
+"GET /media/products/hero/25330.jpg HTTP/1.1" 200 4556325
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+- Broken pipe from ('127.0.0.1', 1486)
+- Broken pipe from ('127.0.0.1', 1493)
+Watching for file changes with StatReloader
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201187
+"GET /media/products/hero/25330.jpg HTTP/1.1" 304 0
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /media/sliders/hero-book_reVocCn.png HTTP/1.1" 200 1493235
+"GET /media/sliders/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_l0hEaGV.png HTTP/1.1" 200 128368
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2029
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2002
+"GET /media/categories/hero-book_T5aF2VE.png HTTP/1.1" 200 1493235
+"GET /media/categories/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_I4HUQtR.png HTTP/1.1" 200 128368
+"GET /media/categories/OV14KD0_SfKT8t6.jpg HTTP/1.1" 200 684371
+"GET /media/sliders/vecteezy_3d-backpack-with-various-school-stationery-illustration_48557422_OrE0IpD.png HTTP/1.1" 200 14001639
+"GET /media/categories/vecteezy_3d-backpack-with-various-school-stationery-illustration_48557422_cTPT9o6.png HTTP/1.1" 200 14001639
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4858
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET / HTTP/1.1" 200 69077
+- Broken pipe from ('127.0.0.1', 14994)
+- Broken pipe from ('127.0.0.1', 6499)
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /media/sliders/vecteezy_3d-backpack-with-various-school-stationery-illustration_48557422_OrE0IpD.png HTTP/1.1" 200 14001639
+"GET /media/categories/vecteezy_3d-backpack-with-various-school-stationery-illustration_48557422_cTPT9o6.png HTTP/1.1" 200 14001639
+"GET /services/categories/ HTTP/1.1" 200 20813
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4871
+"GET /services/stationery/ HTTP/1.1" 200 40831
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /design-tool/product/letterheads/ HTTP/1.1" 200 183193
+Not Found: /api/products/
+"GET /api/products/ HTTP/1.1" 404 5280
+"GET /design-tool/api/user-templates/ HTTP/1.1" 302 0
+"GET /design-tool/api/templates/?page=1&per_page=8 HTTP/1.1" 200 147
+"GET /design-tool/api/categories/ HTTP/1.1" 200 35
+Not Found: /products/ajax/calculate-price/
+"GET /products/ajax/calculate-price/ HTTP/1.1" 404 4928
+"GET /accounts/login/?next=/design-tool/api/user-templates/ HTTP/1.1" 200 12227
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /media/sliders/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_l0hEaGV.png HTTP/1.1" 200 128368
+"GET /media/sliders/hero-book_reVocCn.png HTTP/1.1" 200 1493235
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /media/categories/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_I4HUQtR.png HTTP/1.1" 200 128368
+"GET /media/categories/OV14KD0_SfKT8t6.jpg HTTP/1.1" 200 684371
+"GET /media/categories/hero-book_T5aF2VE.png HTTP/1.1" 200 1493235
+"GET /media/sliders/vecteezy_3d-backpack-with-various-school-stationery-illustration_48557422_OrE0IpD.png HTTP/1.1" 200 14001639
+"GET /media/categories/vecteezy_3d-backpack-with-various-school-stationery-illustration_48557422_cTPT9o6.png HTTP/1.1" 200 14001639
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4871
+"GET /services/stationery/ HTTP/1.1" 200 40831
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /design-tool/product/business-cards/ HTTP/1.1" 200 183193
+"GET /design-tool/api/user-templates/ HTTP/1.1" 302 0
+"GET /design-tool/api/categories/ HTTP/1.1" 200 35
+Not Found: /api/products/
+"GET /design-tool/api/templates/?page=1&per_page=8 HTTP/1.1" 200 147
+"GET /api/products/ HTTP/1.1" 404 5280
+Not Found: /products/ajax/calculate-price/
+"GET /products/ajax/calculate-price/ HTTP/1.1" 404 4928
+"GET /accounts/login/?next=/design-tool/api/user-templates/ HTTP/1.1" 200 12227
+Internal Server Error: /design-tool/api/pixabay/images/
+"GET /design-tool/api/pixabay/images/?q=gym&page=1&per_page=12&image_type=photo HTTP/1.1" 500 240
+"GET /design-tool/product/letterheads/ HTTP/1.1" 200 183193
+"GET /design-tool/api/user-templates/ HTTP/1.1" 302 0
+Not Found: /api/products/
+"GET /api/products/ HTTP/1.1" 404 5280
+"GET /design-tool/api/categories/ HTTP/1.1" 200 35
+"GET /design-tool/api/templates/?page=1&per_page=8 HTTP/1.1" 200 147
+"GET /accounts/login/?next=/design-tool/api/user-templates/ HTTP/1.1" 200 12227
+Not Found: /products/ajax/calculate-price/
+"GET /products/ajax/calculate-price/ HTTP/1.1" 404 4928
+"GET /design-tool/product/bill-books/ HTTP/1.1" 200 183193
+Not Found: /api/products/
+"GET /api/products/ HTTP/1.1" 404 5280
+"GET /design-tool/api/categories/ HTTP/1.1" 200 35
+"GET /design-tool/api/user-templates/ HTTP/1.1" 302 0
+"GET /design-tool/api/templates/?page=1&per_page=8 HTTP/1.1" 200 147
+Not Found: /products/ajax/calculate-price/
+"GET /products/ajax/calculate-price/ HTTP/1.1" 404 4928
+"GET /accounts/login/?next=/design-tool/api/user-templates/ HTTP/1.1" 200 12227
+"GET /design-tool/product/business-cards/ HTTP/1.1" 200 183193
+Not Found: /api/products/
+"GET /api/products/ HTTP/1.1" 404 5280
+"GET /design-tool/api/categories/ HTTP/1.1" 200 35
+"GET /design-tool/api/user-templates/ HTTP/1.1" 302 0
+"GET /design-tool/api/templates/?page=1&per_page=8 HTTP/1.1" 200 147
+"GET /accounts/login/?next=/design-tool/api/user-templates/ HTTP/1.1" 200 12227
+Not Found: /products/ajax/calculate-price/
+"GET /products/ajax/calculate-price/ HTTP/1.1" 404 4928
+"GET /services/stationery/id-cards/static/ HTTP/1.1" 200 65060
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/js/products/dynamic-pricing-calculator.js HTTP/1.1" 200 8043
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /services/book-printing/ HTTP/1.1" 200 42161
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201187
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /media/products/hero/25330.jpg HTTP/1.1" 200 4556325
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /services/book-printing/ HTTP/1.1" 200 42161
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/comic-books/static/ HTTP/1.1" 200 64181
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/coffee-table-books/static/ HTTP/1.1" 200 64263
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/coloring-books/static/ HTTP/1.1" 200 64061
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/art-books/static/ HTTP/1.1" 200 64262
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/annual-reports/static/ HTTP/1.1" 200 64246
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/yearbooks/static/ HTTP/1.1" 200 64162
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/on-demand-books/static/ HTTP/1.1" 200 64256
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201187
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /services/categories/ HTTP/1.1" 200 20813
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /about/ HTTP/1.1" 200 33544
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/about/technology.jpg HTTP/1.1" 404 2021
+"GET /static/images/about/our-story.jpg HTTP/1.1" 404 2018
+Internal Server Error: /contact/
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\core\views.py", line 66, in contact_view
+    return render(request, 'core/contact.html', context)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'templates' not found. 'templates' is not a valid view function or pattern name.
+"GET /contact/ HTTP/1.1" 500 165212
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+Internal Server Error: /contact/
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\core\views.py", line 66, in contact_view
+    return render(request, 'core/contact.html', context)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'templates' not found. 'templates' is not a valid view function or pattern name.
+"GET /contact/ HTTP/1.1" 500 165206
+Internal Server Error: /contact/
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\core\views.py", line 66, in contact_view
+    return render(request, 'core/contact.html', context)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'templates' not found. 'templates' is not a valid view function or pattern name.
+"GET /contact/ HTTP/1.1" 500 165206
+"GET /services/categories/ HTTP/1.1" 200 20813
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/paper-boxes/ HTTP/1.1" 200 40303
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/paper-boxes/medical-boxes/static/ HTTP/1.1" 200 65096
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /design-tool/product/cosmetic-boxes/ HTTP/1.1" 200 183193
+Not Found: /api/products/
+"GET /api/products/ HTTP/1.1" 404 5280
+"GET /design-tool/api/user-templates/ HTTP/1.1" 302 0
+"GET /design-tool/api/categories/ HTTP/1.1" 200 35
+"GET /design-tool/api/templates/?page=1&per_page=8 HTTP/1.1" 200 147
+"GET /accounts/login/?next=/design-tool/api/user-templates/ HTTP/1.1" 200 12227
+Not Found: /products/ajax/calculate-price/
+"GET /products/ajax/calculate-price/ HTTP/1.1" 404 4928
+"GET /design-tool/product/retail-boxes/ HTTP/1.1" 200 183193
+"GET /design-tool/api/user-templates/ HTTP/1.1" 302 0
+Not Found: /api/products/
+"GET /api/products/ HTTP/1.1" 404 5280
+"GET /design-tool/api/categories/ HTTP/1.1" 200 35
+"GET /design-tool/api/templates/?page=1&per_page=8 HTTP/1.1" 200 147
+"GET /accounts/login/?next=/design-tool/api/user-templates/ HTTP/1.1" 200 12227
+Not Found: /products/ajax/calculate-price/
+"GET /products/ajax/calculate-price/ HTTP/1.1" 404 4928
+"GET /services/paper-boxes/folding-carton/static/ HTTP/1.1" 200 65099
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/paper-boxes/corrugated-boxes/static/ HTTP/1.1" 200 64956
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /design-tool/product/kraft-boxes/ HTTP/1.1" 200 183193
+Not Found: /api/products/
+"GET /api/products/ HTTP/1.1" 404 5280
+"GET /design-tool/api/user-templates/ HTTP/1.1" 302 0
+"GET /design-tool/api/templates/?page=1&per_page=8 HTTP/1.1" 200 147
+"GET /design-tool/api/categories/ HTTP/1.1" 200 35
+Not Found: /products/ajax/calculate-price/
+"GET /accounts/login/?next=/design-tool/api/user-templates/ HTTP/1.1" 200 12227
+"GET /products/ajax/calculate-price/ HTTP/1.1" 404 4928
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /services/marketing-material/ HTTP/1.1" 200 27991
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/stationery/ HTTP/1.1" 200 40831
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /services/marketing-material/ HTTP/1.1" 200 27991
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/categories/ HTTP/1.1" 200 20813
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/search/?design_tool=true HTTP/1.1" 200 99747
+"GET /static/css/products/product-detail.css HTTP/1.1" 200 3005
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET / HTTP/1.1" 200 71951
+"GET /media/sliders/hero-book_reVocCn.png HTTP/1.1" 304 0
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /media/sliders/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_l0hEaGV.png HTTP/1.1" 304 0
+"GET /media/sliders/vecteezy_3d-backpack-with-various-school-stationery-illustration_48557422_OrE0IpD.png HTTP/1.1" 304 0
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2029
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2002
+"GET /media/categories/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_I4HUQtR.png HTTP/1.1" 304 0
+"GET /media/categories/hero-book_T5aF2VE.png HTTP/1.1" 304 0
+"GET /media/categories/OV14KD0_SfKT8t6.jpg HTTP/1.1" 304 0
+"GET /media/categories/vecteezy_3d-backpack-with-various-school-stationery-illustration_48557422_cTPT9o6.png HTTP/1.1" 304 0
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4858
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /media/sliders/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_l0hEaGV.png HTTP/1.1" 200 128368
+"GET /media/categories/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_I4HUQtR.png HTTP/1.1" 200 128368
+"GET /media/categories/OV14KD0_SfKT8t6.jpg HTTP/1.1" 200 684371
+"GET /media/sliders/hero-book_reVocCn.png HTTP/1.1" 200 1493235
+"GET /media/categories/hero-book_T5aF2VE.png HTTP/1.1" 200 1493235
+- Broken pipe from ('127.0.0.1', 42685)
+- Broken pipe from ('127.0.0.1', 42678)
+"GET / HTTP/1.1" 200 69077
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /media/sliders/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_l0hEaGV.png HTTP/1.1" 200 128368
+"GET /media/sliders/hero-book_reVocCn.png HTTP/1.1" 200 1493235
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /media/categories/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_I4HUQtR.png HTTP/1.1" 200 128368
+"GET /media/categories/OV14KD0_SfKT8t6.jpg HTTP/1.1" 200 684371
+"GET /media/categories/hero-book_T5aF2VE.png HTTP/1.1" 200 1493235
+"GET /media/sliders/vecteezy_3d-backpack-with-various-school-stationery-illustration_48557422_OrE0IpD.png HTTP/1.1" 200 14001639
+"GET /media/categories/vecteezy_3d-backpack-with-various-school-stationery-illustration_48557422_cTPT9o6.png HTTP/1.1" 200 14001639
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4871
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /media/sliders/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_l0hEaGV.png HTTP/1.1" 200 128368
+"GET /media/sliders/hero-book_reVocCn.png HTTP/1.1" 200 1493235
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /media/categories/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_I4HUQtR.png HTTP/1.1" 200 128368
+"GET /media/categories/OV14KD0_SfKT8t6.jpg HTTP/1.1" 200 684371
+"GET /media/categories/hero-book_T5aF2VE.png HTTP/1.1" 200 1493235
+"GET /media/sliders/vecteezy_3d-backpack-with-various-school-stationery-illustration_48557422_OrE0IpD.png HTTP/1.1" 200 14001639
+"GET / HTTP/1.1" 200 69077
+- Broken pipe from ('127.0.0.1', 54717)
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /media/sliders/vecteezy_3d-backpack-with-various-school-stationery-illustration_48557422_OrE0IpD.png HTTP/1.1" 200 14001639
+"GET /media/categories/vecteezy_3d-backpack-with-various-school-stationery-illustration_48557422_cTPT9o6.png HTTP/1.1" 200 14001639
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4871
+"GET /services/book-printing/ HTTP/1.1" 200 42161
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201187
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/js/products/dynamic-pricing-calculator.js HTTP/1.1" 200 8043
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /media/products/hero/25330.jpg HTTP/1.1" 200 4556325
+"GET /services/book-printing/comic-books/static/ HTTP/1.1" 200 64181
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201187
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /media/sliders/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_l0hEaGV.png HTTP/1.1" 200 128368
+"GET /media/sliders/hero-book_reVocCn.png HTTP/1.1" 200 1493235
+"GET /media/categories/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_I4HUQtR.png HTTP/1.1" 200 128368
+"GET /media/categories/OV14KD0_SfKT8t6.jpg HTTP/1.1" 200 684371
+"GET /media/categories/hero-book_T5aF2VE.png HTTP/1.1" 200 1493235
+"GET /media/sliders/vecteezy_3d-backpack-with-various-school-stationery-illustration_48557422_OrE0IpD.png HTTP/1.1" 200 14001639
+"GET /media/categories/vecteezy_3d-backpack-with-various-school-stationery-illustration_48557422_cTPT9o6.png HTTP/1.1" 200 14001639
+"GET /services/book-printing/ HTTP/1.1" 200 42161
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4871
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201187
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/js/products/dynamic-pricing-calculator.js HTTP/1.1" 200 8043
+"GET /media/products/hero/25330.jpg HTTP/1.1" 200 4556325
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201187
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /services/book-printing/ HTTP/1.1" 200 42161
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/comic-books/static/ HTTP/1.1" 200 64181
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /services/book-printing/ HTTP/1.1" 200 42161
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201187
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/categories/ HTTP/1.1" 200 20813
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/ HTTP/1.1" 200 42161
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201187
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/comic-books/static/ HTTP/1.1" 200 64181
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/coffee-table-books/static/ HTTP/1.1" 200 64263
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/coffee-table-books/static/ HTTP/1.1" 200 64263
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /services/categories/ HTTP/1.1" 200 20813
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /about/ HTTP/1.1" 200 33544
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/about/technology.jpg HTTP/1.1" 404 2021
+"GET /static/images/about/our-story.jpg HTTP/1.1" 404 2018
+Internal Server Error: /contact/
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\core\views.py", line 66, in contact_view
+    return render(request, 'core/contact.html', context)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'templates' not found. 'templates' is not a valid view function or pattern name.
+"GET /contact/ HTTP/1.1" 500 163309
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4871
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /services/book-printing/ HTTP/1.1" 200 42161
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201187
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /media/products/hero/25330.jpg HTTP/1.1" 200 4556325
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201187
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201187
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4871
+"GET /services/book-printing/ HTTP/1.1" 200 42161
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201187
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201187
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201187
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /services/book-printing/ HTTP/1.1" 200 42161
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/comic-books/static/ HTTP/1.1" 200 64181
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/coffee-table-books/static/ HTTP/1.1" 200 64263
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/coloring-books/static/ HTTP/1.1" 200 64061
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/art-books/static/ HTTP/1.1" 200 64262
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/annual-reports/static/ HTTP/1.1" 200 64246
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/yearbooks/static/ HTTP/1.1" 200 64162
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/on-demand-books/static/ HTTP/1.1" 200 64256
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /about/ HTTP/1.1" 200 33544
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/about/our-story.jpg HTTP/1.1" 404 2018
+"GET /static/images/about/technology.jpg HTTP/1.1" 404 2021
+"GET /services/categories/ HTTP/1.1" 200 20813
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /services/books-publications/ HTTP/1.1" 200 27975
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /services/categories/ HTTP/1.1" 200 20813
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /about/ HTTP/1.1" 200 33544
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/about/technology.jpg HTTP/1.1" 404 2021
+"GET /static/images/about/our-story.jpg HTTP/1.1" 404 2018
+Internal Server Error: /contact/
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\core\views.py", line 66, in contact_view
+    return render(request, 'core/contact.html', context)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'templates' not found. 'templates' is not a valid view function or pattern name.
+"GET /contact/ HTTP/1.1" 500 163458
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /services/book-printing/ HTTP/1.1" 200 42161
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201187
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201187
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201187
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+Not Found: /services/books/
+"GET /services/books/ HTTP/1.1" 404 5202
+"GET /services/book-printing/ HTTP/1.1" 200 42161
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/comic-books/static/ HTTP/1.1" 200 64181
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201187
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201187
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201187
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4871
+"GET /services/book-printing/ HTTP/1.1" 200 42161
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201187
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/js/products/dynamic-pricing-calculator.js HTTP/1.1" 200 8043
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /media/products/hero/25330.jpg HTTP/1.1" 200 4556325
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201187
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4871
+"GET /services/book-printing/ HTTP/1.1" 200 42161
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201187
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201187
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /services/paper-boxes/ HTTP/1.1" 200 40303
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/paper-boxes/medical-boxes/static/ HTTP/1.1" 200 65096
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/ HTTP/1.1" 200 20813
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/ HTTP/1.1" 200 42161
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/comic-books/static/ HTTP/1.1" 200 64181
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/coffee-table-books/static/ HTTP/1.1" 200 64263
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /services/categories/ HTTP/1.1" 200 20813
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/marketing-material/ HTTP/1.1" 200 27991
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/categories/ HTTP/1.1" 200 20813
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/paper-boxes/ HTTP/1.1" 200 40303
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /services/book-printing/ HTTP/1.1" 200 42161
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201187
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /services/marketing-material/ HTTP/1.1" 200 27991
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /services/stationery/ HTTP/1.1" 200 40831
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /services/categories/ HTTP/1.1" 200 20813
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /about/ HTTP/1.1" 200 33544
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/about/our-story.jpg HTTP/1.1" 404 2018
+"GET /static/images/about/technology.jpg HTTP/1.1" 404 2021
+Internal Server Error: /contact/
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\core\views.py", line 66, in contact_view
+    return render(request, 'core/contact.html', context)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'templates' not found. 'templates' is not a valid view function or pattern name.
+"GET /contact/ HTTP/1.1" 500 163458
+"GET /static/images/about/our-story.jpg HTTP/1.1" 404 2018
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /services/categories/ HTTP/1.1" 200 20813
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /about/ HTTP/1.1" 200 33544
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/about/our-story.jpg HTTP/1.1" 404 2018
+"GET /static/images/about/technology.jpg HTTP/1.1" 404 2021
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /services/categories/ HTTP/1.1" 200 20813
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /about/ HTTP/1.1" 200 33544
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/about/technology.jpg HTTP/1.1" 404 2021
+"GET /static/images/about/our-story.jpg HTTP/1.1" 404 2018
+Internal Server Error: /contact/
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\core\views.py", line 66, in contact_view
+    return render(request, 'core/contact.html', context)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'templates' not found. 'templates' is not a valid view function or pattern name.
+"GET /contact/ HTTP/1.1" 500 163458
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /services/categories/ HTTP/1.1" 200 20813
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /services/categories/ HTTP/1.1" 200 20813
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /about/ HTTP/1.1" 200 33544
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/about/technology.jpg HTTP/1.1" 404 2021
+"GET /static/images/about/our-story.jpg HTTP/1.1" 404 2018
+Internal Server Error: /contact/
+Traceback (most recent call last):
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\shiwansh\shirsti_printing\apps\core\views.py", line 66, in contact_view
+    return render(request, 'core/contact.html', context)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\shiwansh\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'templates' not found. 'templates' is not a valid view function or pattern name.
+"GET /contact/ HTTP/1.1" 500 163458
+"GET /static/images/about/technology.jpg HTTP/1.1" 404 2021
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /services/book-printing/ HTTP/1.1" 200 42161
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201187
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /services/book-printing/childrens-books/static/ HTTP/1.1" 200 201187
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET / HTTP/1.1" 200 69077
+"GET /static/images/logo.png HTTP/1.1" 404 1985
+"GET /static/images/service-design-services.svg HTTP/1.1" 404 2042
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 2009
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2015

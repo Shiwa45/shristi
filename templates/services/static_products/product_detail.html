@@ -149,23 +149,9 @@
 {% endblock %}
 
 {% block content %}
-<!-- Breadcrumb Navigation -->
-<nav class="breadcrumb-nav">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <ol class="breadcrumb">
-            <li><a href="{% url 'core:home' %}">Home</a></li>
-            <li><i class="fas fa-chevron-right text-xs text-gray-400"></i></li>
-            <li><a href="{% url 'services:home' %}">Services</a></li>
-            <li><i class="fas fa-chevron-right text-xs text-gray-400"></i></li>
-            <li><a href="{% url 'services:category' category.slug %}">{{ category.name }}</a></li>
-            <li><i class="fas fa-chevron-right text-xs text-gray-400"></i></li>
-            <li class="text-gray-900 font-medium">{{ product.name }}</li>
-        </ol>
-    </div>
-</nav>
 
 <!-- Hero Section -->
-<section class="hero-gradient text-white py-16">
+<section class="bg-blue-50 text-Black py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="grid lg:grid-cols-2 gap-12 items-center">
             <!-- Product Info -->
@@ -178,7 +164,7 @@
                 {% endif %}
                 
                 <h1 class="text-4xl lg:text-5xl font-bold mb-6">{{ product.name }}</h1>
-                <p class="text-xl mb-8 text-white/90 leading-relaxed">
+                <p class="text-xl mb-8 text-black/90 leading-relaxed">
                     {{ product.description|default:product.short_description }}
                 </p>
                 
@@ -187,24 +173,24 @@
                     <div class="trust-indicator bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center">
                         <i class="fas fa-shipping-fast text-2xl mb-2 text-green-300"></i>
                         <div class="text-sm font-medium">Free Shipping</div>
-                        <div class="text-xs text-white/80">Orders over ₹2000</div>
+                        <div class="text-xs text-black/80">Orders over ₹2000</div>
                     </div>
                     <div class="trust-indicator bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center">
                         <i class="fas fa-medal text-2xl mb-2 text-yellow-300"></i>
                         <div class="text-sm font-medium">Premium Quality</div>
-                        <div class="text-xs text-white/80">25+ years experience</div>
+                        <div class="text-xs text-black/80">25+ years experience</div>
                     </div>
                     <div class="trust-indicator bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center">
                         <i class="fas fa-clock text-2xl mb-2 text-blue-300"></i>
                         <div class="text-sm font-medium">Quick Turnaround</div>
-                        <div class="text-xs text-white/80">3-5 business days</div>
+                        <div class="text-xs text-black/80">3-5 business days</div>
                     </div>
                 </div>
 
                 <!-- Starting Price -->
                 <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 inline-block">
                     <div class="text-3xl font-bold mb-1">₹{{ product.base_price }}</div>
-                    <div class="text-sm text-white/80">Starting price {{ product.price_unit }}</div>
+                    <div class="text-sm text-black/80">Starting price {{ product.price_unit }}</div>
                     {% if product.minimum_quantity %}
                     <div class="text-xs text-white/70 mt-1">Minimum order: {{ product.minimum_quantity }} pieces</div>
                     {% endif %}
@@ -213,11 +199,11 @@
 
             <!-- Product Image -->
             <div class="relative">
-                <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8">
+                <div class=" backdrop-blur-sm rounded-2xl p-8">
                     {% if product.hero_image %}
                         <img src="{{ product.hero_image.url }}" 
                              alt="{{ product.name }}" 
-                             class="w-full h-80 object-cover rounded-lg shadow-2xl">
+                             class="">
                     {% else %}
                         <div class="w-full h-80 bg-white/20 rounded-lg flex items-center justify-center">
                             <div class="text-center">
@@ -319,57 +305,6 @@
     </div>
 </section>
 
-<!-- QinPrinting Style Pricing Table -->
-{% if product.quantity_tiers %}
-<section class="bg-gray-50 py-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold text-gray-900 mb-4">Instant Online Pricing</h2>
-            <p class="text-xl text-gray-600">Get immediate quotes based on your quantity needs</p>
-        </div>
-        
-        <div class="max-w-4xl mx-auto">
-            <table class="pricing-table">
-                <thead>
-                    <tr>
-                        <th>Quantity</th>
-                        <th>Price Per Unit</th>
-                        <th>Total Cost</th>
-                        <th>You Save</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for tier in product.quantity_tiers %}
-                    <tr>
-                        <td class="font-semibold">{{ tier.min_quantity }}{% if tier.max_quantity %} - {{ tier.max_quantity }}{% else %}+{% endif %} pcs</td>
-                        <td class="text-green-600 font-bold">₹{{ tier.price_per_unit }}</td>
-                        <td class="font-semibold">₹{{ tier.total_cost }}</td>
-                        <td class="text-red-600">
-                            {% if tier.savings %}{{ tier.savings }}%{% else %}-{% endif %}
-                        </td>
-                        <td>
-                            <a href="#" class="instant-quote-btn text-sm">
-                                <i class="fas fa-calculator mr-1"></i>
-                                Get Quote
-                            </a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            
-            <div class="text-center mt-8">
-                <p class="text-gray-600 mb-4">Need a custom quantity? Get a personalized quote!</p>
-                <a href="{% url 'orders:quote_request' %}" class="cta-gradient text-white font-bold py-4 px-8 rounded-lg hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02] inline-block">
-                    <i class="fas fa-calculator mr-2"></i>
-                    Get Custom Quote
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
-{% endif %}
 
 <!-- Product Information Tabs -->
 <section class="bg-white py-16">

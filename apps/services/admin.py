@@ -65,13 +65,13 @@ class ProductFAQInline(admin.TabularInline):
 class ProductSampleInline(admin.TabularInline):
     model = StaticProductSample
     extra = 1
-    fields = ('title', 'description', 'image', 'file', 'order', 'is_active')
+    fields = ('title', 'description', 'thumbnail', 'sample_file', 'file_type', 'order', 'is_active')
 
 
 class ProductTestimonialInline(admin.TabularInline):
     model = StaticProductTestimonial
     extra = 1
-    fields = ('customer_name', 'customer_company', 'content', 'rating', 'order', 'is_active')
+    fields = ('customer_name', 'customer_company', 'testimonial', 'rating', 'order', 'is_active')
 
 @admin.register(StaticProduct)
 class StaticProductAdmin(admin.ModelAdmin):
@@ -172,10 +172,10 @@ class StaticProductSampleAdmin(admin.ModelAdmin):
     list_filter = ('product__category', 'is_active')
     search_fields = ('product__name', 'title', 'description')
     list_editable = ('order', 'is_active')
-    
+
     def image_preview(self, obj):
-        if obj.image:
-            return format_html('<img src="{}" style="max-height: 50px;" />', obj.image.url)
+        if obj.thumbnail:
+            return format_html('<img src="{}" style="max-height: 50px;" />', obj.thumbnail.url)
         return "No image"
     image_preview.short_description = 'Preview'
 
@@ -184,7 +184,7 @@ class StaticProductSampleAdmin(admin.ModelAdmin):
 class StaticProductTestimonialAdmin(admin.ModelAdmin):
     list_display = ('product', 'customer_name', 'customer_company', 'rating', 'order', 'is_active')
     list_filter = ('product__category', 'rating', 'is_active')
-    search_fields = ('product__name', 'customer_name', 'customer_company', 'content')
+    search_fields = ('product__name', 'customer_name', 'customer_company', 'testimonial')
     list_editable = ('order', 'is_active')
     
     def get_readonly_fields(self, request, obj=None):

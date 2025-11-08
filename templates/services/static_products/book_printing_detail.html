@@ -1,0 +1,2527 @@
+{% extends 'services/static_products/product_detail.html' %}
+{% load static %}
+
+{% block extra_css %}
+{{ block.super }}
+<style>
+    /* Lulu.com Inspired Book Printing Styles */
+    .book-options-container {
+        background: #ffffff;
+        padding: 3rem 4rem;
+        box-shadow: none;
+        border: none;
+        margin-top: 0;
+        margin-left: 0;
+        width: 100%;
+        max-width: 1400px;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .book-options-header {
+        color: #1a1a1a;
+        padding: 0 0 2rem 0;
+        border-radius: 0;
+        margin-bottom: 3rem;
+        text-align: left;
+        border-bottom: 2px solid #e5e7eb;
+    }
+
+    .book-options-title {
+        font-size: 2.25rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+        color: #1a1a1a;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    .book-options-subtitle {
+        opacity: 0.8;
+        font-size: 1.125rem;
+        color: #666666;
+        font-weight: 400;
+        line-height: 1.6;
+    }
+
+    /* Form Sections - Lulu.com Style */
+    .form-section {
+        margin-bottom: 3.5rem;
+        padding: 2.5rem 0;
+        border-radius: 0;
+        border: none;
+        border-bottom: 1px solid #e5e7eb;
+        transition: all 0.3s ease;
+        position: relative;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    .form-section.enabled {
+        border-bottom: 1px solid #e5e7eb;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    .form-section.disabled {
+        opacity: 0.5;
+        pointer-events: none;
+        background: transparent;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .form-section.completed {
+        border-bottom: 1px solid #e5e7eb;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    .section-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 1.25rem;
+        margin-bottom: 2rem;
+        padding-bottom: 0;
+    }
+
+    .section-number {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: #f3f4f6;
+        color: #9ca3af;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 0.95rem;
+        flex-shrink: 0;
+        margin-top: 0;
+        border: none;
+        box-shadow: none;
+    }
+
+    .form-section.enabled .section-number {
+        background: #3b82f6;
+        color: white;
+        border: none;
+        box-shadow: none;
+    }
+
+    .form-section.completed .section-number {
+        background: #10b981;
+        color: white;
+        border: none;
+        box-shadow: none;
+    }
+
+    .section-title {
+        font-size: 1.625rem;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin: 0;
+        line-height: 1.3;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    .section-description {
+        color: #6b7280;
+        margin-bottom: 2rem;
+        line-height: 1.6;
+        font-size: 0.9375rem;
+        margin-top: 0.5rem;
+    }
+
+    /* Interior Color Options - Lulu.com Style */
+    .interior-color-options {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+    
+    @media (min-width: 1024px) {
+        .interior-color-options {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+
+    .color-option {
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        padding: 1.25rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        position: relative;
+        text-align: center;
+        background: #ffffff;
+    }
+
+    .color-option:hover {
+        border-color: #3b82f6;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+        transform: none;
+    }
+
+    .color-option.selected {
+        border-color: #3b82f6;
+        background: #eff6ff;
+        box-shadow: 0 0 0 1px #3b82f6;
+    }
+
+    .option-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 0.75rem;
+        height: 80px;
+        width: 100%;
+        background: #f3f4f6;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+
+    .option-icon img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .option-icon svg {
+        transition: none;
+        width: 48px;
+        height: 48px;
+    }
+
+    .color-option:hover .option-icon svg {
+        transform: none;
+    }
+
+    .color-option-title {
+        font-weight: 600;
+        color: #1a1a1a;
+        margin-bottom: 0;
+        font-size: 0.875rem;
+    }
+
+    .premium-badge {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        background: #f59e0b;
+        color: white;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.025em;
+    }
+
+    /* Book Size and Page Count - Lulu.com Style */
+    .size-page-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+    }
+
+    .book-size-dropdown {
+        width: 100%;
+    }
+
+    .book-size-select {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: 400;
+        background: #ffffff;
+        color: #1a1a1a;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 12px center;
+        background-repeat: no-repeat;
+        background-size: 16px;
+        padding-right: 40px;
+    }
+
+    .book-size-select:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .book-size-select:hover {
+        border-color: #9ca3af;
+    }
+
+    .page-count-section {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .page-input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .page-input-group label {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #374151;
+    }
+
+    .page-input {
+        padding: 12px 16px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: 400;
+        text-align: left;
+        background: #ffffff;
+    }
+
+    .page-input:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .conditional-page-inputs {
+        display: none;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .conditional-page-inputs.show {
+        display: grid;
+    }
+
+    /* Paper Type Options - Lulu.com Style */
+    .paper-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+    
+    @media (min-width: 1024px) {
+        .paper-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+
+    .paper-option {
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        padding: 1.25rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        position: relative;
+        background: #ffffff;
+    }
+
+    .paper-option:hover {
+        border-color: #3b82f6;
+        box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
+        transform: none;
+    }
+
+    .paper-option.selected {
+        border-color: #3b82f6;
+        background: #eff6ff;
+        box-shadow: 0 0 0 1px #3b82f6;
+    }
+
+    .paper-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 0.75rem;
+        height: 80px;
+        width: 100%;
+        background: #f3f4f6;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+
+    .paper-icon img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .paper-icon svg {
+        transition: none;
+        width: 48px;
+        height: 48px;
+    }
+
+    .paper-option:hover .paper-icon svg {
+        transform: none;
+    }
+
+    .paper-option.disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+        background: #f9fafb;
+    }
+
+    .paper-option.disabled::before {
+        content: 'Not Available';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #ef4444;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+
+    .paper-weight {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #1a1a1a;
+        margin-bottom: 0;
+    }
+
+    /* Binding Type Options - Lulu.com Style */
+    .binding-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+    
+    @media (min-width: 1024px) {
+        .binding-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+
+    .binding-option {
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        padding: 1.25rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        position: relative;
+        background: #ffffff;
+    }
+
+    .binding-option:hover {
+        border-color: #3b82f6;
+        box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
+        transform: none;
+    }
+
+    .binding-option.selected {
+        border-color: #3b82f6;
+        background: #eff6ff;
+        box-shadow: 0 0 0 1px #3b82f6;
+    }
+
+    .binding-option.disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        background: #f9fafb;
+        position: relative;
+    }
+
+    .binding-option.disabled::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 8px;
+        z-index: 2;
+    }
+
+    .binding-option.disabled::after {
+        content: '🔒 Not Available';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(255, 255, 255, 0.95);
+        color: #666;
+        padding: 6px 10px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        white-space: nowrap;
+        z-index: 3;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e5e7eb;
+        max-width: 90%;
+        text-align: center;
+    }
+
+    .lock-icon {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        color: #9ca3af;
+        font-size: 1rem;
+        z-index: 4;
+        display: none;
+    }
+
+    .binding-option.disabled .lock-icon {
+        display: block;
+    }
+
+    .binding-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 0.75rem;
+        height: 48px;
+    }
+
+    .binding-icon svg {
+        transition: none;
+        width: 48px;
+        height: 48px;
+    }
+
+    .binding-option:hover .binding-icon svg {
+        transform: none;
+    }
+
+    .binding-name {
+        font-weight: 600;
+        color: #1a1a1a;
+        margin-bottom: 0.25rem;
+        font-size: 0.875rem;
+    }
+
+    .binding-description {
+        font-size: 0.75rem;
+        color: #666666;
+        line-height: 1.3;
+    }
+
+    /* Cover Finish Options - Lulu.com Style */
+    .finish-options {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        max-width: 100%;
+    }
+    
+    @media (min-width: 1024px) {
+        .finish-options {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+
+    .finish-option {
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        padding: 1.25rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        background: #ffffff;
+        max-width: 280px;
+    }
+
+    .finish-option:hover {
+        border-color: #3b82f6;
+        box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
+        transform: none;
+    }
+
+    .finish-option.selected {
+        border-color: #3b82f6;
+        background: #eff6ff;
+        box-shadow: 0 0 0 1px #3b82f6;
+    }
+
+    .finish-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 0.75rem;
+        height: 80px;
+        width: 100%;
+        background: #f3f4f6;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+
+    .finish-icon img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .finish-icon svg {
+        transition: none;
+        width: 48px;
+        height: 48px;
+    }
+
+    .finish-option:hover .finish-icon svg {
+        transform: none;
+    }
+
+    .finish-name {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #1a1a1a;
+        margin-bottom: 0;
+    }
+
+    /* Designing and Formatting - Lulu.com Style */
+    .design-service-card {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .design-pricing {
+        background: white;
+        border-radius: 6px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border: 1px solid #e5e7eb;
+    }
+
+    .pricing-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    .pricing-item:last-child {
+        margin-bottom: 0;
+        padding-top: 0.5rem;
+        border-top: 1px solid #f3f4f6;
+        font-weight: 600;
+    }
+
+    .design-toggle {
+        display: flex;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .toggle-option {
+        flex: 1;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        padding: 0.75rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        background: #ffffff;
+        font-size: 0.875rem;
+    }
+
+    .toggle-option:hover {
+        border-color: #3b82f6;
+        box-shadow: 0 1px 4px rgba(59, 130, 246, 0.15);
+    }
+
+    .toggle-option.selected {
+        border-color: #3b82f6;
+        background: #eff6ff;
+        box-shadow: 0 0 0 1px #3b82f6;
+    }
+
+    .file-upload-section {
+        display: none;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .file-upload-section.show {
+        display: grid;
+    }
+
+    .file-upload-area {
+        border: 2px dashed #d1d5db;
+        border-radius: 8px;
+        padding: 1.5rem;
+        text-align: center;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        background: #ffffff;
+    }
+
+    .file-upload-area:hover {
+        border-color: #3b82f6;
+        background: #f8fafc;
+    }
+
+
+
+    .upload-icon {
+        font-size: 2rem;
+        color: #9ca3af;
+        margin-bottom: 0.75rem;
+    }
+
+    .upload-text {
+        color: #374151;
+        font-weight: 500;
+        margin-bottom: 0.25rem;
+        font-size: 0.875rem;
+    }
+
+    .upload-hint {
+        color: #6b7280;
+        font-size: 0.75rem;
+    }
+
+    /* ISBN Allocation - Lulu.com Style */
+    .isbn-info {
+        background: #fef3c7;
+        border: 1px solid #f59e0b;
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .isbn-warning {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #92400e;
+        font-weight: 500;
+        margin-bottom: 0.75rem;
+        font-size: 0.875rem;
+    }
+
+    .isbn-description {
+        color: #78350f;
+        font-size: 0.75rem;
+        line-height: 1.4;
+    }
+
+    .isbn-options {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .isbn-option {
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        padding: 0.625rem 1.25rem;
+        text-align: left;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        background: #ffffff;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .isbn-option:hover {
+        border-color: #3b82f6;
+        box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
+    }
+
+    .isbn-option.selected {
+        border-color: #3b82f6;
+        background: #eff6ff;
+        box-shadow: 0 0 0 1px #3b82f6;
+    }
+
+    .isbn-title {
+        font-weight: 500;
+        color: #1a1a1a;
+        margin-bottom: 0;
+        font-size: 0.9rem;
+    }
+
+    .isbn-subtitle {
+        font-size: 0.75rem;
+        color: #666666;
+        line-height: 1.3;
+        display: none;
+    }
+
+    /* Progress Indicator - Lulu.com Style */
+    .progress-indicator {
+        margin-bottom: 3rem;
+        padding: 1.5rem 0;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .progress-steps {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 100%;
+        overflow-x: auto;
+        padding: 0 1rem;
+    }
+
+    .progress-step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        min-width: 80px;
+        opacity: 0.4;
+        transition: opacity 0.3s ease;
+    }
+
+    .progress-step.active {
+        opacity: 1;
+    }
+
+    .progress-step.completed {
+        opacity: 0.8;
+    }
+
+    .step-number {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #f3f4f6;
+        color: #9ca3af;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.875rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .progress-step.active .step-number {
+        background: #3b82f6;
+        color: white;
+    }
+
+    .progress-step.completed .step-number {
+        background: #10b981;
+        color: white;
+    }
+
+    .step-label {
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: #666666;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    .progress-step.active .step-label {
+        color: #1a1a1a;
+        font-weight: 600;
+    }
+
+    /* Additional Lulu.com Style Improvements */
+    .field-label {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #374151;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Order Button Styling */
+    #order-button {
+        background: #3b82f6;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 0.875rem 2rem;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        width: 100%;
+        margin-top: 1rem;
+    }
+
+    #order-button:hover:not(:disabled) {
+        background: #2563eb;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    }
+
+    #order-button:disabled {
+        background: #9ca3af;
+        cursor: not-allowed;
+        box-shadow: none;
+    }
+
+    /* Input styling improvements */
+    input[type="radio"] {
+        display: none;
+    }
+
+    /* Section spacing improvements */
+    .form-section+.form-section {
+        margin-top: 3rem;
+    }
+
+    /* Typography improvements */
+    h4 {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #1a1a1a;
+        margin-bottom: 1rem;
+    }
+
+    /* Quantity section styling */
+    .quantity-input-container {
+        padding: 1rem 0;
+    }
+
+    .quantity-input-container .page-input-group {
+        width: 100%;
+    }
+
+    .quantity-input-container input[type="number"] {
+        font-size: 1.125rem;
+        font-weight: 500;
+    }
+
+    /* Design checkbox options styling */
+    .design-checkbox-option:hover {
+        border-color: #3b82f6 !important;
+        box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
+    }
+
+    .design-checkbox-option:has(input:checked) {
+        border-color: #3b82f6 !important;
+        background: #eff6ff !important;
+        box-shadow: 0 0 0 1px #3b82f6;
+    }
+
+    /* Design option boxes styling */
+    .design-option-box:hover {
+        border-color: #3b82f6 !important;
+        box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
+        transform: translateY(-1px);
+    }
+
+    .design-option-box:has(input:checked) {
+        border-color: #3b82f6 !important;
+        background: #eff6ff !important;
+        box-shadow: 0 0 0 1px #3b82f6;
+    }
+
+    /* Responsive Design - Lulu.com Style */
+    @media (max-width: 1200px) {
+        .interior-color-options,
+        .paper-grid,
+        .binding-grid,
+        .finish-options {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    @media (max-width: 992px) {
+        .interior-color-options,
+        .paper-grid,
+        .binding-grid,
+        .finish-options {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .progress-steps {
+            padding: 0 0.5rem;
+            gap: 0.5rem;
+        }
+
+        .progress-step {
+            min-width: 60px;
+        }
+
+        .step-number {
+            width: 28px;
+            height: 28px;
+            font-size: 0.75rem;
+        }
+
+        .step-label {
+            font-size: 0.625rem;
+        }
+
+        .book-options-title {
+            font-size: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+        }
+
+
+        .interior-color-options,
+        .paper-grid,
+        .binding-grid,
+        .finish-options {
+            grid-template-columns: 1fr;
+        }
+
+        .book-size-select {
+            font-size: 0.875rem;
+        }
+
+        .conditional-page-inputs {
+            grid-template-columns: 1fr;
+        }
+
+        .file-upload-section {
+            grid-template-columns: 1fr;
+        }
+
+        .design-toggle {
+            flex-direction: column;
+        }
+
+        .isbn-options {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        
+        .isbn-option {
+            width: 100%;
+        }
+
+        .section-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .section-number {
+            align-self: flex-start;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .book-options-container {
+            padding: 0;
+        }
+
+        .book-options-header {
+            padding: 1rem 0;
+        }
+
+        .color-option,
+        .paper-option,
+        .binding-option,
+        .finish-option,
+        .isbn-option {
+            padding: 1rem;
+        }
+
+        .option-icon,
+        .paper-icon,
+        .binding-icon,
+        .finish-icon {
+            height: 60px;
+        }
+
+        .option-icon svg,
+        .paper-icon svg,
+        .binding-icon svg,
+        .finish-icon svg {
+            width: 40px;
+            height: 40px;
+        }
+
+        .option-icon img,
+        .paper-icon img,
+        .binding-icon img,
+        .finish-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block product_options_panel %}
+<!-- Replace the generic options panel with book printing specific form -->
+<div class="book-options-container">
+    <!-- Book Options Header -->
+    <div class="book-options-header">
+        <h2 class="book-options-title">Customize Your Book</h2>
+        <p class="book-options-subtitle">Choose your book specifications to get started with your printing project.</p>
+    </div>
+
+    <!-- Progress Indicator -->
+    <div class="progress-indicator">
+        <div class="progress-steps">
+            <div class="progress-step active" data-step="1">
+                <div class="step-number">1</div>
+                <div class="step-label">Interior</div>
+            </div>
+            <div class="progress-step" data-step="2">
+                <div class="step-number">2</div>
+                <div class="step-label">Size & Pages</div>
+            </div>
+            <div class="progress-step" data-step="3">
+                <div class="step-number">3</div>
+                <div class="step-label">Paper</div>
+            </div>
+            <div class="progress-step" data-step="4">
+                <div class="step-number">4</div>
+                <div class="step-label">Binding</div>
+            </div>
+            <div class="progress-step" data-step="5">
+                <div class="step-number">5</div>
+                <div class="step-label">Finish</div>
+            </div>
+            <div class="progress-step" data-step="6">
+                <div class="step-number">6</div>
+                <div class="step-label">Design</div>
+            </div>
+            <div class="progress-step" data-step="7">
+                <div class="step-number">7</div>
+                <div class="step-label">ISBN</div>
+            </div>
+            <div class="progress-step" data-step="8">
+                <div class="step-number">8</div>
+                <div class="step-label">Quantity</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sequential-form" data-category="book-printing">
+        {% csrf_token %}
+        <!-- Section 1: Interior Color -->
+        <div class="form-section enabled" data-section="interior_color" data-section-number="1">
+            <div class="section-header">
+                <div class="section-number">1</div>
+                <div>
+                    <h3 class="section-title">Interior Color</h3>
+                </div>
+            </div>
+
+            <p class="section-description">
+                Standard Ink provides crisp, clear text perfect for novels and textbooks.
+                Premium Ink offers enhanced color vibrancy and deeper blacks for professional publications.
+            </p>
+
+            <div class="interior-color-options">
+                <div class="color-option" data-value="bw_premium">
+                    <input type="radio" name="interior_color" value="bw_premium" data-price-modifier="0" required>
+                    <div class="option-icon">
+                        <!-- Image placeholder - replace src with actual image path -->
+                        <img src="{% static 'img/finish/black_and_white.png' %}" alt="Black & White Premium">
+                    </div>
+                    <div class="color-option-title">Black & White Premium</div>
+                    <div class="premium-badge">Premium</div>
+                </div>
+
+                <div class="color-option" data-value="bw_standard">
+                    <input type="radio" name="interior_color" value="bw_standard" data-price-modifier="-50" required>
+                    <div class="option-icon">
+                        <!-- Image placeholder - replace src with actual image path -->
+                        <img src="{% static 'img/finish/black_white_standard.png' %}" alt="Black & White Standard">
+                    </div>
+                    <div class="color-option-title">Black & White Standard</div>
+                </div>
+
+                <div class="color-option" data-value="color_premium">
+                    <input type="radio" name="interior_color" value="color_premium" data-price-modifier="300" required>
+                    <div class="option-icon">
+                        <!-- Image placeholder - replace src with actual image path -->
+                        <img src="{% static 'img/finish/color_premium.png' %}" alt="Color Premium">
+                    </div>
+                    <div class="color-option-title">Color Premium</div>
+                    <div class="premium-badge">Premium</div>
+                </div>
+
+                <div class="color-option" data-value="color_standard">
+                    <input type="radio" name="interior_color" value="color_standard" data-price-modifier="200" required>
+                    <div class="option-icon">
+                        <!-- Image placeholder - replace src with actual image path -->
+                        <img src="{% static 'img/finish/color_standard.png' %}" alt="Color Standard">
+                    </div>
+                    <div class="color-option-title">Color Standard</div>
+                </div>
+
+                <div class="color-option" data-value="combine_color">
+                    <input type="radio" name="interior_color" value="combine_color" data-price-modifier="0" required>
+                    <div class="option-icon">
+                        <!-- Image placeholder - replace src with actual image path -->
+                        <img src="{% static 'img/finish/combine_color.png' %}" alt="Combine Color">
+                    </div>
+                    <div class="color-option-title">Combine Color</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Book Size And Page Count -->
+        <div class="form-section disabled" data-section="book_size_pages" data-section-number="2">
+            <div class="section-header">
+                <div class="section-number">2</div>
+                <div>
+                    <h3 class="section-title">Book Size And Page Count</h3>
+                </div>
+            </div>
+
+            <p class="section-description">Select a Book Size And Page Count For Your Book.</p>
+
+            <!-- Book Size and Page Count in Same Row -->
+            <div style="display: flex; gap: 1.5rem; align-items: flex-start; margin-bottom: 1rem;">
+                <div style="flex: 1;">
+                    <label for="book_size" class="field-label" style="display: block; margin-bottom: 0.5rem;">Book Size</label>
+                    <div class="book-size-dropdown">
+                        <select name="book_size" id="book_size" class="book-size-select" required>
+                            <option value="">Select Book Size</option>
+                            <option value="a4" data-price-modifier="0">A4 - 8.27 x 11.69 in (210 x 297 mm)</option>
+                            <option value="letter" data-price-modifier="25">Letter - 8.5 x 11 in (216 x 279 mm)</option>
+                            <option value="executive" data-price-modifier="50">Executive - 7 x 10 in (178 x 254 mm)
+                            </option>
+                            <option value="a5" data-price-modifier="-25">A5 - 5.83 x 8.27 in (148 x 210 mm)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Standard page count (shown by default) -->
+                <div id="standard-page-count" style="flex: 1;">
+                    <label for="page_count" class="field-label" style="display: block; margin-bottom: 0.5rem;">Page Count</label>
+                    <input type="number" id="page_count" name="page_count" class="page-input"
+                        placeholder="Please Enter Qty." min="4" required>
+                </div>
+            </div>
+
+            <!-- Conditional page counts (shown when combine_color is selected) -->
+            <div class="conditional-page-inputs" id="combine-page-counts" style="display: none; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1rem;">
+                <div class="page-input-group">
+                    <label for="bw_page_count" class="field-label">B/W Page Count</label>
+                    <input type="number" id="bw_page_count" name="bw_page_count" class="page-input"
+                        placeholder="Please enter Qty." min="0">
+                </div>
+
+                <div class="page-input-group">
+                    <label for="color_page_count" class="field-label">Color Page Count</label>
+                    <input type="number" id="color_page_count" name="color_page_count" class="page-input"
+                        placeholder="Please enter Qty." min="0">
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Paper Type -->
+        <div class="form-section disabled" data-section="paper_type" data-section-number="3">
+            <div class="section-header">
+                <div class="section-number">3</div>
+                <div>
+                    <h3 class="section-title">Paper Type</h3>
+                </div>
+            </div>
+
+            <p class="section-description">
+                For Premium Ink, We Suggest Using Art Paper For Best Color Reproduction And Image Quality.
+            </p>
+
+            <div class="paper-grid">
+                <div class="paper-option" data-value="75gsm">
+                    <input type="radio" name="paper_type" value="75gsm" data-price-modifier="0" required>
+                    <div class="paper-icon">
+                        <img src="{% static 'img/paper/70gsm.jpg' %}" alt="75 GSM Standard Paper">
+                    </div>
+                    <div class="paper-weight">75 GSM Standard Paper</div>
+                </div>
+
+                <div class="paper-option" data-value="100gsm">
+                    <input type="radio" name="paper_type" value="100gsm" data-price-modifier="50" required>
+                    <div class="paper-icon">
+                        <img src="{% static 'img/paper/100gsm.jpg' %}" alt="100 GSM Premium Paper">
+                    </div>
+                    <div class="paper-weight">100 GSM Premium Paper</div>
+                </div>
+
+                <div class="paper-option" data-value="100gsm_art">
+                    <input type="radio" name="paper_type" value="100gsm_art" data-price-modifier="100" required>
+                    <div class="paper-icon">
+                        <img src="{% static 'img/paper/100gsm.jpg' %}" alt="100 GSM Art Paper">
+                    </div>
+                    <div class="paper-weight">100 GSM Art Paper</div>
+                </div>
+
+                <div class="paper-option" data-value="130gsm_art">
+                    <input type="radio" name="paper_type" value="130gsm_art" data-price-modifier="150" required>
+                    <div class="paper-icon">
+                        <img src="{% static 'img/paper/100gsm.jpg' %}" alt="130 GSM Art Paper">
+                    </div>
+                    <div class="paper-weight">130 GSM Art Paper</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Binding Type -->
+        <div class="form-section disabled" data-section="binding_type" data-section-number="4">
+            <div class="section-header">
+                <div class="section-number">4</div>
+                <div>
+                    <h3 class="section-title">Binding Type</h3>
+                </div>
+            </div>
+
+            <p class="section-description">Select a Binding Type For Your Book.</p>
+
+            <div class="binding-grid">
+                <div class="binding-option" data-value="saddle_stitch">
+                    <input type="radio" name="binding_type" value="saddle_stitch" data-price-modifier="0" required>
+                    <div class="binding-icon">
+                        <img src="{% static 'img/binding/saddle.jpg' %}" alt="Saddle Stitch Binding">
+                    </div>
+                    <div class="binding-name">Saddle Stitch</div>
+                </div>
+
+                <div class="binding-option" data-value="spiral_binding">
+                    <input type="radio" name="binding_type" value="spiral_binding" data-price-modifier="100" required>
+                    <div class="binding-icon">
+                        <img src="{% static 'img/binding/saddle.jpg' %}" alt="Spiral Binding">
+                    </div>
+                    <div class="binding-name">Spiral Binding</div>
+                </div>
+
+                <div class="binding-option" data-value="paperback_perfect" data-min-pages="30">
+                    <input type="radio" name="binding_type" value="paperback_perfect" data-price-modifier="200"
+                        required>
+                    <div class="lock-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="binding-icon">
+                        <img src="{% static 'img/binding/perfect.jpg' %}" alt="Paperback Perfect Binding">
+                    </div>
+                    <div class="binding-name">Paperback (Perfect)</div>
+                </div>
+
+                <div class="binding-option" data-value="hardcover" data-min-pages="30">
+                    <input type="radio" name="binding_type" value="hardcover" data-price-modifier="500" required>
+                    <div class="lock-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="binding-icon">
+                        <img src="{% static 'img/binding/hardcover.jpg' %}" alt="Hardcover Binding">
+                    </div>
+                    <div class="binding-name">Hardcover</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Cover Finish -->
+        <div class="form-section disabled" data-section="cover_finish" data-section-number="5">
+            <div class="section-header">
+                <div class="section-number">5</div>
+                <div>
+                    <h3 class="section-title">Cover Finish</h3>
+                </div>
+            </div>
+
+            <p class="section-description">Select The Cover Finish For Your Book.</p>
+
+            <div class="finish-options">
+                <div class="finish-option" data-value="glossy">
+                    <input type="radio" name="cover_finish" value="glossy" data-price-modifier="50" required>
+                    <div class="finish-icon">
+                        <!-- Image placeholder - replace src with actual image path -->
+                        <img src="{% static 'img/finish/gloss.jpg' %}" alt="Glossy Finish">
+                    </div>
+                    <div class="finish-name">Glossy</div>
+                </div>
+
+                <div class="finish-option" data-value="matte">
+                    <input type="radio" name="cover_finish" value="matte" data-price-modifier="0" required>
+                    <div class="finish-icon">
+                        <!-- Image placeholder - replace src with actual image path -->
+                        <img src="{% static 'img/finish/matte.jpg' %}" alt="Matte Finish">
+                    </div>
+                    <div class="finish-name">Matte</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6: Designing And Formatting -->
+        <div class="form-section disabled" data-section="designing_formatting" data-section-number="6">
+            <div class="section-header">
+                <div class="section-number">6</div>
+                <div>
+                    <h3 class="section-title">Designing And Formatting</h3>
+                    <p class="section-subtitle">Rs.1500/- Extra Per Cover Page And Rs. 50 Extra Per Inner Page</p>
+                </div>
+            </div>
+
+            <p class="section-description mb-4">
+                If you have your own design send you can send it on our email id.
+            </p>
+
+            <!-- Design Service Options in Boxes -->
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <!-- Not Required Box -->
+                <div class="design-option-box" data-value="no" style="border: 2px solid #d1d5db; border-radius: 8px; padding: 0.75rem 1.25rem; cursor: pointer; transition: all 0.2s ease; background: #ffffff;">
+                    <label style="cursor: pointer; display: flex; align-items: center; gap: 0.75rem; white-space: nowrap;">
+                        <input type="radio" name="need_design_service" value="no" required
+                            style="width: 20px; height: 20px; cursor: pointer; accent-color: #3b82f6;">
+                        <span style="font-weight: 500; font-size: 1rem; color: #1a1a1a;">Not Required</span>
+                    </label>
+                </div>
+
+                <!-- Yes You Can Box -->
+                <div class="design-option-box" data-value="yes" style="border: 2px solid #d1d5db; border-radius: 8px; padding: 0.75rem 1.25rem; cursor: pointer; transition: all 0.2s ease; background: #ffffff;">
+                    <label style="cursor: pointer; display: flex; align-items: center; gap: 0.75rem; white-space: nowrap;">
+                        <input type="radio" name="need_design_service" value="yes" required
+                            style="width: 20px; height: 20px; cursor: pointer; accent-color: #3b82f6;">
+                        <span style="font-weight: 500; font-size: 1rem; color: #1a1a1a;">Yes You Can</span>
+                    </label>
+                </div>
+
+                <!-- Cover Page Checkbox (Hidden by default) -->
+                <div id="cover-page-checkbox" class="design-option-box" style="display: none; border: 2px solid #d1d5db; border-radius: 8px; padding: 0.75rem 1.25rem; cursor: pointer; transition: all 0.2s ease; background: #ffffff;">
+                    <label style="cursor: pointer; display: flex; align-items: center; gap: 0.75rem; white-space: nowrap;">
+                        <input type="checkbox" name="cover_page_design" value="yes" data-price-modifier="1500"
+                            style="width: 20px; height: 20px; cursor: pointer; accent-color: #3b82f6;">
+                        <span style="font-weight: 500; font-size: 1rem; color: #1a1a1a;">Cover Page</span>
+                    </label>
+                </div>
+
+                <!-- Inner Pages Checkbox (Hidden by default) -->
+                <div id="inner-pages-checkbox" class="design-option-box" style="display: none; border: 2px solid #d1d5db; border-radius: 8px; padding: 0.75rem 1.25rem; cursor: pointer; transition: all 0.2s ease; background: #ffffff;">
+                    <label style="cursor: pointer; display: flex; align-items: center; gap: 0.75rem; white-space: nowrap;">
+                        <input type="checkbox" name="inner_page_design" value="yes" data-price-per-page="50"
+                            style="width: 20px; height: 20px; cursor: pointer; accent-color: #3b82f6;">
+                        <span style="font-weight: 500; font-size: 1rem; color: #1a1a1a;">Inner Pages</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7: ISBN Allocation -->
+        <div class="form-section disabled" data-section="isbn_allocation" data-section-number="7">
+            <div class="section-header">
+                <div class="section-number">7</div>
+                <div>
+                    <h3 class="section-title">ISBN Allocation</h3>
+                </div>
+            </div>
+
+            <div class="isbn-info">
+                <div class="isbn-warning">
+                    <i class="fas fa-clock"></i>
+                    <span>It May Take 5 to 7 More Working Days To Deliver</span>
+                </div>
+                <div class="isbn-description">
+                    An ISBN (International Standard Book Number) is a unique identifier for your book.
+                    It's required for commercial distribution and helps bookstores and libraries catalog your book.
+                </div>
+            </div>
+
+            <div class="isbn-options">
+                <div class="isbn-option" data-value="not_apply">
+                    <input type="radio" name="isbn_allocation" value="not_apply" data-price-modifier="0" required
+                        style="width: 20px; height: 20px; cursor: pointer; accent-color: #3b82f6; margin: 0;">
+                    <div class="isbn-title">Not Apply</div>
+                </div>
+
+                <div class="isbn-option" data-value="assign_isbn">
+                    <input type="radio" name="isbn_allocation" value="assign_isbn" data-price-modifier="2000" required
+                        style="width: 20px; height: 20px; cursor: pointer; accent-color: #3b82f6; margin: 0;">
+                    <div class="isbn-title">Yes, Assign A Unique ISBN Number</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 8: Quantity -->
+        <div class="form-section disabled" data-section="quantity_selection" data-section-number="8">
+            <div class="section-header">
+                <div class="section-number">8</div>
+                <div>
+                    <h3 class="section-title">Quantity</h3>
+                </div>
+            </div>
+
+            <p class="section-description">
+                Enter the number of books you want to order. Minimum order quantity is 25 books.
+            </p>
+
+            <div class="quantity-input-container">
+                <div class="page-input-group" style="max-width: 400px;">
+                    <label for="quantity-input" class="field-label">Number of Books</label>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <input type="number" id="quantity-input" name="quantity" class="page-input" 
+                            value="{{ min_quantity|default:25 }}" 
+                            min="{{ min_quantity|default:25 }}" 
+                            placeholder="Minimum 25 books" 
+                            required 
+                            style="flex: 1;">
+                        <span class="text-sm text-gray-600 font-medium">books</span>
+                    </div>
+                    <div class="text-xs text-gray-500 mt-2">
+                        <i class="fas fa-info-circle text-blue-500"></i> 
+                        Volume discounts: 5% off for 50+ books, 10% off for 100+ books
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block pricing_calculator %}
+<div class="pricing-calculator" style="max-width: 600px; width: 100%; margin: 0 auto; padding: 20px;">
+    
+    <h3 style="font-size: 18px; font-weight: 600; color: #333; margin-bottom: 20px; text-align: center;">
+        Pricing Calculator
+    </h3>
+
+    <div class="pricing-breakdown" style="border: 1px solid #ddd; border-radius: 4px; padding: 20px; background: #f8f9fa;">
+        <!-- Dynamic specifications will be added here by JavaScript -->
+        <div id="book-specifications">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+                <span style="color: #666; font-size: 14px;">Product:</span>
+                <span style="color: #333; font-size: 14px; font-weight: 500;">{{ product.name }}</span>
+            </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+            <span style="color: #666; font-size: 14px;">Cost Per Book:</span>
+            <span style="color: #333; font-size: 14px; font-weight: 500;" id="cost-per-unit">₹ N/A</span>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+            <span style="color: #666; font-size: 14px;">Subtotal:</span>
+            <span style="color: #333; font-size: 14px; font-weight: 500;" id="subtotal">₹ N/A</span>
+        </div>
+
+        <div id="discount-row" style="display: none; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="color: #28a745; font-size: 14px;">Volume Discount:</span>
+                <span style="color: #28a745; font-size: 14px; font-weight: 500;" id="discount-amount">- ₹ 0</span>
+            </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #e0e0e0;">
+            <span style="color: #666; font-size: 14px;">GST (18%):</span>
+            <span style="color: #333; font-size: 14px; font-weight: 500;" id="gst-amount">₹ N/A</span>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; margin-top: 8px; border-top: 2px solid #333;">
+            <span style="color: #333; font-size: 16px; font-weight: 600;">Total:</span>
+            <span style="color: #333; font-size: 18px; font-weight: 700;" id="total-price">₹ N/A</span>
+        </div>
+    </div>
+
+    <div style="margin-top: 20px;">
+        <button
+            style="width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: 500; cursor: pointer; transition: background-color 0.2s;"
+            onmouseover="this.style.backgroundColor='#0056b3'"
+            onmouseout="this.style.backgroundColor='#007bff'"
+            id="order-button" disabled>
+            Order Your Book Now
+        </button>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+
+<!-- Category-specific JavaScript Configuration -->
+{{ category_slug|json_script:"category-slug" }}
+{{ min_quantity|default:25|json_script:"min-quantity" }}
+{{ gst_percentage|default:18|json_script:"gst-percentage" }}
+{{ product.id|json_script:"product-id" }}
+
+<script>
+    // Global category configuration for this product
+    window.categoryConfig = {
+        category: JSON.parse(document.getElementById('category-slug').textContent),
+        minQuantity: JSON.parse(document.getElementById('min-quantity').textContent),
+        gstPercentage: JSON.parse(document.getElementById('gst-percentage').textContent),
+        productId: JSON.parse(document.getElementById('product-id').textContent)
+    };
+</script>
+
+<!-- Load category-specific JavaScript -->
+<script src="{% static 'js/categories/sequential-form-engine.js' %}"></script>
+<script src="{% static 'js/categories/category-pricing-calculator.js' %}"></script>
+
+<script id="book-printing-config" type="application/json">
+{
+    "productId": {{ product.id|default:0 }},
+    "productName": "{{ product.name|escapejs }}",
+    "categoryName": "{{ category.name|escapejs }}"
+}
+</script>
+
+<script>
+    // Load configuration from JSON
+    window.bookPrintingConfig = JSON.parse(document.getElementById('book-printing-config').textContent);
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        console.log('🚀 Book printing form initialized');
+
+        // Ensure first section is enabled
+        const firstSection = document.querySelector('[data-section-number="1"]');
+        if (firstSection) {
+            firstSection.classList.remove('disabled');
+            firstSection.classList.add('enabled');
+            console.log('✅ First section enabled');
+        }
+
+        // Initialize binding options based on current page count
+        updateBindingOptions();
+
+        // Book printing specific JavaScript for product detail page
+
+        // Handle interior color selection and conditional page count fields
+        const interiorColorInputs = document.querySelectorAll('input[name="interior_color"]');
+        const standardPageCount = document.getElementById('standard-page-count');
+        const combinePageCounts = document.getElementById('combine-page-counts');
+
+        interiorColorInputs.forEach(input => {
+            input.addEventListener('change', function () {
+                // Handle conditional page count fields
+                if (this.value === 'combine_color') {
+                    standardPageCount.style.display = 'none';
+                    combinePageCounts.style.display = 'grid';
+                    document.getElementById('page_count').required = false;
+                    document.getElementById('bw_page_count').required = true;
+                    document.getElementById('color_page_count').required = true;
+                } else {
+                    standardPageCount.style.display = 'block';
+                    combinePageCounts.style.display = 'none';
+                    document.getElementById('page_count').required = true;
+                    document.getElementById('bw_page_count').required = false;
+                    document.getElementById('color_page_count').required = false;
+                }
+
+                // Update pricing in real-time
+                calculatePrice();
+                updateSpecificationsSummary();
+
+                // Reset subsequent sections when interior color changes
+                const currentSection = this.closest('.form-section');
+                const currentSectionNumber = parseInt(currentSection.dataset.sectionNumber);
+                resetSubsequentSections(currentSectionNumber);
+
+                // Check if section is complete and unlock next section
+                if (currentSection && checkSectionCompletion(currentSection)) {
+                    unlockNextSection(currentSection);
+                }
+            });
+        });
+
+        // Handle binding type restrictions based on page count
+        function updateBindingOptions() {
+            const pageCountInput = document.getElementById('page_count');
+            const bwPageCountInput = document.getElementById('bw_page_count');
+            const colorPageCountInput = document.getElementById('color_page_count');
+
+            let totalPages = 0;
+
+            if (pageCountInput.style.display !== 'none' && pageCountInput.value) {
+                totalPages = parseInt(pageCountInput.value) || 0;
+            } else {
+                const bwPages = parseInt(bwPageCountInput.value) || 0;
+                const colorPages = parseInt(colorPageCountInput.value) || 0;
+                totalPages = bwPages + colorPages;
+            }
+
+            const bindingOptions = document.querySelectorAll('.binding-option[data-min-pages="30"]');
+            bindingOptions.forEach(option => {
+                const lockIcon = option.querySelector('.lock-icon');
+                if (totalPages < 30) {
+                    option.classList.add('disabled');
+                    option.querySelector('input').disabled = true;
+                    if (lockIcon) {
+                        lockIcon.style.display = 'block';
+                    }
+                } else {
+                    option.classList.remove('disabled');
+                    option.querySelector('input').disabled = false;
+                    if (lockIcon) {
+                        lockIcon.style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        // Add event listeners for page count changes
+        document.getElementById('page_count').addEventListener('input', function () {
+            updateBindingOptions();
+            calculatePrice();
+
+            // Check if section is complete and unlock next section
+            const currentSection = this.closest('.form-section');
+            if (currentSection && checkSectionCompletion(currentSection)) {
+                unlockNextSection(currentSection);
+            }
+        });
+
+        document.getElementById('bw_page_count').addEventListener('input', function () {
+            updateBindingOptions();
+            calculatePrice();
+
+            // Check if section is complete and unlock next section
+            const currentSection = this.closest('.form-section');
+            if (currentSection && checkSectionCompletion(currentSection)) {
+                unlockNextSection(currentSection);
+            }
+        });
+
+        document.getElementById('color_page_count').addEventListener('input', function () {
+            updateBindingOptions();
+            calculatePrice();
+
+            // Check if section is complete and unlock next section
+            const currentSection = this.closest('.form-section');
+            if (currentSection && checkSectionCompletion(currentSection)) {
+                unlockNextSection(currentSection);
+            }
+        });
+
+        // Handle design service checkboxes
+        const coverPageDesignCheckbox = document.querySelector('input[name="cover_page_design"]');
+        const innerPageDesignCheckbox = document.querySelector('input[name="inner_page_design"]');
+
+        if (coverPageDesignCheckbox) {
+            coverPageDesignCheckbox.addEventListener('change', function () {
+                calculatePrice();
+                updateSpecificationsSummary();
+
+                // Check if section is complete and unlock next section
+                const currentSection = this.closest('.form-section');
+                if (currentSection && checkSectionCompletion(currentSection)) {
+                    unlockNextSection(currentSection);
+                }
+            });
+        }
+
+        if (innerPageDesignCheckbox) {
+            innerPageDesignCheckbox.addEventListener('change', function () {
+                calculatePrice();
+                updateSpecificationsSummary();
+
+                // Check if section is complete and unlock next section
+                const currentSection = this.closest('.form-section');
+                if (currentSection && checkSectionCompletion(currentSection)) {
+                    unlockNextSection(currentSection);
+                }
+            });
+        }
+
+        // Sequential form progression logic
+        function checkSectionCompletion(sectionElement) {
+            const sectionName = sectionElement.dataset.section;
+            
+            // Design section is always complete as it's optional
+            if (sectionName === 'designing_formatting') {
+                return true;
+            }
+            
+            const requiredInputs = sectionElement.querySelectorAll('input[required], select[required]');
+            let isComplete = true;
+            let missingFields = [];
+
+            for (let input of requiredInputs) {
+                if (input.type === 'radio') {
+                    const radioGroup = sectionElement.querySelectorAll(`input[name="${input.name}"]`);
+                    const isChecked = Array.from(radioGroup).some(radio => radio.checked);
+                    if (!isChecked) {
+                        isComplete = false;
+                        missingFields.push(input.name);
+                    }
+                } else if (input.type === 'checkbox' && input.required) {
+                    if (!input.checked) {
+                        isComplete = false;
+                        missingFields.push(input.name);
+                    }
+                } else if (!input.value.trim()) {
+                    isComplete = false;
+                    missingFields.push(input.name);
+                }
+            }
+
+            console.log(`📋 Section ${sectionName} completion check:`, {
+                isComplete,
+                missingFields,
+                requiredInputsCount: requiredInputs.length
+            });
+
+            return isComplete;
+        }
+
+        // Function to unlock next section without auto-scrolling
+        function unlockNextSection(currentSectionElement) {
+            const currentSectionNumber = parseInt(currentSectionElement.dataset.sectionNumber);
+            const nextSectionElement = document.querySelector(`[data-section-number="${currentSectionNumber + 1}"]`);
+
+            if (nextSectionElement) {
+                // Mark current section as completed
+                currentSectionElement.classList.remove('enabled');
+                currentSectionElement.classList.add('completed');
+
+                // Update section number to checkmark
+                const sectionNumber = currentSectionElement.querySelector('.section-number');
+                if (sectionNumber) {
+                    sectionNumber.innerHTML = '<i class="fas fa-check"></i>';
+                }
+
+                // Update progress indicator
+                updateProgressIndicator(currentSectionNumber, currentSectionNumber + 1);
+
+                // Enable next section (unlock it)
+                nextSectionElement.classList.remove('disabled');
+                nextSectionElement.classList.add('enabled');
+
+                console.log(`✅ Section ${currentSectionNumber} completed, Section ${currentSectionNumber + 1} unlocked`);
+            } else {
+                // All sections completed - enable order button
+                enableOrderButton();
+            }
+        }
+
+        function enableOrderButton() {
+            const orderButton = document.getElementById('order-button');
+            if (orderButton) {
+                orderButton.disabled = false;
+                orderButton.classList.add('pulse');
+                console.log('🎉 All sections completed! Order button enabled.');
+            }
+        }
+
+        function resetSubsequentSections(fromSectionNumber) {
+            const allSections = document.querySelectorAll('.form-section');
+
+            allSections.forEach(section => {
+                const sectionNumber = parseInt(section.dataset.sectionNumber);
+                if (sectionNumber > fromSectionNumber) {
+                    section.classList.remove('enabled', 'completed');
+                    section.classList.add('disabled');
+
+                    // Reset section number
+                    const sectionNumberEl = section.querySelector('.section-number');
+                    if (sectionNumberEl) {
+                        sectionNumberEl.textContent = sectionNumber;
+                    }
+
+                    // Clear form inputs in this section
+                    const inputs = section.querySelectorAll('input, select, textarea');
+                    inputs.forEach(input => {
+                        if (input.type === 'radio' || input.type === 'checkbox') {
+                            input.checked = false;
+                        } else {
+                            input.value = '';
+                        }
+                    });
+
+                    // Remove selected classes
+                    const options = section.querySelectorAll('.color-option, .paper-option, .binding-option, .finish-option, .toggle-option, .isbn-option');
+                    options.forEach(option => option.classList.remove('selected'));
+                }
+            });
+        }
+
+        // Handle option selection styling and form progression
+        document.querySelectorAll('.color-option, .paper-option, .binding-option, .finish-option, .toggle-option').forEach(option => {
+            option.addEventListener('click', function () {
+                const input = this.querySelector('input');
+                if (input && !input.disabled) {
+                    input.checked = true;
+
+                    // Remove selected class from siblings
+                    const siblings = this.parentElement.querySelectorAll('.color-option, .paper-option, .binding-option, .finish-option, .toggle-option');
+                    siblings.forEach(sibling => sibling.classList.remove('selected'));
+
+                    // Add selected class to current option
+                    this.classList.add('selected');
+
+                    // Trigger change event
+                    input.dispatchEvent(new Event('change'));
+
+                    // Check if current section is complete and unlock next section
+                    const currentSection = this.closest('.form-section');
+                    if (currentSection && checkSectionCompletion(currentSection)) {
+                        unlockNextSection(currentSection);
+                    }
+                }
+            });
+        });
+
+        // Handle ISBN option clicks separately (they work like design-option-box)
+        document.querySelectorAll('.isbn-option').forEach(option => {
+            option.addEventListener('click', function(e) {
+                if (e.target.tagName !== 'INPUT') {
+                    const input = this.querySelector('input');
+                    if (input) {
+                        input.checked = true;
+                        input.dispatchEvent(new Event('change'));
+                        
+                        // Check if current section is complete and unlock next section
+                        const currentSection = this.closest('.form-section');
+                        if (currentSection && checkSectionCompletion(currentSection)) {
+                            unlockNextSection(currentSection);
+                        }
+                    }
+                }
+            });
+        });
+
+        // Handle book size dropdown selection
+        const bookSizeSelect = document.getElementById('book_size');
+        if (bookSizeSelect) {
+            bookSizeSelect.addEventListener('change', function () {
+                // Update pricing in real-time
+                calculatePrice();
+                updateSpecificationsSummary();
+
+                // Check if section is complete and unlock next section
+                const currentSection = this.closest('.form-section');
+                if (currentSection && checkSectionCompletion(currentSection)) {
+                    unlockNextSection(currentSection);
+                }
+            });
+        }
+
+        // Add general event listeners for all radio buttons to handle section progression and pricing
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', function () {
+                // Update pricing in real-time
+                calculatePrice();
+                updateSpecificationsSummary();
+
+                // Check if section is complete and unlock next section
+                const currentSection = this.closest('.form-section');
+                if (currentSection && checkSectionCompletion(currentSection)) {
+                    unlockNextSection(currentSection);
+                }
+            });
+        });
+
+        // Add event listener to quantity input
+        const quantityInput = document.getElementById('quantity-input');
+        if (quantityInput) {
+            quantityInput.addEventListener('input', function () {
+                calculatePrice();
+                
+                // Check if section is complete and unlock next section
+                const currentSection = this.closest('.form-section');
+                if (currentSection && checkSectionCompletion(currentSection)) {
+                    unlockNextSection(currentSection);
+                }
+            });
+        }
+
+        // Real-time pricing calculator function
+        function calculatePrice() {
+            // Base price per page
+            let basePricePerPage = 2; // Starting base price ₹2 per page
+
+            // Get all selected values
+            const interiorColor = document.querySelector('input[name="interior_color"]:checked');
+            const bookSize = document.getElementById('book_size').value;
+            const paperType = document.querySelector('input[name="paper_type"]:checked');
+            const bindingType = document.querySelector('input[name="binding_type"]:checked');
+            const coverFinish = document.querySelector('input[name="cover_finish"]:checked');
+            const designService = document.querySelector('input[name="design_service"]:checked');
+            const isbnAllocation = document.querySelector('input[name="isbn_allocation"]:checked');
+
+            // Get page counts
+            const pageCountInput = document.getElementById('page_count');
+            const bwPageCountInput = document.getElementById('bw_page_count');
+            const colorPageCountInput = document.getElementById('color_page_count');
+
+            let totalPages = 0;
+            let bwPages = 0;
+            let colorPages = 0;
+
+            if (pageCountInput.style.display !== 'none' && pageCountInput.value) {
+                totalPages = parseInt(pageCountInput.value) || 0;
+            } else {
+                bwPages = parseInt(bwPageCountInput.value) || 0;
+                colorPages = parseInt(colorPageCountInput.value) || 0;
+                totalPages = bwPages + colorPages;
+            }
+
+            // Calculate base cost
+            let costPerBook = 0;
+
+            if (totalPages > 0) {
+                // Interior color pricing
+                if (interiorColor) {
+                    const colorValue = interiorColor.value;
+                    if (colorValue === 'bw_standard') {
+                        costPerBook += bwPages > 0 ? bwPages * 1.5 : totalPages * 1.5;
+                    } else if (colorValue === 'bw_premium') {
+                        costPerBook += bwPages > 0 ? bwPages * 2 : totalPages * 2;
+                    } else if (colorValue === 'color_standard') {
+                        costPerBook += colorPages > 0 ? colorPages * 6 : totalPages * 6;
+                    } else if (colorValue === 'color_premium') {
+                        costPerBook += colorPages > 0 ? colorPages * 8 : totalPages * 8;
+                    } else if (colorValue === 'combine_color') {
+                        costPerBook += (bwPages * 2) + (colorPages * 6);
+                    }
+                }
+
+                // Book size pricing
+                if (bookSize) {
+                    const sizeOption = document.querySelector(`#book_size option[value="${bookSize}"]`);
+                    if (sizeOption) {
+                        const sizeModifier = parseFloat(sizeOption.dataset.priceModifier) || 0;
+                        costPerBook += sizeModifier;
+                    }
+                }
+
+                // Paper type pricing
+                if (paperType) {
+                    const paperModifier = parseFloat(paperType.dataset.priceModifier) || 0;
+                    costPerBook += paperModifier;
+                }
+
+                // Binding type pricing
+                if (bindingType) {
+                    const bindingModifier = parseFloat(bindingType.dataset.priceModifier) || 0;
+                    costPerBook += bindingModifier;
+                }
+
+                // Cover finish pricing
+                if (coverFinish) {
+                    const finishModifier = parseFloat(coverFinish.dataset.priceModifier) || 0;
+                    costPerBook += finishModifier;
+                }
+
+                // Design service pricing (based on checkboxes)
+                let designCost = 0;
+                const coverPageDesign = document.querySelector('input[name="cover_page_design"]:checked');
+                const innerPageDesign = document.querySelector('input[name="inner_page_design"]:checked');
+                
+                if (coverPageDesign) {
+                    designCost += 1500; // Cover page design
+                }
+                
+                if (innerPageDesign) {
+                    const innerPageCost = totalPages * 50; // ₹50 per page
+                    designCost += innerPageCost;
+                }
+
+                // ISBN allocation pricing (fixed cost)
+                let isbnCost = 0;
+                if (isbnAllocation && isbnAllocation.value === 'assign_isbn') {
+                    isbnCost = 2000;
+                }
+
+                // Get quantity
+                const quantity = parseInt(document.getElementById('quantity-input').value) || 25;
+
+                // Calculate subtotal
+                const subtotal = (costPerBook * quantity) + designCost + isbnCost;
+
+                // Volume discount calculation
+                let discount = 0;
+                let discountRow = document.getElementById('discount-row');
+                if (quantity >= 100) {
+                    discount = subtotal * 0.10; // 10% discount
+                    discountRow.style.display = 'flex';
+                } else if (quantity >= 50) {
+                    discount = subtotal * 0.05; // 5% discount
+                    discountRow.style.display = 'flex';
+                } else {
+                    discountRow.style.display = 'none';
+                }
+
+                // Calculate GST (18%)
+                const afterDiscount = subtotal - discount;
+                const gst = afterDiscount * 0.18;
+
+                // Calculate total
+                const total = afterDiscount + gst;
+
+                // Update pricing display
+                document.getElementById('cost-per-unit').textContent = `₹ ${costPerBook.toFixed(2)}`;
+                document.getElementById('subtotal').textContent = `₹ ${subtotal.toFixed(2)}`;
+                document.getElementById('discount-amount').textContent = `- ₹ ${discount.toFixed(2)}`;
+                document.getElementById('gst-amount').textContent = `₹ ${gst.toFixed(2)}`;
+                document.getElementById('total-price').textContent = `₹ ${total.toFixed(2)}`;
+
+                // Update design service display
+                const designServiceRow = document.getElementById('design-service-row');
+                const designServiceCost = document.getElementById('design-service-cost');
+                if (designCost > 0) {
+                    if (designServiceRow) {
+                        designServiceRow.classList.remove('hidden');
+                        designServiceRow.style.display = 'flex';
+                    }
+                    if (designServiceCost) {
+                        designServiceCost.textContent = `+₹${designCost.toFixed(0)}`;
+                    }
+                } else {
+                    if (designServiceRow) {
+                        designServiceRow.classList.add('hidden');
+                        designServiceRow.style.display = 'none';
+                    }
+                }
+
+            } else {
+                // No pages entered yet
+                document.getElementById('cost-per-unit').textContent = '₹ N/A';
+                document.getElementById('subtotal').textContent = '₹ N/A';
+                document.getElementById('discount-amount').textContent = '- ₹ 0';
+                document.getElementById('gst-amount').textContent = '₹ N/A';
+                document.getElementById('total-price').textContent = '₹ N/A';
+            }
+        }
+
+        // Update specifications summary
+        function updateSpecificationsSummary() {
+            const specificationsDiv = document.getElementById('book-specifications');
+            let specificationsHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+                    <span style="color: #666; font-size: 14px;">Product:</span>
+                    <span style="color: #333; font-size: 14px; font-weight: 500;">{{ product.name }}</span>
+                </div>
+            `;
+
+            // Interior Color
+            const interiorColor = document.querySelector('input[name="interior_color"]:checked');
+            if (interiorColor) {
+                const colorLabel = getDisplayValue('interior_color', interiorColor.value);
+                specificationsHTML += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+                        <span style="color: #666; font-size: 14px;">Interior Color:</span>
+                        <span style="color: #333; font-size: 14px; font-weight: 500;">${colorLabel}</span>
+                    </div>
+                `;
+            }
+
+            // Book Size
+            const bookSize = document.getElementById('book_size').value;
+            if (bookSize) {
+                const sizeLabel = document.querySelector(`#book_size option[value="${bookSize}"]`).textContent;
+                specificationsHTML += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+                        <span style="color: #666; font-size: 14px;">Size:</span>
+                        <span style="color: #333; font-size: 14px; font-weight: 500;">${sizeLabel.split('-')[0].trim()}</span>
+                    </div>
+                `;
+            }
+
+            // Page Count
+            const pageCountInput = document.getElementById('page_count');
+            const bwPageCountInput = document.getElementById('bw_page_count');
+            const colorPageCountInput = document.getElementById('color_page_count');
+
+            if (pageCountInput.style.display !== 'none' && pageCountInput.value) {
+                specificationsHTML += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+                        <span style="color: #666; font-size: 14px;">Pages:</span>
+                        <span style="color: #333; font-size: 14px; font-weight: 500;">${pageCountInput.value}</span>
+                    </div>
+                `;
+            } else if (bwPageCountInput.value || colorPageCountInput.value) {
+                const totalPages = (parseInt(bwPageCountInput.value) || 0) + (parseInt(colorPageCountInput.value) || 0);
+                specificationsHTML += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+                        <span style="color: #666; font-size: 14px;">Total Pages:</span>
+                        <span style="color: #333; font-size: 14px; font-weight: 500;">${totalPages} (${bwPageCountInput.value || 0} B&W, ${colorPageCountInput.value || 0} Color)</span>
+                    </div>
+                `;
+            }
+
+            // Paper Type
+            const paperType = document.querySelector('input[name="paper_type"]:checked');
+            if (paperType) {
+                const paperLabel = getDisplayValue('paper_type', paperType.value);
+                specificationsHTML += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+                        <span style="color: #666; font-size: 14px;">Paper:</span>
+                        <span style="color: #333; font-size: 14px; font-weight: 500;">${paperLabel}</span>
+                    </div>
+                `;
+            }
+
+            // Binding Type
+            const bindingType = document.querySelector('input[name="binding_type"]:checked');
+            if (bindingType) {
+                const bindingLabel = getDisplayValue('binding_type', bindingType.value);
+                specificationsHTML += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+                        <span style="color: #666; font-size: 14px;">Binding:</span>
+                        <span style="color: #333; font-size: 14px; font-weight: 500;">${bindingLabel}</span>
+                    </div>
+                `;
+            }
+
+            // Cover Finish
+            const coverFinish = document.querySelector('input[name="cover_finish"]:checked');
+            if (coverFinish) {
+                const finishLabel = getDisplayValue('cover_finish', coverFinish.value);
+                specificationsHTML += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+                        <span style="color: #666; font-size: 14px;">Finish:</span>
+                        <span style="color: #333; font-size: 14px; font-weight: 500;">${finishLabel}</span>
+                    </div>
+                `;
+            }
+
+            // Quantity
+            const quantity = document.getElementById('quantity-input').value;
+            if (quantity) {
+                specificationsHTML += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+                        <span style="color: #666; font-size: 14px;">Quantity:</span>
+                        <span style="color: #333; font-size: 14px; font-weight: 500;">${quantity} books</span>
+                    </div>
+                `;
+            }
+
+            // Design Services
+            const coverPageDesign = document.querySelector('input[name="cover_page_design"]:checked');
+            const innerPageDesign = document.querySelector('input[name="inner_page_design"]:checked');
+            
+            if (coverPageDesign) {
+                specificationsHTML += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+                        <span style="color: #28a745; font-size: 14px;">Cover Design:</span>
+                        <span style="color: #28a745; font-size: 14px; font-weight: 500;">✓ Yes</span>
+                    </div>
+                `;
+            }
+            
+            if (innerPageDesign) {
+                specificationsHTML += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+                        <span style="color: #28a745; font-size: 14px;">Inner Page Design:</span>
+                        <span style="color: #28a745; font-size: 14px; font-weight: 500;">✓ Yes</span>
+                    </div>
+                `;
+            }
+
+            // ISBN
+            const isbn = document.querySelector('input[name="isbn_allocation"]:checked');
+            if (isbn && isbn.value === 'assign_isbn') {
+                specificationsHTML += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+                        <span style="color: #28a745; font-size: 14px;">ISBN:</span>
+                        <span style="color: #28a745; font-size: 14px; font-weight: 500;">✓ Yes</span>
+                    </div>
+                `;
+            }
+
+            specificationsDiv.innerHTML = specificationsHTML;
+        }
+
+        // Design section is always optional, so enable next section automatically
+        const designSection = document.querySelector('[data-section="designing_formatting"]');
+        if (designSection) {
+            // Add click listener to automatically enable next section when user interacts
+            // Design section interaction handled
+        }
+
+        // Handle order button click
+        document.getElementById('order-button').addEventListener('click', function () {
+            if (this.disabled) return;
+
+            // Collect all form data
+            const formData = collectFormData();
+
+            // Show confirmation and submit order
+            submitBookOrder(formData);
+        });
+
+        function collectFormData() {
+            const data = {};
+
+            // Collect all form inputs
+            document.querySelectorAll('input[type="radio"]:checked, input[type="checkbox"]:checked, input[type="number"], input[type="file"]').forEach(input => {
+                if (input.type === 'file' && input.files.length > 0) {
+                    data[input.name] = input.files[0].name;
+                } else if (input.value) {
+                    data[input.name] = input.value;
+                }
+            });
+
+            // Collect select dropdown values
+            document.querySelectorAll('select').forEach(select => {
+                if (select.value) {
+                    data[select.name] = select.value;
+                }
+            });
+
+            // Add quantity (minimum 25 for book printing)
+            data.quantity = Math.max(parseInt(data.page_count) || 25, 25);
+
+            // Add product information
+            data.product_id = window.bookPrintingConfig.productId;
+            data.product_name = window.bookPrintingConfig.productName;
+            data.category = window.bookPrintingConfig.categoryName;
+
+            return data;
+        }
+
+        function updateProgressIndicator(completedStep, activeStep) {
+            // Mark completed step
+            const completedStepElement = document.querySelector(`[data-step="${completedStep}"]`);
+            if (completedStepElement) {
+                completedStepElement.classList.remove('active');
+                completedStepElement.classList.add('completed');
+            }
+
+            // Mark active step
+            const activeStepElement = document.querySelector(`[data-step="${activeStep}"]`);
+            if (activeStepElement) {
+                // Remove active class from all steps
+                document.querySelectorAll('.progress-step').forEach(step => {
+                    step.classList.remove('active');
+                });
+                activeStepElement.classList.add('active');
+            }
+        }
+
+        function submitBookOrder(formData) {
+            // Show loading state
+            const orderButton = document.getElementById('order-button');
+            const originalText = orderButton.innerHTML;
+            orderButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
+            orderButton.disabled = true;
+
+            // Submit directly to backend without confirmation dialog
+            submitOrderToBackend(formData, orderButton, originalText);
+        }
+
+        function submitOrderToBackend(formData, orderButton, originalText) {
+            // Get CSRF token
+            const csrfTokenElement = document.querySelector('[name=csrfmiddlewaretoken]');
+            const metaCsrfElement = document.querySelector('meta[name="csrf-token"]');
+            const csrfToken = (csrfTokenElement && csrfTokenElement.value) ||
+                (metaCsrfElement && metaCsrfElement.getAttribute('content'));
+
+            // Add customer info if available
+            const customerInfo = {
+                name: formData.customer_name || '',
+                email: formData.customer_email || '',
+                phone: formData.customer_phone || ''
+            };
+
+            // Prepare JSON data for submission
+            const submitData = {
+                form_data: formData,
+                customer_info: customerInfo
+            };
+
+            // Get product ID from the page
+            const productId = window.bookPrintingConfig.productId;
+
+            // Submit to backend
+            fetch(`/orders/api/book-printing/submit/${productId}/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken,
+                },
+                body: JSON.stringify(submitData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Redirect directly to order/checkout page without alert
+                        if (data.redirect_url) {
+                            window.location.href = data.redirect_url;
+                        } else if (data.order_number) {
+                            window.location.href = `/orders/order/${data.order_number}/`;
+                        } else {
+                            window.location.href = '/orders/';
+                        }
+                    } else {
+                        // Show error message
+                        alert(`❌ Error: ${data.message}`);
+
+                        // Reset button
+                        orderButton.innerHTML = originalText;
+                        orderButton.disabled = false;
+                    }
+                })
+                .catch(error => {
+                    console.error('Order submission error:', error);
+                    alert('❌ There was an error submitting your order. Please try again.');
+
+                    // Reset button
+                    orderButton.innerHTML = originalText;
+                    orderButton.disabled = false;
+                });
+        }
+
+        function createOrderSummary(data) {
+            let summary = `Product: ${data.product_name}\n`;
+            summary += `Category: ${data.category}\n\n`;
+
+            if (data.interior_color) {
+                summary += `Interior Color: ${getDisplayValue('interior_color', data.interior_color)}\n`;
+            }
+            if (data.book_size) {
+                summary += `Book Size: ${getDisplayValue('book_size', data.book_size)}\n`;
+            }
+            if (data.page_count) {
+                summary += `Page Count: ${data.page_count}\n`;
+            }
+            if (data.bw_page_count && data.color_page_count) {
+                summary += `B&W Pages: ${data.bw_page_count}, Color Pages: ${data.color_page_count}\n`;
+            }
+            if (data.paper_type) {
+                summary += `Paper Type: ${getDisplayValue('paper_type', data.paper_type)}\n`;
+            }
+            if (data.binding_type) {
+                summary += `Binding: ${getDisplayValue('binding_type', data.binding_type)}\n`;
+            }
+            if (data.cover_finish) {
+                summary += `Cover Finish: ${getDisplayValue('cover_finish', data.cover_finish)}\n`;
+            }
+            if (data.cover_page_design || data.inner_page_design) {
+                let designServices = [];
+                if (data.cover_page_design) designServices.push('Cover Page');
+                if (data.inner_page_design) designServices.push('Inner Pages');
+                summary += `Design Service: ${designServices.join(', ')}\n`;
+            }
+            if (data.isbn_allocation) {
+                summary += `ISBN: ${getDisplayValue('isbn_allocation', data.isbn_allocation)}\n`;
+            }
+
+            const totalPrice = document.getElementById('total-price').textContent;
+            summary += `\nTotal Price: ${totalPrice}`;
+
+            return summary;
+        }
+
+        function getDisplayValue(fieldName, value) {
+            const displayValues = {
+                'interior_color': {
+                    'bw_premium': 'Black & White Premium',
+                    'bw_standard': 'Black & White Standard',
+                    'color_premium': 'Color Premium',
+                    'color_standard': 'Color Standard',
+                    'combine_color': 'Combine Color'
+                },
+                'book_size': {
+                    'a4': 'A4 (8.27 x 11.69 in)',
+                    'letter': 'Letter (8.5 x 11 in)',
+                    'executive': 'Executive (7 x 10 in)',
+                    'a5': 'A5 (5.83 x 8.27 in)'
+                },
+                'paper_type': {
+                    '75gsm': '75 GSM Standard',
+                    '100gsm': '100 GSM Premium',
+                    '100gsm_art': '100 GSM Art Paper',
+                    '130gsm_art': '130 GSM Art Paper'
+                },
+                'binding_type': {
+                    'saddle_stitch': 'Saddle Stitch',
+                    'spiral_binding': 'Spiral Binding',
+                    'paperback_perfect': 'Paperback (Perfect)',
+                    'hardcover': 'Hardcover'
+                },
+                'cover_finish': {
+                    'glossy': 'Glossy',
+                    'matte': 'Matte'
+                },
+                'design_service': {
+                    'not_required': 'Not Required',
+                    'yes_design': 'Yes, Design Service'
+                },
+                'isbn_allocation': {
+                    'not_apply': 'Not Required',
+                    'assign_isbn': 'Yes, Assign ISBN'
+                }
+            };
+
+            if (displayValues[fieldName] && displayValues[fieldName][value]) {
+                return displayValues[fieldName][value];
+            }
+
+            return value;
+        }
+
+        console.log('✅ Book printing form initialized with order functionality');
+
+        // Handle design service toggle with checkboxes
+        const notRequiredRadio = document.querySelector('input[name="need_design_service"][value="no"]');
+        const yesYouCanRadio = document.querySelector('input[name="need_design_service"][value="yes"]');
+        const coverPageCheckbox = document.getElementById('cover-page-checkbox');
+        const innerPagesCheckbox = document.getElementById('inner-pages-checkbox');
+
+        // Handle radio button changes
+        notRequiredRadio.addEventListener('change', function() {
+            if (this.checked) {
+                // Hide checkboxes
+                coverPageCheckbox.style.display = 'none';
+                innerPagesCheckbox.style.display = 'none';
+                // Uncheck design checkboxes
+                document.querySelector('input[name="cover_page_design"]').checked = false;
+                document.querySelector('input[name="inner_page_design"]').checked = false;
+                calculatePrice();
+                updateSpecificationsSummary();
+                
+                // Check if section is complete and unlock next section
+                const currentSection = this.closest('.form-section');
+                if (currentSection && checkSectionCompletion(currentSection)) {
+                    unlockNextSection(currentSection);
+                }
+            }
+        });
+
+        yesYouCanRadio.addEventListener('change', function() {
+            if (this.checked) {
+                // Show checkboxes inline
+                coverPageCheckbox.style.display = 'flex';
+                innerPagesCheckbox.style.display = 'flex';
+            }
+        });
+
+        // Handle design option box clicks
+        document.querySelectorAll('.design-option-box').forEach(box => {
+            box.addEventListener('click', function(e) {
+                // Don't trigger if clicking on the input directly
+                if (e.target.tagName !== 'INPUT') {
+                    const input = this.querySelector('input');
+                    if (input) {
+                        if (input.type === 'radio') {
+                            input.checked = true;
+                        } else if (input.type === 'checkbox') {
+                            input.checked = !input.checked;
+                        }
+                        input.dispatchEvent(new Event('change'));
+                    }
+                }
+            });
+        });
+
+        // Add change listeners to design checkboxes for price calculation
+        const designCheckboxes = document.querySelectorAll('input[name="cover_page_design"], input[name="inner_page_design"]');
+        designCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                calculatePrice();
+                updateSpecificationsSummary();
+                
+                // Check if section is complete and unlock next section
+                const currentSection = this.closest('.form-section');
+                if (currentSection && checkSectionCompletion(currentSection)) {
+                    unlockNextSection(currentSection);
+                }
+            });
+        });
+    });
+
+</script>
+{% endblock %}

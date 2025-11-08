@@ -50,4 +50,7 @@ urlpatterns = [
     path('quote/<str:quote_number>/', views.quote_detail_view, name='quote_detail_new'),
     path('api/quote/<str:quote_number>/accept/', views.accept_quote, name='accept_quote'),
     path('quote/<str:quote_number>/download/', views.download_quote_pdf, name='download_quote_pdf'),
+    
+    # BOOK PRINTING ORDER SUBMISSION
+    path('api/book-printing/submit/<int:product_id>/', views.submit_book_printing_order, name='submit_book_printing_order'),
 ]

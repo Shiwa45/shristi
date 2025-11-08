@@ -1,0 +1,958 @@
+{% extends 'services/categories/base_category.html' %}
+{% load static %}
+
+{% block category_extra_css %}
+<style>
+/* Book Printing Specific Styles */
+.book-options-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 16px;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.book-options-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.book-options-subtitle {
+    opacity: 0.9;
+    font-size: 1rem;
+}
+
+/* Interior Color Options */
+.interior-color-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.color-option {
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.color-option:hover {
+    border-color: #667eea;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+}
+
+.color-option.selected {
+    border-color: #667eea;
+    background: #f0f9ff;
+}
+
+.color-option-title {
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.color-option-description {
+    font-size: 0.875rem;
+    color: #6b7280;
+    line-height: 1.5;
+}
+
+.premium-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Book Size and Page Count */
+.size-page-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.book-size-options {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.size-option {
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.size-option:hover {
+    border-color: #667eea;
+}
+
+.size-option.selected {
+    border-color: #667eea;
+    background: #f0f9ff;
+}
+
+.size-name {
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.size-dimensions {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.page-count-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.page-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.page-input {
+    padding: 12px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.page-input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.conditional-page-inputs {
+    display: none;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.conditional-page-inputs.show {
+    display: grid;
+}
+
+/* Paper Type Options */
+.paper-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.paper-option {
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.paper-option:hover {
+    border-color: #667eea;
+    transform: translateY(-2px);
+}
+
+.paper-option.selected {
+    border-color: #667eea;
+    background: #f0f9ff;
+}
+
+.paper-option.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #f9fafb;
+}
+
+.paper-option.disabled::before {
+    content: 'Not Available';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(239, 68, 68, 0.9);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.paper-weight {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.paper-type {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+/* Binding Type Options */
+.binding-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.binding-option {
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.binding-option:hover {
+    border-color: #667eea;
+    transform: translateY(-2px);
+}
+
+.binding-option.selected {
+    border-color: #667eea;
+    background: #f0f9ff;
+}
+
+.binding-option.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #f9fafb;
+}
+
+.binding-option.disabled::after {
+    content: 'Not available for less than 30 pages';
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ef4444;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+}
+
+.binding-icon {
+    font-size: 2rem;
+    color: #667eea;
+    margin-bottom: 1rem;
+}
+
+.binding-name {
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.binding-description {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+/* Cover Finish Options */
+.finish-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.finish-option {
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.finish-option:hover {
+    border-color: #667eea;
+    transform: translateY(-2px);
+}
+
+.finish-option.selected {
+    border-color: #667eea;
+    background: #f0f9ff;
+}
+
+.finish-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.finish-icon.glossy {
+    color: #fbbf24;
+}
+
+.finish-icon.matte {
+    color: #6b7280;
+}
+
+.finish-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+/* Designing and Formatting */
+.design-service-card {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 100%);
+    border: 2px solid #c7d2fe;
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.design-pricing {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #e5e7eb;
+}
+
+.pricing-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.pricing-item:last-child {
+    margin-bottom: 0;
+    padding-top: 0.75rem;
+    border-top: 1px solid #f3f4f6;
+    font-weight: 700;
+}
+
+.design-toggle {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.toggle-option {
+    flex: 1;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.toggle-option:hover {
+    border-color: #667eea;
+}
+
+.toggle-option.selected {
+    border-color: #667eea;
+    background: #f0f9ff;
+}
+
+.file-upload-section {
+    display: none;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.file-upload-section.show {
+    display: grid;
+}
+
+/* ISBN Allocation */
+.isbn-info {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.isbn-warning {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #92400e;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.isbn-description {
+    color: #78350f;
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+.isbn-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.isbn-option {
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.isbn-option:hover {
+    border-color: #667eea;
+}
+
+.isbn-option.selected {
+    border-color: #667eea;
+    background: #f0f9ff;
+}
+
+.isbn-title {
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.isbn-subtitle {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .size-page-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .interior-color-options,
+    .paper-grid,
+    .binding-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .finish-options {
+        grid-template-columns: 1fr;
+    }
+    
+    .conditional-page-inputs {
+        grid-template-columns: 1fr;
+    }
+    
+    .file-upload-section {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %}
+
+{% block category_form %}
+<div class="sequential-form" data-category="book-printing">
+    <!-- Book Options Header -->
+    <div class="book-options-header">
+        <h2 class="book-options-title">Book Options</h2>
+        <p class="book-options-subtitle">Select The Colors, Paper Type, Binding And Cover Finish For Your Book.</p>
+    </div>
+
+    <!-- Section 1: Interior Color -->
+    <div class="form-section enabled" data-section="interior_color" data-section-number="1">
+        <div class="section-header">
+            <div class="section-number">1</div>
+            <div>
+                <h3 class="section-title">Interior Color</h3>
+            </div>
+        </div>
+        
+        <p class="section-description">
+            Standard Ink provides crisp, clear text perfect for novels and textbooks. 
+            Premium Ink offers enhanced color vibrancy and deeper blacks for professional publications.
+        </p>
+        
+        <div class="interior-color-options">
+            <div class="color-option" data-value="bw_premium">
+                <input type="radio" name="interior_color" value="bw_premium" data-price-modifier="0" required>
+                <div class="color-option-title">Black & White Premium</div>
+                <div class="color-option-description">
+                    High-quality black and white printing with premium ink for sharp, professional text and images.
+                </div>
+                <div class="premium-badge">Premium</div>
+            </div>
+            
+            <div class="color-option" data-value="bw_standard">
+                <input type="radio" name="interior_color" value="bw_standard" data-price-modifier="-50" required>
+                <div class="color-option-title">Black & White Standard</div>
+                <div class="color-option-description">
+                    Standard black and white printing suitable for text-heavy books and basic illustrations.
+                </div>
+            </div>
+            
+            <div class="color-option" data-value="color_premium">
+                <input type="radio" name="interior_color" value="color_premium" data-price-modifier="300" required>
+                <div class="color-option-title">Color Premium</div>
+                <div class="color-option-description">
+                    Full-color printing with premium inks for vibrant images, perfect for children's books and art books.
+                </div>
+                <div class="premium-badge">Premium</div>
+            </div>
+            
+            <div class="color-option" data-value="color_standard">
+                <input type="radio" name="interior_color" value="color_standard" data-price-modifier="200" required>
+                <div class="color-option-title">Color Standard</div>
+                <div class="color-option-description">
+                    Standard full-color printing for books with colorful content and illustrations.
+                </div>
+            </div>
+            
+            <div class="color-option" data-value="combine_color">
+                <input type="radio" name="interior_color" value="combine_color" data-price-modifier="0" required>
+                <div class="color-option-title">Combine Color</div>
+                <div class="color-option-description">
+                    Mix of black & white and color pages. Perfect for books with selective color sections.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 2: Book Size And Page Count -->
+    <div class="form-section disabled" data-section="book_size_pages" data-section-number="2">
+        <div class="section-header">
+            <div class="section-number">2</div>
+            <div>
+                <h3 class="section-title">Book Size And Page Count</h3>
+            </div>
+        </div>
+        
+        <p class="section-description">Select a Book Size And Page Count For Your Book.</p>
+        
+        <div class="size-page-grid">
+            <div>
+                <h4 class="font-semibold text-gray-900 mb-3">Book Size</h4>
+                <div class="book-size-options">
+                    <div class="size-option" data-value="a4">
+                        <input type="radio" name="book_size" value="a4" data-price-modifier="0" required>
+                        <div class="size-name">A4</div>
+                        <div class="size-dimensions">8.27 x 11.69 in / 210 x 297 mm</div>
+                    </div>
+                    
+                    <div class="size-option" data-value="letter">
+                        <input type="radio" name="book_size" value="letter" data-price-modifier="25" required>
+                        <div class="size-name">Letter</div>
+                        <div class="size-dimensions">8.5 x 11 in / 216 x 279 mm</div>
+                    </div>
+                    
+                    <div class="size-option" data-value="executive">
+                        <input type="radio" name="book_size" value="executive" data-price-modifier="50" required>
+                        <div class="size-name">Executive</div>
+                        <div class="size-dimensions">7 x 10 in / 178 x 254 mm</div>
+                    </div>
+                    
+                    <div class="size-option" data-value="a5">
+                        <input type="radio" name="book_size" value="a5" data-price-modifier="-25" required>
+                        <div class="size-name">A5</div>
+                        <div class="size-dimensions">5.83 x 8.27 in / 148 x 210 mm</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="page-count-section">
+                <h4 class="font-semibold text-gray-900 mb-3">Page Count</h4>
+                
+                <!-- Standard page count (shown by default) -->
+                <div class="page-input-group" id="standard-page-count">
+                    <label for="page_count" class="field-label">Page Count</label>
+                    <input type="number" 
+                           id="page_count" 
+                           name="page_count" 
+                           class="page-input"
+                           placeholder="Please Enter Qty."
+                           min="4"
+                           required>
+                </div>
+                
+                <!-- Conditional page counts (shown when combine_color is selected) -->
+                <div class="conditional-page-inputs" id="combine-page-counts">
+                    <div class="page-input-group">
+                        <label for="bw_page_count" class="field-label">B/W Page Count</label>
+                        <input type="number" 
+                               id="bw_page_count" 
+                               name="bw_page_count" 
+                               class="page-input"
+                               placeholder="Please enter Qty."
+                               min="0">
+                    </div>
+                    
+                    <div class="page-input-group">
+                        <label for="color_page_count" class="field-label">Color Page Count</label>
+                        <input type="number" 
+                               id="color_page_count" 
+                               name="color_page_count" 
+                               class="page-input"
+                               placeholder="Please enter Qty."
+                               min="0">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 3: Paper Type -->
+    <div class="form-section disabled" data-section="paper_type" data-section-number="3">
+        <div class="section-header">
+            <div class="section-number">3</div>
+            <div>
+                <h3 class="section-title">Paper Type</h3>
+            </div>
+        </div>
+        
+        <p class="section-description">
+            For Premium Ink, We Suggest Using Art Paper For Best Color Reproduction And Image Quality.
+        </p>
+        
+        <div class="paper-grid">
+            <div class="paper-option disabled" data-value="75gsm">
+                <input type="radio" name="paper_type" value="75gsm" data-price-modifier="0" required>
+                <div class="paper-weight">75 GSM</div>
+                <div class="paper-type">Standard Paper</div>
+            </div>
+            
+            <div class="paper-option" data-value="100gsm">
+                <input type="radio" name="paper_type" value="100gsm" data-price-modifier="50" required>
+                <div class="paper-weight">100 GSM</div>
+                <div class="paper-type">Premium Paper</div>
+            </div>
+            
+            <div class="paper-option disabled" data-value="100gsm_art">
+                <input type="radio" name="paper_type" value="100gsm_art" data-price-modifier="100" required>
+                <div class="paper-weight">100 GSM</div>
+                <div class="paper-type">Art Paper</div>
+            </div>
+            
+            <div class="paper-option" data-value="130gsm_art">
+                <input type="radio" name="paper_type" value="130gsm_art" data-price-modifier="150" required>
+                <div class="paper-weight">130 GSM</div>
+                <div class="paper-type">Art Paper</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 4: Binding Type -->
+    <div class="form-section disabled" data-section="binding_type" data-section-number="4">
+        <div class="section-header">
+            <div class="section-number">4</div>
+            <div>
+                <h3 class="section-title">Binding Type</h3>
+            </div>
+        </div>
+        
+        <p class="section-description">Select a Binding Type For Your Book.</p>
+        
+        <div class="binding-grid">
+            <div class="binding-option" data-value="saddle_stitch">
+                <input type="radio" name="binding_type" value="saddle_stitch" data-price-modifier="0" required>
+                <div class="binding-icon">
+                    <i class="fas fa-stapler"></i>
+                </div>
+                <div class="binding-name">Saddle Stitch</div>
+                <div class="binding-description">Folded and stapled binding, perfect for booklets and magazines</div>
+            </div>
+            
+            <div class="binding-option" data-value="spiral_binding">
+                <input type="radio" name="binding_type" value="spiral_binding" data-price-modifier="100" required>
+                <div class="binding-icon">
+                    <i class="fas fa-circle-notch"></i>
+                </div>
+                <div class="binding-name">Spiral Binding</div>
+                <div class="binding-description">Coil binding that allows pages to lay flat when opened</div>
+            </div>
+            
+            <div class="binding-option" data-value="paperback_perfect" data-min-pages="30">
+                <input type="radio" name="binding_type" value="paperback_perfect" data-price-modifier="200" required>
+                <div class="binding-icon">
+                    <i class="fas fa-book"></i>
+                </div>
+                <div class="binding-name">Paperback (Perfect)</div>
+                <div class="binding-description">Professional perfect binding with soft cover</div>
+            </div>
+            
+            <div class="binding-option" data-value="hardcover" data-min-pages="30">
+                <input type="radio" name="binding_type" value="hardcover" data-price-modifier="500" required>
+                <div class="binding-icon">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <div class="binding-name">Hardcover</div>
+                <div class="binding-description">Premium hardcover binding for lasting durability</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 5: Cover Finish -->
+    <div class="form-section disabled" data-section="cover_finish" data-section-number="5">
+        <div class="section-header">
+            <div class="section-number">5</div>
+            <div>
+                <h3 class="section-title">Cover Finish</h3>
+            </div>
+        </div>
+        
+        <p class="section-description">Select The Cover Finish For Your Book.</p>
+        
+        <div class="finish-options">
+            <div class="finish-option" data-value="glossy">
+                <input type="radio" name="cover_finish" value="glossy" data-price-modifier="50" required>
+                <div class="finish-icon glossy">
+                    <i class="fas fa-sun"></i>
+                </div>
+                <div class="finish-name">Glossy</div>
+            </div>
+            
+            <div class="finish-option" data-value="matte">
+                <input type="radio" name="cover_finish" value="matte" data-price-modifier="0" required>
+                <div class="finish-icon matte">
+                    <i class="fas fa-moon"></i>
+                </div>
+                <div class="finish-name">Matte</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 6: Designing And Formatting -->
+    <div class="form-section disabled" data-section="designing_formatting" data-section-number="6">
+        <div class="section-header">
+            <div class="section-number">6</div>
+            <div>
+                <h3 class="section-title">Designing And Formatting</h3>
+            </div>
+        </div>
+        
+        <div class="design-service-card">
+            <div class="design-pricing">
+                <div class="pricing-item">
+                    <span>Cover Page Design:</span>
+                    <span class="font-bold text-blue-600">₹1,500 Extra</span>
+                </div>
+                <div class="pricing-item">
+                    <span>Inner Page Formatting:</span>
+                    <span class="font-bold text-blue-600">₹50 Extra Per Page</span>
+                </div>
+            </div>
+            
+            <p class="section-description mb-4">
+                Please Upload Your Files For Designing And Formatting Cover Or Inner Page.
+            </p>
+            
+            <div class="design-toggle">
+                <div class="toggle-option" data-value="not_required">
+                    <input type="radio" name="design_service" value="not_required" data-price-modifier="0" required>
+                    <div class="font-semibold">Not Required</div>
+                </div>
+                
+                <div class="toggle-option" data-value="yes_design">
+                    <input type="radio" name="design_service" value="yes_design" data-price-modifier="1500" required>
+                    <div class="font-semibold">Yes, You Can</div>
+                </div>
+            </div>
+            
+            <div class="file-upload-section" id="design-file-uploads">
+                <div class="file-upload-area" data-field="cover_page_file">
+                    <div class="upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <div class="upload-text">Cover Page</div>
+                    <div class="upload-hint">PDF, Word File & Excel</div>
+                    <input type="file" name="cover_page_file" accept=".pdf,.doc,.docx,.xls,.xlsx" style="display: none;">
+                </div>
+                
+                <div class="file-upload-area" data-field="inner_pages_file">
+                    <div class="upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <div class="upload-text">Inner Pages</div>
+                    <div class="upload-hint">PDF, Word File & Excel</div>
+                    <input type="file" name="inner_pages_file" accept=".pdf,.doc,.docx,.xls,.xlsx" style="display: none;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 7: ISBN Allocation -->
+    <div class="form-section disabled" data-section="isbn_allocation" data-section-number="7">
+        <div class="section-header">
+            <div class="section-number">7</div>
+            <div>
+                <h3 class="section-title">ISBN Allocation</h3>
+            </div>
+        </div>
+        
+        <div class="isbn-info">
+            <div class="isbn-warning">
+                <i class="fas fa-clock"></i>
+                <span>It May Take 5 to 7 More Working Days To Deliver</span>
+            </div>
+            <div class="isbn-description">
+                An ISBN (International Standard Book Number) is a unique identifier for your book. 
+                It's required for commercial distribution and helps bookstores and libraries catalog your book.
+            </div>
+        </div>
+        
+        <div class="isbn-options">
+            <div class="isbn-option" data-value="not_apply">
+                <input type="radio" name="isbn_allocation" value="not_apply" data-price-modifier="0" required>
+                <div class="isbn-title">Not Apply</div>
+                <div class="isbn-subtitle">No ISBN needed</div>
+            </div>
+            
+            <div class="isbn-option" data-value="assign_isbn">
+                <input type="radio" name="isbn_allocation" value="assign_isbn" data-price-modifier="2000" required>
+                <div class="isbn-title">Yes, Assign A Unique ISBN Number</div>
+                <div class="isbn-subtitle">Professional ISBN allocation</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block category_extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Book printing specific JavaScript
+    
+    // Handle interior color selection and conditional page count fields
+    const interiorColorInputs = document.querySelectorAll('input[name="interior_color"]');
+    const standardPageCount = document.getElementById('standard-page-count');
+    const combinePageCounts = document.getElementById('combine-page-counts');
+    
+    interiorColorInputs.forEach(input => {
+        input.addEventListener('change', function() {
+            if (this.value === 'combine_color') {
+                standardPageCount.style.display = 'none';
+                combinePageCounts.classList.add('show');
+                document.getElementById('page_count').required = false;
+                document.getElementById('bw_page_count').required = true;
+                document.getElementById('color_page_count').required = true;
+            } else {
+                standardPageCount.style.display = 'block';
+                combinePageCounts.classList.remove('show');
+                document.getElementById('page_count').required = true;
+                document.getElementById('bw_page_count').required = false;
+                document.getElementById('color_page_count').required = false;
+            }
+        });
+    });
+    
+    // Handle binding type restrictions based on page count
+    function updateBindingOptions() {
+        const pageCountInput = document.getElementById('page_count');
+        const bwPageCountInput = document.getElementById('bw_page_count');
+        const colorPageCountInput = document.getElementById('color_page_count');
+        
+        let totalPages = 0;
+        
+        if (pageCountInput.style.display !== 'none' && pageCountInput.value) {
+            totalPages = parseInt(pageCountInput.value);
+        } else {
+            const bwPages = parseInt(bwPageCountInput.value) || 0;
+            const colorPages = parseInt(colorPageCountInput.value) || 0;
+            totalPages = bwPages + colorPages;
+        }
+        
+        const bindingOptions = document.querySelectorAll('.binding-option[data-min-pages="30"]');
+        bindingOptions.forEach(option => {
+            if (totalPages < 30) {
+                option.classList.add('disabled');
+                option.querySelector('input').disabled = true;
+            } else {
+                option.classList.remove('disabled');
+                option.querySelector('input').disabled = false;
+            }
+        });
+    }
+    
+    // Add event listeners for page count changes
+    document.getElementById('page_count').addEventListener('input', updateBindingOptions);
+    document.getElementById('bw_page_count').addEventListener('input', updateBindingOptions);
+    document.getElementById('color_page_count').addEventListener('input', updateBindingOptions);
+    
+    // Handle design service file uploads
+    const designServiceInputs = document.querySelectorAll('input[name="design_service"]');
+    const fileUploadSection = document.getElementById('design-file-uploads');
+    
+    designServiceInputs.forEach(input => {
+        input.addEventListener('change', function() {
+            if (this.value === 'yes_design') {
+                fileUploadSection.classList.add('show');
+            } else {
+                fileUploadSection.classList.remove('show');
+            }
+        });
+    });
+    
+    // Handle option selection styling
+    document.querySelectorAll('.color-option, .size-option, .paper-option, .binding-option, .finish-option, .toggle-option, .isbn-option').forEach(option => {
+        option.addEventListener('click', function() {
+            const input = this.querySelector('input');
+            if (input && !input.disabled) {
+                input.checked = true;
+                
+                // Remove selected class from siblings
+                const siblings = this.parentElement.querySelectorAll('.color-option, .size-option, .paper-option, .binding-option, .finish-option, .toggle-option, .isbn-option');
+                siblings.forEach(sibling => sibling.classList.remove('selected'));
+                
+                // Add selected class to current option
+                this.classList.add('selected');
+                
+                // Trigger change event
+                input.dispatchEvent(new Event('change'));
+            }
+        });
+    });
+    
+    // File upload handling
+    document.querySelectorAll('.file-upload-area').forEach(area => {
+        area.addEventListener('click', function() {
+            const input = this.querySelector('input[type="file"]');
+            if (input) {
+                input.click();
+            }
+        });
+        
+        // Handle file selection
+        const fileInput = area.querySelector('input[type="file"]');
+        if (fileInput) {
+            fileInput.addEventListener('change', function() {
+                if (this.files.length > 0) {
+                    const fileName = this.files[0].name;
+                    const uploadText = area.querySelector('.upload-text');
+                    uploadText.textContent = fileName;
+                    area.classList.add('selected');
+                }
+            });
+        }
+    });
+});
+</script>
+{% endblock %}

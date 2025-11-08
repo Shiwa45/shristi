@@ -25,7 +25,7 @@ class CheckoutView(View):
         
         context = {
             'cart': cart,
-            'cart_items': cart.items.select_related('product', 'user_design'),
+            'cart_items': cart.items.select_related('static_product', 'user_design'),
             'step': 1,
             'steps': [
                 {'number': 1, 'name': 'Review Cart', 'current': True},
@@ -236,7 +236,7 @@ class CheckoutConfirmView(View):
         
         context = {
             'cart': cart,
-            'cart_items': cart.items.select_related('product', 'user_design'),
+            'cart_items': cart.items.select_related('static_product', 'user_design'),
             'shipping_data': request.session['shipping_data'],
             'payment_method': request.session['payment_method'],
             'subtotal': subtotal,
@@ -259,18 +259,22 @@ class CheckoutConfirmView(View):
         try:
             # Create the order
             order = self.create_order(request)
-            
+
             # Clear session data
             self.clear_checkout_session(request)
-            
+
             # Send confirmation email (implement later)
             # self.send_confirmation_email(order)
-            
+
             messages.success(request, f'Order {order.order_number} has been placed successfully!')
             return redirect('orders:checkout_success', order_number=order.order_number)
-            
+
         except Exception as e:
-            messages.error(request, 'There was an error processing your order. Please try again.')
+            # Log the error for debugging
+            import traceback
+            print(f"Order creation error: {str(e)}")
+            print(traceback.format_exc())
+            messages.error(request, f'There was an error processing your order: {str(e)}')
             return redirect('orders:checkout_confirm')
     
     def create_order(self, request):
@@ -317,10 +321,10 @@ class CheckoutConfirmView(View):
         for cart_item in cart.items.all():
             OrderItem.objects.create(
                 order=order,
-                product=cart_item.product,
+                static_product=cart_item.static_product,
                 user_design=cart_item.user_design,
                 uploaded_file=cart_item.uploaded_file,
-                product_name=cart_item.product.name,
+                product_name=cart_item.static_product.name if cart_item.static_product else 'Unknown Product',
                 quantity=cart_item.quantity,
                 unit_price=cart_item.unit_price,
                 total_price=cart_item.total_price,
@@ -377,6 +381,6 @@ class CheckoutSuccessView(View):
         
         context = {
             'order': order,
-            'order_items': order.items.select_related('product'),
+            'order_items': order.items.select_related('static_product'),
         }
         return render(request, 'orders/checkout/success.html', context)

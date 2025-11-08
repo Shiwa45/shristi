@@ -199,7 +199,7 @@
 
             <!-- Product Image -->
             <div class="relative">
-                <div class=" backdrop-blur-sm rounded-2xl p-8">
+                <div class=" backdrop-blur-sm rounded-2xl p-2">
                     {% if product.hero_image %}
                         <img src="{{ product.hero_image.url }}" 
                              alt="{{ product.name }}" 
@@ -260,6 +260,7 @@
                 {% endif %}
 
                 <!-- Product Options Panel -->
+                {% block product_options_panel %}
                 <div class="specification-grid rounded-2xl p-8">
                     <h2 class="text-2xl font-bold text-gray-900 mb-8 flex items-center">
                         <i class="fas fa-cogs text-purple-600 mr-3"></i>
@@ -268,16 +269,17 @@
 
                     <!-- Include your existing options panel -->
                     {% include 'services/static_products/partials/options_panel.html' %}
-
-
                 </div>
+                {% endblock %}
             </div>
 
             <!-- Pricing Calculator (1/3 width) -->
             <div class="lg:col-span-1">
                 <div class="sticky top-8">
                     <!-- Include your existing pricing calculator -->
+                    {% block pricing_calculator %}
                     {% include 'services/static_products/partials/pricing_calculator.html' %}
+                    {% endblock %}
 
                     <!-- Contact Support -->
                     <div class="bg-blue-50 rounded-xl p-6 mt-8">

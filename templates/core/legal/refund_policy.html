@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Refund Policy - Shrishti Printing{% endblock %}
+
+{% block content %}
+<div class="bg-white min-h-screen">
+    <!-- Header Section -->
+    <div class="gradient-bg text-white py-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-4xl font-bold text-center mb-4">Refund Policy</h1>
+            <p class="text-center text-lg opacity-90">Understanding our refund terms</p>
+        </div>
+    </div>
+
+    <!-- Content Section -->
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="prose prose-lg max-w-none">
+            <div class="mb-8">
+                <p class="text-gray-600 mb-6">
+                    At Shrishti Printing, we strive to deliver high-quality printing services that meet your expectations. Please review our refund policy carefully before placing an order.
+                </p>
+            </div>
+
+            <!-- General Refund Policy -->
+            <div class="mb-10">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">General Refund Policy</h2>
+                <ul class="list-disc pl-6 text-gray-700 space-y-3">
+                    <li>
+                        <strong>Payment Required in Advance:</strong> All orders require payment in advance before production begins.
+                    </li>
+                    <li>
+                        <strong>No Refunds After Production:</strong> Once an order has entered the production phase, payment will not be refunded.
+                    </li>
+                    <li>
+                        <strong>Customer Responsibility:</strong> Shrishti Printing is not liable for errors in proof or artwork that were approved by the customer.
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Proof Approval -->
+            <div class="mb-10">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Proof Approval and Customer Responsibility</h2>
+                <p class="text-gray-700 mb-4">
+                    Before production begins, we provide a digital proof for your review and approval. By approving the proof, you accept full responsibility for:
+                </p>
+                <ul class="list-disc pl-6 text-gray-700 space-y-2">
+                    <li>Spelling, grammar, and content accuracy</li>
+                    <li>Image quality and placement</li>
+                    <li>Colors (subject to printing limitations)</li>
+                    <li>Layout and design elements</li>
+                </ul>
+                <p class="text-gray-700 mt-4">
+                    <strong>No refunds will be issued for errors that were present in the approved proof.</strong>
+                </p>
+            </div>
+
+            <!-- Eligible Refund Cases -->
+            <div class="mb-10">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Eligible Refund Cases</h2>
+                <p class="text-gray-700 mb-4">
+                    Refunds or reprints may be considered in the following circumstances:
+                </p>
+                <ul class="list-disc pl-6 text-gray-700 space-y-3">
+                    <li>
+                        <strong>Manufacturing Defects:</strong> If the printed product has defects due to our production error (not present in the approved proof).
+                    </li>
+                    <li>
+                        <strong>Incorrect Specifications:</strong> If we failed to follow the specifications confirmed in your order (e.g., wrong paper type, incorrect quantity).
+                    </li>
+                    <li>
+                        <strong>Damaged Delivery:</strong> If products are damaged during shipping due to insufficient packaging on our part (must be reported within 48 hours of delivery with photographic evidence).
+                    </li>
+                    <li>
+                        <strong>Non-Delivery:</strong> If we fail to deliver your order and cannot provide a suitable alternative delivery date.
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Non-Refundable Cases -->
+            <div class="mb-10">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Non-Refundable Cases</h2>
+                <p class="text-gray-700 mb-4">
+                    Refunds will NOT be provided in the following situations:
+                </p>
+                <ul class="list-disc pl-6 text-gray-700 space-y-3">
+                    <li>Customer-supplied artwork contains errors that were not caught during proof approval</li>
+                    <li>Customer changes mind after production has started</li>
+                    <li>Minor color variations between digital proof and printed product (due to screen calibration differences and printing process limitations)</li>
+                    <li>Standard industry tolerances for cutting, trimming, or folding (typically +/- 1/8 inch)</li>
+                    <li>Customer dissatisfaction with design choices they approved</li>
+                    <li>Late payment penalties or interest charges</li>
+                </ul>
+            </div>
+
+            <!-- Refund Process -->
+            <div class="mb-10">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Refund Request Process</h2>
+                <p class="text-gray-700 mb-4">
+                    If you believe you are eligible for a refund:
+                </p>
+                <ol class="list-decimal pl-6 text-gray-700 space-y-3">
+                    <li>
+                        <strong>Contact Us Immediately:</strong> Email us at <a href="mailto:info@shrishtiprinting.com" class="text-purple-600 hover:underline">info@shrishtiprinting.com</a> or call us within 48 hours of receiving your order.
+                    </li>
+                    <li>
+                        <strong>Provide Details:</strong> Include your order number, description of the issue, and photographic evidence of the defect or error.
+                    </li>
+                    <li>
+                        <strong>Review Process:</strong> Our team will review your claim within 2-3 business days.
+                    </li>
+                    <li>
+                        <strong>Resolution:</strong> If approved, we will offer either a full refund, partial refund, or reprint of the order at no additional cost.
+                    </li>
+                </ol>
+            </div>
+
+            <!-- Refund Timeline -->
+            <div class="mb-10">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Refund Timeline</h2>
+                <p class="text-gray-700">
+                    If a refund is approved, it will be processed within 7-10 business days. Refunds will be issued to the original payment method used for the purchase.
+                </p>
+            </div>
+
+            <!-- Late Payment Interest -->
+            <div class="mb-10">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Late Payment</h2>
+                <p class="text-gray-700">
+                    Interest at the rate of 15% per month will be charged if the bill is not paid within the due date. Late payment penalties are non-refundable.
+                </p>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="bg-gray-50 p-6 rounded-lg mt-12">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Questions About Refunds?</h2>
+                <p class="text-gray-700 mb-4">
+                    If you have any questions about our refund policy or need to request a refund, please contact us:
+                </p>
+                <div class="text-gray-700">
+                    <p class="font-semibold">Shrishti Printing</p>
+                    <p>Email: <a href="mailto:info@shrishtiprinting.com" class="text-purple-600 hover:underline">info@shrishtiprinting.com</a></p>
+                    <p class="mt-2">
+                        <a href="{% url 'core:contact' %}" class="text-purple-600 hover:underline">Contact Us</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-8 text-sm text-gray-500">
+                <p><strong>Last Updated:</strong> {{ "now"|date:"F Y" }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

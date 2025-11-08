@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Privacy Policy - Shrishti Printing{% endblock %}
+
+{% block content %}
+<div class="bg-white min-h-screen">
+    <!-- Header Section -->
+    <div class="gradient-bg text-white py-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-4xl font-bold text-center mb-4">Privacy Policy</h1>
+            <p class="text-center text-lg opacity-90">Your privacy is important to us</p>
+        </div>
+    </div>
+
+    <!-- Content Section -->
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="prose prose-lg max-w-none">
+            <div class="mb-8">
+                <p class="text-gray-600 mb-6">
+                    At Shrishti Printing, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your personal information when you visit our website or use our services.
+                </p>
+            </div>
+
+            <!-- Section 1 -->
+            <div class="mb-10">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">1. What Information Do We Collect?</h2>
+                <p class="text-gray-700 mb-4">
+                    We collect information from you when you register on our site, place an order, subscribe to our newsletter, or fill out a form. When ordering or registering on our site, as appropriate, you may be asked to enter your:
+                </p>
+                <ul class="list-disc pl-6 text-gray-700 space-y-2 mb-4">
+                    <li>Name</li>
+                    <li>Email address</li>
+                    <li>Mailing address</li>
+                    <li>Phone number</li>
+                </ul>
+                <p class="text-gray-700">
+                    You may, however, visit our site anonymously without providing any personal information.
+                </p>
+            </div>
+
+            <!-- Section 2 -->
+            <div class="mb-10">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">2. What Do We Use Your Information For?</h2>
+                <p class="text-gray-700 mb-4">
+                    Any of the information we collect from you may be used in one of the following ways:
+                </p>
+                <ul class="list-disc pl-6 text-gray-700 space-y-3">
+                    <li>
+                        <strong>To personalize your experience:</strong> Your information helps us to better respond to your individual needs.
+                    </li>
+                    <li>
+                        <strong>To improve our website:</strong> We continually strive to improve our website offerings based on the information and feedback we receive from you.
+                    </li>
+                    <li>
+                        <strong>To improve customer service:</strong> Your information helps us to more effectively respond to your customer service requests and support needs.
+                    </li>
+                    <li>
+                        <strong>To process transactions:</strong> Your information, whether public or private, will not be sold, exchanged, transferred, or given to any other company for any reason whatsoever, without your consent, other than for the express purpose of delivering the purchased product or service requested.
+                    </li>
+                    <li>
+                        <strong>To send periodic emails:</strong> The email address you provide for order processing may be used to send you information and updates pertaining to your order, in addition to receiving occasional company news, updates, related product or service information, etc.
+                    </li>
+                </ul>
+                <p class="text-gray-700 mt-4">
+                    <em>Note: If at any time you would like to unsubscribe from receiving future emails, we include detailed unsubscribe instructions at the bottom of each email.</em>
+                </p>
+            </div>
+
+            <!-- Section 3 -->
+            <div class="mb-10">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">3. How Do We Protect Your Information?</h2>
+                <p class="text-gray-700 mb-4">
+                    We implement a variety of security measures to maintain the safety of your personal information when you place an order or enter, submit, or access your personal information.
+                </p>
+                <ul class="list-disc pl-6 text-gray-700 space-y-2">
+                    <li>We offer the use of a secure server</li>
+                    <li>All supplied sensitive/credit information is transmitted via Secure Socket Layer (SSL) technology</li>
+                    <li>Information is encrypted into our Payment gateway providers database</li>
+                    <li>After a transaction, your private information (credit cards, social security numbers, financials, etc.) will not be stored on our servers</li>
+                </ul>
+            </div>
+
+            <!-- Section 4 -->
+            <div class="mb-10">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">4. Do We Disclose Information to Outside Parties?</h2>
+                <p class="text-gray-700 mb-4">
+                    We do not sell, trade, or otherwise transfer to outside parties your personally identifiable information. This does not include trusted third parties who assist us in operating our website, conducting our business, or servicing you, so long as those parties agree to keep this information confidential.
+                </p>
+                <p class="text-gray-700">
+                    We may also release your information when we believe release is appropriate to comply with the law, enforce our site policies, or protect ours or others' rights, property, or safety. However, non-personally identifiable visitor information may be provided to other parties for marketing, advertising, or other uses.
+                </p>
+            </div>
+
+            <!-- Section 5 -->
+            <div class="mb-10">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">5. Online Privacy Policy Only</h2>
+                <p class="text-gray-700 mb-4">
+                    This online privacy policy applies only to information collected through our website and not to information collected offline.
+                </p>
+                <p class="text-gray-700">
+                    Please also visit our <a href="{% url 'core:terms_conditions' %}" class="text-purple-600 hover:underline">Terms and Conditions</a> section establishing the use, disclaimers, and limitations of liability governing the use of our website.
+                </p>
+            </div>
+
+            <!-- Section 6 -->
+            <div class="mb-10">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">6. Your Consent</h2>
+                <p class="text-gray-700">
+                    By using our site, you consent to our website's privacy policy.
+                </p>
+            </div>
+
+            <!-- Section 7 -->
+            <div class="mb-10">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">7. Cookies</h2>
+                <p class="text-gray-700">
+                    We use cookies to enhance your browsing experience, analyze site traffic, and personalize content. You can choose to disable cookies through your browser settings, but this may affect some features of our website.
+                </p>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="bg-gray-50 p-6 rounded-lg mt-12">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Questions or Concerns?</h2>
+                <p class="text-gray-700 mb-4">
+                    If you have any questions about this Privacy Policy, please contact us at:
+                </p>
+                <div class="text-gray-700">
+                    <p class="font-semibold">Shrishti Printing</p>
+                    <p>Email: <a href="mailto:info@shrishtiprinting.com" class="text-purple-600 hover:underline">info@shrishtiprinting.com</a></p>
+                    <p class="mt-2">
+                        <a href="{% url 'core:contact' %}" class="text-purple-600 hover:underline">Contact Us</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-8 text-sm text-gray-500">
+                <p><strong>Last Updated:</strong> {{ "now"|date:"F Y" }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

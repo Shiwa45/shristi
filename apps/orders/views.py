@@ -8,7 +8,7 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.views import View
-from .models import Cart, CartItem, Order, QuoteRequest, Coupon
+from .models import Cart, CartItem, Order, OrderItem, QuoteRequest, Coupon
 from .utils import CartManager
 from apps.services.models import StaticProduct
 import json
@@ -23,7 +23,7 @@ class CartView(View):
         
         context = {
             'cart': cart,
-            'cart_items': cart.items.select_related('product', 'user_design'),
+            'cart_items': cart.items.select_related('static_product', 'user_design'),
             'cart_total': cart.subtotal,
             'cart_count': cart.total_items,
         }
@@ -199,7 +199,7 @@ def order_detail(request, order_number):
     
     context = {
         'order': order,
-        'order_items': order.items.select_related('product'),
+        'order_items': order.items.select_related('static_product'),
         'status_history': order.status_history.select_related('changed_by')[:10],
     }
     return render(request, 'orders/detail.html', context)
@@ -279,7 +279,7 @@ def quote_detail(request, quote_number):
     
     context = {
         'quote': quote,
-        'quote_items': quote.items.select_related('product'),
+        'quote_items': quote.items.select_related('static_product'),
     }
     return render(request, 'orders/quote_detail.html', context)
 
@@ -745,6 +745,212 @@ def accept_quote(request, quote_number):
             'success': False,
             'message': f'Error accepting quote: {str(e)}'
         }, status=500)
+
+
+@require_http_methods(["POST"])
+def submit_book_printing_order(request, product_id):
+    """Submit book printing order with category-specific form data"""
+    try:
+        data = json.loads(request.body)
+        
+        # Get the static product
+        static_product = get_object_or_404(StaticProduct, id=product_id, is_active=True)
+        
+        # Validate that this is a book printing product
+        if not static_product.category or static_product.category.slug != 'book-printing':
+            return JsonResponse({
+                'success': False,
+                'message': 'This endpoint is only for book printing products'
+            }, status=400)
+        
+        # Extract form data
+        form_data = data.get('form_data', {})
+        customer_info = data.get('customer_info', {})
+        
+        # Validate required fields
+        required_fields = ['interior_color', 'book_size', 'page_count', 'paper_type', 'binding_type', 'cover_finish']
+        missing_fields = [field for field in required_fields if not form_data.get(field)]
+        
+        if missing_fields:
+            return JsonResponse({
+                'success': False,
+                'message': f'Missing required fields: {", ".join(missing_fields)}'
+            }, status=400)
+        
+        # Calculate quantity (minimum 25 for book printing)
+        quantity = max(int(form_data.get('quantity', 25)), 25)
+        
+        # Calculate pricing based on specifications
+        unit_price = calculate_book_printing_price(static_product, form_data)
+        total_price = unit_price * quantity
+        
+        # Create specifications object
+        specifications = {
+            'interior_color': form_data.get('interior_color'),
+            'book_size': form_data.get('book_size'),
+            'page_count': form_data.get('page_count'),
+            'bw_page_count': form_data.get('bw_page_count'),
+            'color_page_count': form_data.get('color_page_count'),
+            'paper_type': form_data.get('paper_type'),
+            'binding_type': form_data.get('binding_type'),
+            'cover_finish': form_data.get('cover_finish'),
+            'design_service': form_data.get('design_service'),
+            'isbn_allocation': form_data.get('isbn_allocation'),
+            'special_instructions': form_data.get('special_instructions', ''),
+        }
+        
+        # Handle file uploads if present
+        uploaded_files = {}
+        if 'cover_page_file' in request.FILES:
+            uploaded_files['cover_page'] = request.FILES['cover_page_file']
+        if 'inner_pages_file' in request.FILES:
+            uploaded_files['inner_pages'] = request.FILES['inner_pages_file']
+        
+        # Add to cart (for authenticated users) or quote request (for anonymous)
+        if request.user.is_authenticated:
+            # Get or create cart
+            cart = get_or_create_cart(request)
+            
+            # Check if similar item already exists in cart
+            existing_item = CartItem.objects.filter(
+                cart=cart,
+                static_product=static_product
+            ).first()
+            
+            if existing_item:
+                # Update existing item
+                existing_item.quantity += quantity
+                existing_item.specifications.update(specifications)
+                existing_item.save()
+            else:
+                # Create new cart item
+                CartItem.objects.create(
+                    cart=cart,
+                    static_product=static_product,
+                    quantity=quantity,
+                    unit_price=unit_price,
+                    specifications=specifications
+                )
+            
+            return JsonResponse({
+                'success': True,
+                'message': 'Book added to cart successfully!',
+                'redirect_url': '/orders/checkout/'
+            })
+        
+        else:
+            # Create quote request for anonymous users
+            quote_request = QuoteRequest.objects.create(
+                user=None,  # Anonymous
+                customer_name=customer_info.get('name', 'Anonymous Customer'),
+                customer_email=customer_info.get('email', ''),
+                customer_phone=customer_info.get('phone', ''),
+                description=f"Book Printing Order: {static_product.name}",
+                requirements=json.dumps(specifications, indent=2),
+                quantity=quantity,
+                quoted_amount=total_price * 1.18
+            )
+            
+            return JsonResponse({
+                'success': True,
+                'message': 'Quote request submitted successfully! We will contact you shortly.',
+                'quote_number': quote_request.quote_number,
+                'estimated_total': str(total_price * 1.18)
+            })
+            
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'message': f'Error submitting order: {str(e)}'
+        }, status=500)
+
+
+def calculate_book_printing_price(product, form_data):
+    """Calculate book printing price based on specifications"""
+    base_price = float(product.base_price)
+    
+    # Interior color modifiers
+    color_modifiers = {
+        'bw_standard': -50,
+        'bw_premium': 0,
+        'color_standard': 200,
+        'color_premium': 300,
+        'combine_color': 0  # Will be calculated separately
+    }
+    
+    interior_color = form_data.get('interior_color')
+    if interior_color in color_modifiers:
+        base_price += color_modifiers[interior_color]
+    
+    # Handle combine color pricing
+    if interior_color == 'combine_color':
+        bw_pages = int(form_data.get('bw_page_count', 0))
+        color_pages = int(form_data.get('color_page_count', 0))
+        # Add pricing based on page counts
+        base_price += (bw_pages * 2) + (color_pages * 8)  # Example pricing
+    else:
+        page_count = int(form_data.get('page_count', 4))
+        # Add pricing based on total page count
+        if interior_color in ['color_standard', 'color_premium']:
+            base_price += page_count * 6  # Color page pricing
+        else:
+            base_price += page_count * 2  # B&W page pricing
+    
+    # Book size modifiers
+    size_modifiers = {
+        'a4': 0,
+        'letter': 25,
+        'executive': 50,
+        'a5': -25
+    }
+    
+    book_size = form_data.get('book_size')
+    if book_size in size_modifiers:
+        base_price += size_modifiers[book_size]
+    
+    # Paper type modifiers
+    paper_modifiers = {
+        '75gsm': 0,
+        '100gsm': 50,
+        '100gsm_art': 100,
+        '130gsm_art': 150
+    }
+    
+    paper_type = form_data.get('paper_type')
+    if paper_type in paper_modifiers:
+        base_price += paper_modifiers[paper_type]
+    
+    # Binding type modifiers
+    binding_modifiers = {
+        'saddle_stitch': 0,
+        'spiral_binding': 50,
+        'paperback_perfect': 100,
+        'hardcover': 300
+    }
+    
+    binding_type = form_data.get('binding_type')
+    if binding_type in binding_modifiers:
+        base_price += binding_modifiers[binding_type]
+    
+    # Cover finish modifiers
+    finish_modifiers = {
+        'matte': 0,
+        'glossy': 25
+    }
+    
+    cover_finish = form_data.get('cover_finish')
+    if cover_finish in finish_modifiers:
+        base_price += finish_modifiers[cover_finish]
+    
+    # Design service
+    if form_data.get('design_service') == 'yes_design':
+        base_price += 1500  # Rs. 1500 for design service
+    
+    # ISBN allocation
+    if form_data.get('isbn_allocation') == 'assign_isbn':
+        base_price += 500  # Rs. 500 for ISBN
+    
+    return max(base_price, 50)  # Minimum price of Rs. 50
 
 
 @require_http_methods(["GET"])

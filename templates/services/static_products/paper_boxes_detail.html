@@ -1,0 +1,1818 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Folding Carton Boxes Printing Instant Price | {{ block.super }}{% endblock %}
+
+{% block meta_description %}Custom folding carton boxes printing with instant pricing. Professional packaging solutions for cosmetics, electronics, and retail products.{% endblock %}
+
+{% block extra_css %}
+{{ block.super }}
+<style>
+    /* Hero Section with Light Background */
+    .hero-section {
+        background: #f8f9fa;
+        padding: 4rem 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e5e7eb' fill-opacity='0.3'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3Ccircle cx='10' cy='10' r='4'/%3E%3Ccircle cx='50' cy='10' r='4'/%3E%3Ccircle cx='10' cy='50' r='4'/%3E%3Ccircle cx='50' cy='50' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .hero-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    .hero-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: center;
+    }
+
+    .hero-title {
+        font-size: 3rem;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin-bottom: 1rem;
+        line-height: 1.2;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+        color: #6b7280;
+        margin-bottom: 2rem;
+        line-height: 1.6;
+    }
+
+    .hero-features {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-bottom: 2rem;
+    }
+
+    .feature-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: #374151;
+        font-weight: 500;
+    }
+
+    .feature-item i {
+        color: #10b981;
+        font-size: 1.1rem;
+    }
+
+    .hero-cta {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .btn-primary, .btn-secondary {
+        padding: 0.875rem 2rem;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: none;
+    }
+
+    .btn-primary {
+        background: #3b82f6;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background: #2563eb;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .btn-secondary {
+        background: transparent;
+        color: #3b82f6;
+        border: 2px solid #3b82f6;
+    }
+
+    .btn-secondary:hover {
+        background: #3b82f6;
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    .hero-image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .hero-image img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (max-width: 968px) {
+        .hero-content {
+            grid-template-columns: 1fr;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+        }
+
+        .hero-features {
+            align-items: center;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .hero-section {
+            padding: 2rem 0;
+        }
+
+        .hero-title {
+            font-size: 2rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+        }
+
+        .hero-cta {
+            justify-content: center;
+        }
+    }
+
+    /* Paper Boxes Page - Matching Book Printing Style */
+    .paper-boxes-page {
+        background: #ffffff;
+        min-height: 100vh;
+    }
+
+    .paper-boxes-container {
+        background: #ffffff;
+        padding: 3rem 4rem;
+        box-shadow: none;
+        border: none;
+        margin-top: 0;
+        margin-left: 0;
+        width: 100%;
+        max-width: 1400px;
+        flex: 1;
+        min-width: 0;
+    }
+
+    /* Paper Boxes Options Header - Matching Book Printing Style */
+    .paper-boxes-header {
+        color: #1a1a1a;
+        padding: 0 0 2rem 0;
+        border-radius: 0;
+        margin-bottom: 3rem;
+        text-align: left;
+        border-bottom: 2px solid #e5e7eb;
+    }
+
+    .paper-boxes-title {
+        font-size: 2.25rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+        color: #1a1a1a;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    .paper-boxes-subtitle {
+        opacity: 0.8;
+        font-size: 1.125rem;
+        color: #666666;
+        font-weight: 400;
+        line-height: 1.6;
+    }
+
+    /* Box Type Selection - QinPrinting Style */
+    .box-type-section {
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .box-type-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #1a1a1a;
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+
+    .box-type-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    @media (max-width: 1200px) {
+        .box-type-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .box-type-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    .box-type-card {
+        background: #f8f9fa;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        padding: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: center;
+        position: relative;
+        min-height: 160px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .box-type-card:hover {
+        border-color: #007bff;
+        box-shadow: 0 4px 12px rgba(0, 123, 255, 0.15);
+        transform: translateY(-2px);
+    }
+
+    .box-type-card.active {
+        border-color: #007bff;
+        background: #e3f2fd;
+        box-shadow: 0 0 0 2px #007bff;
+    }
+
+    .box-type-image {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: white;
+        border-radius: 6px;
+        margin-bottom: 0.75rem;
+        padding: 0.5rem;
+        min-height: 80px;
+    }
+
+    .box-type-image img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+
+    .box-type-name {
+        font-weight: 600;
+        color: #1a1a1a;
+        font-size: 0.875rem;
+        line-height: 1.3;
+        margin-bottom: 0.5rem;
+    }
+
+    .box-type-indicator {
+        width: 0;
+        height: 0;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-top: 8px solid #007bff;
+        margin: 0 auto;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .box-type-card.active .box-type-indicator {
+        opacity: 1;
+    }
+
+    /* Style Selection - Inside Form Section */
+    .style-section {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        border: 1px solid #e9ecef;
+    }
+
+    .style-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #1a1a1a;
+        margin-bottom: 1rem;
+        text-align: left;
+    }
+
+    .style-options {
+        display: flex;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .style-option {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        padding: 0.5rem 1rem;
+        background: white;
+        border: 1px solid #e9ecef;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        color: #495057;
+        font-size: 0.875rem;
+    }
+
+    .style-option:hover {
+        background: #e9ecef;
+        border-color: #007bff;
+    }
+
+    .style-option input[type="radio"] {
+        margin-right: 0.5rem;
+        accent-color: #007bff;
+    }
+
+    .style-option:has(input:checked) {
+        background: #007bff;
+        color: white;
+        border-color: #007bff;
+    }
+
+    .style-label {
+        font-size: 0.875rem;
+    }
+
+    .style-preview {
+        display: flex;
+        justify-content: center;
+        margin-top: 0.5rem;
+    }
+
+    .style-preview-image {
+        background: white;
+        border-radius: 6px;
+        padding: 0.75rem;
+        border: 1px solid #e9ecef;
+        max-width: 200px;
+        width: 100%;
+    }
+
+    .style-preview-image img {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+        border-radius: 4px;
+    }
+
+    /* Calculator Section */
+    .calculator-section {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    @media (max-width: 968px) {
+        .calculator-section {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Form Section */
+    .form-section {
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        display: block;
+        font-weight: 600;
+        color: #1a1a1a;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 2px solid #e9ecef;
+        border-radius: 6px;
+        font-size: 0.95rem;
+        transition: border-color 0.3s ease;
+    }
+
+    .form-input:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+    }
+
+    .form-select {
+        width: 100%;
+        padding: 0.75rem;
+        border: 2px solid #e9ecef;
+        border-radius: 6px;
+        font-size: 0.95rem;
+        background: white;
+        transition: border-color 0.3s ease;
+    }
+
+    .form-select:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+    }
+
+    .size-inputs {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+
+    .unit-toggle {
+        display: flex;
+        border: 2px solid #e9ecef;
+        border-radius: 6px;
+        overflow: hidden;
+        background: white;
+        margin-bottom: 1rem;
+    }
+
+    .unit-btn {
+        flex: 1;
+        padding: 0.75rem;
+        background: white;
+        border: none;
+        cursor: pointer;
+        font-weight: 500;
+        color: #495057;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+    }
+
+    .unit-btn.active {
+        background: #007bff;
+        color: white;
+    }
+
+    .country-buttons {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .country-btn {
+        padding: 0.5rem 1rem;
+        background: #f8f9fa;
+        border: 2px solid #e9ecef;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        color: #495057;
+        transition: all 0.3s ease;
+        font-weight: 500;
+    }
+
+    .country-btn:hover {
+        background: #e9ecef;
+    }
+
+    .country-btn.active {
+        background: #007bff;
+        color: white;
+        border-color: #007bff;
+    }
+
+    .apply-btn {
+        padding: 0.5rem 1.5rem;
+        background: #28a745;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .apply-btn:hover {
+        background: #218838;
+        transform: translateY(-1px);
+    }
+
+    /* Pricing Section */
+    .pricing-section {
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        height: fit-content;
+        position: sticky;
+        top: 2rem;
+    }
+
+    .pricing-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+
+    .price-breakdown {
+        margin-bottom: 1.5rem;
+    }
+
+    .price-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+    .price-row.total {
+        border-bottom: 2px solid #007bff;
+        font-weight: 700;
+        font-size: 1.1rem;
+    }
+
+    .price-value {
+        font-weight: 600;
+        color: #1a1a1a;
+    }
+
+    .unit-price {
+        text-align: center;
+        margin: 1rem 0;
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+    }
+
+    .unit-price-label {
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 0.5rem;
+    }
+
+    .unit-price-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #007bff;
+    }
+
+    .estimate-note {
+        font-size: 0.85rem;
+        color: #666;
+        margin-bottom: 0.5rem;
+        text-align: center;
+    }
+
+    .action-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-top: 1.5rem;
+    }
+
+    .action-btn {
+        padding: 0.75rem 1rem;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-align: center;
+    }
+
+    .btn-save {
+        background: #007bff;
+        color: white;
+    }
+
+    .btn-save:hover {
+        background: #0056b3;
+    }
+
+    .btn-shipping {
+        background: #17a2b8;
+        color: white;
+    }
+
+    .btn-shipping:hover {
+        background: #138496;
+    }
+
+    .btn-sample {
+        background: #ffc107;
+        color: #212529;
+    }
+
+    .btn-sample:hover {
+        background: #e0a800;
+    }
+
+    /* Zip Code Section */
+    .zip-section {
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 2px solid #e9ecef;
+    }
+
+    .zip-input-group {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+    }
+
+    .zip-input {
+        flex: 1;
+        padding: 0.75rem;
+        border: 2px solid #e9ecef;
+        border-radius: 6px;
+        font-size: 0.9rem;
+    }
+
+    .zip-input:focus {
+        outline: none;
+        border-color: #007bff;
+    }
+
+    /* Info Notes */
+    .info-note {
+        padding: 1rem;
+        background: #e3f2fd;
+        border-left: 4px solid #007bff;
+        border-radius: 6px;
+        color: #1565c0;
+        font-size: 0.875rem;
+        margin-top: 1rem;
+    }
+
+    .info-note a {
+        color: #007bff;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .info-note a:hover {
+        text-decoration: underline;
+    }
+
+    /* Additional Sections */
+    .section-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+        font-size: 1.1rem;
+        color: #666;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    /* Specifications Section - Matching Book Printing Style */
+    .specifications-section {
+        background: transparent;
+        padding: 2.5rem 0;
+        margin: 0;
+        border-radius: 0;
+        border-bottom: 1px solid #e5e7eb;
+        box-shadow: none;
+    }
+
+    .specs-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem;
+    }
+
+    .spec-card {
+        text-align: center;
+        padding: 1.5rem 1rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+        border: 1px solid #e5e7eb;
+        transition: all 0.2s ease;
+    }
+
+    .spec-card:hover {
+        border-color: #3b82f6;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+        transform: none;
+    }
+
+    .spec-icon {
+        width: 48px;
+        height: 48px;
+        background: #f3f4f6;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        color: #6b7280;
+        font-size: 1.25rem;
+    }
+
+    .spec-card h3 {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: #1a1a1a;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    .spec-card p {
+        color: #6b7280;
+        line-height: 1.5;
+        font-size: 0.875rem;
+    }
+
+    /* Finishes Section */
+    .finishes-section {
+        background: #f8f9fa;
+        padding: 4rem 2rem;
+        margin: 2rem 0;
+    }
+
+    .finishes-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+    }
+
+    .finish-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .finish-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .finish-image {
+        height: 200px;
+        overflow: hidden;
+    }
+
+    .finish-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .finish-card h3 {
+        padding: 1rem 1rem 0.5rem;
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #1a1a1a;
+    }
+
+    .finish-card p {
+        padding: 0 1rem 1rem;
+        color: #666;
+        line-height: 1.5;
+    }
+
+    /* Paper Types Section */
+    .paper-types-section {
+        background: white;
+        padding: 4rem 2rem;
+        margin: 2rem 0;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .paper-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+
+    .paper-card {
+        background: #f8f9fa;
+        padding: 2rem;
+        border-radius: 12px;
+        border-left: 4px solid #007bff;
+    }
+
+    .paper-card h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #1a1a1a;
+        margin-bottom: 1rem;
+    }
+
+    .paper-card ul {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 1rem;
+    }
+
+    .paper-card li {
+        padding: 0.25rem 0;
+        color: #666;
+    }
+
+    .paper-card p {
+        color: #666;
+        line-height: 1.5;
+    }
+
+    /* Samples Section */
+    .samples-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 4rem 2rem;
+        margin: 2rem 0;
+        border-radius: 12px;
+        color: white;
+    }
+
+    .samples-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: center;
+    }
+
+    .samples-text h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .samples-benefits {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 2rem;
+    }
+
+    .samples-benefits li {
+        padding: 0.5rem 0;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .samples-benefits i {
+        color: #10b981;
+    }
+
+    .samples-note {
+        font-size: 0.9rem;
+        opacity: 0.8;
+        margin-top: 0.5rem;
+    }
+
+    .samples-image img {
+        width: 100%;
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    /* FAQ Section */
+    .faq-section {
+        background: white;
+        padding: 4rem 2rem;
+        margin: 2rem 0;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .faq-content {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .faq-item {
+        border-bottom: 1px solid #e9ecef;
+        margin-bottom: 1rem;
+    }
+
+    .faq-question {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem 0;
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
+
+    .faq-question:hover {
+        color: #007bff;
+    }
+
+    .faq-question h3 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .faq-question i {
+        transition: transform 0.3s ease;
+    }
+
+    .faq-item.active .faq-question i {
+        transform: rotate(180deg);
+    }
+
+    .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+
+    .faq-item.active .faq-answer {
+        max-height: 200px;
+    }
+
+    .faq-answer p {
+        padding: 0 0 1.5rem;
+        color: #666;
+        line-height: 1.6;
+    }
+
+    /* Contact CTA Section */
+    .contact-cta-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 4rem 2rem;
+        margin: 2rem 0;
+        border-radius: 12px;
+        text-align: center;
+        color: white;
+    }
+
+    .cta-content h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .cta-content p {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+    }
+
+    .cta-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .cta-buttons .btn-primary,
+    .cta-buttons .btn-secondary {
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    /* Responsive Design - Matching Book Printing Style */
+    @media (max-width: 1024px) {
+        .paper-boxes-container {
+            padding: 2rem 3rem;
+        }
+        
+        .specs-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .finishes-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .style-options {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .paper-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .samples-content {
+            grid-template-columns: 1fr;
+            text-align: center;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .paper-boxes-container {
+            padding: 1.5rem 2rem;
+        }
+
+        .paper-boxes-title {
+            font-size: 1.875rem;
+        }
+
+        .paper-boxes-subtitle {
+            font-size: 1rem;
+        }
+
+        .box-type-section,
+        .style-section,
+        .form-section,
+        .pricing-section {
+            padding: 1.5rem;
+        }
+
+        .size-inputs {
+            grid-template-columns: 1fr;
+        }
+
+        .style-options {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .country-buttons {
+            justify-content: center;
+        }
+
+        .specs-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .finishes-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .section-title {
+            font-size: 2rem;
+        }
+
+        .cta-content h2 {
+            font-size: 2rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section with Light Background -->
+<section class="hero-section">
+    <div class="hero-container">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">Custom Folding Carton Boxes</h1>
+                <p class="hero-subtitle">
+                    A popular choice for packing high-end products such as perfume, cosmetics, self-care products, and personal electronics. 
+                    Beautiful, practical, and fully customizable packaging solution.
+                </p>
+                <div class="hero-features">
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Instant Online Pricing</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Professional Quality</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Fast Delivery</span>
+                    </div>
+                </div>
+                <div class="hero-cta">
+                    <button class="btn-primary" onclick="document.getElementById('calculator').scrollIntoView({behavior: 'smooth'})">
+                        Get Instant Quote
+                    </button>
+                    <button class="btn-secondary" onclick="document.getElementById('samples').scrollIntoView({behavior: 'smooth'})">
+                        Order Samples
+                    </button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="{% static 'img/box/hero-boxes.jpg' %}" alt="Custom Folding Carton Boxes" onerror="this.style.display='none'">
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="paper-boxes-page">
+    <div class="paper-boxes-container">
+        <!-- Paper Boxes Options Header -->
+        <div class="paper-boxes-header">
+            <h2 class="paper-boxes-title">Customize Your Folding Carton Box</h2>
+            <p class="paper-boxes-subtitle">Choose your box specifications to get started with your packaging project.</p>
+        </div>
+
+        <!-- Box Type Selection -->
+        <div class="box-type-section" id="calculator">
+            <h2 class="box-type-title">Type of Box</h2>
+            <div class="box-type-grid">
+                <div class="box-type-card active" data-tab="tuck-end" onclick="switchBoxType(this, 'tuck-end')">
+                    <div class="box-type-image">
+                        <img src="{% static 'img/box/Straight-Tuck-End-Box-3-1.png' %}" alt="Tuck End Box">
+                    </div>
+                    <div class="box-type-name">Tuck End Box</div>
+                    <div class="box-type-indicator"></div>
+                </div>
+
+                <div class="box-type-card" data-tab="snap-lock" onclick="switchBoxType(this, 'snap-lock')">
+                    <div class="box-type-image">
+                        <img src="{% static 'img/box/Tuck-Top-Snap-Lock-Bottom-Box-3-1.png' %}" alt="Tuck Top Snap Lock Bottom Box">
+                    </div>
+                    <div class="box-type-name">Tuck Top Snap Lock Bottom Box</div>
+                    <div class="box-type-indicator"></div>
+                </div>
+
+                <div class="box-type-card" data-tab="auto-bottom" onclick="switchBoxType(this, 'auto-bottom')">
+                    <div class="box-type-image">
+                        <img src="{% static 'img/box/Tuck-Top-Auto-Bottom-Box-3-1.png' %}" alt="Tuck Top Auto Bottom Box">
+                    </div>
+                    <div class="box-type-name">Tuck Top Auto Bottom Box</div>
+                    <div class="box-type-indicator"></div>
+                </div>
+
+                <div class="box-type-card" data-tab="seal-end" onclick="switchBoxType(this, 'seal-end')">
+                    <div class="box-type-image">
+                        <img src="{% static 'img/box/Seal-End-Box-3-1.png' %}" alt="Seal End Box">
+                    </div>
+                    <div class="box-type-name">Seal End Box</div>
+                    <div class="box-type-indicator"></div>
+                </div>
+
+                <div class="box-type-card" data-tab="sleeve" onclick="switchBoxType(this, 'sleeve')">
+                    <div class="box-type-image">
+                        <img src="{% static 'img/box/Box-Sleeve-4-1.png' %}" alt="Box Sleeve">
+                    </div>
+                    <div class="box-type-name">Box Sleeve</div>
+                    <div class="box-type-indicator"></div>
+                </div>
+
+                <div class="box-type-card" data-tab="one-piece" onclick="switchBoxType(this, 'one-piece')">
+                    <div class="box-type-image">
+                        <img src="{% static 'img/box/One-Piece-Tuck-Top-Boxes-3-1.png.webp' %}" alt="One-Piece Tuck Top Box">
+                    </div>
+                    <div class="box-type-name">One-Piece Tuck Top Box</div>
+                    <div class="box-type-indicator"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calculator Section -->
+        <div class="calculator-section">
+            <!-- Form Section -->
+            <div class="form-section">
+                <!-- Style Selection -->
+                <div class="style-section">
+                    <h3 class="style-title">Style</h3>
+                    <div class="style-options">
+                        <label class="style-option">
+                            <input type="radio" name="style" value="straight-tuck-end" checked onchange="selectStyle(this, 'straight-tuck-end')">
+                            <span class="style-label">Straight Tuck End Box</span>
+                        </label>
+                        <label class="style-option">
+                            <input type="radio" name="style" value="tuck-end-hang-tab" onchange="selectStyle(this, 'tuck-end-hang-tab')">
+                            <span class="style-label">Tuck End with Hang Tab Box</span>
+                        </label>
+                        <label class="style-option">
+                            <input type="radio" name="style" value="reverse-tuck-end" onchange="selectStyle(this, 'reverse-tuck-end')">
+                            <span class="style-label">Reverse Tuck End Box</span>
+                        </label>
+                    </div>
+                    
+                    <!-- Style Preview Image -->
+                    <div class="style-preview">
+                        <div class="style-preview-image">
+                            <img id="style-preview-img" src="{% static 'img/box/Straight-Tuck-End-Box-3-1.png' %}" alt="Selected Style Preview">
+                        </div>
+                    </div>
+                </div>
+                <form id="box-calculator-form">
+                    {% csrf_token %}
+
+                    <!-- Quantity -->
+                    <div class="form-group">
+                        <label class="form-label">Quantity</label>
+                        <input type="number" class="form-input" name="quantity" id="quantity" min="100" step="50" value="100" required oninput="calculatePrice()">
+                        <div class="estimate-note">MOQ: 100pcs</div>
+                    </div>
+
+                    <!-- Size -->
+                    <div class="form-group">
+                        <label class="form-label">Size</label>
+                        <div class="unit-toggle">
+                            <button type="button" class="unit-btn active" onclick="switchUnit('inch')">inch</button>
+                            <button type="button" class="unit-btn" onclick="switchUnit('mm')">mm</button>
+                        </div>
+                        <div class="size-inputs">
+                            <div>
+                                <label class="form-label">L</label>
+                                <input type="number" class="form-input" id="length" name="length" step="0.1" min="2" placeholder="10.0" required oninput="calculatePrice()">
+                            </div>
+                            <div>
+                                <label class="form-label">W</label>
+                                <input type="number" class="form-input" id="width" name="width" step="0.1" min="2" placeholder="8.0" required oninput="calculatePrice()">
+                            </div>
+                            <div>
+                                <label class="form-label">H</label>
+                                <input type="number" class="form-input" id="height" name="height" step="0.1" min="1" placeholder="3.0" required oninput="calculatePrice()">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Paper -->
+                    <div class="form-group">
+                        <label class="form-label">Paper</label>
+                        <select class="form-select" name="paper" id="paper" required onchange="calculatePrice()">
+                            <option value="">Select paper...</option>
+                            <optgroup label="Art Card (White)">
+                                <option value="art-card-250" data-price="0">Art Card 250 GSM - Base Price</option>
+                                <option value="art-card-300" data-price="200">Art Card 300 GSM - +₹200</option>
+                                <option value="art-card-350" data-price="350">Art Card 350 GSM - +₹350</option>
+                                <option value="art-card-400" data-price="500">Art Card 400 GSM - +₹500</option>
+                            </optgroup>
+                            <optgroup label="Kraft Board (Brown)">
+                                <option value="kraft-250" data-price="0">Kraft Board 250 GSM - Base Price</option>
+                                <option value="kraft-300" data-price="150">Kraft Board 300 GSM - +₹150</option>
+                                <option value="kraft-350" data-price="250">Kraft Board 350 GSM - +₹250</option>
+                                <option value="kraft-400" data-price="400">Kraft Board 400 GSM - +₹400</option>
+                            </optgroup>
+                            <optgroup label="Duplex Board">
+                                <option value="duplex-250" data-price="100">Duplex Board 250 GSM - +₹100</option>
+                                <option value="duplex-300" data-price="200">Duplex Board 300 GSM - +₹200</option>
+                                <option value="duplex-350" data-price="300">Duplex Board 350 GSM - +₹300</option>
+                            </optgroup>
+                            <optgroup label="Corrugated">
+                                <option value="corrugated-e" data-price="300">E-Flute Corrugated - +₹300</option>
+                                <option value="corrugated-b" data-price="400">B-Flute Corrugated - +₹400</option>
+                            </optgroup>
+                        </select>
+                        <div class="info-note">
+                            If you need special paper not shown in the dropdown menu, please <a href="{% url 'core:contact' %}">contact us</a>.
+                        </div>
+                    </div>
+
+                    <!-- Box Finish -->
+                    <div class="form-group">
+                        <label class="form-label">Box Finish</label>
+                        <select class="form-select" name="finish" id="finish" required onchange="calculatePrice()">
+                            <option value="">Select finish...</option>
+                            <option value="no-finish" data-price="0">No Finish - Base Price</option>
+                            <option value="matte-lamination" data-price="300">Matte Lamination - +₹300</option>
+                            <option value="gloss-lamination" data-price="300">Gloss Lamination - +₹300</option>
+                            <option value="soft-touch" data-price="500">Soft Touch Lamination - +₹500</option>
+                            <option value="spot-uv" data-price="800">Spot UV - +₹800</option>
+                            <option value="foil-stamping-silver" data-price="1200">Foil Stamping (Silver) - +₹1,200</option>
+                            <option value="foil-stamping-gold" data-price="1200">Foil Stamping (Gold) - +₹1,200</option>
+                            <option value="embossing" data-price="1500">Embossing - +₹1,500</option>
+                            <option value="debossing" data-price="1500">Debossing - +₹1,500</option>
+                        </select>
+                        <div class="info-note">
+                            If you need any specific box surface, for example foil stamping, spot UV, emboss etc, please <a href="{% url 'core:contact' %}">contact us</a>.
+                        </div>
+                    </div>
+
+                    <!-- Printing -->
+                    <div class="form-group">
+                        <label class="form-label">Printing</label>
+                        <select class="form-select" name="printing" id="printing" required onchange="calculatePrice()">
+                            <option value="">Select printing...</option>
+                            <option value="no-print" data-price="0">No Printing - Base Price</option>
+                            <option value="1-color" data-price="500">1 Color Printing - +₹500</option>
+                            <option value="2-color" data-price="800">2 Color Printing - +₹800</option>
+                            <option value="cmyk-outside" data-price="1500">Full Color CMYK (Outside) - +₹1,500</option>
+                            <option value="cmyk-both" data-price="2500">Full Color CMYK (Both Sides) - +₹2,500</option>
+                            <option value="pantone-1" data-price="800">Pantone 1 Color - +₹800</option>
+                            <option value="pantone-2" data-price="1200">Pantone 2 Colors - +₹1,200</option>
+                        </select>
+                        <div class="country-buttons">
+                            <button type="button" class="country-btn active" onclick="selectCountry(this, 'India')">India</button>
+                            <button type="button" class="country-btn" onclick="selectCountry(this, 'USA')">USA</button>
+                            <button type="button" class="country-btn" onclick="selectCountry(this, 'Canada')">Canada</button>
+                            <button type="button" class="country-btn" onclick="selectCountry(this, 'Australia')">Australia</button>
+                            <button type="button" class="country-btn" onclick="selectCountry(this, 'UK')">UK</button>
+                            <button type="button" class="apply-btn" onclick="calculatePrice()">Apply</button>
+                        </div>
+                        <div class="info-note">
+                            To other countries, please <a href="{% url 'core:contact' %}">contact us</a>
+                        </div>
+                        <div class="estimate-note">
+                            Delivery from Mumbai, India to <span id="delivery-location">your location</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Pricing Section -->
+            <div class="pricing-section">
+                <h3 class="pricing-title">💰 Pricing Summary</h3>
+
+                <div class="price-breakdown">
+                    <div class="price-row">
+                        <span>EXW Mumbai Price</span>
+                        <span class="price-value" id="exw-price">Calculating...</span>
+                    </div>
+                    <div class="price-row">
+                        <span>Shipping Cost to Door</span>
+                        <span class="price-value" id="shipping-cost">Enter zip code</span>
+                    </div>
+                    <div class="price-row">
+                        <span>Quantity</span>
+                        <span class="price-value" id="qty-display">100</span>
+                    </div>
+                    <div class="price-row total">
+                        <span>Total Price</span>
+                        <span class="price-value" id="total-price">₹0</span>
+                    </div>
+                </div>
+
+                <div class="unit-price">
+                    <div class="unit-price-label">Unit Price:</div>
+                    <div class="unit-price-value" id="unit-price">₹0</div>
+                </div>
+
+                <div class="estimate-note">*The price doesn't include shipping costs.</div>
+                <div class="estimate-note">Estimated weight: <span id="weight">0 kg</span></div>
+
+                <div class="action-buttons">
+                    <button type="button" class="action-btn btn-save" onclick="saveQuote()">
+                        💾 Save Quote
+                    </button>
+                    <button type="button" class="action-btn btn-shipping" onclick="getShippingCost()">
+                        📦 Get Shipping Cost
+                    </button>
+                    <button type="button" class="action-btn btn-sample" onclick="orderSample()">
+                        📋 Order Sample Pack
+                    </button>
+                </div>
+
+                <!-- Zip Code Input -->
+                <div class="zip-section">
+                    <label class="form-label">Change Delivery Location:</label>
+                    <div class="zip-input-group">
+                        <input type="text" id="zip-code" placeholder="Enter zip code" class="zip-input">
+                        <button type="button" class="apply-btn" onclick="updateLocation()">Apply</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Specifications Section -->
+        <section class="specifications-section" id="specifications">
+            <div class="section-header">
+                <h2 class="section-title">Box Specifications</h2>
+                <p class="section-subtitle">Technical details and specifications for our folding carton boxes</p>
+            </div>
+            
+            <div class="specs-grid">
+                <div class="spec-card">
+                    <div class="spec-icon">
+                        <i class="fas fa-ruler"></i>
+                    </div>
+                    <h3>Dimensions</h3>
+                    <p>Custom sizes from 2" x 2" x 1" to 24" x 18" x 12" (L x W x H)</p>
+                </div>
+                
+                <div class="spec-card">
+                    <div class="spec-icon">
+                        <i class="fas fa-weight"></i>
+                    </div>
+                    <h3>Paper Weight</h3>
+                    <p>250 GSM to 400 GSM paperboard options available</p>
+                </div>
+                
+                <div class="spec-card">
+                    <div class="spec-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>Printing</h3>
+                    <p>CMYK, Pantone, spot colors, and specialty inks</p>
+                </div>
+                
+                <div class="spec-card">
+                    <div class="spec-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Finishing</h3>
+                    <p>Lamination, UV coating, foil stamping, embossing</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Special Finishes Section -->
+        <section class="finishes-section" id="finishes">
+            <div class="section-header">
+                <h2 class="section-title">Special Finishes</h2>
+                <p class="section-subtitle">Elevate your packaging with premium finishing options</p>
+            </div>
+            
+            <div class="finishes-grid">
+                <div class="finish-card">
+                    <div class="finish-image">
+                        <img src="{% static 'img/finishes/gloss-lamination.jpg' %}" alt="Gloss Lamination" onerror="this.style.display='none'">
+                    </div>
+                    <h3>Gloss Lamination</h3>
+                    <p>Shiny, smooth surface that boosts vibrancy and provides protection</p>
+                </div>
+                
+                <div class="finish-card">
+                    <div class="finish-image">
+                        <img src="{% static 'img/finishes/matte-lamination.jpg' %}" alt="Matte Lamination" onerror="this.style.display='none'">
+                    </div>
+                    <h3>Matte Lamination</h3>
+                    <p>Soft, non-glare look with refined feel and elegant appearance</p>
+                </div>
+                
+                <div class="finish-card">
+                    <div class="finish-image">
+                        <img src="{% static 'img/finishes/soft-touch.jpg' %}" alt="Soft Touch" onerror="this.style.display='none'">
+                    </div>
+                    <h3>Soft Touch Lamination</h3>
+                    <p>Velvety tactile finish for premium unboxing experience</p>
+                </div>
+                
+                <div class="finish-card">
+                    <div class="finish-image">
+                        <img src="{% static 'img/finishes/foil-stamping.jpg' %}" alt="Foil Stamping" onerror="this.style.display='none'">
+                    </div>
+                    <h3>Foil Stamping</h3>
+                    <p>Metallic accents in gold, silver, bronze and custom colors</p>
+                </div>
+                
+                <div class="finish-card">
+                    <div class="finish-image">
+                        <img src="{% static 'img/finishes/embossing.jpg' %}" alt="Embossing" onerror="this.style.display='none'">
+                    </div>
+                    <h3>Embossing</h3>
+                    <p>Raised areas for dimensional branding and tactile appeal</p>
+                </div>
+                
+                <div class="finish-card">
+                    <div class="finish-image">
+                        <img src="{% static 'img/finishes/spot-uv.jpg' %}" alt="Spot UV" onerror="this.style.display='none'">
+                    </div>
+                    <h3>Spot UV</h3>
+                    <p>Gloss highlights on matte backgrounds for contrast effects</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Paper Types Section -->
+        <section class="paper-types-section" id="paper-types">
+            <div class="section-header">
+                <h2 class="section-title">Paper Types</h2>
+                <p class="section-subtitle">Choose from our range of premium paperboard options</p>
+            </div>
+            
+            <div class="paper-grid">
+                <div class="paper-card">
+                    <h3>Art Card (White)</h3>
+                    <ul>
+                        <li>250 GSM - Base Price</li>
+                        <li>300 GSM - +₹200</li>
+                        <li>350 GSM - +₹350</li>
+                        <li>400 GSM - +₹500</li>
+                    </ul>
+                    <p>High-quality white paperboard perfect for vibrant printing</p>
+                </div>
+                
+                <div class="paper-card">
+                    <h3>Kraft Board (Brown)</h3>
+                    <ul>
+                        <li>250 GSM - Base Price</li>
+                        <li>300 GSM - +₹150</li>
+                        <li>350 GSM - +₹250</li>
+                        <li>400 GSM - +₹400</li>
+                    </ul>
+                    <p>Eco-friendly brown kraft board for natural, sustainable packaging</p>
+                </div>
+                
+                <div class="paper-card">
+                    <h3>Duplex Board</h3>
+                    <ul>
+                        <li>250 GSM - +₹100</li>
+                        <li>300 GSM - +₹200</li>
+                        <li>350 GSM - +₹300</li>
+                    </ul>
+                    <p>Two-layer board with excellent print quality and durability</p>
+                </div>
+                
+                <div class="paper-card">
+                    <h3>Corrugated</h3>
+                    <ul>
+                        <li>E-Flute - +₹300</li>
+                        <li>B-Flute - +₹400</li>
+                    </ul>
+                    <p>Extra protection with fluted construction for fragile items</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Samples Section -->
+        <section class="samples-section" id="samples">
+            <div class="section-header">
+                <h2 class="section-title">Order Sample Pack</h2>
+                <p class="section-subtitle">Get hands-on experience with our paper and finish options</p>
+            </div>
+            
+            <div class="samples-content">
+                <div class="samples-text">
+                    <h3>Why Order Samples?</h3>
+                    <ul class="samples-benefits">
+                        <li><i class="fas fa-check"></i> Feel the quality of different paper types</li>
+                        <li><i class="fas fa-check"></i> See finish effects in person</li>
+                        <li><i class="fas fa-check"></i> Test color accuracy</li>
+                        <li><i class="fas fa-check"></i> Verify dimensions and fit</li>
+                        <li><i class="fas fa-check"></i> Make informed decisions</li>
+                    </ul>
+                    <div class="samples-cta">
+                        <button class="btn-primary" onclick="orderSample()">
+                            Order Sample Pack - ₹500
+                        </button>
+                        <p class="samples-note">*Sample cost will be deducted from your final order</p>
+                    </div>
+                </div>
+                <div class="samples-image">
+                    <img src="{% static 'img/samples/box-samples.jpg' %}" alt="Box Samples" onerror="this.style.display='none'">
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section" id="faq">
+            <div class="section-header">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <p class="section-subtitle">Common questions about our folding carton boxes</p>
+            </div>
+            
+            <div class="faq-content">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>What is the minimum order quantity?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our minimum order quantity is 100 pieces for folding carton boxes. Larger quantities offer better pricing due to press and finishing efficiencies.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>Do you provide dieline templates?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we provide free dieline templates for all box styles. Share your size and style requirements, and we'll send you a print-ready dieline for artwork placement.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>What file formats do you accept?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We require artwork in high-resolution PDF format with 0.125 inches (3mm) bleed. For best results, use CMYK color mode and 300 DPI resolution.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>How long does production take?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Standard production time is 7-10 business days after artwork approval. Rush orders can be accommodated with additional charges.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>Can I get samples before placing a large order?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely! We offer sample packs for ₹500 that include different paper types and finishes. The sample cost is deducted from your final order.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact CTA Section -->
+        <section class="contact-cta-section">
+            <div class="cta-content">
+                <h2>Ready to Get Started?</h2>
+                <p>Contact our packaging experts for personalized assistance with your folding carton box project.</p>
+                <div class="cta-buttons">
+                    <a href="{% url 'core:contact' %}" class="btn-primary">Get Custom Quote</a>
+                    <a href="tel:+919876543210" class="btn-secondary">Call Us Now</a>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script>
+// Configuration
+const BASE_PRICE = 1500;
+let currentUnit = 'inch';
+let selectedCountry = 'India';
+
+// Box Type Switching
+function switchBoxType(card, type) {
+    document.querySelectorAll('.box-type-card').forEach(card => card.classList.remove('active'));
+    card.classList.add('active');
+    calculatePrice();
+}
+
+// Style Selection
+function selectStyle(radioButton, style) {
+    // Update preview image based on selected style
+    const previewImg = document.getElementById('style-preview-img');
+    const imageMap = {
+        'straight-tuck-end': '{% static "img/box/Straight-Tuck-End-Box-3-1.png" %}',
+        'tuck-end-hang-tab': '{% static "img/box/Straight-Tuck-End-Box-2-2.png" %}',
+        'reverse-tuck-end': '{% static "img/box/Straight-Tuck-End-Box-2-2.png" %}'
+    };
+    
+    if (previewImg && imageMap[style]) {
+        previewImg.src = imageMap[style];
+        previewImg.alt = radioButton.nextElementSibling.textContent;
+    }
+    
+    calculatePrice();
+}
+
+// Unit Toggle
+function switchUnit(unit) {
+    document.querySelectorAll('.unit-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    const length = document.getElementById('length');
+    const width = document.getElementById('width');
+    const height = document.getElementById('height');
+    
+    if (unit === 'mm' && currentUnit === 'inch') {
+        if (length.value) length.value = (parseFloat(length.value) * 25.4).toFixed(1);
+        if (width.value) width.value = (parseFloat(width.value) * 25.4).toFixed(1);
+        if (height.value) height.value = (parseFloat(height.value) * 25.4).toFixed(1);
+        currentUnit = 'mm';
+    } else if (unit === 'inch' && currentUnit === 'mm') {
+        if (length.value) length.value = (parseFloat(length.value) / 25.4).toFixed(2);
+        if (width.value) width.value = (parseFloat(width.value) / 25.4).toFixed(2);
+        if (height.value) height.value = (parseFloat(height.value) / 25.4).toFixed(2);
+        currentUnit = 'inch';
+    }
+}
+
+// Country Selection
+function selectCountry(button, country) {
+    document.querySelectorAll('.country-btn').forEach(btn => btn.classList.remove('active'));
+    button.classList.add('active');
+    selectedCountry = country;
+    document.getElementById('delivery-location').textContent = country;
+}
+
+// Calculate Price
+function calculatePrice() {
+    const quantity = parseInt(document.getElementById('quantity').value) || 0;
+    if (quantity < 100) return;
+    
+    let unitPrice = BASE_PRICE;
+    
+    // Paper
+    const paperSelect = document.getElementById('paper');
+    if (paperSelect.value) {
+        const option = paperSelect.options[paperSelect.selectedIndex];
+        unitPrice += parseInt(option.dataset.price || 0);
+    }
+    
+    // Finish
+    const finishSelect = document.getElementById('finish');
+    if (finishSelect.value) {
+        const option = finishSelect.options[finishSelect.selectedIndex];
+        unitPrice += parseInt(option.dataset.price || 0);
+    }
+    
+    // Printing
+    const printingSelect = document.getElementById('printing');
+    if (printingSelect.value) {
+        const option = printingSelect.options[printingSelect.selectedIndex];
+        unitPrice += parseInt(option.dataset.price || 0);
+    }
+    
+    // Calculate totals
+    const subtotal = unitPrice * quantity;
+    
+    // Discounts
+    let discount = 0;
+    if (quantity >= 500) discount = 0.18;
+    else if (quantity >= 250) discount = 0.12;
+    else if (quantity >= 150) discount = 0.08;
+    
+    const total = subtotal * (1 - discount);
+    const finalUnitPrice = total / quantity;
+    
+    // Weight
+    const length = parseFloat(document.getElementById('length').value) || 0;
+    const width = parseFloat(document.getElementById('width').value) || 0;
+    const height = parseFloat(document.getElementById('height').value) || 0;
+    const weight = ((length * width * height * quantity) / 1000000 * 0.65).toFixed(2);
+    
+    // Update UI
+    const exwText = discount > 0 ? 
+        `₹${Math.round(total).toLocaleString()} <small style="color: #28a745;">(Save ${Math.round(discount * 100)}%)</small>` :
+        `₹${Math.round(total).toLocaleString()}`;
+    
+    document.getElementById('exw-price').innerHTML = exwText;
+    document.getElementById('total-price').textContent = `₹${Math.round(total).toLocaleString()}`;
+    document.getElementById('unit-price').textContent = `₹${Math.round(finalUnitPrice).toLocaleString()}`;
+    document.getElementById('qty-display').textContent = quantity.toLocaleString();
+    document.getElementById('weight').textContent = `${weight} kg`;
+}
+
+// Actions
+function saveQuote() {
+    alert('Quote saved successfully!');
+}
+
+function getShippingCost() {
+    alert('Calculating shipping cost...');
+}
+
+function orderSample() {
+    window.location.href = '{% url "core:contact" %}';
+}
+
+function updateLocation() {
+    const zipCode = document.getElementById('zip-code').value;
+    if (!zipCode) {
+        alert('Please enter a zip code');
+        return;
+    }
+    document.getElementById('shipping-cost').textContent = '₹2,500 (est.)';
+    document.getElementById('delivery-location').textContent = `${selectedCountry} - ${zipCode}`;
+}
+
+// FAQ Toggle Function
+function toggleFAQ(element) {
+    const faqItem = element.parentElement;
+    const isActive = faqItem.classList.contains('active');
+    
+    // Close all FAQ items
+    document.querySelectorAll('.faq-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    
+    // Open clicked item if it wasn't active
+    if (!isActive) {
+        faqItem.classList.add('active');
+    }
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+    calculatePrice();
+});
+</script>
+{% endblock %}

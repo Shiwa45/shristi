@@ -1,0 +1,626 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ category.name }} - Professional {{ category.name }} Services | Shirsti Printing{% endblock %}
+
+{% block meta_description %}{{ meta_description|default:category.description|truncatewords:20 }} Professional printing services with quality guaranteed.{% endblock %}
+
+{% block extra_css %}
+<style>
+/* Category-Specific Page Styles */
+.category-specific-page {
+    min-height: 100vh;
+    background: #f8fafc;
+}
+
+/* Hero Section */
+.category-hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: relative;
+    overflow: hidden;
+    padding: 6rem 0 4rem;
+}
+
+.category-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3Ccircle cx='10' cy='10' r='4'/%3E%3Ccircle cx='50' cy='10' r='4'/%3E%3Ccircle cx='10' cy='50' r='4'/%3E%3Ccircle cx='50' cy='50' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.category-hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.category-icon-wrapper {
+    width: 120px;
+    height: 120px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.category-icon-wrapper i {
+    font-size: 3.5rem;
+    color: white;
+}
+
+.category-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.category-description {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 600px;
+    margin: 0 auto 3rem;
+    line-height: 1.6;
+}
+
+/* Breadcrumb */
+.breadcrumb-nav {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 1rem 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+}
+
+.breadcrumb a {
+    color: #6b7280;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.breadcrumb a:hover {
+    color: #667eea;
+}
+
+.breadcrumb-separator {
+    color: #9ca3af;
+}
+
+.breadcrumb-current {
+    color: #1f2937;
+    font-weight: 600;
+}
+
+/* Main Content Layout */
+.category-content {
+    padding: 4rem 0;
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.form-container {
+    background: white;
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e5e7eb;
+}
+
+.pricing-sidebar {
+    position: sticky;
+    top: 2rem;
+    height: fit-content;
+}
+
+.pricing-card {
+    background: white;
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e5e7eb;
+}
+
+/* Form Sections */
+.form-section {
+    margin-bottom: 3rem;
+    padding: 2rem;
+    border-radius: 16px;
+    border: 2px solid #e5e7eb;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.form-section.enabled {
+    border-color: #667eea;
+    background: #f8fafc;
+}
+
+.form-section.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+    background: #f9fafb;
+}
+
+.form-section.completed {
+    border-color: #10b981;
+    background: #f0fdf4;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.section-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #e5e7eb;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.form-section.enabled .section-number {
+    background: #667eea;
+    color: white;
+}
+
+.form-section.completed .section-number {
+    background: #10b981;
+    color: white;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0;
+}
+
+.section-description {
+    color: #6b7280;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+/* Form Fields */
+.form-field {
+    margin-bottom: 1.5rem;
+}
+
+.field-label {
+    display: block;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.5rem;
+}
+
+.field-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.field-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.field-help {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-top: 0.5rem;
+}
+
+/* Radio and Checkbox Groups */
+.option-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.option-item {
+    position: relative;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.option-item:hover {
+    border-color: #667eea;
+    background: #f8fafc;
+}
+
+.option-item.selected {
+    border-color: #667eea;
+    background: #f0f9ff;
+}
+
+.option-item input[type="radio"],
+.option-item input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.option-label {
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.25rem;
+}
+
+.option-description {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.option-price {
+    font-size: 0.875rem;
+    color: #059669;
+    font-weight: 600;
+    margin-top: 0.5rem;
+}
+
+/* Conditional Fields */
+.conditional-field {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #f8fafc;
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
+}
+
+/* File Upload */
+.file-upload-area {
+    border: 2px dashed #d1d5db;
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.file-upload-area:hover {
+    border-color: #667eea;
+    background: #f8fafc;
+}
+
+.file-upload-area.dragover {
+    border-color: #667eea;
+    background: #f0f9ff;
+}
+
+.upload-icon {
+    font-size: 3rem;
+    color: #9ca3af;
+    margin-bottom: 1rem;
+}
+
+.upload-text {
+    color: #374151;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.upload-hint {
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+/* Specifications Summary */
+.specifications-summary {
+    background: white;
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e5e7eb;
+    margin-top: 2rem;
+}
+
+.summary-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.summary-item:last-child {
+    border-bottom: none;
+}
+
+.summary-label {
+    font-weight: 600;
+    color: #374151;
+}
+
+.summary-value {
+    color: #6b7280;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .category-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .pricing-sidebar {
+        position: static;
+        order: -1;
+    }
+}
+
+@media (max-width: 768px) {
+    .category-title {
+        font-size: 2.5rem;
+    }
+    
+    .category-content {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .form-container,
+    .pricing-card {
+        padding: 1.5rem;
+    }
+    
+    .option-group {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Loading States */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Animation for section progression */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-section.newly-enabled {
+    animation: slideInUp 0.5s ease-out;
+}
+</style>
+
+{% block category_extra_css %}{% endblock %}
+{% endblock %}
+
+{% block content %}
+<div class="category-specific-page">
+    <!-- Breadcrumb Navigation -->
+    <nav class="breadcrumb-nav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="breadcrumb">
+                <a href="{% url 'core:home' %}">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+                    </svg>
+                    Home
+                </a>
+                <span class="breadcrumb-separator">/</span>
+                <a href="{% url 'services:home' %}">Services</a>
+                <span class="breadcrumb-separator">/</span>
+                <span class="breadcrumb-current">{{ category.name }}</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    {% block category_header %}
+    <section class="category-hero">
+        <div class="category-hero-content">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div class="category-icon-wrapper">
+                    <i class="{{ category.icon|default:'fas fa-print' }}"></i>
+                </div>
+                <h1 class="category-title">{{ category.name }}</h1>
+                <p class="category-description">
+                    {{ category.description|default:"Professional printing solutions tailored for your business needs. Quality guaranteed, delivered fast." }}
+                </p>
+            </div>
+        </div>
+    </section>
+    {% endblock %}
+
+    <!-- Main Content -->
+    <main class="category-content">
+        <!-- Form Container -->
+        <div class="form-container">
+            {% block category_form %}
+            <div class="sequential-form" data-category="{{ category_slug }}">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">
+                    Configure Your {{ category.name }} Order
+                </h2>
+                
+                {% for section_key, section in form_sections.items %}
+                <div class="form-section" 
+                     data-section="{{ section_key }}" 
+                     data-enabled="{% if forloop.first %}true{% else %}false{% endif %}">
+                    
+                    <div class="section-header">
+                        <div class="section-number">{{ forloop.counter }}</div>
+                        <div>
+                            <h3 class="section-title">{{ section.name }}</h3>
+                        </div>
+                    </div>
+                    
+                    {% if section.fields.0.description %}
+                    <p class="section-description">{{ section.fields.0.description }}</p>
+                    {% endif %}
+                    
+                    {% for field in section.fields %}
+                        {% include 'services/categories/partials/form_field.html' with field=field %}
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+            {% endblock %}
+        </div>
+
+        <!-- Pricing Sidebar -->
+        <div class="pricing-sidebar">
+            {% block pricing_calculator %}
+            <div class="pricing-card">
+                <h3 class="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                    <i class="fas fa-calculator text-blue-600 mr-2"></i>
+                    Price Calculator
+                </h3>
+                
+                <div class="pricing-breakdown">
+                    <div class="price-item">
+                        <span class="price-label">Cost Per Unit:</span>
+                        <span class="price-value" id="cost-per-unit">₹ N/A</span>
+                    </div>
+                    
+                    <div class="price-item">
+                        <span class="price-label">Quantity:</span>
+                        <span class="price-value" id="quantity-display">{{ min_quantity|default:25 }} pieces</span>
+                    </div>
+                    
+                    <hr class="my-4">
+                    
+                    <div class="price-item">
+                        <span class="price-label">Subtotal:</span>
+                        <span class="price-value" id="subtotal">₹ N/A</span>
+                    </div>
+                    
+                    <div class="price-item" id="discount-row" style="display: none;">
+                        <span class="price-label">Volume Discount:</span>
+                        <span class="price-value text-green-600" id="discount-amount">- ₹ 0</span>
+                    </div>
+                    
+                    <div class="price-item">
+                        <span class="price-label">GST (18%):</span>
+                        <span class="price-value" id="gst-amount">₹ N/A</span>
+                    </div>
+                    
+                    <hr class="my-4">
+                    
+                    <div class="price-item total">
+                        <span class="price-label font-bold text-lg">Total:</span>
+                        <span class="price-value font-bold text-lg text-blue-600" id="total-price">₹ N/A</span>
+                    </div>
+                </div>
+                
+                <button class="w-full mt-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:shadow-lg transition-all duration-300" 
+                        id="order-button" disabled>
+                    <i class="fas fa-shopping-cart mr-2"></i>
+                    Order Now
+                </button>
+            </div>
+            {% endblock %}
+        </div>
+    </main>
+
+    <!-- Specifications Summary -->
+    {% block specifications_summary %}
+    <aside class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+        <div class="specifications-summary">
+            <h3 class="summary-title">
+                <i class="fas fa-list-check text-blue-600"></i>
+                Order Summary
+            </h3>
+            
+            <div id="specifications-list">
+                <div class="summary-item">
+                    <span class="summary-label">Category:</span>
+                    <span class="summary-value">{{ category.name }}</span>
+                </div>
+                <!-- Dynamic specifications will be added here by JavaScript -->
+            </div>
+        </div>
+    </aside>
+    {% endblock %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Category-specific JavaScript will be loaded here -->
+<script>
+// Global category configuration
+window.categoryConfig = {
+    category: '{{ category_slug }}',
+    minQuantity: {{ min_quantity|default:25 }},
+    gstPercentage: {{ gst_percentage|default:18 }},
+    formSections: {{ form_sections|safe }},
+    pricingRules: {{ pricing_rules|safe }}
+};
+</script>
+
+{% block category_extra_js %}{% endblock %}
+
+<!-- Load category-specific JavaScript -->
+<script src="{% static 'js/categories/sequential-form-engine.js' %}"></script>
+<script src="{% static 'js/categories/category-pricing-calculator.js' %}"></script>
+{% endblock %}

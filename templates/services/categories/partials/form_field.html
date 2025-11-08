@@ -1,0 +1,177 @@
+<!-- Form Field Partial Template -->
+<div class="form-field" 
+     data-field="{{ field.field_name }}" 
+     data-field-type="{{ field.field_type }}"
+     data-required="{{ field.is_required|yesno:'true,false' }}"
+     {% if field.get_show_condition %}data-show-condition="{{ field.show_condition|safe }}"{% endif %}
+     {% if field.get_triggered_fields %}data-triggers="{{ field.triggers_fields|safe }}"{% endif %}>
+    
+    <label class="field-label" for="{{ field.field_name }}">
+        {{ field.field_label }}
+        {% if field.is_required %}<span class="text-red-500">*</span>{% endif %}
+    </label>
+    
+    {% if field.help_text %}
+    <p class="field-help">{{ field.help_text }}</p>
+    {% endif %}
+    
+    {% if field.field_type == 'text' %}
+        <input type="text" 
+               id="{{ field.field_name }}" 
+               name="{{ field.field_name }}" 
+               class="field-input"
+               {% if field.placeholder %}placeholder="{{ field.placeholder }}"{% endif %}
+               {% if field.default_value %}value="{{ field.default_value }}"{% endif %}
+               {% if field.is_required %}required{% endif %}>
+    
+    {% elif field.field_type == 'number' %}
+        <input type="number" 
+               id="{{ field.field_name }}" 
+               name="{{ field.field_name }}" 
+               class="field-input"
+               {% if field.placeholder %}placeholder="{{ field.placeholder }}"{% endif %}
+               {% if field.default_value %}value="{{ field.default_value }}"{% endif %}
+               {% if field.min_value %}min="{{ field.min_value }}"{% endif %}
+               {% if field.max_value %}max="{{ field.max_value }}"{% endif %}
+               {% if field.is_required %}required{% endif %}>
+    
+    {% elif field.field_type == 'select' %}
+        <select id="{{ field.field_name }}" 
+                name="{{ field.field_name }}" 
+                class="field-input"
+                {% if field.is_required %}required{% endif %}>
+            <option value="">Select {{ field.field_label }}</option>
+            {% for option in field.get_options %}
+            <option value="{{ option.value }}" 
+                    data-price-modifier="{{ option.price_modifier|default:0 }}"
+                    {% if option.value == field.default_value %}selected{% endif %}>
+                {{ option.label }}
+                {% if option.price_modifier %}
+                    ({% if option.price_modifier > 0 %}+{% endif %}₹{{ option.price_modifier }})
+                {% endif %}
+            </option>
+            {% endfor %}
+        </select>
+    
+    {% elif field.field_type == 'radio' %}
+        <div class="option-group">
+            {% for option in field.get_options %}
+            <div class="option-item" data-value="{{ option.value }}">
+                <input type="radio" 
+                       id="{{ field.field_name }}_{{ forloop.counter }}" 
+                       name="{{ field.field_name }}" 
+                       value="{{ option.value }}"
+                       data-price-modifier="{{ option.price_modifier|default:0 }}"
+                       {% if option.value == field.default_value %}checked{% endif %}
+                       {% if field.is_required %}required{% endif %}>
+                
+                <div class="option-label">{{ option.label }}</div>
+                
+                {% if option.description %}
+                <div class="option-description">{{ option.description }}</div>
+                {% endif %}
+                
+                {% if option.price_modifier %}
+                <div class="option-price">
+                    {% if option.price_modifier > 0 %}+{% endif %}₹{{ option.price_modifier }}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    
+    {% elif field.field_type == 'checkbox' %}
+        <div class="checkbox-group">
+            {% for option in field.get_options %}
+            <div class="option-item">
+                <input type="checkbox" 
+                       id="{{ field.field_name }}_{{ forloop.counter }}" 
+                       name="{{ field.field_name }}" 
+                       value="{{ option.value }}"
+                       data-price-modifier="{{ option.price_modifier|default:0 }}"
+                       {% if option.value == field.default_value %}checked{% endif %}>
+                
+                <label for="{{ field.field_name }}_{{ forloop.counter }}" class="option-label">
+                    {{ option.label }}
+                </label>
+                
+                {% if option.description %}
+                <div class="option-description">{{ option.description }}</div>
+                {% endif %}
+                
+                {% if option.price_modifier %}
+                <div class="option-price">
+                    {% if option.price_modifier > 0 %}+{% endif %}₹{{ option.price_modifier }}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    
+    {% elif field.field_type == 'file' %}
+        <div class="file-upload-area" 
+             data-field="{{ field.field_name }}"
+             onclick="document.getElementById('{{ field.field_name }}').click()">
+            
+            <div class="upload-icon">
+                <i class="fas fa-cloud-upload-alt"></i>
+            </div>
+            
+            <div class="upload-text">
+                Click to upload or drag and drop
+            </div>
+            
+            <div class="upload-hint">
+                {% if field.get_validation_rules.allowed_file_types %}
+                    Allowed: {{ field.get_validation_rules.allowed_file_types|join:", "|upper }}
+                {% else %}
+                    PDF, Word File & Excel
+                {% endif %}
+            </div>
+            
+            <input type="file" 
+                   id="{{ field.field_name }}" 
+                   name="{{ field.field_name }}" 
+                   style="display: none;"
+                   {% if field.get_validation_rules.allowed_file_types %}
+                       accept=".{{ field.get_validation_rules.allowed_file_types|join:',.' }}"
+                   {% else %}
+                       accept=".pdf,.doc,.docx,.xls,.xlsx"
+                   {% endif %}
+                   {% if field.is_required %}required{% endif %}>
+        </div>
+        
+        <div class="uploaded-files" id="{{ field.field_name }}_files" style="display: none;">
+            <!-- Uploaded files will be displayed here -->
+        </div>
+    
+    {% elif field.field_type == 'range' %}
+        <div class="range-container">
+            <input type="range" 
+                   id="{{ field.field_name }}" 
+                   name="{{ field.field_name }}" 
+                   class="field-range"
+                   {% if field.min_value %}min="{{ field.min_value }}"{% endif %}
+                   {% if field.max_value %}max="{{ field.max_value }}"{% endif %}
+                   {% if field.default_value %}value="{{ field.default_value }}"{% endif %}
+                   oninput="document.getElementById('{{ field.field_name }}_value').textContent = this.value">
+            
+            <div class="range-value">
+                Value: <span id="{{ field.field_name }}_value">{{ field.default_value|default:field.min_value|default:0 }}</span>
+            </div>
+        </div>
+    
+    {% endif %}
+    
+    <!-- Field validation error display -->
+    <div class="field-error" id="{{ field.field_name }}_error" style="display: none;">
+        <!-- Error messages will be displayed here -->
+    </div>
+</div>
+
+<!-- Conditional fields that depend on this field -->
+{% if field.get_triggered_fields %}
+    {% for triggered_field_name in field.get_triggered_fields %}
+        <!-- Conditional fields will be rendered by JavaScript -->
+    {% endfor %}
+{% endif %}

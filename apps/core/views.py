@@ -167,3 +167,35 @@ def handler404(request, exception):
 def handler500(request):
     """Custom 500 error handler"""
     return render(request, 'errors/500.html', status=500)
+
+
+def privacy_policy_view(request):
+    """Privacy policy page view"""
+    context = {
+        'page_title': 'Privacy Policy'
+    }
+    return render(request, 'core/legal/privacy_policy.html', context)
+
+
+def terms_conditions_view(request):
+    """Terms and conditions page view"""
+    context = {
+        'page_title': 'Terms & Conditions'
+    }
+    return render(request, 'core/legal/terms_conditions.html', context)
+
+
+def refund_policy_view(request):
+    """Refund policy page view"""
+    context = {
+        'page_title': 'Refund Policy'
+    }
+    return render(request, 'core/legal/refund_policy.html', context)
+
+
+def cancellation_policy_view(request):
+    """Cancellation policy page view"""
+    context = {
+        'page_title': 'Cancellation Policy'
+    }
+    return render(request, 'core/legal/cancellation_policy.html', context)

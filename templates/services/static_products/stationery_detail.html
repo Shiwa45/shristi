@@ -1,0 +1,535 @@
+{% extends 'services/static_products/product_detail.html' %}
+{% load static %}
+
+{% block extra_css %}
+{{ block.super }}
+<style>
+    /* Stationery Styles - Matching Book Printing Theme */
+    .stationery-container {
+        background: #ffffff;
+        padding: 3rem 4rem;
+        box-shadow: none;
+        border: none;
+        margin-top: 0;
+        margin-left: 0;
+        width: 100%;
+        max-width: 1400px;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .stationery-header {
+        color: #1a1a1a;
+        padding: 0 0 2rem 0;
+        border-radius: 0;
+        margin-bottom: 3rem;
+        text-align: left;
+        border-bottom: 2px solid #e5e7eb;
+    }
+
+    .stationery-title {
+        font-size: 2.25rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+        color: #1a1a1a;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    .stationery-subtitle {
+        opacity: 0.8;
+        font-size: 1.125rem;
+        color: #666666;
+        font-weight: 400;
+        line-height: 1.6;
+    }
+
+    /* Form Sections - Matching Book Printing Style */
+    .form-section {
+        margin-bottom: 2rem;
+        padding: 1.5rem 0;
+        border-radius: 0;
+        border: none;
+        border-bottom: 1px solid #e5e7eb;
+        transition: all 0.3s ease;
+        position: relative;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    .form-section.enabled {
+        border-bottom: 1px solid #e5e7eb;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    .form-section.disabled {
+        opacity: 0.5;
+        pointer-events: none;
+        background: transparent;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .form-section.completed {
+        border-bottom: 1px solid #e5e7eb;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    .section-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 1.25rem;
+        margin-bottom: 2rem;
+        padding-bottom: 0;
+    }
+
+    .section-number {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: #f3f4f6;
+        color: #9ca3af;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 0.95rem;
+        flex-shrink: 0;
+        margin-top: 0;
+        border: none;
+        box-shadow: none;
+    }
+
+    .form-section.enabled .section-number {
+        background: #3b82f6;
+        color: white;
+        border: none;
+        box-shadow: none;
+    }
+
+    .form-section.completed .section-number {
+        background: #10b981;
+        color: white;
+        border: none;
+        box-shadow: none;
+    }
+
+    .section-title {
+        font-size: 1.625rem;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin: 0;
+        line-height: 1.3;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    .section-description {
+        color: #6b7280;
+        margin-bottom: 2rem;
+        line-height: 1.6;
+        font-size: 0.9375rem;
+        margin-top: 0.5rem;
+    }
+
+    /* Option Groups - Matching Book Printing Style */
+    .option-group {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+    }
+
+    .option-btn {
+        padding: 0.75rem 1.5rem;
+        background: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+        color: #495057;
+        font-weight: 500;
+    }
+
+    .option-btn:hover {
+        background: #e9ecef;
+        border-color: #3b82f6;
+    }
+
+    .option-btn.active {
+        background: #3b82f6;
+        color: white;
+        border-color: #3b82f6;
+    }
+
+    /* Size Inputs */
+    .size-inputs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        display: block;
+        font-weight: 600;
+        color: #1a1a1a;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #e9ecef;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        transition: border-color 0.3s ease;
+    }
+
+    .form-input:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+    }
+
+    .estimate-note {
+        font-size: 0.8rem;
+        color: #6c757d;
+        margin-top: 0.25rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+        .stationery-container {
+            padding: 2rem 3rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .stationery-container {
+            padding: 1.5rem 2rem;
+        }
+
+        .stationery-title {
+            font-size: 1.875rem;
+        }
+
+        .stationery-subtitle {
+            font-size: 1rem;
+        }
+
+        .size-inputs {
+            grid-template-columns: 1fr;
+        }
+
+        .option-group {
+            flex-direction: column;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block product_options_panel %}
+<!-- Replace the generic options panel with stationery specific form -->
+<div class="stationery-container">
+    <!-- Stationery Options Header -->
+    <div class="stationery-header">
+        <h2 class="stationery-title">Customize Your {{ product.name }}</h2>
+        <p class="stationery-subtitle">Choose your {{ category.name|lower }} specifications to get started with your printing project.</p>
+    </div>
+
+    <div class="sequential-form" data-category="{{ category_slug }}">
+        {% csrf_token %}
+        
+        <!-- Section 1: Size -->
+        <div class="form-section enabled" data-section="size" data-section-number="1">
+            <div class="section-header">
+                <div class="section-number">1</div>
+                <div class="section-title">Size</div>
+            </div>
+            <div class="section-description">
+                Choose the dimensions for your {{ product.name|lower }}.
+            </div>
+            
+            <div class="size-inputs">
+                <div class="form-group">
+                    <label class="form-label">Width (mm)</label>
+                    <input type="number" class="form-input" id="width" name="width" step="0.1" min="1" placeholder="210" required oninput="calculatePrice()">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Height (mm)</label>
+                    <input type="number" class="form-input" id="height" name="height" step="0.1" min="1" placeholder="297" required oninput="calculatePrice()">
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Paper -->
+        <div class="form-section enabled" data-section="paper" data-section-number="2">
+            <div class="section-header">
+                <div class="section-number">2</div>
+                <div class="section-title">Paper</div>
+            </div>
+            <div class="section-description">
+                Select the paper quality and weight for your {{ product.name|lower }}.
+            </div>
+            
+            <div class="option-group">
+                <button type="button" class="option-btn active" onclick="selectOption(this, 'paper', '80gsm')">80 GSM</button>
+                <button type="button" class="option-btn" onclick="selectOption(this, 'paper', '100gsm')">100 GSM</button>
+                <button type="button" class="option-btn" onclick="selectOption(this, 'paper', '120gsm')">120 GSM</button>
+            </div>
+        </div>
+
+        <!-- Section 3: Printing -->
+        <div class="form-section enabled" data-section="printing" data-section-number="3">
+            <div class="section-header">
+                <div class="section-number">3</div>
+                <div class="section-title">Printing</div>
+            </div>
+            <div class="section-description">
+                Choose printing options for your {{ product.name|lower }}.
+            </div>
+            
+            <div class="option-group">
+                <button type="button" class="option-btn active" onclick="selectOption(this, 'printing_side', 'front')">Front Side</button>
+                <button type="button" class="option-btn" onclick="selectOption(this, 'printing_side', 'both')">Both Sides</button>
+            </div>
+        </div>
+
+        <!-- Section 4: Finish -->
+        <div class="form-section enabled" data-section="finish" data-section-number="4">
+            <div class="section-header">
+                <div class="section-number">4</div>
+                <div class="section-title">Finish</div>
+            </div>
+            <div class="section-description">
+                Select finishing options for your {{ product.name|lower }}.
+            </div>
+            
+            <div class="option-group">
+                <button type="button" class="option-btn active" onclick="selectOption(this, 'finish', 'none')">None</button>
+                <button type="button" class="option-btn" onclick="selectOption(this, 'finish', 'matt')">Matt Finish</button>
+                <button type="button" class="option-btn" onclick="selectOption(this, 'finish', 'glossy')">Glossy Finish</button>
+            </div>
+        </div>
+
+        <!-- Section 5: Delivery -->
+        <div class="form-section enabled" data-section="delivery" data-section-number="5">
+            <div class="section-header">
+                <div class="section-number">5</div>
+                <div class="section-title">Delivery</div>
+            </div>
+            <div class="section-description">
+                Choose your preferred delivery timeline.
+            </div>
+            
+            <div class="option-group">
+                <button type="button" class="option-btn active" onclick="selectOption(this, 'delivery', '3days')">3 Business Days</button>
+                <button type="button" class="option-btn" onclick="selectOption(this, 'delivery', '5days')">5 Business Days</button>
+            </div>
+        </div>
+
+        <!-- Section 6: Quantity -->
+        <div class="form-section enabled" data-section="quantity" data-section-number="6">
+            <div class="section-header">
+                <div class="section-number">6</div>
+                <div class="section-title">Quantity</div>
+            </div>
+            <div class="section-description">
+                Enter the quantity you need for your {{ product.name|lower }}.
+            </div>
+            
+            <div class="form-group">
+                <input type="number" class="form-input" name="quantity" id="quantity" min="100" step="50" value="100" required oninput="calculatePrice()">
+                <div class="estimate-note">MOQ: 100pcs</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block pricing_calculator %}
+<div class="pricing-calculator" style="max-width: 600px; width: 100%; margin: 0 auto; padding: 20px;">
+    
+    <h3 style="font-size: 18px; font-weight: 600; color: #333; margin-bottom: 20px; text-align: center;">
+        Pricing Calculator
+    </h3>
+
+    <div class="pricing-breakdown" style="border: 1px solid #ddd; border-radius: 4px; padding: 20px; background: #f8f9fa;">
+        <!-- Dynamic specifications will be added here by JavaScript -->
+        <div id="stationery-specifications">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+                <span style="color: #666; font-size: 14px;">Product:</span>
+                <span style="color: #333; font-size: 14px; font-weight: 500;">{{ product.name }}</span>
+            </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+            <span style="color: #666; font-size: 14px;">Cost Per Item:</span>
+            <span style="color: #333; font-size: 14px; font-weight: 500;" id="cost-per-unit">₹2.50</span>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+            <span style="color: #666; font-size: 14px;">Subtotal:</span>
+            <span style="color: #333; font-size: 14px; font-weight: 500;" id="subtotal">₹250.00</span>
+        </div>
+
+        <div id="discount-row" style="display: none; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="color: #28a745; font-size: 14px;">Volume Discount:</span>
+                <span style="color: #28a745; font-size: 14px; font-weight: 500;" id="discount-amount">- ₹ 0</span>
+            </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #e0e0e0;">
+            <span style="color: #666; font-size: 14px;">GST (18%):</span>
+            <span style="color: #333; font-size: 14px; font-weight: 500;" id="gst-amount">₹45.00</span>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; margin-top: 8px; border-top: 2px solid #333;">
+            <span style="color: #333; font-size: 16px; font-weight: 600;">Total:</span>
+            <span style="color: #333; font-size: 18px; font-weight: 700;" id="total-price">₹295.00</span>
+        </div>
+    </div>
+
+    <div style="margin-top: 20px;">
+        <button
+            style="width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: 500; cursor: pointer; transition: background-color 0.2s;"
+            onmouseover="this.style.backgroundColor='#0056b3'"
+            onmouseout="this.style.backgroundColor='#007bff'"
+            id="order-button" onclick="orderNow()">
+            Order Your {{ product.name }} Now
+        </button>
+    </div>
+</div>
+
+<script>
+let selectedOptions = {
+    paper: '80gsm',
+    printing_side: 'front',
+    finish: 'none',
+    delivery: '3days'
+};
+
+// Option Selection
+function selectOption(button, option, value) {
+    const group = button.parentElement;
+    group.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('active'));
+    button.classList.add('active');
+    selectedOptions[option] = value;
+    calculatePrice();
+}
+
+// Price Calculation
+function calculatePrice() {
+    const quantity = parseInt(document.getElementById('quantity').value) || 100;
+    const width = parseFloat(document.getElementById('width').value) || 210;
+    const height = parseFloat(document.getElementById('height').value) || 297;
+    
+    // Base pricing (per item)
+    let basePrice = 2.50; // Starting price for stationery
+    
+    // Adjust price based on options
+    if (selectedOptions.printing_side === 'both') {
+        basePrice *= 1.5;
+    }
+    
+    if (selectedOptions.finish === 'matt') {
+        basePrice += 0.25;
+    } else if (selectedOptions.finish === 'glossy') {
+        basePrice += 0.35;
+    }
+    
+    if (selectedOptions.delivery === '3days') {
+        basePrice += 0.15;
+    }
+    
+    // Calculate quantity discount
+    let discount = 0;
+    if (quantity >= 1000) {
+        discount = 0.15; // 15% discount
+    } else if (quantity >= 500) {
+        discount = 0.10; // 10% discount
+    } else if (quantity >= 250) {
+        discount = 0.05; // 5% discount
+    }
+    
+    const subtotal = basePrice * quantity;
+    const discountAmount = subtotal * discount;
+    const finalSubtotal = subtotal - discountAmount;
+    const gst = finalSubtotal * 0.18;
+    const total = finalSubtotal + gst;
+    
+    // Update display
+    document.getElementById('cost-per-unit').textContent = `₹${basePrice.toFixed(2)}`;
+    document.getElementById('subtotal').textContent = `₹${subtotal.toFixed(2)}`;
+    document.getElementById('total-price').textContent = `₹${total.toFixed(2)}`;
+    document.getElementById('gst-amount').textContent = `₹${gst.toFixed(2)}`;
+    
+    // Show/hide discount row
+    const discountRow = document.getElementById('discount-row');
+    if (discount > 0) {
+        discountRow.style.display = 'block';
+        document.getElementById('discount-amount').textContent = `- ₹${discountAmount.toFixed(2)}`;
+    } else {
+        discountRow.style.display = 'none';
+    }
+    
+    // Update specifications
+    updateSpecificationsSummary();
+}
+
+function updateSpecificationsSummary() {
+    const specificationsDiv = document.getElementById('stationery-specifications');
+    const width = document.getElementById('width').value || 210;
+    const height = document.getElementById('height').value || 297;
+    const quantity = document.getElementById('quantity').value || 100;
+    
+    let specificationsHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+            <span style="color: #666; font-size: 14px;">Product:</span>
+            <span style="color: #333; font-size: 14px; font-weight: 500;">{{ product.name }}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+            <span style="color: #666; font-size: 14px;">Size:</span>
+            <span style="color: #333; font-size: 14px; font-weight: 500;">${width} x ${height} mm</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+            <span style="color: #666; font-size: 14px;">Paper:</span>
+            <span style="color: #333; font-size: 14px; font-weight: 500;">${selectedOptions.paper.toUpperCase()}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+            <span style="color: #666; font-size: 14px;">Printing:</span>
+            <span style="color: #333; font-size: 14px; font-weight: 500;">${selectedOptions.printing_side === 'both' ? 'Both Sides' : 'Front Side'}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+            <span style="color: #666; font-size: 14px;">Finish:</span>
+            <span style="color: #333; font-size: 14px; font-weight: 500;">${selectedOptions.finish === 'none' ? 'None' : selectedOptions.finish === 'matt' ? 'Matt Finish' : 'Glossy Finish'}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+            <span style="color: #666; font-size: 14px;">Delivery:</span>
+            <span style="color: #333; font-size: 14px; font-weight: 500;">${selectedOptions.delivery === '3days' ? '3 Business Days' : '5 Business Days'}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+            <span style="color: #666; font-size: 14px;">Quantity:</span>
+            <span style="color: #333; font-size: 14px; font-weight: 500;">${quantity} pcs</span>
+        </div>
+    `;
+    
+    specificationsDiv.innerHTML = specificationsHTML;
+}
+
+function orderNow() {
+    // Handle order logic
+    alert('Order functionality will be implemented');
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+    calculatePrice();
+});
+</script>
+{% endblock %}

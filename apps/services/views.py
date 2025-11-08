@@ -1,10 +1,21 @@
-# apps/services/views.py - Updated for Static Products
+# apps/services/views.py - Updated for Category-Specific Pages
 
-from django.shortcuts import render, get_object_or_404
-from django.http import JsonResponse
+from django.shortcuts import render, get_object_or_404, redirect
+from django.http import JsonResponse, Http404
 from django.core.paginator import Paginator
 from django.db.models import Q
-from .models import ServiceCategory, StaticProduct
+from django.views.decorators.http import require_http_methods
+from decimal import Decimal
+import json
+from .models import ServiceCategory, StaticProduct, CategoryFormField, CategoryPricingRule
+
+ALLOWED_CATEGORIES = [
+    'book-printing',
+    'paper-boxes', 
+    'marketing-material',
+    'stationery'
+]
+
 
 def services_home(request):
     """Services home page showing all categories"""
@@ -57,7 +68,7 @@ def category_detail(request, slug):
 
 
 def static_product_detail(request, category_slug, product_slug):
-    """Enhanced static product detail page with all features"""
+    """Enhanced static product detail page with category-specific features"""
     category = get_object_or_404(ServiceCategory, slug=category_slug, is_active=True)
     product = get_object_or_404(
         StaticProduct,
@@ -82,6 +93,30 @@ def static_product_detail(request, category_slug, product_slug):
         ).select_related('category')[:4-len(related_products)]
         related_products = list(related_products) + list(additional_products)
 
+    # Check if this category has category-specific features
+    is_category_specific = category.slug in ALLOWED_CATEGORIES
+    
+    # Get category-specific form fields and pricing rules if applicable
+    form_fields = []
+    form_sections = {}
+    pricing_rules = []
+    
+    if is_category_specific:
+        form_fields = category.get_category_form_fields()
+        form_sections = category.get_form_sections()
+        pricing_rules = category.get_pricing_rules()
+
+    # Determine template based on category
+    template_name = 'services/static_products/product_detail.html'
+    if is_category_specific:
+        category_templates = {
+            'book-printing': 'services/static_products/book_printing_detail.html',
+            'paper-boxes': 'services/static_products/paper_boxes_detail.html',
+            'marketing-material': 'services/static_products/marketing_material_detail.html',
+            'stationery': 'services/static_products/stationery_detail.html'
+        }
+        template_name = category_templates.get(category.slug, template_name)
+
     context = {
         'category': category,
         'product': product,
@@ -89,8 +124,45 @@ def static_product_detail(request, category_slug, product_slug):
         'page_title': f'{product.name} - {category.name} - Shirsti Printing',
         'meta_description': product.short_description,
         'canonical_url': request.build_absolute_uri(),
+        'is_category_specific': is_category_specific,
+        'form_fields': form_fields,
+        'form_sections': form_sections,
+        'pricing_rules': pricing_rules,
+        'category_slug': category.slug,
     }
-    return render(request, 'services/static_products/product_detail.html', context)
+    
+    # Add category-specific context
+    if category.slug == 'book-printing':
+        context.update({
+            'min_quantity': 25,
+            'min_pages': 4,
+            'binding_page_limit': 30,
+            'design_service_price': 1500,
+            'inner_page_design_price': 50,
+            'isbn_delivery_days': '5-7',
+            'gst_percentage': 18,
+        })
+    elif category.slug == 'paper-boxes':
+        context.update({
+            'min_quantity': 100,
+            'material_types': ['Corrugated', 'Cardboard', 'Kraft'],
+            'printing_options': ['No Printing', '1-Color', 'Full Color'],
+            'finishing_options': ['Matte', 'Gloss', 'UV Coating'],
+        })
+    elif category.slug == 'marketing-material':
+        context.update({
+            'material_types': ['Brochures', 'Flyers', 'Posters', 'Catalogs'],
+            'featured_services': ['Brochures', 'Business Cards', 'Flyers'],
+            'design_service_available': True,
+        })
+    elif category.slug == 'stationery':
+        context.update({
+            'stationery_types': ['Business Cards', 'Letterheads', 'Envelopes'],
+            'premium_options': ['Embossing', 'Foil Stamping', 'Spot UV'],
+            'standard_sizes': True,
+        })
+    
+    return render(request, template_name, context)
 
 def product_detail(request, category_slug, product_slug):
     """Handle StaticProduct model only"""
@@ -235,4 +307,93 @@ def product_search(request):
     }
     return render(request, 'services/search.html', context)
 
+
+@require_http_methods(["POST"])
+def category_pricing_api(request):
+    """API endpoint for category-specific pricing calculation"""
+    try:
+        # Parse JSON data from request body
+        data = json.loads(request.body)
+        category_slug = data.get('category')
+        form_data = data.get('form_data', {})
+        quantity = int(data.get('quantity', 25))
+        
+        # Validate category
+        if category_slug not in CategorySpecificView.ALLOWED_CATEGORIES:
+            return JsonResponse({'error': 'Invalid category'}, status=400)
+        
+        # Get category and pricing rules
+        try:
+            category = ServiceCategory.objects.get(slug=category_slug, is_active=True)
+        except ServiceCategory.DoesNotExist:
+            return JsonResponse({'error': 'Category not found'}, status=404)
+        
+        pricing_rules = category.get_pricing_rules()
+        
+        # Calculate pricing based on category-specific rules
+        total_price = Decimal('0.00')
+        price_breakdown = {
+            'base_price': Decimal('0.00'),
+            'option_modifiers': {},
+            'quantity_discount': Decimal('0.00'),
+            'additional_services': {},
+            'subtotal': Decimal('0.00'),
+            'gst': Decimal('0.00'),
+            'total': Decimal('0.00')
+        }
+        
+        # Apply pricing rules
+        for rule in pricing_rules:
+            if rule.applies_to(form_data, quantity):
+                rule_price = rule.calculate_price(form_data, quantity, total_price)
+                
+                if rule.rule_type == 'base_price':
+                    price_breakdown['base_price'] = rule_price
+                    total_price = rule_price
+                elif rule.rule_type == 'option_modifier':
+                    price_breakdown['option_modifiers'][rule.rule_name] = rule_price
+                    total_price += rule_price
+                elif rule.rule_type == 'quantity_tier':
+                    price_breakdown['quantity_discount'] = rule_price
+                    total_price += rule_price  # rule_price is negative for discounts
+                elif rule.rule_type in ['conditional_pricing', 'page_based_pricing']:
+                    price_breakdown['option_modifiers'][rule.rule_name] = rule_price
+                    total_price += rule_price
+        
+        # Calculate subtotal
+        price_breakdown['subtotal'] = total_price
+        
+        # Add GST (18%)
+        gst_amount = total_price * Decimal('0.18')
+        price_breakdown['gst'] = gst_amount
+        
+        # Calculate final total
+        final_total = total_price + gst_amount
+        price_breakdown['total'] = final_total
+        
+        # Convert Decimal to float for JSON serialization
+        def decimal_to_float(obj):
+            if isinstance(obj, dict):
+                return {k: decimal_to_float(v) for k, v in obj.items()}
+            elif isinstance(obj, Decimal):
+                return float(obj)
+            return obj
+        
+        price_breakdown = decimal_to_float(price_breakdown)
+        
+        return JsonResponse({
+            'success': True,
+            'category': category_slug,
+            'quantity': quantity,
+            'price_breakdown': price_breakdown,
+            'price_per_unit': float(final_total) / quantity if quantity > 0 else 0,
+            'currency': 'INR'
+        })
+        
+    except json.JSONDecodeError:
+        return JsonResponse({'error': 'Invalid JSON data'}, status=400)
+    except ValueError as e:
+        return JsonResponse({'error': f'Invalid parameter: {str(e)}'}, status=400)
+    except Exception as e:
+        return JsonResponse({'error': 'Internal server error'}, status=500)
 

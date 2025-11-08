@@ -20,7 +20,7 @@ class OrderEmailManager:
             
             context = {
                 'order': order,
-                'order_items': order.items.select_related('product'),
+                'order_items': order.items.select_related('static_product'),
                 'company_name': 'Shirsti Printing Company',
                 'support_email': settings.DEFAULT_FROM_EMAIL,
                 'company_phone': '+91 123 456 7890',
@@ -103,7 +103,7 @@ class OrderEmailManager:
             
             context = {
                 'order': order,
-                'order_items': order.items.select_related('product'),
+                'order_items': order.items.select_related('static_product'),
                 'admin_url': f"{settings.SITE_URL}/admin/orders/order/{order.id}/",
             }
             

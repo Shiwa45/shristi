@@ -1,148 +1,209 @@
-<!-- Product Details Tabs -->
-<div class="container mx-auto px-4">
-    <div class="product-tabs">
-        <!-- Tab Navigation -->
-        <div class="flex space-x-1 rounded-xl bg-blue-900 p-1 mb-8">
-            <button onclick="switchTab('specifications')" id="tab-specifications" class="tab-button w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 bg-white shadow active">
-                Specifications
-            </button>
-            <button onclick="switchTab('samples')" id="tab-samples" class="tab-button w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-100 hover:bg-white/[0.12] hover:text-white focus:outline-none focus:ring-2">
-                Samples
-            </button>
-            <button onclick="switchTab('reviews')" id="tab-reviews" class="tab-button w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-100 hover:bg-white/[0.12] hover:text-white focus:outline-none focus:ring-2">
-                Reviews
-            </button>
-            <button onclick="switchTab('faq')" id="tab-faq" class="tab-button w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-100 hover:bg-white/[0.12] hover:text-white focus:outline-none focus:ring-2">
-                FAQ
-            </button>
+<!-- Redesigned Product Tabs: compact, card-style, accessible tabs -->
+<div class="product-tabs-card max-w-6xl mx-auto px-4">
+    <style>
+    /* minimal scoped styles to avoid touching global CSS */
+    .pt-card { background: linear-gradient(180deg,#fff,#fbfdff); border-radius:12px; box-shadow:0 6px 20px rgba(16,24,40,0.06); overflow:hidden }
+    .pt-tablist { display:flex; gap:8px; padding:12px; background:#f3f6fb }
+    .pt-tab { flex:1; text-align:center; padding:10px 12px; border-radius:8px; cursor:pointer; font-weight:600; color:#334155 }
+    .pt-tab[aria-selected="true"] { background:linear-gradient(90deg,#667eea,#764ba2); color:white; box-shadow:0 6px 18px rgba(102,126,234,0.18) }
+    .pt-panel { padding:20px; display:none }
+    .pt-panel.active { display:block }
+    .pt-grid { display:grid; gap:16px; grid-template-columns:repeat(1,1fr) }
+    @media(min-width:768px){ .pt-grid{ grid-template-columns: 2fr 1fr } }
+    .feature-list { list-style:none; padding:0; margin:0; display:grid; gap:16px }
+    .feature-item { display:flex; gap:16px; align-items:flex-start; padding:12px; background:#fafbfc; border-radius:8px; border-left:3px solid #3b82f6 }
+    .feature-item .icon { width:44px; height:44px; flex-shrink:0; border-radius:10px; background:linear-gradient(135deg,#3b82f6,#1d4ed8); display:flex; align-items:center; justify-content:center; color:#fff; box-shadow:0 2px 8px rgba(59,130,246,0.15) }
+    .spec-table { width:100%; border-collapse:collapse; background:#fff; border-radius:8px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.04) }
+    .spec-table td{ padding:16px 20px; border-bottom:1px solid #f1f5f9; vertical-align:top }
+    .spec-table tr:last-child td{ border-bottom:none }
+    .spec-table tr:nth-child(even){ background:#fafbfc }
+    .spec-label{ font-weight:500; color:#374151; font-size:13px; text-transform:capitalize; letter-spacing:0.025em }
+    .spec-value{ font-weight:600; color:#111827; font-size:14px }
+    .sample-grid{ display:grid; gap:10px; grid-template-columns:repeat(2,1fr) }
+    @media(min-width:1024px){ .sample-grid{ grid-template-columns:repeat(4,1fr) } }
+    .sample-card{ background:#fff; border-radius:8px; overflow:hidden; box-shadow:0 2px 6px rgba(2,6,23,0.04); padding:12px; text-align:center }
+    .faq-item{ border-top:1px solid #eef2f6; padding:12px 0 }
+    </style>
+
+    <div class="pt-card">
+        <div role="tablist" aria-label="Product information tabs" class="pt-tablist">
+            <button role="tab" aria-selected="true" aria-controls="pt-specs" id="pt-tab-specs" data-tab="pt-specs" class="pt-tab">Specifications</button>
+            <button role="tab" aria-selected="false" aria-controls="pt-samples" id="pt-tab-samples" data-tab="pt-samples" class="pt-tab">Samples</button>
+            <button role="tab" aria-selected="false" aria-controls="pt-reviews" id="pt-tab-reviews" data-tab="pt-reviews" class="pt-tab">Reviews</button>
+            <button role="tab" aria-selected="false" aria-controls="pt-faq" id="pt-tab-faq" data-tab="pt-faq" class="pt-tab">FAQ</button>
         </div>
 
-        <!-- Tab Content -->
-        <div class="tab-content">
-            <!-- Specifications Tab -->
-            <div id="content-specifications" class="tab-panel">
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Technical Specifications</h3>
-                        <div class="space-y-4">
-                            <div>
-                                <h4 class="font-medium text-gray-700 mb-2">Description</h4>
-                                <p class="text-gray-600">{{ product.description|default:"Professional printing service with high-quality materials and expert craftsmanship." }}</p>
-                            </div>
-                            <div>
-                                <h4 class="font-medium text-gray-700 mb-2">Quality Features</h4>
-                                <ul class="list-disc list-inside text-gray-600 space-y-1">
-                                    <li>Premium quality materials</li>
-                                    <li>Professional printing technology</li>
-                                    <li>Expert quality control</li>
-                                    <li>Fast turnaround time</li>
-                                </ul>
-                            </div>
+        <div id="pt-specs" role="tabpanel" aria-labelledby="pt-tab-specs" class="pt-panel active">
+            <div class="pt-grid">
+                <div>
+                    <div class="bg-white rounded-lg p-6 shadow-sm border border-gray-100">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                            <svg class="w-6 h-6 mr-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Product Overview
+                        </h3>
+                        <div class="prose prose-sm max-w-none">
+                            <p class="text-gray-700 leading-relaxed mb-4">{{ product.description|default:product.short_description }}</p>
                         </div>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Product Details</h3>
-                        <div class="space-y-4">
-                            {% if product.turnaround_time %}
-                            <div>
-                                <h4 class="font-medium text-gray-700 mb-2">Turnaround Time</h4>
-                                <p class="text-gray-600">{{ product.turnaround_time }} standard delivery</p>
-                            </div>
-                            {% endif %}
-                            <div>
-                                <h4 class="font-medium text-gray-700 mb-2">File Requirements</h4>
-                                <ul class="list-disc list-inside text-gray-600 space-y-1">
-                                    <li>PDF files with 300 DPI resolution</li>
-                                    <li>CMYK color mode for best results</li>
-                                    <li>Include 3mm bleed area</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Samples Tab -->
-            <div id="content-samples" class="tab-panel hidden">
-                <div class="text-center mb-8">
-                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Sample Gallery</h3>
-                    <p class="text-gray-600">Browse through our sample works to see the quality and options available</p>
-                </div>
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    {% for i in "1234" %}
-                    <div class="sample-item group cursor-pointer">
-                        <div class="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg overflow-hidden">
-                            <div class="w-full h-full flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-                                <div class="text-center text-gray-500">
-                                    <svg class="w-12 h-12 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
-                                    </svg>
-                                    <p class="text-sm font-medium">Sample {{ forloop.counter }}</p>
-                                </div>
-                            </div>
+                        {% if product.key_features %}
+                        <div class="mt-6">
+                            <h4 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                                <svg class="w-5 h-5 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                Key Features
+                            </h4>
+                            <ul class="feature-list">
+                                {% for feat in product.key_features %}
+                                <li class="feature-item">
+                                    <div class="icon" aria-hidden="true">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <div class="font-semibold text-gray-900">{{ feat.title }}</div>
+                                        {% if feat.description %}<div class="text-sm text-gray-600 mt-1">{{ feat.description }}</div>{% endif %}
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
                         </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <aside>
+                    <div class="bg-white rounded-lg p-6 shadow-sm border border-gray-100">
+                        <h4 class="text-base font-semibold text-gray-900 mb-4 flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            Product Details
+                        </h4>
+                        <table class="spec-table">
+                            <tbody>
+                                <tr><td class="spec-label">Starting Price</td><td class="spec-value">₹{{ product.base_price }}</td></tr>
+                                <tr><td class="spec-label">Price Unit</td><td class="spec-value">{{ product.price_unit }}</td></tr>
+                                {% if product.minimum_quantity %}<tr><td class="spec-label">Minimum Quantity</td><td class="spec-value">{{ product.minimum_quantity }}</td></tr>{% endif %}
+                                {% if product.turnaround_time %}<tr><td class="spec-label">Turnaround Time</td><td class="spec-value">{{ product.turnaround_time }}</td></tr>{% endif %}
+                                {% if product.design_tool_enabled %}
+                                <tr><td class="spec-label">Design Tool</td><td class="spec-value"><span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">Available</span></td></tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {% if product.specifications %}
+                    <div class="bg-white rounded-lg p-6 shadow-sm border border-gray-100 mt-6">
+                        <h4 class="text-base font-semibold text-gray-900 mb-4 flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            Technical Specifications
+                        </h4>
+                        <table class="spec-table">
+                            <tbody>
+                                {% for k,v in product.specifications.items %}
+                                <tr><td class="spec-label">{{ k }}</td><td class="spec-value">{{ v }}</td></tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% endif %}
+                </aside>
+            </div>
+        </div>
+
+        <div id="pt-samples" role="tabpanel" aria-labelledby="pt-tab-samples" class="pt-panel">
+            <h3 class="text-lg font-semibold mb-4">Sample Gallery</h3>
+            <div class="sample-grid">
+                {% comment %} If product has gallery_images use them, otherwise show placeholders {% endcomment %}
+                {% if product.gallery_images.exists %}
+                    {% for img in product.gallery_images.all %}
+                    <div class="sample-card">
+                        <img src="{{ img.image.url }}" alt="Sample {{ forloop.counter }} for {{ product.name }}" style="width:100%; height:140px; object-fit:cover; border-radius:6px;" />
+                        <div class="mt-2 text-sm">Sample {{ forloop.counter }}</div>
                     </div>
                     {% endfor %}
-                </div>
+                {% else %}
+                    {% for i in "1234" %}
+                    <div class="sample-card">
+                        <div style="height:140px; display:flex; align-items:center; justify-content:center; background:linear-gradient(180deg,#f8fafc,#eef2f7); border-radius:6px;">
+                            <div class="text-gray-400">No image</div>
+                        </div>
+                        <div class="mt-2 text-sm">Sample {{ forloop.counter }}</div>
+                    </div>
+                    {% endfor %}
+                {% endif %}
             </div>
+        </div>
 
-            <!-- Reviews Tab -->
-            <div id="content-reviews" class="tab-panel hidden">
-                <div class="mb-8">
-                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Customer Reviews</h3>
-                    <div class="flex items-center space-x-4 mb-6">
-                        <div class="text-4xl font-bold text-gray-900">4.8</div>
-                        <div>
-                            <div class="flex items-center space-x-1 mb-1">
-                                {% for i in "12345" %}
-                                <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                </svg>
-                                {% endfor %}
+        <div id="pt-reviews" role="tabpanel" aria-labelledby="pt-tab-reviews" class="pt-panel">
+            <h3 class="text-lg font-semibold mb-3">Customer Reviews</h3>
+            <div class="text-sm text-gray-700 mb-4">Our customers love this product — average rating <strong>4.8</strong> (based on site reviews)</div>
+            <div class="space-y-4">
+                {% comment %} If there's a review system, loop through recent reviews. Placeholder fallback below. {% endcomment %}
+                {% if reviews %}
+                    {% for r in reviews %}
+                    <div class="bg-white p-4 rounded-md shadow-sm">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <div class="font-semibold">{{ r.user_name|default:r.user.username }}</div>
+                                <div class="text-xs text-gray-500">{{ r.created_at|date:'M d, Y' }}</div>
                             </div>
-                            <p class="text-sm text-gray-600">Based on 247 reviews</p>
+                            <div class="text-yellow-400">{% for i in "12345" %}★{% endfor %}</div>
                         </div>
+                        <div class="text-sm text-gray-600 mt-2">{{ r.comment }}</div>
                     </div>
-                </div>
-                <div class="space-y-6">
-                    <div class="border border-gray-200 rounded-lg p-6">
-                        <p class="text-gray-600">Excellent quality {{ product.name|lower }}! Professional service and timely delivery.</p>
-                        <p class="text-sm text-gray-500 mt-2">- Rajesh Kumar</p>
-                    </div>
-                </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="bg-white p-4 rounded-md shadow-sm">No reviews yet. Be the first to review this product.</div>
+                {% endif %}
             </div>
+        </div>
 
-            <!-- FAQ Tab -->
-            <div id="content-faq" class="tab-panel hidden">
-                <div class="space-y-4">
-                    <div class="faq-item border border-gray-200 rounded-lg">
-                        <button class="w-full text-left p-4 focus:outline-none" onclick="toggleFAQ(this)">
-                            <div class="flex justify-between items-center">
-                                <h4 class="font-medium text-gray-900">What file formats do you accept?</h4>
-                                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                </svg>
-                            </div>
-                        </button>
-                        <div class="faq-answer hidden p-4 pt-0 text-gray-600">
-                            We accept PDF, AI, PSD, PNG, and JPG files. For best results, please provide high-resolution files (300 DPI).
-                        </div>
-                    </div>
-                    <div class="faq-item border border-gray-200 rounded-lg">
-                        <button class="w-full text-left p-4 focus:outline-none" onclick="toggleFAQ(this)">
-                            <div class="flex justify-between items-center">
-                                <h4 class="font-medium text-gray-900">How long does production take?</h4>
-                                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                </svg>
-                            </div>
-                        </button>
-                        <div class="faq-answer hidden p-4 pt-0 text-gray-600">
-                            {% if product.turnaround_time %}Standard production time is {{ product.turnaround_time }}.{% else %}Standard production time is 3-5 business days.{% endif %} Rush orders available.
-                        </div>
-                    </div>
+        <div id="pt-faq" role="tabpanel" aria-labelledby="pt-tab-faq" class="pt-panel">
+            <h3 class="text-lg font-semibold mb-3">Frequently Asked Questions</h3>
+            <div class="text-sm text-gray-700">
+                <div class="faq-item">
+                    <div class="font-medium">What file formats do you accept?</div>
+                    <div class="text-gray-600 mt-1">PDF, AI, PSD, PNG, JPG (300 DPI recommended). We can assist with conversions if needed.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="font-medium">How long does production take?</div>
+                    <div class="text-gray-600 mt-1">{% if product.turnaround_time %}{{ product.turnaround_time }}{% else %}3-5 business days{% endif %}. Rush options available.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="font-medium">Do you offer design services?</div>
+                    <div class="text-gray-600 mt-1">{% if product.design_service_available %}Yes — design service is available for an additional ₹{{ product.design_service_price }}.{% else %}Design service not available for this product.{% endif %}</div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+    // Minimal, accessible tab behavior (no external dependencies)
+    (function(){
+        const tabs = document.querySelectorAll('.pt-tab');
+        const panels = document.querySelectorAll('.pt-panel');
+        function activate(tab){
+            tabs.forEach(t => t.setAttribute('aria-selected','false'));
+            panels.forEach(p => p.classList.remove('active'));
+            tab.setAttribute('aria-selected','true');
+            document.getElementById(tab.getAttribute('data-tab')).classList.add('active');
+            tab.focus();
+        }
+        tabs.forEach(t => t.addEventListener('click', ()=> activate(t)));
+        // keyboard support
+        tabs.forEach(t => t.addEventListener('keydown', function(e){
+            const idx = Array.prototype.indexOf.call(tabs, this);
+            if(e.key === 'ArrowRight') { activate(tabs[(idx+1)%tabs.length]); e.preventDefault(); }
+            if(e.key === 'ArrowLeft') { activate(tabs[(idx-1+tabs.length)%tabs.length]); e.preventDefault(); }
+        }));
+    })();
+    </script>
 </div>

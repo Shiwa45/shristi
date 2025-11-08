@@ -269,7 +269,6 @@ Drishthi Printing - Professional Quality Custom Printing
     font-weight: 600;
     text-decoration: none;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     position: relative;
@@ -732,7 +731,7 @@ Drishthi Printing - Professional Quality Custom Printing
                     <p class="category-description">{{ category.description|truncatewords:20 }}</p>
                     
                     <a href="{% url 'services:category' category.slug %}" class="category-button">
-                        <span>Explore {{ category.name }}</span>
+                        <span>View Details</span>
                         <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
@@ -740,13 +739,7 @@ Drishthi Printing - Professional Quality Custom Printing
             {% endfor %}
         </div>
         
-        <div class="text-center mt-12">
-            <a href="{% url 'services:categories' %}" 
-               class="inline-flex items-center bg-gradient-to-r from-purple-600 to-purple-700 text-white px-8 py-4 rounded-full font-semibold hover:from-purple-700 hover:to-purple-800 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                <span>View All Services</span>
-                <i class="fas fa-arrow-right ml-2"></i>
-            </a>
-        </div>
+
     </div>
 </section>
 
@@ -795,7 +788,7 @@ Drishthi Printing - Professional Quality Custom Printing
                     </a>
                 </div>
                 <div class="relative">
-                    <img src="{% static 'images/service-design-services.svg' %}" alt="Professional Design Team" class="w-full max-w-lg mx-auto">
+                    <img src="{% static 'img/no_design.png' %}" alt="Professional Design Team" class="w-full max-w-lg mx-auto">
                 </div>
             </div>
         </div>

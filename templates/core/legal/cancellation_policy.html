@@ -1,0 +1,200 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Cancellation Policy - Shrishti Printing{% endblock %}
+
+{% block content %}
+<div class="bg-white min-h-screen">
+    <!-- Header Section -->
+    <div class="gradient-bg text-white py-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-4xl font-bold text-center mb-4">Cancellation Policy</h1>
+            <p class="text-center text-lg opacity-90">Important information about order cancellations</p>
+        </div>
+    </div>
+
+    <!-- Content Section -->
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="prose prose-lg max-w-none">
+            <div class="mb-8">
+                <p class="text-gray-600 mb-6">
+                    At Shrishti Printing, we understand that circumstances may change. Please review our cancellation policy to understand your options and any applicable fees.
+                </p>
+            </div>
+
+            <!-- General Cancellation Policy -->
+            <div class="mb-10">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">General Cancellation Terms</h2>
+                <p class="text-gray-700 mb-4">
+                    Cancellation fees depend on the stage of processing your order has reached at the time of cancellation request. The earlier you cancel, the lower the fee.
+                </p>
+            </div>
+
+            <!-- Cancellation Window -->
+            <div class="mb-10">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Free Cancellation Window</h2>
+                <div class="bg-green-50 border-l-4 border-green-500 p-4 mb-4">
+                    <p class="text-green-800 font-semibold">
+                        <svg class="inline h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        Free Cancellation within 30 Minutes
+                    </p>
+                </div>
+                <p class="text-gray-700">
+                    Customers can cancel their order free of charge within <strong>30 minutes</strong> of placing the booking. After this window, cancellation fees will apply based on the processing stage.
+                </p>
+            </div>
+
+            <!-- Cancellation Fee Structure -->
+            <div class="mb-10">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Cancellation Fee Structure</h2>
+                <p class="text-gray-700 mb-4">
+                    Cancellation fees are calculated based on how far your order has progressed:
+                </p>
+
+                <div class="space-y-4">
+                    <!-- Stage 1 -->
+                    <div class="border-l-4 border-blue-500 bg-blue-50 p-4">
+                        <h3 class="font-bold text-gray-900 mb-2">Stage 1: Order Received (30 min - 2 hours)</h3>
+                        <p class="text-gray-700">
+                            <strong>Cancellation Fee: 10% of order value</strong>
+                        </p>
+                        <p class="text-sm text-gray-600 mt-1">
+                            Order has been received but processing has not begun.
+                        </p>
+                    </div>
+
+                    <!-- Stage 2 -->
+                    <div class="border-l-4 border-yellow-500 bg-yellow-50 p-4">
+                        <h3 class="font-bold text-gray-900 mb-2">Stage 2: Design/Proof Phase (2-24 hours)</h3>
+                        <p class="text-gray-700">
+                            <strong>Cancellation Fee: 25% of order value</strong>
+                        </p>
+                        <p class="text-sm text-gray-600 mt-1">
+                            Artwork is being prepared or proof has been sent for approval.
+                        </p>
+                    </div>
+
+                    <!-- Stage 3 -->
+                    <div class="border-l-4 border-orange-500 bg-orange-50 p-4">
+                        <h3 class="font-bold text-gray-900 mb-2">Stage 3: Pre-Production (After proof approval)</h3>
+                        <p class="text-gray-700">
+                            <strong>Cancellation Fee: 50% of order value</strong>
+                        </p>
+                        <p class="text-sm text-gray-600 mt-1">
+                            Proof has been approved and materials are being prepared for printing.
+                        </p>
+                    </div>
+
+                    <!-- Stage 4 -->
+                    <div class="border-l-4 border-red-500 bg-red-50 p-4">
+                        <h3 class="font-bold text-gray-900 mb-2">Stage 4: In Production</h3>
+                        <p class="text-gray-700">
+                            <strong>Cancellation Fee: 100% of order value (No Refund)</strong>
+                        </p>
+                        <p class="text-sm text-gray-600 mt-1">
+                            Printing has started or completed. Order cannot be cancelled.
+                        </p>
+                    </div>
+
+                    <!-- Stage 5 -->
+                    <div class="border-l-4 border-purple-500 bg-purple-50 p-4">
+                        <h3 class="font-bold text-gray-900 mb-2">Stage 5: Completed/Dispatched</h3>
+                        <p class="text-gray-700">
+                            <strong>No Cancellation Available</strong>
+                        </p>
+                        <p class="text-sm text-gray-600 mt-1">
+                            Order has been completed and shipped. Cancellation not possible.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Non-Payment Cancellation -->
+            <div class="mb-10">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Cancellation Due to Non-Payment</h2>
+                <p class="text-gray-700 mb-4">
+                    Shrishti Printing reserves the right to cancel orders in the following circumstances:
+                </p>
+                <ul class="list-disc pl-6 text-gray-700 space-y-2">
+                    <li>Payment is not received within the specified time frame</li>
+                    <li>Payment method fails or is declined</li>
+                    <li>Dishonoured cheques (subject to additional fees of Rs. 1,000 plus bank charges)</li>
+                    <li>Customer fails to respond to communication regarding order details or proof approval within 7 days</li>
+                </ul>
+                <p class="text-gray-700 mt-4">
+                    In such cases, any advance payment made will be refunded minus a 10% processing fee.
+                </p>
+            </div>
+
+            <!-- How to Cancel -->
+            <div class="mb-10">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">How to Cancel Your Order</h2>
+                <p class="text-gray-700 mb-4">
+                    To request a cancellation:
+                </p>
+                <ol class="list-decimal pl-6 text-gray-700 space-y-3">
+                    <li>
+                        <strong>Contact Us Immediately:</strong> Email us at <a href="mailto:info@shrishtiprinting.com" class="text-purple-600 hover:underline">info@shrishtiprinting.com</a> or call our customer service.
+                    </li>
+                    <li>
+                        <strong>Provide Order Details:</strong> Include your order number and reason for cancellation.
+                    </li>
+                    <li>
+                        <strong>Confirmation:</strong> We will confirm the cancellation and applicable fees within 24 hours.
+                    </li>
+                    <li>
+                        <strong>Refund Processing:</strong> If applicable, refunds will be processed within 7-10 business days.
+                    </li>
+                </ol>
+            </div>
+
+            <!-- Custom Orders -->
+            <div class="mb-10">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Custom/Personalized Orders</h2>
+                <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4">
+                    <p class="text-yellow-800">
+                        <strong>Important:</strong> Custom or personalized orders cannot be cancelled once production begins, as these items are made specifically for you and cannot be resold.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Modification vs Cancellation -->
+            <div class="mb-10">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Order Modification</h2>
+                <p class="text-gray-700">
+                    If you need to make changes to your order rather than cancel it completely, please contact us as soon as possible. Minor modifications may be possible depending on the stage of production, though additional fees may apply.
+                </p>
+            </div>
+
+            <!-- Force Majeure -->
+            <div class="mb-10">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Force Majeure</h2>
+                <p class="text-gray-700">
+                    Shrishti Printing reserves the right to cancel or delay orders due to circumstances beyond our control, including but not limited to natural disasters, strikes, equipment failure, or material shortages. In such cases, customers will receive a full refund of any payments made.
+                </p>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="bg-gray-50 p-6 rounded-lg mt-12">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Need to Cancel an Order?</h2>
+                <p class="text-gray-700 mb-4">
+                    Contact us immediately to discuss your cancellation:
+                </p>
+                <div class="text-gray-700">
+                    <p class="font-semibold">Shrishti Printing</p>
+                    <p>Email: <a href="mailto:info@shrishtiprinting.com" class="text-purple-600 hover:underline">info@shrishtiprinting.com</a></p>
+                    <p class="mt-2">
+                        <a href="{% url 'core:contact' %}" class="text-purple-600 hover:underline">Contact Us</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-8 text-sm text-gray-500">
+                <p><strong>Last Updated:</strong> {{ "now"|date:"F Y" }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

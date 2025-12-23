@@ -1,52 +1,35 @@
 {% load dynamic_form_tags %}
 
-<div class="form-field-wrapper">
-    <label for="{{ field_id }}" class="form-label">
+<div class="form-field-container {{ field|get_field_css_classes }} mb-5" data-field-name="{{ field.field_name }}">
+    <label class="block text-sm font-semibold text-gray-800 mb-2">
         {{ field.field_label }}
-        {% if field.is_required %}<span class="required-asterisk">*</span>{% endif %}
+        {% if field.is_required %}<span class="text-red-500">*</span>{% endif %}
     </label>
 
-    {% if field.help_text %}
-        <p class="field-help-text">{{ field.help_text }}</p>
-    {% endif %}
-
-    <select id="{{ field_id }}"
-            name="{{ field.field_name }}"
-            class="form-select"
-            {% if field.is_required %}required{% endif %}
-            data-field-type="select"
-            data-price-affecting="{{ field.is_price_affecting|yesno:'true,false' }}">
-
-        {% if not field.is_required %}
-            <option value="">{{ field.placeholder|default:"Please select..." }}</option>
-        {% endif %}
-
-        {% for option in field_options %}
-            <option value="{{ option.value }}"
-                    data-price-modifier="{{ option.price_modifier|default:0 }}"
-                    {% if option.description %}data-description="{{ option.description }}"{% endif %}
-                    {% if current_value == option.value %}selected{% endif %}>
-                {{ option.label }}
-                {% if option.price_modifier and option.price_modifier != 0 %}
-                    {% if option.price_modifier > 0 %}
-                        (+₹{{ option.price_modifier }})
-                    {% else %}
-                        (₹{{ option.price_modifier }})
-                    {% endif %}
-                {% endif %}
+    <div class="relative">
+        <select name="{{ field.field_name }}" 
+                class="block w-full appearance-none rounded-lg border border-gray-300 bg-white py-3 pl-4 pr-10 text-gray-700 shadow-sm focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500 sm:text-sm transition-all duration-200 hover:border-gray-400"
+                {% if field.is_required %}required{% endif %}>
+            <option value="">Select {{ field.field_label }}</option>
+            {% for option in field_options %}
+            <option value="{{ option.value }}" 
+                    {% if current_value == option.value %}selected{% endif %}
+                    data-price-modifier="{{ option.price_modifier }}">
+                {{ option.label }} 
+                {% if option.price_modifier > 0 %}(+₹{{ option.price_modifier }}){% endif %}
             </option>
-        {% endfor %}
-    </select>
-
-    {% if field|get_field_triggers %}
-        <script>
-            // Add field trigger logic
-            document.addEventListener('DOMContentLoaded', function() {
-                const field = document.getElementById('{{ field_id }}');
-                field.addEventListener('change', function() {
-                    window.handleFieldTriggers('{{ field.field_name }}', this.value, {{ field|get_field_triggers|jsonify }});
-                });
-            });
-        </script>
+            {% endfor %}
+        </select>
+        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-500">
+            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+            </svg>
+        </div>
+    </div>
+    
+    {% if field.help_text %}
+    <p class="text-xs text-gray-500 mt-1.5 flex items-center">
+        <i class="fas fa-info-circle mr-1"></i> {{ field.help_text }}
+    </p>
     {% endif %}
 </div>

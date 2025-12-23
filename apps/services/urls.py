@@ -19,10 +19,11 @@ urlpatterns = [
     # Main services pages
     path('', views.services_home, name='home'),
     path('categories/', views.services_home, name='categories'),
+    path('all-products/', views.all_products, name='all_products'),
     path('search/', views.product_search, name='search'),
-    
 
-    
+
+
     # Category pages (fallback for non-specific categories)
     path('<slug:slug>/', views.category_detail, name='category'),
     

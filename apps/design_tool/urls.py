@@ -38,4 +38,7 @@ urlpatterns = [
 
     # Pixabay integration
     path('api/pixabay/images/', views.api_pixabay_images, name='api_pixabay_images'),
+    path('api/pixabay/cliparts/', views.api_pixabay_cliparts, name='api_pixabay_cliparts'),
+    path('api/unsplash/images/', views.api_unsplash_images, name='api_unsplash_images'),
+    path('api/pexels/images/', views.api_pexels_images, name='api_pexels_images'),
 ]

@@ -1,0 +1,149 @@
+{% load dynamic_form_tags %}
+<!-- templates/services/partials/field_types/styled_range.html -->
+<div class="styled-range-wrapper">
+    <div class="range-input-container">
+        <input type="range" 
+               id="{{ field.field_name }}" 
+               name="{{ field.field_name }}" 
+               class="styled-range-input"
+               min="{{ field.min_value|default:0 }}"
+               max="{{ field.max_value|default:100 }}"
+               step="1"
+               {% if field.default_value %}value="{{ field.default_value }}"{% endif %}
+               {% if form_data and form_data|get_item:field.field_name %}value="{{ form_data|get_item:field.field_name }}"{% endif %}
+               data-field-type="range"
+               data-price-affecting="{{ field.is_price_affecting|yesno:'true,false' }}"
+               oninput="handleRangeChange(this)">
+        
+        <!-- Range value display -->
+        <div class="range-value-display">
+            <span class="range-value">{{ field.default_value|default:field.min_value|default:0 }}</span>
+        </div>
+    </div>
+    
+    <!-- Range labels -->
+    <div class="range-labels">
+        <span class="range-min">{{ field.min_value|default:0 }}</span>
+        <span class="range-max">{{ field.max_value|default:100 }}</span>
+    </div>
+</div>
+
+<style>
+.styled-range-wrapper {
+    position: relative;
+    padding: 1rem 0;
+}
+
+.range-input-container {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.styled-range-input {
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: #e5e7eb;
+    outline: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+}
+
+.styled-range-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #3b82f6;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.styled-range-input::-webkit-slider-thumb:hover {
+    background: #2563eb;
+    transform: scale(1.1);
+}
+
+.styled-range-input::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #3b82f6;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.range-value-display {
+    position: absolute;
+    top: -2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #374151;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.range-value-display::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid #374151;
+}
+
+.range-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-top: 0.5rem;
+}
+</style>
+
+<script>
+function handleRangeChange(rangeInput) {
+    const valueDisplay = rangeInput.parentElement.querySelector('.range-value');
+    if (valueDisplay) {
+        valueDisplay.textContent = rangeInput.value;
+    }
+    
+    // Update slider position for value display
+    const percent = ((rangeInput.value - rangeInput.min) / (rangeInput.max - rangeInput.min)) * 100;
+    const valueDisplayContainer = rangeInput.parentElement.querySelector('.range-value-display');
+    if (valueDisplayContainer) {
+        valueDisplayContainer.style.left = `${percent}%`;
+    }
+    
+    if (rangeInput.dataset.priceAffecting === 'true') {
+        updateFieldPricing(rangeInput, parseFloat(rangeInput.value));
+    }
+    
+    document.dispatchEvent(new CustomEvent('fieldChange', {
+        detail: {
+            fieldName: rangeInput.name,
+            value: rangeInput.value,
+            fieldType: 'range',
+            fieldElement: rangeInput
+        }
+    }));
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.styled-range-input').forEach(handleRangeChange);
+});
+</script>
+
+
+

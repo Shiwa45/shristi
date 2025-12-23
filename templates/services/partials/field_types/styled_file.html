@@ -1,0 +1,245 @@
+{% load dynamic_form_tags %}
+<!-- templates/services/partials/field_types/styled_file.html -->
+<div class="styled-file-wrapper">
+    <div class="file-upload-area" 
+         ondrop="handleFileDrop(event, '{{ field.field_name }}')" 
+         ondragover="handleDragOver(event)"
+         ondragenter="handleDragEnter(event)"
+         ondragleave="handleDragLeave(event)">
+        
+        <input type="file" 
+               id="{{ field.field_name }}" 
+               name="{{ field.field_name }}" 
+               class="file-input"
+               {% if field.is_required %}required{% endif %}
+               accept=".pdf,.ai,.png,.jpg,.jpeg,.svg"
+               onchange="handleFileSelect(this)">
+        
+        <div class="upload-content">
+            <div class="upload-icon">
+                <i class="fas fa-cloud-upload-alt"></i>
+            </div>
+            <div class="upload-text">
+                <p class="upload-title">Drop files here or <span class="browse-link">browse</span></p>
+                <p class="upload-subtitle">Supported: PDF, AI, PNG, JPG (min 300 DPI)</p>
+            </div>
+        </div>
+        
+        <!-- File preview area -->
+        <div class="file-preview-area hidden">
+            <div class="file-list"></div>
+            <button type="button" class="clear-files-btn" onclick="clearFiles('{{ field.field_name }}')">
+                <i class="fas fa-times mr-2"></i>Clear Files
+            </button>
+        </div>
+    </div>
+</div>
+
+<style>
+.styled-file-wrapper {
+    position: relative;
+}
+
+.file-upload-area {
+    border: 2px dashed #d1d5db;
+    border-radius: 1rem;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+}
+
+.file-upload-area:hover,
+.file-upload-area.drag-over {
+    border-color: #3b82f6;
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+}
+
+.file-input {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.upload-content {
+    pointer-events: none;
+}
+
+.upload-icon {
+    font-size: 3rem;
+    color: #9ca3af;
+    margin-bottom: 1rem;
+}
+
+.upload-title {
+    font-size: 1rem;
+    color: #374151;
+    margin-bottom: 0.5rem;
+}
+
+.browse-link {
+    color: #3b82f6;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.upload-subtitle {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.file-preview-area {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 0.5rem;
+    border: 1px solid #e5e7eb;
+}
+
+.file-preview-area.hidden {
+    display: none;
+}
+
+.file-list {
+    margin-bottom: 1rem;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+    background: #f8fafc;
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.file-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.file-icon {
+    width: 32px;
+    height: 32px;
+    background: #e5e7eb;
+    border-radius: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+}
+
+.clear-files-btn {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.clear-files-btn:hover {
+    background: #dc2626;
+}
+</style>
+
+<script>
+function handleFileDrop(event, fieldName) {
+    event.preventDefault();
+    const uploadArea = event.currentTarget;
+    uploadArea.classList.remove('drag-over');
+    
+    const files = event.dataTransfer.files;
+    const input = document.getElementById(fieldName);
+    input.files = files;
+    
+    displayFiles(files, fieldName);
+}
+
+function handleDragOver(event) {
+    event.preventDefault();
+}
+
+function handleDragEnter(event) {
+    event.preventDefault();
+    event.currentTarget.classList.add('drag-over');
+}
+
+function handleDragLeave(event) {
+    event.preventDefault();
+    if (!event.currentTarget.contains(event.relatedTarget)) {
+        event.currentTarget.classList.remove('drag-over');
+    }
+}
+
+function handleFileSelect(fileInput) {
+    displayFiles(fileInput.files, fileInput.id);
+}
+
+function displayFiles(files, fieldName) {
+    const wrapper = document.getElementById(fieldName).closest('.styled-file-wrapper');
+    const previewArea = wrapper.querySelector('.file-preview-area');
+    const fileList = wrapper.querySelector('.file-list');
+    
+    if (files.length > 0) {
+        previewArea.classList.remove('hidden');
+        fileList.innerHTML = '';
+        
+        Array.from(files).forEach((file, index) => {
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-item';
+            fileItem.innerHTML = `
+                <div class="file-info">
+                    <div class="file-icon">
+                        <i class="fas fa-file"></i>
+                    </div>
+                    <div>
+                        <div class="file-name">${file.name}</div>
+                        <div class="file-size">${formatFileSize(file.size)}</div>
+                    </div>
+                </div>
+                <button type="button" onclick="removeFile(${index}, '${fieldName}')" class="text-red-500 hover:text-red-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            fileList.appendChild(fileItem);
+        });
+    }
+}
+
+function clearFiles(fieldName) {
+    const input = document.getElementById(fieldName);
+    input.value = '';
+    
+    const wrapper = input.closest('.styled-file-wrapper');
+    const previewArea = wrapper.querySelector('.file-preview-area');
+    previewArea.classList.add('hidden');
+}
+
+function formatFileSize(bytes) {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
+
+// Setup file upload click handlers
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.file-upload-area').forEach(area => {
+        area.addEventListener('click', function() {
+            const input = this.querySelector('.file-input');
+            input.click();
+        });
+    });
+});
+</script>
+
+
+

@@ -23,22 +23,55 @@ def services_menu_context(request):
             products = category.static_products.filter(is_active=True).order_by('order', 'name')
             
             if products.exists():  # Only include categories that have products
+                # Dictionary to track groups by name
+                groups_map = {}
+                # List to hold all top-level items (groups and standalone products)
+                menu_items = []
+                
+                for product in products:
+                    if product.group_name:
+                        # It's part of a group
+                        if product.group_name not in groups_map:
+                            # Create new group entry
+                            group_entry = {
+                                'type': 'group',
+                                'name': product.group_name,
+                                'order': product.group_order,
+                                'products': []
+                            }
+                            groups_map[product.group_name] = group_entry
+                            menu_items.append(group_entry)
+                        
+                        # Add product to existing group
+                        groups_map[product.group_name]['products'].append({
+                            'name': product.name,
+                            'slug': product.slug,
+                            'is_featured': product.is_featured,
+                            'url': product.get_absolute_url(),
+                            'short_description': product.short_description,
+                        })
+                    else:
+                        # It's a standalone product
+                        menu_items.append({
+                            'type': 'product',
+                            'name': product.name,
+                            'slug': product.slug,
+                            'is_featured': product.is_featured,
+                            'url': product.get_absolute_url(),
+                            'short_description': product.short_description,
+                            'order': product.group_order, # Use group_order for sorting
+                        })
+                
+                # Sort menu_items by order
+                menu_items.sort(key=lambda x: x.get('order', 0))
+                
                 category_data = {
                     'name': category.name,
                     'slug': category.slug,
                     'is_featured': category.is_featured,
                     'icon': category.icon,
                     'url': category.get_absolute_url(),
-                    'products': [
-                        {
-                            'name': product.name,
-                            'slug': product.slug,
-                            'is_featured': product.is_featured,
-                            'url': product.get_absolute_url(),
-                            'short_description': product.short_description,
-                        }
-                        for product in products
-                    ]
+                    'menu_items': menu_items,
                 }
                 menu_structure.append(category_data)
         

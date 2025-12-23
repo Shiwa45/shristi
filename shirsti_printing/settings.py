@@ -1,4 +1,5 @@
 # shirsti_printing/settings.py
+import importlib
 import os
 from pathlib import Path
 from decouple import config
@@ -21,6 +22,7 @@ DJANGO_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.contrib.humanize',
 ]
 
 THIRD_PARTY_APPS = [
@@ -48,7 +50,6 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -56,6 +57,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+if importlib.util.find_spec('whitenoise') is not None:
+    MIDDLEWARE.insert(2, 'whitenoise.middleware.WhiteNoiseMiddleware')
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 ROOT_URLCONF = 'shirsti_printing.urls'
 
@@ -180,7 +185,6 @@ LOGGING = {
 }
 
 # Third-party API Keys
-PIXABAY_API_KEY = config('PIXABAY_API_KEY', default='')
-
-
-
+PIXABAY_API_KEY = config('PIXABAY_API_KEY', default='27347-23fd1708b1c4f768195a5093b')
+UNSPLASH_ACCESS_KEY = config('UNSPLASH_ACCESS_KEY', default='5746b12f75e91c251bddf6f83bd2ad0d658122676e9bd2444e110951f9a04af8')
+PEXELS_API_KEY = config('PEXELS_API_KEY', default='563492ad6f9170000100000147b95f140fe441b858072ac5940c9ba0')

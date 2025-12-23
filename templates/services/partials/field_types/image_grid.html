@@ -1,0 +1,54 @@
+{% load dynamic_form_tags %}
+
+<div class="form-field-container {{ field|get_field_css_classes }} mb-6" data-field-name="{{ field.field_name }}">
+    <label class="block text-sm font-semibold text-gray-800 mb-3">
+        {{ field.field_label }}
+        {% if field.is_required %}<span class="text-red-500">*</span>{% endif %}
+    </label>
+
+    {% if field.help_text %}
+    <p class="text-xs text-gray-500 mb-3 flex items-center">
+        <i class="fas fa-info-circle mr-1"></i> {{ field.help_text }}
+    </p>
+    {% endif %}
+
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {% for option in field_options %}
+        <label class="image-grid-option cursor-pointer group">
+            <input type="radio" name="{{ field.field_name }}" value="{{ option.value }}" {% if current_value == option.value %}checked{% endif %} {% if field.is_required %}required{% endif %} data-price-modifier="{{ option.price_modifier }}" class="hidden peer">
+            
+            <div class="relative border-2 border-gray-300 rounded-lg p-3 transition-all duration-200 hover:border-purple-400 hover:shadow-md peer-checked:border-purple-600 peer-checked:bg-purple-50 peer-checked:shadow-lg flex flex-col items-center justify-center aspect-square">
+                
+                {% if option.image_url %}
+                <div class="w-full flex-1 flex items-center justify-center mb-2">
+                    <img src="{{ option.image_url }}" alt="{{ option.label }}" class="max-w-full max-h-full object-contain">
+                </div>
+                {% endif %}
+                
+                <div class="text-center mt-auto">
+                    <div class="font-medium text-xs text-gray-800 group-hover:text-purple-700 peer-checked:text-purple-700">
+                        {{ option.label }}
+                    </div>
+                    
+                    {% if option.price_modifier > 0 %}
+                    <div class="text-xs text-green-600 mt-0.5">
+                        +₹{{ option.price_modifier }}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="absolute top-2 right-2 w-5 h-5 rounded-full bg-purple-600 text-white flex items-center justify-center opacity-0 peer-checked:opacity-100 transition-opacity">
+                    <i class="fas fa-check text-xs"></i>
+                </div>
+            </div>
+        </label>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+.image-grid-option input[type="radio"]:focus + div {
+    outline: 2px solid #9333ea;
+    outline-offset: 2px;
+}
+</style>

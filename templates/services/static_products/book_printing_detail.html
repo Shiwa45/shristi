@@ -45,8 +45,8 @@
 
     /* Form Sections - Lulu.com Style */
     .form-section {
-        margin-bottom: 3.5rem;
-        padding: 2.5rem 0;
+        margin-bottom: 2rem;
+        padding: 1.5rem 0;
         border-radius: 0;
         border: none;
         border-bottom: 1px solid #e5e7eb;
@@ -79,7 +79,7 @@
         display: flex;
         align-items: flex-start;
         gap: 1.25rem;
-        margin-bottom: 2rem;
+        margin-bottom: 1.25rem;
         padding-bottom: 0;
     }
 
@@ -125,7 +125,7 @@
 
     .section-description {
         color: #6b7280;
-        margin-bottom: 2rem;
+        margin-bottom: 1.5rem;
         line-height: 1.6;
         font-size: 0.9375rem;
         margin-top: 0.5rem;
@@ -137,7 +137,7 @@
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 1rem;
     }
-    
+
     @media (min-width: 1024px) {
         .interior-color-options {
             grid-template-columns: repeat(4, 1fr);
@@ -306,7 +306,7 @@
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 1rem;
     }
-    
+
     @media (min-width: 1024px) {
         .paper-grid {
             grid-template-columns: repeat(4, 1fr);
@@ -397,7 +397,7 @@
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 1rem;
     }
-    
+
     @media (min-width: 1024px) {
         .binding-grid {
             grid-template-columns: repeat(4, 1fr);
@@ -518,7 +518,7 @@
         gap: 1rem;
         max-width: 100%;
     }
-    
+
     @media (min-width: 1024px) {
         .finish-options {
             grid-template-columns: repeat(4, 1fr);
@@ -871,7 +871,7 @@
 
     /* Section spacing improvements */
     .form-section+.form-section {
-        margin-top: 3rem;
+        margin-top: 1.5rem;
     }
 
     /* Typography improvements */
@@ -923,6 +923,7 @@
 
     /* Responsive Design - Lulu.com Style */
     @media (max-width: 1200px) {
+
         .interior-color-options,
         .paper-grid,
         .binding-grid,
@@ -932,6 +933,7 @@
     }
 
     @media (max-width: 992px) {
+
         .interior-color-options,
         .paper-grid,
         .binding-grid,
@@ -996,7 +998,7 @@
             flex-direction: column;
             align-items: stretch;
         }
-        
+
         .isbn-option {
             width: 100%;
         }
@@ -1065,43 +1067,6 @@
         <p class="book-options-subtitle">Choose your book specifications to get started with your printing project.</p>
     </div>
 
-    <!-- Progress Indicator -->
-    <div class="progress-indicator">
-        <div class="progress-steps">
-            <div class="progress-step active" data-step="1">
-                <div class="step-number">1</div>
-                <div class="step-label">Interior</div>
-            </div>
-            <div class="progress-step" data-step="2">
-                <div class="step-number">2</div>
-                <div class="step-label">Size & Pages</div>
-            </div>
-            <div class="progress-step" data-step="3">
-                <div class="step-number">3</div>
-                <div class="step-label">Paper</div>
-            </div>
-            <div class="progress-step" data-step="4">
-                <div class="step-number">4</div>
-                <div class="step-label">Binding</div>
-            </div>
-            <div class="progress-step" data-step="5">
-                <div class="step-number">5</div>
-                <div class="step-label">Finish</div>
-            </div>
-            <div class="progress-step" data-step="6">
-                <div class="step-number">6</div>
-                <div class="step-label">Design</div>
-            </div>
-            <div class="progress-step" data-step="7">
-                <div class="step-number">7</div>
-                <div class="step-label">ISBN</div>
-            </div>
-            <div class="progress-step" data-step="8">
-                <div class="step-number">8</div>
-                <div class="step-label">Quantity</div>
-            </div>
-        </div>
-    </div>
 
     <div class="sequential-form" data-category="book-printing">
         {% csrf_token %}
@@ -1183,7 +1148,8 @@
             <!-- Book Size and Page Count in Same Row -->
             <div style="display: flex; gap: 1.5rem; align-items: flex-start; margin-bottom: 1rem;">
                 <div style="flex: 1;">
-                    <label for="book_size" class="field-label" style="display: block; margin-bottom: 0.5rem;">Book Size</label>
+                    <label for="book_size" class="field-label" style="display: block; margin-bottom: 0.5rem;">Book
+                        Size</label>
                     <div class="book-size-dropdown">
                         <select name="book_size" id="book_size" class="book-size-select" required>
                             <option value="">Select Book Size</option>
@@ -1198,14 +1164,16 @@
 
                 <!-- Standard page count (shown by default) -->
                 <div id="standard-page-count" style="flex: 1;">
-                    <label for="page_count" class="field-label" style="display: block; margin-bottom: 0.5rem;">Page Count</label>
+                    <label for="page_count" class="field-label" style="display: block; margin-bottom: 0.5rem;">Page
+                        Count</label>
                     <input type="number" id="page_count" name="page_count" class="page-input"
                         placeholder="Please Enter Qty." min="4" required>
                 </div>
             </div>
 
             <!-- Conditional page counts (shown when combine_color is selected) -->
-            <div class="conditional-page-inputs" id="combine-page-counts" style="display: none; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1rem;">
+            <div class="conditional-page-inputs" id="combine-page-counts"
+                style="display: none; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1rem;">
                 <div class="page-input-group">
                     <label for="bw_page_count" class="field-label">B/W Page Count</label>
                     <input type="number" id="bw_page_count" name="bw_page_count" class="page-input"
@@ -1370,8 +1338,10 @@
             <!-- Design Service Options in Boxes -->
             <div style="display: flex; gap: 1rem; align-items: center;">
                 <!-- Not Required Box -->
-                <div class="design-option-box" data-value="no" style="border: 2px solid #d1d5db; border-radius: 8px; padding: 0.75rem 1.25rem; cursor: pointer; transition: all 0.2s ease; background: #ffffff;">
-                    <label style="cursor: pointer; display: flex; align-items: center; gap: 0.75rem; white-space: nowrap;">
+                <div class="design-option-box" data-value="no"
+                    style="border: 2px solid #d1d5db; border-radius: 8px; padding: 0.75rem 1.25rem; cursor: pointer; transition: all 0.2s ease; background: #ffffff;">
+                    <label
+                        style="cursor: pointer; display: flex; align-items: center; gap: 0.75rem; white-space: nowrap;">
                         <input type="radio" name="need_design_service" value="no" required
                             style="width: 20px; height: 20px; cursor: pointer; accent-color: #3b82f6;">
                         <span style="font-weight: 500; font-size: 1rem; color: #1a1a1a;">Not Required</span>
@@ -1379,8 +1349,10 @@
                 </div>
 
                 <!-- Yes You Can Box -->
-                <div class="design-option-box" data-value="yes" style="border: 2px solid #d1d5db; border-radius: 8px; padding: 0.75rem 1.25rem; cursor: pointer; transition: all 0.2s ease; background: #ffffff;">
-                    <label style="cursor: pointer; display: flex; align-items: center; gap: 0.75rem; white-space: nowrap;">
+                <div class="design-option-box" data-value="yes"
+                    style="border: 2px solid #d1d5db; border-radius: 8px; padding: 0.75rem 1.25rem; cursor: pointer; transition: all 0.2s ease; background: #ffffff;">
+                    <label
+                        style="cursor: pointer; display: flex; align-items: center; gap: 0.75rem; white-space: nowrap;">
                         <input type="radio" name="need_design_service" value="yes" required
                             style="width: 20px; height: 20px; cursor: pointer; accent-color: #3b82f6;">
                         <span style="font-weight: 500; font-size: 1rem; color: #1a1a1a;">Yes You Can</span>
@@ -1388,8 +1360,10 @@
                 </div>
 
                 <!-- Cover Page Checkbox (Hidden by default) -->
-                <div id="cover-page-checkbox" class="design-option-box" style="display: none; border: 2px solid #d1d5db; border-radius: 8px; padding: 0.75rem 1.25rem; cursor: pointer; transition: all 0.2s ease; background: #ffffff;">
-                    <label style="cursor: pointer; display: flex; align-items: center; gap: 0.75rem; white-space: nowrap;">
+                <div id="cover-page-checkbox" class="design-option-box"
+                    style="display: none; border: 2px solid #d1d5db; border-radius: 8px; padding: 0.75rem 1.25rem; cursor: pointer; transition: all 0.2s ease; background: #ffffff;">
+                    <label
+                        style="cursor: pointer; display: flex; align-items: center; gap: 0.75rem; white-space: nowrap;">
                         <input type="checkbox" name="cover_page_design" value="yes" data-price-modifier="1500"
                             style="width: 20px; height: 20px; cursor: pointer; accent-color: #3b82f6;">
                         <span style="font-weight: 500; font-size: 1rem; color: #1a1a1a;">Cover Page</span>
@@ -1397,8 +1371,10 @@
                 </div>
 
                 <!-- Inner Pages Checkbox (Hidden by default) -->
-                <div id="inner-pages-checkbox" class="design-option-box" style="display: none; border: 2px solid #d1d5db; border-radius: 8px; padding: 0.75rem 1.25rem; cursor: pointer; transition: all 0.2s ease; background: #ffffff;">
-                    <label style="cursor: pointer; display: flex; align-items: center; gap: 0.75rem; white-space: nowrap;">
+                <div id="inner-pages-checkbox" class="design-option-box"
+                    style="display: none; border: 2px solid #d1d5db; border-radius: 8px; padding: 0.75rem 1.25rem; cursor: pointer; transition: all 0.2s ease; background: #ffffff;">
+                    <label
+                        style="cursor: pointer; display: flex; align-items: center; gap: 0.75rem; white-space: nowrap;">
                         <input type="checkbox" name="inner_page_design" value="yes" data-price-per-page="50"
                             style="width: 20px; height: 20px; cursor: pointer; accent-color: #3b82f6;">
                         <span style="font-weight: 500; font-size: 1rem; color: #1a1a1a;">Inner Pages</span>
@@ -1459,16 +1435,13 @@
                 <div class="page-input-group" style="max-width: 400px;">
                     <label for="quantity-input" class="field-label">Number of Books</label>
                     <div style="display: flex; align-items: center; gap: 1rem;">
-                        <input type="number" id="quantity-input" name="quantity" class="page-input" 
-                            value="{{ min_quantity|default:25 }}" 
-                            min="{{ min_quantity|default:25 }}" 
-                            placeholder="Minimum 25 books" 
-                            required 
-                            style="flex: 1;">
+                        <input type="number" id="quantity-input" name="quantity" class="page-input"
+                            value="" min="{{ min_quantity|default:25 }}"
+                            placeholder="Minimum 25 books" required style="flex: 1;">
                         <span class="text-sm text-gray-600 font-medium">books</span>
                     </div>
                     <div class="text-xs text-gray-500 mt-2">
-                        <i class="fas fa-info-circle text-blue-500"></i> 
+                        <i class="fas fa-info-circle text-blue-500"></i>
                         Volume discounts: 5% off for 50+ books, 10% off for 100+ books
                     </div>
                 </div>
@@ -1480,26 +1453,30 @@
 
 {% block pricing_calculator %}
 <div class="pricing-calculator" style="max-width: 600px; width: 100%; margin: 0 auto; padding: 20px;">
-    
+
     <h3 style="font-size: 18px; font-weight: 600; color: #333; margin-bottom: 20px; text-align: center;">
         Pricing Calculator
     </h3>
 
-    <div class="pricing-breakdown" style="border: 1px solid #ddd; border-radius: 4px; padding: 20px; background: #f8f9fa;">
+    <div class="pricing-breakdown"
+        style="border: 1px solid #ddd; border-radius: 4px; padding: 20px; background: #f8f9fa;">
         <!-- Dynamic specifications will be added here by JavaScript -->
         <div id="book-specifications">
-            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
                 <span style="color: #666; font-size: 14px;">Product:</span>
                 <span style="color: #333; font-size: 14px; font-weight: 500;">{{ product.name }}</span>
             </div>
         </div>
 
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+        <div
+            style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
             <span style="color: #666; font-size: 14px;">Cost Per Book:</span>
             <span style="color: #333; font-size: 14px; font-weight: 500;" id="cost-per-unit">₹ N/A</span>
         </div>
 
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+        <div
+            style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
             <span style="color: #666; font-size: 14px;">Subtotal:</span>
             <span style="color: #333; font-size: 14px; font-weight: 500;" id="subtotal">₹ N/A</span>
         </div>
@@ -1511,12 +1488,14 @@
             </div>
         </div>
 
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #e0e0e0;">
+        <div
+            style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #e0e0e0;">
             <span style="color: #666; font-size: 14px;">GST (18%):</span>
             <span style="color: #333; font-size: 14px; font-weight: 500;" id="gst-amount">₹ N/A</span>
         </div>
 
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; margin-top: 8px; border-top: 2px solid #333;">
+        <div
+            style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; margin-top: 8px; border-top: 2px solid #333;">
             <span style="color: #333; font-size: 16px; font-weight: 600;">Total:</span>
             <span style="color: #333; font-size: 18px; font-weight: 700;" id="total-price">₹ N/A</span>
         </div>
@@ -1525,13 +1504,13 @@
     <div style="margin-top: 20px;">
         <button
             style="width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: 500; cursor: pointer; transition: background-color 0.2s;"
-            onmouseover="this.style.backgroundColor='#0056b3'"
-            onmouseout="this.style.backgroundColor='#007bff'"
+            onmouseover="this.style.backgroundColor='#0056b3'" onmouseout="this.style.backgroundColor='#007bff'"
             id="order-button" disabled>
             Order Your Book Now
         </button>
     </div>
 </div>
+<!-- Related Products -->
 {% endblock %}
 
 {% block extra_js %}
@@ -1644,20 +1623,34 @@
             const bindingOptions = document.querySelectorAll('.binding-option[data-min-pages="30"]');
             bindingOptions.forEach(option => {
                 const lockIcon = option.querySelector('.lock-icon');
+                const input = option.querySelector('input');
                 if (totalPages < 30) {
                     option.classList.add('disabled');
-                    option.querySelector('input').disabled = true;
+                    input.disabled = true;
+                    if (input.checked) input.checked = false;
                     if (lockIcon) {
                         lockIcon.style.display = 'block';
                     }
                 } else {
                     option.classList.remove('disabled');
-                    option.querySelector('input').disabled = false;
+                    input.disabled = false;
                     if (lockIcon) {
                         lockIcon.style.display = 'none';
                     }
                 }
             });
+
+            // Disable saddle stitch for 49+ pages
+            const saddleOption = document.querySelector('.binding-option[data-value="saddle_stitch"]');
+            if (saddleOption) {
+                const saddleInput = saddleOption.querySelector('input');
+                const disableSaddle = totalPages >= 49;
+                saddleOption.classList.toggle('disabled', disableSaddle);
+                saddleInput.disabled = disableSaddle;
+                if (disableSaddle && saddleInput.checked) {
+                    saddleInput.checked = false;
+                }
+            }
         }
 
         // Add event listeners for page count changes
@@ -1727,12 +1720,12 @@
         // Sequential form progression logic
         function checkSectionCompletion(sectionElement) {
             const sectionName = sectionElement.dataset.section;
-            
+
             // Design section is always complete as it's optional
             if (sectionName === 'designing_formatting') {
                 return true;
             }
-            
+
             const requiredInputs = sectionElement.querySelectorAll('input[required], select[required]');
             let isComplete = true;
             let missingFields = [];
@@ -1864,13 +1857,13 @@
 
         // Handle ISBN option clicks separately (they work like design-option-box)
         document.querySelectorAll('.isbn-option').forEach(option => {
-            option.addEventListener('click', function(e) {
+            option.addEventListener('click', function (e) {
                 if (e.target.tagName !== 'INPUT') {
                     const input = this.querySelector('input');
                     if (input) {
                         input.checked = true;
                         input.dispatchEvent(new Event('change'));
-                        
+
                         // Check if current section is complete and unlock next section
                         const currentSection = this.closest('.form-section');
                         if (currentSection && checkSectionCompletion(currentSection)) {
@@ -1917,7 +1910,7 @@
         if (quantityInput) {
             quantityInput.addEventListener('input', function () {
                 calculatePrice();
-                
+
                 // Check if section is complete and unlock next section
                 const currentSection = this.closest('.form-section');
                 if (currentSection && checkSectionCompletion(currentSection)) {
@@ -2008,11 +2001,11 @@
                 let designCost = 0;
                 const coverPageDesign = document.querySelector('input[name="cover_page_design"]:checked');
                 const innerPageDesign = document.querySelector('input[name="inner_page_design"]:checked');
-                
+
                 if (coverPageDesign) {
                     designCost += 1500; // Cover page design
                 }
-                
+
                 if (innerPageDesign) {
                     const innerPageCost = totalPages * 50; // ₹50 per page
                     designCost += innerPageCost;
@@ -2025,37 +2018,51 @@
                 }
 
                 // Get quantity
-                const quantity = parseInt(document.getElementById('quantity-input').value) || 25;
+                const quantityInput = document.getElementById('quantity-input');
+                const quantity = parseInt(quantityInput.value);
+                const minQuantity = parseInt(quantityInput.getAttribute('min')) || 1;
+                const hasQuantity = !isNaN(quantity);
+                const quantityValid = hasQuantity && quantity >= minQuantity;
 
-                // Calculate subtotal
-                const subtotal = (costPerBook * quantity) + designCost + isbnCost;
-
-                // Volume discount calculation
+                // Calculate subtotal if quantity is valid
                 let discount = 0;
-                let discountRow = document.getElementById('discount-row');
-                if (quantity >= 100) {
-                    discount = subtotal * 0.10; // 10% discount
-                    discountRow.style.display = 'flex';
-                } else if (quantity >= 50) {
-                    discount = subtotal * 0.05; // 5% discount
-                    discountRow.style.display = 'flex';
+                let gst = 0;
+                let total = 0;
+                const discountRow = document.getElementById('discount-row');
+
+                if (quantityValid) {
+                    document.getElementById('cost-per-unit').textContent = `₹ ${costPerBook.toFixed(2)}`;
+                    const subtotal = (costPerBook * quantity) + designCost + isbnCost;
+
+                    if (quantity >= 100) {
+                        discount = subtotal * 0.10; // 10% discount
+                        discountRow.style.display = 'flex';
+                    } else if (quantity >= 50) {
+                        discount = subtotal * 0.05; // 5% discount
+                        discountRow.style.display = 'flex';
+                    } else if (discountRow) {
+                        discountRow.style.display = 'none';
+                    }
+
+                    const afterDiscount = subtotal - discount;
+                    gst = afterDiscount * 0.18;
+                    total = afterDiscount + gst;
+
+                    document.getElementById('subtotal').textContent = `₹ ${subtotal.toFixed(2)}`;
+                    document.getElementById('discount-amount').textContent = `- ₹ ${discount.toFixed(2)}`;
+                    document.getElementById('gst-amount').textContent = `₹ ${gst.toFixed(2)}`;
+                    document.getElementById('total-price').textContent = `₹ ${total.toFixed(2)}`;
                 } else {
-                    discountRow.style.display = 'none';
+                    // Quantity not set yet; hide price outputs
+                    if (discountRow) {
+                        discountRow.style.display = 'none';
+                    }
+                    document.getElementById('subtotal').textContent = 'Enter quantity';
+                    document.getElementById('discount-amount').textContent = '- ₹ 0';
+                    document.getElementById('gst-amount').textContent = 'Enter quantity';
+                    document.getElementById('total-price').textContent = 'Enter quantity';
+                    document.getElementById('cost-per-unit').textContent = '₹ N/A';
                 }
-
-                // Calculate GST (18%)
-                const afterDiscount = subtotal - discount;
-                const gst = afterDiscount * 0.18;
-
-                // Calculate total
-                const total = afterDiscount + gst;
-
-                // Update pricing display
-                document.getElementById('cost-per-unit').textContent = `₹ ${costPerBook.toFixed(2)}`;
-                document.getElementById('subtotal').textContent = `₹ ${subtotal.toFixed(2)}`;
-                document.getElementById('discount-amount').textContent = `- ₹ ${discount.toFixed(2)}`;
-                document.getElementById('gst-amount').textContent = `₹ ${gst.toFixed(2)}`;
-                document.getElementById('total-price').textContent = `₹ ${total.toFixed(2)}`;
 
                 // Update design service display
                 const designServiceRow = document.getElementById('design-service-row');
@@ -2191,7 +2198,7 @@
             // Design Services
             const coverPageDesign = document.querySelector('input[name="cover_page_design"]:checked');
             const innerPageDesign = document.querySelector('input[name="inner_page_design"]:checked');
-            
+
             if (coverPageDesign) {
                 specificationsHTML += `
                     <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
@@ -2200,7 +2207,7 @@
                     </div>
                 `;
             }
-            
+
             if (innerPageDesign) {
                 specificationsHTML += `
                     <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
@@ -2462,7 +2469,7 @@
         const innerPagesCheckbox = document.getElementById('inner-pages-checkbox');
 
         // Handle radio button changes
-        notRequiredRadio.addEventListener('change', function() {
+        notRequiredRadio.addEventListener('change', function () {
             if (this.checked) {
                 // Hide checkboxes
                 coverPageCheckbox.style.display = 'none';
@@ -2472,7 +2479,7 @@
                 document.querySelector('input[name="inner_page_design"]').checked = false;
                 calculatePrice();
                 updateSpecificationsSummary();
-                
+
                 // Check if section is complete and unlock next section
                 const currentSection = this.closest('.form-section');
                 if (currentSection && checkSectionCompletion(currentSection)) {
@@ -2481,7 +2488,7 @@
             }
         });
 
-        yesYouCanRadio.addEventListener('change', function() {
+        yesYouCanRadio.addEventListener('change', function () {
             if (this.checked) {
                 // Show checkboxes inline
                 coverPageCheckbox.style.display = 'flex';
@@ -2491,7 +2498,7 @@
 
         // Handle design option box clicks
         document.querySelectorAll('.design-option-box').forEach(box => {
-            box.addEventListener('click', function(e) {
+            box.addEventListener('click', function (e) {
                 // Don't trigger if clicking on the input directly
                 if (e.target.tagName !== 'INPUT') {
                     const input = this.querySelector('input');
@@ -2510,10 +2517,10 @@
         // Add change listeners to design checkboxes for price calculation
         const designCheckboxes = document.querySelectorAll('input[name="cover_page_design"], input[name="inner_page_design"]');
         designCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
+            checkbox.addEventListener('change', function () {
                 calculatePrice();
                 updateSpecificationsSummary();
-                
+
                 // Check if section is complete and unlock next section
                 const currentSection = this.closest('.form-section');
                 if (currentSection && checkSectionCompletion(currentSection)) {

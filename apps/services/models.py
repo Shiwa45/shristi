@@ -151,6 +151,10 @@ class StaticProduct(models.Model):
     description = models.TextField()
     short_description = models.TextField(max_length=300)
 
+    # Grouping for Mega Menu
+    group_name = models.CharField(max_length=100, blank=True, help_text="Group name for mega menu (e.g., 'Business Card', 'Letter Head')")
+    group_order = models.IntegerField(default=0, help_text="Order of the group in the menu")
+
     # Design Tool Integration
     design_tool_enabled = models.BooleanField(default=False, help_text="Enable design tool for this product")
     canvas_width = models.IntegerField(null=True, blank=True, help_text="Canvas width in pixels for design tool")
@@ -576,6 +580,7 @@ class ProductFormField(models.Model):
         ('range', 'Range Slider'),
         ('file', 'File Upload'),
         ('conditional_group', 'Conditional Field Group'),
+        ('image_grid', 'Image Grid Selector'),
     ]
 
     FIELD_SECTIONS = [

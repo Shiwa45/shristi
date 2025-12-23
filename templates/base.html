@@ -15,6 +15,10 @@
         * {
             font-family: 'Inter', sans-serif;
         }
+        .footer{
+            margin-top: 50px;
+        }
+        
         
         .gradient-bg {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -66,7 +70,8 @@
             top: calc(100% + 0.5rem);
             left: 50%;
             transform: translateX(-50%) translateY(-10px);
-            min-width: 800px;
+            /* Wider dropdown so long service names fit comfortably */
+            min-width: 1080px;
             background: white;
             border: none;
             border-top: 3px solid #7c3aed;
@@ -142,7 +147,7 @@
         /* Mobile responsive */
         @media (max-width: 1024px) {
             .mega-menu {
-                min-width: 600px;
+                min-width: 720px;
             }
             
             .mega-menu-columns {
@@ -176,7 +181,7 @@
 </head>
 <body class="bg-gray-50">
     <!-- Navigation -->
-    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
+    <nav class="bg-white shadow-lg fixed w-full top-0 z-50 ">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <!-- Logo -->
@@ -189,11 +194,12 @@
                 
                 <!-- Desktop Navigation -->
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="{% url 'core:home' %}" class="text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-medium transition duration-300">Home</a>
+                    <a href="{% url 'core:home' %}" class="text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-semibold transition duration-300">Home</a>
+                    <a href="{% url 'services:all_products' %}" class="text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-semibold transition duration-300">All Products</a>
                     
                     <!-- Services Mega Menu -->
                     <div class="mega-menu-item">
-                        <a href="" class="text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-medium transition duration-300">
+                        <a href="" class="text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-semibold transition duration-300">
                             Services
                             <span class="dropdown-arrow">▼</span>
                         </a>
@@ -204,12 +210,32 @@
                                     <div class="mega-menu-column">
                                         <h3 class="mega-menu-heading">{{ category.name }}</h3>
                                         <ul class="mega-menu-links">
-                                            {% for product in category.products %}
-                                            <li>
-                                                <a href="{{ product.url }}">
-                                                    {{ product.name }}{% if product.is_featured %} ⭐{% endif %}
-                                                </a>
-                                            </li>
+                                            {% for item in category.menu_items %}
+                                                {% if item.type == 'group' %}
+                                                <li class="group-item mb-2">
+                                                    <details class="group-dropdown group">
+                                                        <summary class="list-none flex justify-between items-center cursor-pointer py-1 px-2 rounded hover:bg-purple-50 text-gray-700 font-semibold text-sm transition-colors duration-200">
+                                                            <span>{{ item.name }}</span>
+                                                            <span class="transform transition-transform duration-200 group-open:rotate-180 text-xs text-purple-500">▼</span>
+                                                        </summary>
+                                                        <ul class="mt-1 pl-4 border-l-2 border-purple-100 space-y-1 animate-fadeIn">
+                                                            {% for product in item.products %}
+                                                            <li>
+                                                                <a href="{{ product.url }}" class="text-sm text-gray-600 hover:text-purple-600 block py-1 transition-colors duration-200">
+                                                                    {{ product.name }}{% if product.is_featured %} ⭐{% endif %}
+                                                                </a>
+                                                            </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </details>
+                                                </li>
+                                                {% else %}
+                                                <li>
+                                                    <a href="{{ item.url }}" class="block py-1 px-2 rounded hover:bg-purple-50 text-sm font-semibold text-gray-700 transition-colors duration-200">
+                                                        {{ item.name }}{% if item.is_featured %} ⭐{% endif %}
+                                                    </a>
+                                                </li>
+                                                {% endif %}
                                             {% endfor %}
                                         </ul>
                                     </div>
@@ -219,12 +245,12 @@
                         </div>
                     </div>
                     
-                    <a href="{% url 'core:about' %}" class="text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-medium transition duration-300">About</a>
-                    <a href="{% url 'core:contact' %}" class="text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-medium transition duration-300">Contact</a>
+                    <a href="{% url 'core:about' %}" class="text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-semibold transition duration-300">About</a>
+                    <a href="{% url 'core:contact' %}" class="text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-semibold transition duration-300">Contact</a>
                     
                     {% if user.is_authenticated %}
                         <div class="relative group">
-                            <button class="flex items-center text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-medium transition duration-300">
+                            <button class="flex items-center text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-semibold transition duration-300">
                                 <span>{{ user.first_name|default:user.username }}</span>
                                 <svg class="ml-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
@@ -247,8 +273,8 @@
                             <span class="absolute -top-2 -right-2 bg-purple-600 text-white rounded-full text-xs h-5 w-5 flex items-center justify-center" id="cart-count">0</span>
                         </a>
                     {% else %}
-                        {# <a href="{% url 'accounts:login' %}" class="text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-medium transition duration-300">Login</a> #}
-                        {# <a href="{% url 'accounts:register' %}" class="bg-purple-600 text-white hover:bg-purple-700 px-4 py-2 rounded-md text-sm font-medium transition duration-300">Register</a> #}
+                        {# <a href="{% url 'accounts:login' %}" class="text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-semibold transition duration-300">Login</a> #}
+                        {# <a href="{% url 'accounts:register' %}" class="bg-purple-600 text-white hover:bg-purple-700 px-4 py-2 rounded-md text-sm font-semibold transition duration-300">Register</a> #}
                     {% endif %}
                 </div>
                 
@@ -266,11 +292,12 @@
         <!-- Mobile Navigation -->
         <div class="mobile-menu hidden md:hidden">
             <div class="px-2 pt-2 pb-3 space-y-1 bg-white shadow-lg">
-                <a href="{% url 'core:home' %}" class="block px-3 py-2 text-gray-700 hover:text-purple-600">Home</a>
+                <a href="{% url 'core:home' %}" class="block px-3 py-2 text-gray-700 hover:text-purple-600 font-semibold">Home</a>
+                <a href="{% url 'services:all_products' %}" class="block px-3 py-2 text-gray-700 hover:text-purple-600 font-semibold">All Products</a>
                 
                 <!-- Mobile Services Dropdown -->
                 <div class="mobile-dropdown">
-                    <button class="mobile-dropdown-toggle w-full text-left px-3 py-2 text-gray-700 hover:text-purple-600 flex justify-between items-center">
+                    <button class="mobile-dropdown-toggle w-full text-left px-3 py-2 text-gray-700 hover:text-purple-600 flex justify-between items-center font-semibold">
                         <span>Services</span>
                         <span class="dropdown-arrow text-xs">▼</span>
                     </button>
@@ -288,21 +315,21 @@
                     </div>
                 </div>
                 
-                <a href="{% url 'core:about' %}" class="block px-3 py-2 text-gray-700 hover:text-purple-600">About</a>
-                <a href="{% url 'core:contact' %}" class="block px-3 py-2 text-gray-700 hover:text-purple-600">Contact</a>
+                <a href="{% url 'core:about' %}" class="block px-3 py-2 text-gray-700 hover:text-purple-600 font-semibold">About</a>
+                <a href="{% url 'core:contact' %}" class="block px-3 py-2 text-gray-700 hover:text-purple-600 font-semibold">Contact</a>
                 
                 {% if user.is_authenticated %}
                     <div class="border-t border-gray-200 pt-2">
-                        <a href="{% url 'accounts:profile' %}" class="block px-3 py-2 text-gray-700 hover:text-purple-600">My Profile</a>
-                        <a href="{% url 'orders:history' %}" class="block px-3 py-2 text-gray-700 hover:text-purple-600">Order History</a>
-                        <a href="{% url 'design_tool:my_designs' %}" class="block px-3 py-2 text-gray-700 hover:text-purple-600">My Designs</a>
-                        <a href="{% url 'orders:cart' %}" class="block px-3 py-2 text-gray-700 hover:text-purple-600">Cart</a>
-                        <a href="{% url 'accounts:logout' %}" class="block px-3 py-2 text-gray-700 hover:text-purple-600">Logout</a>
+                        <a href="{% url 'accounts:profile' %}" class="block px-3 py-2 text-gray-700 hover:text-purple-600 font-semibold">My Profile</a>
+                        <a href="{% url 'orders:history' %}" class="block px-3 py-2 text-gray-700 hover:text-purple-600 font-semibold">Order History</a>
+                        <a href="{% url 'design_tool:my_designs' %}" class="block px-3 py-2 text-gray-700 hover:text-purple-600 font-semibold">My Designs</a>
+                        <a href="{% url 'orders:cart' %}" class="block px-3 py-2 text-gray-700 hover:text-purple-600 font-semibold">Cart</a>
+                        <a href="{% url 'accounts:logout' %}" class="block px-3 py-2 text-gray-700 hover:text-purple-600 font-semibold">Logout</a>
                     </div>
                 {% else %}
                     <div class="border-t border-gray-200 pt-2">
-                        {# <a href="{% url 'accounts:login' %}" class="block px-3 py-2 text-gray-700 hover:text-purple-600">Login</a> #}
-                        {# <a href="{% url 'accounts:register' %}" class="block px-3 py-2 text-gray-700 hover:text-purple-600">Register</a> #}
+                        {# <a href="{% url 'accounts:login' %}" class="block px-3 py-2 text-gray-700 hover:text-purple-600 font-semibold">Login</a> #}
+                        {# <a href="{% url 'accounts:register' %}" class="block px-3 py-2 text-gray-700 hover:text-purple-600 font-semibold">Register</a> #}
                     </div>
                 {% endif %}
             </div>
@@ -315,7 +342,7 @@
     </main>
     
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white">
+    <footer class="bg-gray-900 text-white footer">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div class="col-span-1 md:col-span-2">
@@ -343,6 +370,7 @@
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
                     <ul class="space-y-2 text-gray-300">
+                        <li><a href="{% url 'core:home' %}" class="hover:text-white transition duration-300">Home</a></li>
                         <li><a href="{% url 'core:about' %}" class="hover:text-white transition duration-300">About Us</a></li>
                         <li><a href="{% url 'core:contact' %}" class="hover:text-white transition duration-300">Contact</a></li>
                         <li><a href="{% url 'core:faq' %}" class="hover:text-white transition duration-300">FAQ</a></li>
@@ -399,15 +427,6 @@
 
                 <div class="text-center text-gray-400 mt-6">
                     <p>&copy; 2024 Shrishti Printing Company. All rights reserved.</p>
-                    <p class="mt-2 text-sm">
-                        <a href="{% url 'core:privacy_policy' %}" class="hover:text-white transition duration-300">Privacy</a>
-                        <span class="mx-2">|</span>
-                        <a href="{% url 'core:terms_conditions' %}" class="hover:text-white transition duration-300">Terms</a>
-                        <span class="mx-2">|</span>
-                        <a href="{% url 'core:refund_policy' %}" class="hover:text-white transition duration-300">Refund</a>
-                        <span class="mx-2">|</span>
-                        <a href="{% url 'core:cancellation_policy' %}" class="hover:text-white transition duration-300">Cancellation</a>
-                    </p>
                 </div>
             </div>
         </div>

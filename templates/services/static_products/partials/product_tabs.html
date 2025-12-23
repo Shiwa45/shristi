@@ -3,13 +3,14 @@
     <style>
     /* minimal scoped styles to avoid touching global CSS */
     .pt-card { background: linear-gradient(180deg,#fff,#fbfdff); border-radius:12px; box-shadow:0 6px 20px rgba(16,24,40,0.06); overflow:hidden }
-    .pt-tablist { display:flex; gap:8px; padding:12px; background:#f3f6fb }
-    .pt-tab { flex:1; text-align:center; padding:10px 12px; border-radius:8px; cursor:pointer; font-weight:600; color:#334155 }
+    .pt-tablist { display:flex; gap:8px; padding:12px; background:#f3f6fb; justify-content:space-between; flex-wrap:wrap }
+    .pt-tab { flex:1 0 120px; text-align:center; padding:6px 8px; border-radius:8px; cursor:pointer; font-weight:600; color:#334155; min-width:75px; max-width:140px }
     .pt-tab[aria-selected="true"] { background:linear-gradient(90deg,#667eea,#764ba2); color:white; box-shadow:0 6px 18px rgba(102,126,234,0.18) }
     .pt-panel { padding:20px; display:none }
     .pt-panel.active { display:block }
     .pt-grid { display:grid; gap:16px; grid-template-columns:repeat(1,1fr) }
     @media(min-width:768px){ .pt-grid{ grid-template-columns: 2fr 1fr } }
+    @media(max-width:640px){ .pt-tab{ flex:1 1 46%; min-width:90px; max-width:none; padding:8px 10px } }
     .feature-list { list-style:none; padding:0; margin:0; display:grid; gap:16px }
     .feature-item { display:flex; gap:16px; align-items:flex-start; padding:12px; background:#fafbfc; border-radius:8px; border-left:3px solid #3b82f6 }
     .feature-item .icon { width:44px; height:44px; flex-shrink:0; border-radius:10px; background:linear-gradient(135deg,#3b82f6,#1d4ed8); display:flex; align-items:center; justify-content:center; color:#fff; box-shadow:0 2px 8px rgba(59,130,246,0.15) }

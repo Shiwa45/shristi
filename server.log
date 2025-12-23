@@ -1,4 +1,0 @@
-Not Found: /cart/data/
-"GET /cart/data/ HTTP/1.1" 404 4868
-"GET / HTTP/1.1" 200 69077
-"GET /static/images/logo.png HTTP/1.1" 404 1985

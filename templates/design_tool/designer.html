@@ -22,7 +22,7 @@
         }
 
         :root {
-            --primary-color: #ff5722;
+            --primary-color: #4f46e5;
             --secondary-color: #2196f3;
             --dark-bg: #2c3e50;
             --sidebar-bg: #34495e;
@@ -119,7 +119,7 @@
         }
 
         .panel-header {
-            background: linear-gradient(135deg, var(--primary-color), #ff7043);
+            background: linear-gradient(135deg, var(--primary-color), #6366f1);
             color: white;
             padding: 15px;
             font-size: 16px;
@@ -258,7 +258,7 @@
         }
 
         .toolbar-btn.primary:hover {
-            background: #ff7043;
+            background: #6366f1;
         }
 
         /* Canvas Container with Rulers */
@@ -869,9 +869,16 @@
                     <!-- Clipart Search Section -->
                     <div class="properties-group">
                         <div class="properties-title">Clipart Library</div>
-                        <input type="text" id="clipartSearch" class="property-input" placeholder="Search cliparts..." 
-                               style="width: 100%; margin-bottom: 10px;" onkeypress="handleClipartSearch(event)">
-                        <button class="toolbar-btn primary" style="width: 100%; margin-bottom: 10px;" onclick="searchCliparts()">
+                        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                            <input type="text" id="clipartSearch" class="property-input" placeholder="Search cliparts..." 
+                                style="flex: 1;" onkeypress="handleClipartSearch(event)">
+                            <select id="clipartSourceSelect" class="property-input" style="width: 170px;" onchange="setClipartSource(this.value)">
+                                <option value="builtin" selected>Built-in Icons</option>
+                                <option value="pixabay">Pixabay Vectors</option>
+                                <option value="unsplash">Unsplash Photos</option>
+                            </select>
+                        </div>
+                        <button class="toolbar-btn primary" style="width: 100%; margin-bottom: 10px;" onclick="searchCliparts(null, true)">
                             <i class="fas fa-search"></i> Search Cliparts
                         </button>
                         
@@ -903,9 +910,16 @@
                     <span class="panel-close" onclick="closePanel()">×</span>
                 </div>
                 <div class="panel-content">
-                    <input type="text" id="pixabaySearch" class="property-input" placeholder="Search images..."
-                        style="width: 100%; margin-bottom: 10px;">
-                    <button class="toolbar-btn primary" style="width: 100%;" onclick="searchPixabayImages()">
+                        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                            <input type="text" id="pixabaySearch" class="property-input" placeholder="Search images..."
+                                style="flex: 1;">
+                            <select id="imageSourceSelect" class="property-input" style="width: 160px;" onchange="setStockSource(this.value)">
+                                <option value="unsplash" selected>Unsplash</option>
+                                <option value="pixabay">Pixabay</option>
+                                <option value="pexels">Pexels</option>
+                            </select>
+                        </div>
+                    <button class="toolbar-btn primary" style="width: 100%;" onclick="searchStockImages(true)">
                         Search Images
                     </button>
                     <div id="pixabayLoading" class="loading" style="display: none;">
@@ -914,9 +928,9 @@
                     </div>
                     <div id="pixabayResults" class="search-grid"></div>
                     <div id="pixabayPagination" class="pagination" style="display: none;">
-                        <button class="page-btn" id="pixabayPrev" onclick="changePixabayPage(-1)">Previous</button>
+                        <button class="page-btn" id="pixabayPrev" onclick="changeStockPage(-1)">Previous</button>
                         <span id="pixabayPageInfo"></span>
-                        <button class="page-btn" id="pixabayNext" onclick="changePixabayPage(1)">Next</button>
+                        <button class="page-btn" id="pixabayNext" onclick="changeStockPage(1)">Next</button>
                     </div>
                 </div>
             </div>
@@ -1199,13 +1213,13 @@
             <span>Duplicate</span>
         </div>
         <div class="context-menu-separator"></div>
-        <div class="context-menu-item" onclick="changeElementColor()">
-            <i class="fas fa-palette"></i>
-            <span>Change Color</span>
+        <div class="context-menu-item" onclick="reflectHorizontal()">
+            <i class="fas fa-arrows-alt-h"></i>
+            <span>Reflect Horizontal</span>
         </div>
-        <div class="context-menu-item" onclick="showElementProperties()">
-            <i class="fas fa-cog"></i>
-            <span>Properties</span>
+        <div class="context-menu-item" onclick="reflectVertical()">
+            <i class="fas fa-arrows-alt-v"></i>
+            <span>Reflect Vertical</span>
         </div>
         <div class="context-menu-separator"></div>
         <div class="context-menu-item" onclick="bringToFront()">
@@ -1215,6 +1229,32 @@
         <div class="context-menu-item" onclick="sendToBack()">
             <i class="fas fa-arrow-down"></i>
             <span>Send to Back</span>
+        </div>
+        <div class="context-menu-item" onclick="bringForward()">
+            <i class="fas fa-level-up-alt"></i>
+            <span>Bring Forward</span>
+        </div>
+        <div class="context-menu-item" onclick="sendBackward()">
+            <i class="fas fa-level-down-alt"></i>
+            <span>Send Backward</span>
+        </div>
+        <div class="context-menu-separator"></div>
+        <div class="context-menu-item" onclick="centerHorizontal()">
+            <i class="fas fa-arrows-alt-h"></i>
+            <span>Center Horizontal</span>
+        </div>
+        <div class="context-menu-item" onclick="centerVertical()">
+            <i class="fas fa-arrows-alt-v"></i>
+            <span>Center Vertical</span>
+        </div>
+        <div class="context-menu-separator"></div>
+        <div class="context-menu-item" onclick="changeElementColor()">
+            <i class="fas fa-palette"></i>
+            <span>Change Color</span>
+        </div>
+        <div class="context-menu-item" onclick="showElementProperties()">
+            <i class="fas fa-cog"></i>
+            <span>Properties</span>
         </div>
         <div class="context-menu-separator"></div>
         <div class="context-menu-item" onclick="deleteSelected()" style="color: #f44336;">
@@ -1248,12 +1288,25 @@
             templateId: null
         };
 
-        // Pixabay API configuration
-        let pixabayConfig = {
-            currentPage: 1,
-            totalHits: 0,
-            perPage: 12
+        // Stock image provider configuration
+        const stockImageSources = {
+            pixabay: {
+                label: 'Pixabay',
+                endpoint: '{% url "design_tool:api_pixabay_images" %}',
+                config: { currentPage: 1, totalHits: 0, perPage: 12 }
+            },
+            unsplash: {
+                label: 'Unsplash',
+                endpoint: '{% url "design_tool:api_unsplash_images" %}',
+                config: { currentPage: 1, totalHits: 0, perPage: 12 }
+            },
+            pexels: {
+                label: 'Pexels',
+                endpoint: '{% url "design_tool:api_pexels_images" %}',
+                config: { currentPage: 1, totalHits: 0, perPage: 12 }
+            }
         };
+        let activeStockSource = 'unsplash';
 
         // Products cache
         let productsCache = [];
@@ -1437,7 +1490,6 @@
             loadDatabaseTemplates();
             loadUserTemplates();
             checkURLParams();
-            startAutoSave();
         });
 
         // Check URL parameters for product/category
@@ -1454,66 +1506,38 @@
                         if (data) {
                             applyProductSettings(data);
                         }
+                    })
+                    .catch(() => {
+                        console.warn('Product lookup failed, using defaults');
                     });
             }
         }
 
         // Load products from backend
         async function loadProducts() {
-            try {
-                // Try the API endpoint first
-                let response = await fetch('/api/products/');
-                let data;
+            // Default products to avoid 404s when API is unavailable
+            const fallbackProducts = [
+                { id: 1, name: 'Business Card', width: 90, height: 54, bleed_size: 3, safe_zone: 5 },
+                { id: 2, name: 'Flyer', width: 210, height: 297, bleed_size: 3, safe_zone: 5 },
+                { id: 3, name: 'Poster', width: 420, height: 594, bleed_size: 5, safe_zone: 10 }
+            ];
 
-                if (!response.ok) {
-                    // Fallback to products endpoint
-                    response = await fetch('/products/ajax/calculate-price/');
-                    // For now, use hardcoded products if API is not available
-                    data = {
-                        results: [
-                            { id: 1, name: 'Business Card', slug: 'business-card', width: 90, height: 54, bleed_size: 3, safe_zone: 5 },
-                            { id: 2, name: 'Flyer', slug: 'flyer', width: 210, height: 297, bleed_size: 3, safe_zone: 5 },
-                            { id: 3, name: 'Poster', slug: 'poster', width: 420, height: 594, bleed_size: 5, safe_zone: 10 }
-                        ]
-                    };
-                } else {
-                    data = await response.json();
-                }
+            // Use defaults to avoid noisy 404s in dev; replace with API data when available
+            const data = { results: fallbackProducts };
 
-                if (data && data.results) {
-                    productsCache = data.results;
-                    const select = document.getElementById('productSelect');
-                    select.innerHTML = '<option value="">Select Product</option>';
-
-                    data.results.forEach(product => {
-                        const option = document.createElement('option');
-                        option.value = product.id;
-                        option.textContent = product.name;
-                        option.dataset.width = product.width;
-                        option.dataset.height = product.height;
-                        option.dataset.bleed = product.bleed_size || 3;
-                        option.dataset.safeZone = product.safe_zone || 5;
-                        select.appendChild(option);
-                    });
-                }
-            } catch (error) {
-                console.error('Error loading products:', error);
-                // Load default products as fallback
-                const defaultProducts = [
-                    { id: 1, name: 'Business Card', width: 90, height: 54 },
-                    { id: 2, name: 'Flyer', width: 210, height: 297 },
-                    { id: 3, name: 'Poster', width: 420, height: 594 }
-                ];
-
+            if (data && data.results) {
+                productsCache = data.results;
                 const select = document.getElementById('productSelect');
-                defaultProducts.forEach(product => {
+                select.innerHTML = '<option value=\"\">Select Product</option>';
+
+                data.results.forEach(product => {
                     const option = document.createElement('option');
                     option.value = product.id;
                     option.textContent = product.name;
                     option.dataset.width = product.width;
                     option.dataset.height = product.height;
-                    option.dataset.bleed = 3;
-                    option.dataset.safeZone = 5;
+                    option.dataset.bleed = product.bleed_size || 3;
+                    option.dataset.safeZone = product.safe_zone || 5;
                     select.appendChild(option);
                 });
             }
@@ -1551,7 +1575,10 @@
         // Load SVG template - FIXED for full editability
         async function loadSVGTemplate(svgUrl) {
             try {
-                const response = await fetch(svgUrl);
+                const response = await fetch(svgUrl, {
+                    credentials: 'same-origin',
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                });
                 const svgText = await response.text();
 
                 fabric.loadSVGFromString(svgText, function (objects, options) {
@@ -1610,6 +1637,7 @@
                     // Ensure guides are on top
                     bringGuidesToFront();
 
+                    scaleAndCenterCanvasElements();
                     canvas.renderAll();
                     saveHistory();
                 }, null, { crossOrigin: 'Anonymous' });
@@ -1629,9 +1657,6 @@
 
                 // Load from JSON
                 canvas.loadFromJSON(jsonData, function() {
-                    canvas.renderAll();
-                    saveHistory();
-
                     // Make all text objects editable
                     canvas.getObjects().forEach(obj => {
                         if (obj.type === 'text') {
@@ -1665,12 +1690,47 @@
 
                     // Ensure guides are on top
                     bringGuidesToFront();
+                    scaleAndCenterCanvasElements();
                     canvas.renderAll();
+                    saveHistory();
                 });
             } catch (error) {
                 console.error('Error loading JSON template:', error);
                 alert('Failed to load template data.');
             }
+        }
+
+        // Fit imported content to the current canvas
+        function scaleAndCenterCanvasElements() {
+            if (!canvas) return;
+            const objects = canvas.getObjects().filter(obj => obj.visible !== false && obj.customType !== 'grid');
+            if (!objects.length) return;
+
+            let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+            objects.forEach(obj => {
+                obj.setCoords();
+                const bounds = obj.getBoundingRect(true, true);
+                minX = Math.min(minX, bounds.left);
+                minY = Math.min(minY, bounds.top);
+                maxX = Math.max(maxX, bounds.left + bounds.width);
+                maxY = Math.max(maxY, bounds.top + bounds.height);
+            });
+
+            const contentWidth = maxX - minX;
+            const contentHeight = maxY - minY;
+            if (contentWidth === 0 || contentHeight === 0) return;
+
+            const targetWidth = canvas.width * 0.9;
+            const targetHeight = canvas.height * 0.9;
+            const scale = Math.min(targetWidth / contentWidth, targetHeight / contentHeight);
+
+            objects.forEach(obj => {
+                obj.scaleX *= scale;
+                obj.scaleY *= scale;
+                obj.left = (obj.left - minX) * scale + (canvas.width - contentWidth * scale) / 2;
+                obj.top = (obj.top - minY) * scale + (canvas.height - contentHeight * scale) / 2;
+                obj.setCoords();
+            });
         }
 
         // Bring guides to front - now handled by overlay system
@@ -2144,11 +2204,15 @@
                 canvasConfig.bleedMM = template.bleed_mm || 3;
                 canvasConfig.safeZoneMM = template.safe_zone_mm || 5;
 
-                // Update form fields
-                document.getElementById('canvasWidth').value = template.width_mm;
-                document.getElementById('canvasHeight').value = template.height_mm;
-                document.getElementById('bleedSize').value = template.bleed_mm || 3;
-                document.getElementById('safeZoneSize').value = template.safe_zone_mm || 5;
+                // Update form fields (guarding for missing inputs)
+                const widthInput = document.getElementById('canvasWidthMM');
+                const heightInput = document.getElementById('canvasHeightMM');
+                if (widthInput) widthInput.value = template.width_mm;
+                if (heightInput) heightInput.value = template.height_mm;
+                const bleedInput = document.getElementById('bleedSize');
+                const safeInput = document.getElementById('safeZoneSize');
+                if (bleedInput) bleedInput.value = template.bleed_mm || 3;
+                if (safeInput) safeInput.value = template.safe_zone_mm || 5;
 
                 // Update canvas size
                 updateCanvasFromMM();
@@ -2266,11 +2330,15 @@
                 canvasConfig.bleedMM = template.bleed_mm || 3;
                 canvasConfig.safeZoneMM = template.safe_zone_mm || 5;
 
-                // Update form fields
-                document.getElementById('canvasWidth').value = template.width_mm;
-                document.getElementById('canvasHeight').value = template.height_mm;
-                document.getElementById('bleedSize').value = template.bleed_mm || 3;
-                document.getElementById('safeZoneSize').value = template.safe_zone_mm || 5;
+                // Update form fields (guarding for missing inputs)
+                const widthInput = document.getElementById('canvasWidthMM');
+                const heightInput = document.getElementById('canvasHeightMM');
+                if (widthInput) widthInput.value = template.width_mm;
+                if (heightInput) heightInput.value = template.height_mm;
+                const bleedInput = document.getElementById('bleedSize');
+                const safeInput = document.getElementById('safeZoneSize');
+                if (bleedInput) bleedInput.value = template.bleed_mm || 3;
+                if (safeInput) safeInput.value = template.safe_zone_mm || 5;
 
                 // Update canvas size
                 updateCanvasFromMM();
@@ -2423,11 +2491,15 @@
             // Right-click context menu
             canvas.on('mouse:down', function(options) {
                 if (options.e.button === 2) { // Right click
-                    const target = canvas.findTarget(options.e);
+                    options.e.preventDefault();
+                    options.e.stopPropagation();
+                    const target = options.target || canvas.findTarget(options.e);
                     if (target && target.customType !== 'grid' && target.customType !== 'bleed' && target.customType !== 'safezone') {
                         canvas.setActiveObject(target);
                         canvas.renderAll();
                         showContextMenu(options.e, target);
+                    } else {
+                        hideContextMenu();
                     }
                 }
             });
@@ -2435,6 +2507,14 @@
             // Prevent default context menu on canvas
             canvas.upperCanvasEl.addEventListener('contextmenu', function(e) {
                 e.preventDefault();
+                const target = canvas.findTarget(e) || canvas.getActiveObject();
+                if (target && target.customType !== 'grid' && target.customType !== 'bleed' && target.customType !== 'safezone') {
+                    canvas.setActiveObject(target);
+                    canvas.renderAll();
+                    showContextMenu(e, target);
+                } else {
+                    hideContextMenu();
+                }
             });
 
             saveHistory();
@@ -2459,8 +2539,14 @@
 
         // Update canvas from MM input
         function updateCanvasFromMM() {
-            canvasConfig.widthMM = parseFloat(document.getElementById('canvasWidthMM').value);
-            canvasConfig.heightMM = parseFloat(document.getElementById('canvasHeightMM').value);
+            const widthInput = document.getElementById('canvasWidthMM');
+            const heightInput = document.getElementById('canvasHeightMM');
+
+            const newWidthMM = parseFloat(widthInput ? widthInput.value : canvasConfig.widthMM) || canvasConfig.widthMM || 90;
+            const newHeightMM = parseFloat(heightInput ? heightInput.value : canvasConfig.heightMM) || canvasConfig.heightMM || 54;
+
+            canvasConfig.widthMM = newWidthMM;
+            canvasConfig.heightMM = newHeightMM;
 
             const widthPx = mmToPx(canvasConfig.widthMM);
             const heightPx = mmToPx(canvasConfig.heightMM);
@@ -2471,6 +2557,11 @@
 
             drawRulers();
             addGrid();
+            scaleAndCenterCanvasElements();
+
+            currentZoom = 1;
+            canvas.setZoom(1);
+            updateZoomLevel();
 
             // Update overlay guides
             if (guideOverlayManager) {
@@ -2855,7 +2946,7 @@
                     shape = new fabric.Rect({
                         width: mmToPx(20),
                         height: mmToPx(20),
-                        fill: '#ff5722',
+                        fill: '#4f46e5',
                         left: canvas.width / 2 - mmToPx(10),
                         top: canvas.height / 2 - mmToPx(10)
                     });
@@ -2924,8 +3015,23 @@
             }
         }
 
-        // Pixabay API Integration
-        async function searchPixabayImages() {
+        // Stock image integrations (Pixabay, Unsplash, Pexels)
+        function setStockSource(source) {
+            if (!stockImageSources[source]) return;
+            activeStockSource = source;
+            stockImageSources[source].config.currentPage = 1;
+            document.getElementById('pixabayResults').innerHTML = '';
+            document.getElementById('pixabayPagination').style.display = 'none';
+            if (document.getElementById('pixabaySearch').value) {
+                searchStockImages(true);
+            }
+        }
+
+        function getActiveStockConfig() {
+            return stockImageSources[activeStockSource].config;
+        }
+
+        async function searchStockImages(resetPage = false, allowFallback = true) {
             const searchTerm = document.getElementById('pixabaySearch').value;
             if (!searchTerm) {
                 alert('Please enter a search term');
@@ -2935,59 +3041,70 @@
             const loading = document.getElementById('pixabayLoading');
             const resultsDiv = document.getElementById('pixabayResults');
             const pagination = document.getElementById('pixabayPagination');
+            const config = getActiveStockConfig();
+            if (resetPage) {
+                config.currentPage = 1;
+            }
+            const { currentPage, perPage } = config;
+            const endpoint = stockImageSources[activeStockSource].endpoint;
 
             loading.style.display = 'flex';
             resultsDiv.innerHTML = '';
             pagination.style.display = 'none';
 
             try {
-                // Using Django backend endpoint that proxies to Pixabay
-                const response = await fetch(`{% url "design_tool:api_pixabay_images" %}?q=${encodeURIComponent(searchTerm)}&page=${pixabayConfig.currentPage}&per_page=${pixabayConfig.perPage}&image_type=photo`);
+                const response = await fetch(`${endpoint}?q=${encodeURIComponent(searchTerm)}&page=${currentPage}&per_page=${perPage}&image_type=photo`);
                 const data = await response.json();
 
                 if (data.success && data.images.length > 0) {
-                    pixabayConfig.totalHits = data.pagination.total_hits;
-                    displayPixabayResults(data.images);
-                    setupPixabayPagination();
+                    getActiveStockConfig().totalHits = data.pagination.total_hits;
+                    displayStockResults(data.images);
+                    setupStockPagination();
                 } else {
+                    // stay on the chosen provider; don't auto-switch
                     resultsDiv.innerHTML = '<p style="text-align: center; color: #999;">No images found</p>';
                 }
             } catch (error) {
-                console.error('Pixabay search error:', error);
+                console.error('Stock image search error:', error);
                 resultsDiv.innerHTML = '<p style="text-align: center; color: #f44336;">Error searching images</p>';
             } finally {
                 loading.style.display = 'none';
             }
         }
 
-        function displayPixabayResults(images) {
+        function displayStockResults(images) {
             const resultsDiv = document.getElementById('pixabayResults');
             resultsDiv.innerHTML = '';
 
             images.forEach(image => {
                 const div = document.createElement('div');
                 div.className = 'search-item';
-                div.innerHTML = `<img src="${image.preview_url}" alt="${image.tags}">`;
+                const label = image.tags || image.description || image.user || '';
+                div.innerHTML = `<img src="${image.preview_url}" alt="${label}">`;
                 div.onclick = () => addImageToCanvas(image.large_url || image.preview_url);
                 resultsDiv.appendChild(div);
             });
         }
 
-        function setupPixabayPagination() {
+        function setupStockPagination() {
             const pagination = document.getElementById('pixabayPagination');
-            const totalPages = Math.ceil(pixabayConfig.totalHits / pixabayConfig.perPage);
+            const config = getActiveStockConfig();
+            const totalPages = Math.ceil(config.totalHits / config.perPage);
 
             if (totalPages > 1) {
                 pagination.style.display = 'flex';
-                document.getElementById('pixabayPageInfo').textContent = `Page ${pixabayConfig.currentPage} of ${totalPages}`;
-                document.getElementById('pixabayPrev').disabled = pixabayConfig.currentPage === 1;
-                document.getElementById('pixabayNext').disabled = pixabayConfig.currentPage === totalPages;
+                document.getElementById('pixabayPageInfo').textContent = `Page ${config.currentPage} of ${totalPages} (${stockImageSources[activeStockSource].label})`;
+                document.getElementById('pixabayPrev').disabled = config.currentPage === 1;
+                document.getElementById('pixabayNext').disabled = config.currentPage === totalPages;
             }
         }
 
-        function changePixabayPage(direction) {
-            pixabayConfig.currentPage += direction;
-            searchPixabayImages();
+        function changeStockPage(direction) {
+            const config = getActiveStockConfig();
+            const nextPage = config.currentPage + direction;
+            if (nextPage < 1) return;
+            config.currentPage = nextPage;
+            searchStockImages(false, true);
         }
 
         function addImageToCanvas(url) {
@@ -3214,6 +3331,46 @@
             hideContextMenu();
         }
 
+        function reflectHorizontal() {
+            const target = contextMenuTarget || canvas.getActiveObject();
+            if (!target) return;
+            target.set('flipX', !target.flipX);
+            canvas.renderAll();
+            saveHistory();
+            hideContextMenu();
+        }
+
+        function reflectVertical() {
+            const target = contextMenuTarget || canvas.getActiveObject();
+            if (!target) return;
+            target.set('flipY', !target.flipY);
+            canvas.renderAll();
+            saveHistory();
+            hideContextMenu();
+        }
+
+        function centerHorizontal() {
+            const target = contextMenuTarget || canvas.getActiveObject();
+            if (!target) return;
+            const targetWidth = (target.width * target.scaleX) || target.getScaledWidth();
+            target.set('left', (canvas.width - targetWidth) / 2);
+            target.setCoords();
+            canvas.renderAll();
+            saveHistory();
+            hideContextMenu();
+        }
+
+        function centerVertical() {
+            const target = contextMenuTarget || canvas.getActiveObject();
+            if (!target) return;
+            const targetHeight = (target.height * target.scaleY) || target.getScaledHeight();
+            target.set('top', (canvas.height - targetHeight) / 2);
+            target.setCoords();
+            canvas.renderAll();
+            saveHistory();
+            hideContextMenu();
+        }
+
         // Change element color
         function changeElementColor() {
             if (!contextMenuTarget) return;
@@ -3328,7 +3485,7 @@
             
             propertiesHTML += `
                 <div style="display: flex; gap: 10px; margin-top: 20px;">
-                    <button onclick="applyProperties()" style="flex: 1; padding: 10px; background: #ff5722; color: white; border: none; border-radius: 4px; cursor: pointer;">Apply</button>
+                    <button onclick="applyProperties()" style="flex: 1; padding: 10px; background: #4f46e5; color: white; border: none; border-radius: 4px; cursor: pointer;">Apply</button>
                     <button onclick="closePropertiesModal()" style="flex: 1; padding: 10px; background: #ddd; border: none; border-radius: 4px; cursor: pointer;">Cancel</button>
                 </div>
             `;
@@ -3712,7 +3869,7 @@
                 
                 colorSwatch.onmouseout = () => {
                     colorSwatch.style.transform = 'scale(1)';
-                    colorSwatch.style.borderColor = selectedColorToReplace === color ? '#ff5722' : '#ddd';
+                    colorSwatch.style.borderColor = selectedColorToReplace === color ? '#4f46e5' : '#ddd';
                 };
                 
                 colorSwatch.onclick = () => {
@@ -3779,7 +3936,7 @@
             const btn = document.getElementById('colorReplaceBtn');
             
             if (colorReplaceMode) {
-                btn.style.background = '#ff5722';
+                btn.style.background = '#4f46e5';
                 btn.style.color = 'white';
                 btn.title = 'Click a color to replace, then pick new color';
                 selectedColorToReplace = null;
@@ -3803,7 +3960,7 @@
             });
             
             selectedColorToReplace = color;
-            swatchElement.style.borderColor = '#ff5722';
+            swatchElement.style.borderColor = '#4f46e5';
             swatchElement.style.borderWidth = '3px';
             
             // Show color picker for replacement
@@ -4206,129 +4363,96 @@ END:VCARD`;
             perPage: 12,
             currentQuery: ''
         };
-
-
-
-
-
-        // Handle clipart search on Enter key
-        function handleClipartSearch(event) {
-            if (event.key === 'Enter') {
-                searchCliparts();
+        const clipartSources = {
+            pixabay: {
+                label: 'Pixabay Vectors',
+                endpoint: '{% url "design_tool:api_pixabay_cliparts" %}'
+            },
+            unsplash: {
+                label: 'Unsplash',
+                endpoint: '{% url "design_tool:api_unsplash_images" %}'  // will use photos as clipart fallback
+            },
+            builtin: {
+                label: 'Built-in Icons',
+                local: true
             }
-        }
+        };
+        let activeClipartSource = 'builtin';
 
-        // Search cliparts using Iconify API (more reliable)
-        async function searchCliparts(query = null, showLoading = true) {
-            const searchTerm = query || document.getElementById('clipartSearch').value || '';
-            
-            if (!searchTerm.trim()) {
-                loadPopularCliparts();
-                return;
-            }
-            
-            clipartConfig.currentQuery = searchTerm;
-            
-            const loading = document.getElementById('clipartLoading');
-            const resultsDiv = document.getElementById('clipartResults');
-            const pagination = document.getElementById('clipartPagination');
-            
-            if (showLoading) {
-                loading.style.display = 'flex';
-                resultsDiv.innerHTML = '';
-                pagination.style.display = 'none';
-            }
-            
-            try {
-                // Use a simpler approach with predefined popular icons
-                const popularIcons = getPopularIcons(searchTerm);
-                
-                if (popularIcons.length > 0) {
-                    clipartConfig.totalHits = popularIcons.length;
-                    displayCliparts(popularIcons.slice(0, clipartConfig.perPage));
-                    setupClipartPagination();
-                } else {
-                    displayNoResults();
-                }
-            } catch (error) {
-                console.error('Clipart search error:', error);
-                loadPopularCliparts();
-            } finally {
-                if (showLoading) {
-                    loading.style.display = 'none';
-                }
-            }
-        }
 
-        // Get popular icons based on search term
-        function getPopularIcons(searchTerm = '') {
+
+
+
+        // Local clipart library (fallback / offline)
+        function getLocalClipartIcons(searchTerm = '') {
+            const svgData = (symbol) => {
+                const encoded = encodeURIComponent(
+                    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+                        <rect width="64" height="64" rx="12" ry="12" fill="#eef2ff"/>
+                        <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="44" fill="#4f46e5">${symbol}</text>
+                    </svg>`
+                );
+                return `data:image/svg+xml;utf8,${encoded}`;
+            };
+
             const iconLibrary = {
                 'star': [
-                    { name: 'star', set: 'mdi', title: 'Star' },
-                    { name: 'star-outline', set: 'mdi', title: 'Star Outline' },
-                    { name: 'star-half', set: 'mdi', title: 'Star Half' },
-                    { name: 'star-circle', set: 'mdi', title: 'Star Circle' }
+                    { name: 'star', title: 'Star', symbol: '★' },
+                    { name: 'sparkle', title: 'Sparkle', symbol: '✦' },
+                    { name: 'award', title: 'Award', symbol: '🏅' }
                 ],
                 'heart': [
-                    { name: 'heart', set: 'mdi', title: 'Heart' },
-                    { name: 'heart-outline', set: 'mdi', title: 'Heart Outline' },
-                    { name: 'heart-broken', set: 'mdi', title: 'Broken Heart' },
-                    { name: 'cards-heart', set: 'mdi', title: 'Heart Card' }
+                    { name: 'heart', title: 'Heart', symbol: '❤' },
+                    { name: 'favorite', title: 'Favorite', symbol: '💖' },
+                    { name: 'like', title: 'Like', symbol: '👍' }
                 ],
                 'arrow': [
-                    { name: 'arrow-right', set: 'mdi', title: 'Arrow Right' },
-                    { name: 'arrow-left', set: 'mdi', title: 'Arrow Left' },
-                    { name: 'arrow-up', set: 'mdi', title: 'Arrow Up' },
-                    { name: 'arrow-down', set: 'mdi', title: 'Arrow Down' }
+                    { name: 'arrow-right', title: 'Arrow Right', symbol: '➡' },
+                    { name: 'arrow-left', title: 'Arrow Left', symbol: '⬅' },
+                    { name: 'arrow-up', title: 'Arrow Up', symbol: '⬆' },
+                    { name: 'arrow-down', title: 'Arrow Down', symbol: '⬇' }
                 ],
                 'business': [
-                    { name: 'briefcase', set: 'mdi', title: 'Briefcase' },
-                    { name: 'office-building', set: 'mdi', title: 'Office Building' },
-                    { name: 'chart-line', set: 'mdi', title: 'Chart' },
-                    { name: 'currency-usd', set: 'mdi', title: 'Dollar' }
+                    { name: 'briefcase', title: 'Briefcase', symbol: '💼' },
+                    { name: 'chart', title: 'Chart', symbol: '📈' },
+                    { name: 'money', title: 'Money', symbol: '💵' }
                 ],
                 'nature': [
-                    { name: 'tree', set: 'mdi', title: 'Tree' },
-                    { name: 'flower', set: 'mdi', title: 'Flower' },
-                    { name: 'leaf', set: 'mdi', title: 'Leaf' },
-                    { name: 'weather-sunny', set: 'mdi', title: 'Sun' }
+                    { name: 'tree', title: 'Tree', symbol: '🌳' },
+                    { name: 'flower', title: 'Flower', symbol: '🌸' },
+                    { name: 'leaf', title: 'Leaf', symbol: '🍃' },
+                    { name: 'sun', title: 'Sun', symbol: '☀' }
                 ],
                 'tech': [
-                    { name: 'laptop', set: 'mdi', title: 'Laptop' },
-                    { name: 'cellphone', set: 'mdi', title: 'Phone' },
-                    { name: 'wifi', set: 'mdi', title: 'WiFi' },
-                    { name: 'cloud', set: 'mdi', title: 'Cloud' }
+                    { name: 'laptop', title: 'Laptop', symbol: '💻' },
+                    { name: 'phone', title: 'Phone', symbol: '📱' },
+                    { name: 'wifi', title: 'WiFi', symbol: '📶' },
+                    { name: 'cloud', title: 'Cloud', symbol: '☁' }
                 ],
                 'social': [
-                    { name: 'account', set: 'mdi', title: 'User' },
-                    { name: 'account-group', set: 'mdi', title: 'Group' },
-                    { name: 'thumb-up', set: 'mdi', title: 'Like' },
-                    { name: 'share', set: 'mdi', title: 'Share' }
+                    { name: 'user', title: 'User', symbol: '👤' },
+                    { name: 'group', title: 'Group', symbol: '👥' },
+                    { name: 'share', title: 'Share', symbol: '🔗' }
                 ],
                 'home': [
-                    { name: 'home', set: 'mdi', title: 'Home' },
-                    { name: 'door', set: 'mdi', title: 'Door' },
-                    { name: 'window-closed', set: 'mdi', title: 'Window' },
-                    { name: 'garage', set: 'mdi', title: 'Garage' }
+                    { name: 'home', title: 'Home', symbol: '🏠' },
+                    { name: 'door', title: 'Door', symbol: '🚪' },
+                    { name: 'garage', title: 'Garage', symbol: '🚗' }
                 ]
             };
 
-            // Search for matching categories
             const searchLower = searchTerm.toLowerCase();
             let matchedIcons = [];
 
-            // Direct category match
-            if (iconLibrary[searchLower]) {
+            if (searchLower && iconLibrary[searchLower]) {
                 matchedIcons = iconLibrary[searchLower];
-            } else {
-                // Search in all categories
+            } else if (searchLower) {
                 Object.keys(iconLibrary).forEach(category => {
                     if (category.includes(searchLower) || searchLower.includes(category)) {
                         matchedIcons = matchedIcons.concat(iconLibrary[category]);
                     }
                 });
-                
-                // If no matches, search in icon names
+
                 if (matchedIcons.length === 0) {
                     Object.values(iconLibrary).forEach(icons => {
                         icons.forEach(icon => {
@@ -4338,26 +4462,121 @@ END:VCARD`;
                         });
                     });
                 }
+            } else {
+                Object.values(iconLibrary).forEach(icons => matchedIcons = matchedIcons.concat(icons));
             }
 
-            // Add SVG URLs
             return matchedIcons.map(icon => ({
-                ...icon,
-                url: `https://api.iconify.design/${icon.set}/${icon.name}.svg`
+                name: icon.name,
+                title: icon.title,
+                url: svgData(icon.symbol),
+                tags: icon.title
             }));
         }
 
-        // Load popular cliparts by default
+        // Handle clipart search on Enter key
+        function handleClipartSearch(event) {
+            if (event.key === 'Enter') {
+                searchCliparts(null, true);
+            }
+        }
+
+        // Clipart search (Pixabay vectors or built-in icons)
+        function setClipartSource(source) {
+            if (!clipartSources[source]) return;
+            activeClipartSource = source;
+            clipartConfig.currentPage = 1;
+            document.getElementById('clipartResults').innerHTML = '';
+            document.getElementById('clipartPagination').style.display = 'none';
+            if (document.getElementById('clipartSearch').value) {
+                searchCliparts(null, true);
+            } else {
+                loadPopularCliparts();
+            }
+        }
+
+        async function searchCliparts(query = null, resetPage = false) {
+            const searchTerm = query ?? document.getElementById('clipartSearch').value ?? '';
+            clipartConfig.currentQuery = searchTerm;
+            
+            if (resetPage) {
+                clipartConfig.currentPage = 1;
+            }
+
+            const loading = document.getElementById('clipartLoading');
+            const resultsDiv = document.getElementById('clipartResults');
+            const pagination = document.getElementById('clipartPagination');
+            
+            loading.style.display = 'flex';
+            resultsDiv.innerHTML = '';
+            pagination.style.display = 'none';
+
+            // Built-in/offline source
+            if (clipartSources[activeClipartSource].local) {
+                const localIcons = getLocalClipartIcons(searchTerm);
+                clipartConfig.totalHits = localIcons.length;
+                const start = (clipartConfig.currentPage - 1) * clipartConfig.perPage;
+                const pageIcons = localIcons.slice(start, start + clipartConfig.perPage);
+                displayCliparts(pageIcons);
+                setupClipartPagination();
+                loading.style.display = 'none';
+                return;
+            }
+            
+            // Pixabay vectors or Unsplash fallback
+            try {
+                const endpoint = clipartSources[activeClipartSource].endpoint;
+                const response = await fetch(`${endpoint}?q=${encodeURIComponent(searchTerm)}&page=${clipartConfig.currentPage}&per_page=${clipartConfig.perPage}${activeClipartSource === 'unsplash' ? '' : ''}`);
+                const data = await response.json();
+
+                if (activeClipartSource === 'unsplash') {
+                    if (data.success && (data.images || []).length > 0) {
+                        clipartConfig.totalHits = data.pagination.total_hits;
+                        // Map images to clipart-like objects
+                        const mapped = data.images.map(img => ({
+                            preview_url: img.preview_url,
+                            large_url: img.large_url,
+                            tags: img.tags,
+                            title: img.user
+                        }));
+                        displayCliparts(mapped);
+                        setupClipartPagination();
+                    } else {
+                        fallbackToLocalCliparts(searchTerm);
+                    }
+                } else {
+                    if (data.success && (data.cliparts || []).length > 0) {
+                        clipartConfig.totalHits = data.pagination.total_hits;
+                        displayCliparts(data.cliparts);
+                        setupClipartPagination();
+                    } else {
+                        fallbackToLocalCliparts(searchTerm);
+                    }
+                }
+            } catch (error) {
+                console.error('Clipart search error:', error);
+                fallbackToLocalCliparts(searchTerm);
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function fallbackToLocalCliparts(searchTerm) {
+            activeClipartSource = 'builtin';
+            document.getElementById('clipartSourceSelect').value = 'builtin';
+            const localIcons = getLocalClipartIcons(searchTerm);
+            clipartConfig.totalHits = localIcons.length;
+            const start = (clipartConfig.currentPage - 1) * clipartConfig.perPage;
+            displayCliparts(localIcons.slice(start, start + clipartConfig.perPage));
+            setupClipartPagination();
+        }
+
+        // Load popular cliparts by default (uses current source)
         function loadPopularCliparts() {
-            const popularCategories = ['star', 'heart', 'arrow', 'business', 'nature', 'tech'];
-            let allPopularIcons = [];
-            
-            popularCategories.forEach(category => {
-                const icons = getPopularIcons(category);
-                allPopularIcons = allPopularIcons.concat(icons.slice(0, 2)); // 2 icons per category
-            });
-            
-            displayCliparts(allPopularIcons);
+            const defaultTerm = activeClipartSource === 'pixabay' ? 'icon' : '';
+            document.getElementById('clipartSearch').value = defaultTerm;
+            clipartConfig.currentPage = 1;
+            searchCliparts(defaultTerm, false);
         }
 
         // Display cliparts in grid
@@ -4383,8 +4602,9 @@ END:VCARD`;
                     position: relative;
                 `;
                 
-                const svgUrl = clipart.url;
-                const title = clipart.title || clipart.name || 'Icon';
+                const svgUrl = clipart.preview_url || clipart.url;
+                const fullUrl = clipart.large_url || svgUrl;
+                const title = clipart.title || clipart.name || clipart.tags || 'Icon';
                 
                 // Create SVG element directly for better compatibility
                 div.innerHTML = `
@@ -4404,7 +4624,7 @@ END:VCARD`;
                 
                 div.onmouseover = () => {
                     div.style.transform = 'scale(1.05)';
-                    div.style.borderColor = '#ff5722';
+                    div.style.borderColor = '#4f46e5';
                     div.querySelector('div:last-child').style.opacity = '1';
                 };
                 
@@ -4414,7 +4634,7 @@ END:VCARD`;
                     div.querySelector('div:last-child').style.opacity = '0';
                 };
                 
-                div.onclick = () => addClipartToCanvas(svgUrl, title);
+                div.onclick = () => addClipartToCanvas(fullUrl, title);
                 
                 resultsDiv.appendChild(div);
             });
@@ -4429,12 +4649,18 @@ END:VCARD`;
                 <div style="text-align: center; padding: 30px 20px; color: #999;">
                     <i class="fas fa-search-minus" style="font-size: 48px; margin-bottom: 15px; opacity: 0.5;"></i>
                     <h3 style="margin-bottom: 10px; color: #666;">No Results Found</h3>
-                    <p style="margin-bottom: 15px;">Try different keywords or check your spelling.</p>
+                    <p style="margin-bottom: 15px;">Try different keywords, switch sources, or use popular icons.</p>
                     <button class="toolbar-btn" onclick="displayDefaultCliparts()" style="margin-top: 10px;">
                         <i class="fas fa-arrow-left"></i> Back to Search
                     </button>
                 </div>
             `;
+        }
+
+        function displayDefaultCliparts() {
+            activeClipartSource = document.getElementById('clipartSourceSelect').value || 'pixabay';
+            clipartConfig.currentPage = 1;
+            loadPopularCliparts();
         }
 
         // Add clipart to canvas
@@ -4539,7 +4765,7 @@ END:VCARD`;
             
             if (totalPages > 1) {
                 pagination.style.display = 'flex';
-                document.getElementById('clipartPageInfo').textContent = `Page ${clipartConfig.currentPage} of ${totalPages}`;
+                document.getElementById('clipartPageInfo').textContent = `Page ${clipartConfig.currentPage} of ${totalPages} (${clipartSources[activeClipartSource].label})`;
                 document.getElementById('clipartPrev').disabled = clipartConfig.currentPage === 1;
                 document.getElementById('clipartNext').disabled = clipartConfig.currentPage === totalPages;
             } else {
@@ -4549,8 +4775,10 @@ END:VCARD`;
 
         // Change clipart page
         function changeClipartPage(direction) {
-            clipartConfig.currentPage += direction;
-            searchCliparts(clipartConfig.currentQuery);
+            const next = clipartConfig.currentPage + direction;
+            if (next < 1) return;
+            clipartConfig.currentPage = next;
+            searchCliparts(clipartConfig.currentQuery || '');
         }
 
         // Tool switching

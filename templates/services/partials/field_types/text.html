@@ -1,22 +1,20 @@
 {% load dynamic_form_tags %}
 
-<div class="form-field-wrapper">
-    <label for="{{ field_id }}" class="form-label">
+<div class="form-field-container {{ field|get_field_css_classes }} mb-5" data-field-name="{{ field.field_name }}">
+    <label class="block text-sm font-semibold text-gray-800 mb-2">
         {{ field.field_label }}
-        {% if field.is_required %}<span class="required-asterisk">*</span>{% endif %}
+        {% if field.is_required %}<span class="text-red-500">*</span>{% endif %}
     </label>
 
-    {% if field.help_text %}
-        <p class="field-help-text">{{ field.help_text }}</p>
-    {% endif %}
+    <div class="relative rounded-md shadow-sm">
+        <input type="text" name="{{ field.field_name }}" value="{{ current_value }}"
+            class="block w-full rounded-lg border-gray-300 py-3 px-4 text-gray-900 placeholder-gray-400 focus:border-purple-500 focus:ring-purple-500 sm:text-sm transition-all duration-200 hover:border-gray-400"
+            placeholder="{{ field.placeholder }}" {% if field.is_required %}required{% endif %}>
+    </div>
 
-    <input type="text"
-           id="{{ field_id }}"
-           name="{{ field.field_name }}"
-           class="form-input"
-           value="{{ current_value }}"
-           {% if field.placeholder %}placeholder="{{ field.placeholder }}"{% endif %}
-           {% if field.is_required %}required{% endif %}
-           data-field-type="text"
-           data-price-affecting="{{ field.is_price_affecting|yesno:'true,false' }}">
+    {% if field.help_text %}
+    <p class="text-xs text-gray-500 mt-1.5 flex items-center">
+        <i class="fas fa-info-circle mr-1"></i> {{ field.help_text }}
+    </p>
+    {% endif %}
 </div>

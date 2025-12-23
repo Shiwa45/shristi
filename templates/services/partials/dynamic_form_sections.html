@@ -1,215 +1,27 @@
 {% load dynamic_form_tags %}
-<!-- templates/services/partials/dynamic_form_sections.html -->
-<div class="dynamic-form-sections">
-    {% for section_key, section_data in sections %}
-        <div class="form-section-clean" data-section="{{ section_key }}">
-            <!-- Section Header -->
-            <div class="section-header-clean">
-                <h3 class="section-title-clean">
-                    {% get_section_icon section_key as icon_class %}
-                    <i class="{{ icon_class }} section-icon"></i>
-                    {{ section_data.display_name }}
-                </h3>
-                {% if section_data.description %}
-                <p class="section-description">{{ section_data.description }}</p>
-                {% endif %}
-            </div>
 
-            <!-- Section Fields Grid -->
-            <div class="section-fields-grid">
-                {% for field in section_data.fields %}
-                    <div class="field-container" 
-                         data-field="{{ field.field_name }}"
-                         {% if field.grid_columns > 1 %}data-span="{{ field.grid_columns }}"{% endif %}
-                         {% if field.show_condition %}data-show-condition="{{ field.show_condition }}"{% endif %}>
-                        
-                        {% include 'services/partials/field_types/styled_field.html' with field=field form_data=form_data %}
-                    </div>
-                {% endfor %}
-            </div>
+<div class="dynamic-form-sections space-y-6">
+    {% for section_key, section in sections %}
+    {% if section.fields %}
+    <div class="form-section border-b border-gray-100 pb-6 last:border-0">
+        {% if section.name != "Product Specifications" and section.name != "Quantity & Pricing" %}
+        <div class="section-header mb-4">
+            <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider flex items-center">
+                <i class="{% get_section_icon section_key %} mr-2 text-gray-400"></i>
+                {{ section.display_name }}
+            </h3>
+            {% if section.description %}
+            <p class="text-xs text-gray-500 mt-1">{{ section.description }}</p>
+            {% endif %}
         </div>
+        {% endif %}
+
+        <div class="section-fields grid grid-cols-1 gap-4">
+            {% for field in section.fields %}
+            {% render_form_field field form_data %}
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
     {% endfor %}
 </div>
-
-<style>
-.dynamic-form-sections {
-    background: white;
-    border-radius: 1rem;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-}
-
-.form-section-clean {
-    border-bottom: 1px solid #f1f5f9;
-    position: relative;
-}
-
-.form-section-clean:last-child {
-    border-bottom: none;
-}
-
-.form-section-clean:nth-child(even) {
-    background: linear-gradient(135deg, #fafbfc 0%, #f8fafc 100%);
-}
-
-.section-header-clean {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 1.5rem 2rem;
-    position: relative;
-}
-
-.section-header-clean::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3Ccircle cx='10' cy='10' r='4'/%3E%3Ccircle cx='50' cy='10' r='4'/%3E%3Ccircle cx='10' cy='50' r='4'/%3E%3Ccircle cx='50' cy='50' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    opacity: 0.1;
-}
-
-.section-title-clean {
-    font-size: 1.25rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    margin: 0;
-    position: relative;
-    z-index: 1;
-}
-
-.section-icon {
-    margin-right: 0.75rem;
-    font-size: 1.25rem;
-    opacity: 0.9;
-}
-
-.section-description {
-    margin-top: 0.5rem;
-    margin-bottom: 0;
-    opacity: 0.9;
-    font-size: 0.925rem;
-    position: relative;
-    z-index: 1;
-}
-
-.section-fields-grid {
-    padding: 2rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-    align-items: start;
-}
-
-.field-container {
-    position: relative;
-}
-
-.field-container[data-span="2"] {
-    grid-column: span 2;
-}
-
-.field-container[data-span="3"] {
-    grid-column: span 3;
-}
-
-.field-container[data-show-condition] {
-    transition: all 0.3s ease;
-}
-
-.field-container.hidden {
-    display: none;
-}
-
-/* Section-specific colors */
-.form-section-clean[data-section="product_specs"] .section-header-clean {
-    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-}
-
-.form-section-clean[data-section="design_options"] .section-header-clean {
-    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
-}
-
-.form-section-clean[data-section="printing_options"] .section-header-clean {
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-}
-
-.form-section-clean[data-section="finishing_options"] .section-header-clean {
-    background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
-}
-
-.form-section-clean[data-section="additional_services"] .section-header-clean {
-    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-}
-
-.form-section-clean[data-section="file_uploads"] .section-header-clean {
-    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-}
-
-.form-section-clean[data-section="quantity_pricing"] .section-header-clean {
-    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-}
-
-/* Mobile responsive */
-@media (max-width: 768px) {
-    .section-fields-grid {
-        grid-template-columns: 1fr;
-        padding: 1rem;
-        gap: 1rem;
-    }
-    
-    .field-container[data-span="2"],
-    .field-container[data-span="3"] {
-        grid-column: span 1;
-    }
-    
-    .section-header-clean {
-        padding: 1rem 1.5rem;
-    }
-    
-    .section-title-clean {
-        font-size: 1.125rem;
-    }
-}
-
-/* Enhanced visual hierarchy */
-.form-section-clean:first-child .section-header-clean {
-    border-radius: 1rem 1rem 0 0;
-}
-
-.form-section-clean:last-child:not(:first-child) {
-    border-radius: 0 0 1rem 1rem;
-}
-
-.form-section-clean:first-child:last-child .section-header-clean {
-    border-radius: 1rem 1rem 0 0;
-}
-
-/* Smooth animations */
-.field-container {
-    animation: fadeInUp 0.3s ease-out;
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Focus management */
-.section-fields-grid:focus-within {
-    outline: none;
-}
-
-.field-container:focus-within {
-    transform: translateY(-2px);
-    transition: transform 0.2s ease;
-}
-</style>

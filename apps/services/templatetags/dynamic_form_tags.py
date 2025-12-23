@@ -38,8 +38,11 @@ def render_product_form_fields(product, form_data=None):
     for field in fields:
         section_key = field.field_section
         if section_key not in sections:
+            section_name = field.get_field_section_display()
             sections[section_key] = {
-                'name': field.get_field_section_display(),
+                'name': section_name,
+                'display_name': section_name,
+                'description': getattr(field, 'section_description', ''),
                 'order': field.section_order,
                 'fields': []
             }
@@ -74,10 +77,9 @@ def render_form_field(field, form_data=None, field_id_prefix=""):
     template_name = f'services/partials/field_types/{field.field_type}.html'
 
     try:
-        return render_to_string(template_name, context)
-    except:
-        # Fallback to generic field template
-        return render_to_string('services/partials/field_types/generic.html', context)
+        return mark_safe(render_to_string(template_name, context))
+    except Exception as e:
+        return mark_safe(f"<div class='text-red-500 p-4 border border-red-500 rounded'>Error rendering field {field.field_name}: {str(e)}</div>")
 
 @register.filter
 def get_field_css_classes(field):

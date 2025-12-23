@@ -4,9 +4,11 @@ from django.contrib import admin
 from django.utils.html import format_html
 from django.urls import reverse
 from django.utils.safestring import mark_safe
+import json
 from .models import (
     ServiceCategory, StaticProduct, StaticProductImage,
-    StaticProductFAQ, StaticProductSample, StaticProductTestimonial
+    StaticProductFAQ, StaticProductSample, StaticProductTestimonial,
+    ProductFormField
 )
 
 # apps/services/admin.py - Updated for Static Products
@@ -24,6 +26,101 @@ class StaticProductForm(forms.ModelForm):
             'design_service_available', 'design_service_price',
             'key_features', 'specifications', 'is_active', 'is_featured', 'order'
         ]
+
+
+class ProductFormFieldForm(forms.ModelForm):
+    options = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'rows': 5, 'class': 'vLargeTextField'}),
+        help_text='JSON format: [{"value": "a4", "label": "A4", "price_modifier": 0}]'
+    )
+    show_condition = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'rows': 3, 'class': 'vLargeTextField'}),
+        help_text='JSON format: {"field": "color_mode", "value": "full_color", "operator": "equals"}'
+    )
+    triggers_fields = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'rows': 2, 'class': 'vLargeTextField'}),
+        help_text='JSON format: ["bw_page_count", "color_page_count"]'
+    )
+
+    class Meta:
+        model = ProductFormField
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Format JSON fields for display (pretty print)
+        if self.instance and self.instance.pk:
+            for field_name in ['options', 'show_condition', 'triggers_fields']:
+                raw_value = getattr(self.instance, field_name, '')
+                if raw_value:
+                    try:
+                        parsed = json.loads(raw_value)
+                        self.fields[field_name].initial = json.dumps(parsed, indent=2)
+                    except (TypeError, ValueError, json.JSONDecodeError):
+                        self.fields[field_name].initial = raw_value
+
+    def clean_options(self):
+        value = self.cleaned_data.get('options', '').strip()
+        if not value:
+            return ''
+        try:
+            # Validate JSON format
+            json.loads(value)
+            return value
+        except json.JSONDecodeError as e:
+            raise forms.ValidationError(f"Invalid JSON format: {e}") from e
+
+    def clean_show_condition(self):
+        value = self.cleaned_data.get('show_condition', '').strip()
+        if not value:
+            return ''
+        try:
+            # Validate JSON format
+            json.loads(value)
+            return value
+        except json.JSONDecodeError as e:
+            raise forms.ValidationError(f"Invalid JSON format: {e}") from e
+
+    def clean_triggers_fields(self):
+        value = self.cleaned_data.get('triggers_fields', '').strip()
+        if not value:
+            return ''
+        try:
+            # Validate JSON format
+            json.loads(value)
+            return value
+        except json.JSONDecodeError as e:
+            raise forms.ValidationError(f"Invalid JSON format: {e}") from e
+
+
+class ProductFormFieldInline(admin.StackedInline):
+    model = ProductFormField
+    form = ProductFormFieldForm
+    extra = 0
+    classes = ('collapse',)
+    fieldsets = (
+        ('Field Basics', {
+            'fields': ('field_section', 'field_name', 'field_label', 'field_type', 'order', 'section_order', 'is_required')
+        }),
+        ('Display & Help', {
+            'fields': ('help_text', 'placeholder', 'css_classes', 'grid_columns')
+        }),
+        ('Options & Defaults', {
+            'fields': ('options', 'default_value', 'min_value', 'max_value')
+        }),
+        ('Conditional Logic', {
+            'fields': ('show_condition', 'triggers_fields')
+        }),
+        ('Pricing Impact', {
+            'fields': ('is_price_affecting', 'price_modifier')
+        }),
+        ('Status', {
+            'fields': ('is_active',)
+        }),
+    )
 
 
 @admin.register(ServiceCategory)
@@ -125,7 +222,7 @@ class StaticProductAdmin(admin.ModelAdmin):
         }),
     )
     
-    inlines = [ProductImageInline, ProductFAQInline, ProductSampleInline, ProductTestimonialInline]
+    inlines = [ProductFormFieldInline, ProductImageInline, ProductFAQInline, ProductSampleInline, ProductTestimonialInline]
     
     # Temporarily remove readonly fields to debug
     # def get_readonly_fields(self, request, obj=None):
@@ -191,6 +288,16 @@ class StaticProductTestimonialAdmin(admin.ModelAdmin):
         if obj:  # editing
             return ('created_at',)
         return ()
+
+
+@admin.register(ProductFormField)
+class ProductFormFieldAdmin(admin.ModelAdmin):
+    form = ProductFormFieldForm
+    list_display = ('field_label', 'static_product', 'field_section', 'field_type', 'is_required', 'is_active')
+    list_filter = ('field_section', 'field_type', 'is_required', 'is_active', 'static_product__category')
+    search_fields = ('field_label', 'field_name', 'static_product__name')
+    ordering = ('static_product', 'section_order', 'order')
+    autocomplete_fields = ('static_product',)
 
 
 # Custom admin site configuration

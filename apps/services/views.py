@@ -3,7 +3,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse, Http404
 from django.core.paginator import Paginator
-from django.db.models import Q
+from django.db.models import Q, Case, When, Value, IntegerField
 from django.views.decorators.http import require_http_methods
 from decimal import Decimal
 import json
@@ -15,6 +15,68 @@ ALLOWED_CATEGORIES = [
     'marketing-material',
     'stationery'
 ]
+
+# Whitelisted product names for categories that should only show a curated set
+CATEGORY_PRODUCT_WHITELIST = {
+    'marketing-material': [
+        'Brochures',
+        'Certificates',
+        'Poster',
+        'Posters',
+        'Flyers & Leaflets',
+        'Flyers',
+        'Dangler',
+        'Danglers',
+        'Standees',
+        'Button Badges',
+        'Tent Card',
+    ],
+    'stationery': [
+        'Business Card',
+        'Business Cards',
+        'Letter Head',
+        'Letterheads',
+        'Envelopes',
+        'Bill Book',
+        'Bill Books',
+        'ID Cards',
+        'Document Printing',
+    ],
+}
+
+
+def _apply_curated_products(queryset, slug, exclude_id=None):
+    """
+    Limit a product queryset to the curated list for specific categories and
+    ensure ordering matches the requested sequence.
+    """
+    preferred_names = CATEGORY_PRODUCT_WHITELIST.get(slug, [])
+    if not preferred_names:
+        return queryset
+
+    name_filter = Q()
+    for name in preferred_names:
+        name_filter |= Q(name__iexact=name)
+
+    if exclude_id:
+        queryset = queryset.exclude(id=exclude_id)
+
+    order_cases = [
+        When(name__iexact=name, then=Value(index))
+        for index, name in enumerate(preferred_names)
+    ]
+
+    return (
+        queryset.filter(name_filter)
+        .annotate(
+            preferred_order=Case(
+                *order_cases,
+                default=Value(len(preferred_names)),
+                output_field=IntegerField(),
+            )
+        )
+        .order_by('preferred_order', 'order', 'name')
+    )
 
 
 def services_home(request):
@@ -47,17 +109,20 @@ def services_home(request):
 def category_detail(request, slug):
     """Category detail page showing all products in category"""
     category = get_object_or_404(ServiceCategory, slug=slug, is_active=True)
-    
+
     products = StaticProduct.objects.filter(
         category=category,
         is_active=True
     ).order_by('order', 'name')
-    
+
+    # Apply curated product list for Marketing Materials and Stationery to remove extras
+    products = _apply_curated_products(products, slug)
+
     # Pagination
     paginator = Paginator(products, 12)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    
+
     context = {
         'category': category,
         'products': page_obj,
@@ -65,6 +130,26 @@ def category_detail(request, slug):
         'page_title': f'{category.name} - Shirsti Printing'
     }
     return render(request, 'services/category_detail.html', context)
+
+
+def all_products(request):
+    """All products page showing all products without filters"""
+    products = StaticProduct.objects.filter(
+        is_active=True
+    ).select_related('category').order_by('category__order', 'category__name', 'order', 'name')
+
+    # Pagination
+    paginator = Paginator(products, 12)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'products': page_obj,
+        'page_obj': page_obj,
+        'page_title': 'All Products - Shirsti Printing',
+        'is_all_products': True
+    }
+    return render(request, 'services/all_products.html', context)
 
 
 def static_product_detail(request, category_slug, product_slug):
@@ -82,6 +167,17 @@ def static_product_detail(request, category_slug, product_slug):
         category=category,
         is_active=True
     ).exclude(id=product.id).select_related('category')[:4]
+
+    # Keep related products aligned with curated lists where applicable
+    if CATEGORY_PRODUCT_WHITELIST.get(category.slug):
+        related_products = _apply_curated_products(
+            StaticProduct.objects.filter(
+                category=category,
+                is_active=True,
+            ),
+            category.slug,
+            exclude_id=product.id,
+        ).select_related('category')[:4]
 
     # If no related products in same category, get from other categories
     if len(related_products) < 4:
@@ -396,4 +492,3 @@ def category_pricing_api(request):
         return JsonResponse({'error': f'Invalid parameter: {str(e)}'}, status=400)
     except Exception as e:
         return JsonResponse({'error': 'Internal server error'}, status=500)
-

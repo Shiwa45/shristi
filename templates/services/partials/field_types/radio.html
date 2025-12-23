@@ -1,64 +1,50 @@
 {% load dynamic_form_tags %}
 
-<div class="form-field-wrapper">
-    <fieldset>
-        <legend class="form-label">
-            {{ field.field_label }}
-            {% if field.is_required %}<span class="required-asterisk">*</span>{% endif %}
-        </legend>
+<div class="form-field-container {{ field|get_field_css_classes }} mb-6" data-field-name="{{ field.field_name }}">
+    <label class="block text-sm font-semibold text-gray-800 mb-3">
+        {{ field.field_label }}
+        {% if field.is_required %}<span class="text-red-500">*</span>{% endif %}
+    </label>
 
-        {% if field.help_text %}
-            <p class="field-help-text">{{ field.help_text }}</p>
-        {% endif %}
-
-        <div class="radio-group">
-            {% for option in field_options %}
-                <div class="radio-option">
-                    <input type="radio"
-                           id="{{ field_id }}_{{ forloop.counter }}"
-                           name="{{ field.field_name }}"
-                           value="{{ option.value }}"
-                           {% if current_value == option.value %}checked{% endif %}
-                           {% if field.is_required and forloop.first and not current_value %}checked{% endif %}
-                           data-price-modifier="{{ option.price_modifier|default:0 }}"
-                           {% if option.description %}data-description="{{ option.description }}"{% endif %}
-                           data-field-type="radio"
-                           data-price-affecting="{{ field.is_price_affecting|yesno:'true,false' }}"
-                           {% if field.is_required %}required{% endif %}>
-
-                    <label for="{{ field_id }}_{{ forloop.counter }}" class="radio-label">
-                        <span class="radio-text">{{ option.label }}</span>
-                        {% if option.price_modifier and option.price_modifier != 0 %}
-                            <span class="price-modifier">
-                                {% if option.price_modifier > 0 %}
-                                    +₹{{ option.price_modifier }}
-                                {% else %}
-                                    ₹{{ option.price_modifier }}
-                                {% endif %}
-                            </span>
-                        {% endif %}
-                        {% if option.description %}
-                            <span class="option-description">{{ option.description }}</span>
-                        {% endif %}
-                    </label>
-                </div>
-            {% endfor %}
-        </div>
-    </fieldset>
-
-    {% if field|get_field_triggers %}
-        <script>
-            // Add field trigger logic
-            document.addEventListener('DOMContentLoaded', function() {
-                const radioInputs = document.querySelectorAll('input[name="{{ field.field_name }}"]');
-                radioInputs.forEach(function(input) {
-                    input.addEventListener('change', function() {
-                        if (this.checked) {
-                            window.handleFieldTriggers('{{ field.field_name }}', this.value, {{ field|get_field_triggers|jsonify }});
-                        }
-                    });
-                });
-            });
-        </script>
+    {% if field.help_text %}
+    <p class="text-xs text-gray-500 mb-3 -mt-1">{{ field.help_text }}</p>
     {% endif %}
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+        {% for option in field_options %}
+        <label class="visual-option-card group relative flex cursor-pointer rounded-xl border border-gray-200 bg-white p-4 shadow-sm focus:outline-none transition-all duration-200 hover:border-purple-400 hover:shadow-md">
+            <input type="radio" 
+                   name="{{ field.field_name }}" 
+                   value="{{ option.value }}" 
+                   class="sr-only peer" 
+                   {% if current_value == option.value %}checked{% endif %} 
+                   {% if field.is_required %}required{% endif %}
+                   data-price-modifier="{{ option.price_modifier }}">
+            
+            <span class="flex flex-1 flex-col text-center">
+                <span class="block text-sm font-medium text-gray-900 group-hover:text-purple-700 peer-checked:text-purple-800 transition-colors">
+                    {{ option.label }}
+                </span>
+                
+                {% if option.description %}
+                <span class="mt-1 text-xs text-gray-500">{{ option.description }}</span>
+                {% endif %}
+                
+                {% if option.price_modifier > 0 %}
+                <span class="mt-2 inline-block rounded-full bg-purple-50 px-2 py-0.5 text-xs font-semibold text-purple-700">
+                    +₹{{ option.price_modifier }}
+                </span>
+                {% endif %}
+            </span>
+
+            <!-- Active Border -->
+            <span class="pointer-events-none absolute -inset-px rounded-xl border-2 border-transparent peer-checked:border-purple-600" aria-hidden="true"></span>
+            
+            <!-- Checkmark -->
+            <span class="absolute -top-2 -right-2 hidden h-6 w-6 items-center justify-center rounded-full bg-purple-600 text-white shadow-sm ring-2 ring-white peer-checked:flex transform scale-0 peer-checked:scale-100 transition-transform duration-200">
+                <svg class="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            </span>
+        </label>
+        {% endfor %}
+    </div>
 </div>

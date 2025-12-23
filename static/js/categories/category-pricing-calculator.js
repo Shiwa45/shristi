@@ -5,6 +5,7 @@ class CategoryPricingCalculator {
         this.minQuantity = categoryConfig.minQuantity || 25;
         this.gstPercentage = categoryConfig.gstPercentage || 18;
         this.basePrice = 100; // Default base price
+        this.pricingReady = false;
         this.formData = {};
         this.pricing = {
             basePrice: 0,
@@ -25,31 +26,46 @@ class CategoryPricingCalculator {
         this.updateQuantityDisplay();
         
         // Initialize pricing display
-        this.updatePricingDisplay();
+        if (this.category === 'book-printing') {
+            this.resetPricingDisplay();
+        } else {
+            this.updatePricingDisplay();
+        }
         
         console.log('✅ Pricing calculator ready');
     }
     
     updatePricing(formData) {
         this.formData = { ...formData };
+        const quantity = this.getValidQuantity();
+
+        // For book printing we do not want to show any numbers until quantity is entered
+        if (this.category === 'book-printing' && quantity === null) {
+            this.pricingReady = false;
+            this.resetPricingDisplay();
+            return;
+        }
         
         console.log('🧮 Calculating pricing for:', formData);
         
         // Calculate based on category
         if (this.category === 'book-printing') {
-            this.calculateBookPricing();
+            this.calculateBookPricing(quantity);
         } else {
             this.calculateGenericPricing();
         }
+
+        this.pricingReady = true;
         
         // Update display
         this.updatePricingDisplay();
     }
     
-    calculateBookPricing() {
+    calculateBookPricing(quantity) {
         let basePrice = 5.0; // Base price per page
         let totalPages = 0;
         let optionModifiers = {};
+        const qty = quantity || this.minQuantity;
         
         // Calculate total pages
         if (this.formData.interior_color === 'combine_color') {
@@ -127,7 +143,6 @@ class CategoryPricingCalculator {
         }
         
         // Calculate totals
-        const quantity = this.minQuantity;
         let unitPrice = basePrice;
         
         // Add option modifiers
@@ -135,11 +150,11 @@ class CategoryPricingCalculator {
             unitPrice += modifier;
         });
         
-        const subtotal = unitPrice * quantity;
+        const subtotal = unitPrice * qty;
         
         // Apply volume discount (example: 10% for orders over 100)
         let discount = 0;
-        if (quantity >= 100) {
+        if (qty >= 100) {
             discount = subtotal * 0.1;
         }
         
@@ -152,7 +167,7 @@ class CategoryPricingCalculator {
             basePrice: basePrice,
             optionModifiers: optionModifiers,
             unitPrice: unitPrice,
-            quantity: quantity,
+            quantity: qty,
             subtotal: subtotal,
             discount: discount,
             gst: gst,
@@ -202,6 +217,11 @@ alculateGenericPricing() {
     }
     
     updatePricingDisplay() {
+        if (this.category === 'book-printing' && !this.pricingReady) {
+            this.resetPricingDisplay();
+            return;
+        }
+
         // Update cost per unit
         const costPerUnit = document.getElementById('cost-per-unit');
         if (costPerUnit) {
@@ -247,8 +267,44 @@ alculateGenericPricing() {
     updateQuantityDisplay() {
         const quantityDisplay = document.getElementById('quantity-display');
         if (quantityDisplay) {
-            quantityDisplay.textContent = `${this.pricing.quantity || this.minQuantity} pieces`;
+            const qty = this.pricing.quantity || (this.pricingReady ? this.minQuantity : null);
+            quantityDisplay.textContent = qty ? `${qty} pieces` : 'Enter quantity';
         }
+    }
+    
+    resetPricingDisplay() {
+        this.pricingReady = false;
+
+        const setText = (id, value) => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = value;
+        };
+
+        setText('cost-per-unit', '₹ N/A');
+        setText('subtotal', 'Enter quantity');
+        setText('discount-amount', '- ₹ 0');
+        setText('gst-amount', 'Enter quantity');
+        setText('total-price', 'Enter quantity');
+
+        const discountRow = document.getElementById('discount-row');
+        if (discountRow) discountRow.style.display = 'none';
+
+        this.pricing = {
+            basePrice: 0,
+            optionModifiers: {},
+            unitPrice: 0,
+            quantity: null,
+            subtotal: 0,
+            discount: 0,
+            gst: 0,
+            total: 0
+        };
+    }
+
+    getValidQuantity() {
+        const quantity = parseInt(this.formData.quantity);
+        if (isNaN(quantity)) return null;
+        return Math.max(quantity, this.minQuantity);
     }
     
     formatPrice(price) {

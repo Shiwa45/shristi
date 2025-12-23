@@ -289,6 +289,147 @@ def api_database_templates(request):
 
 
 @require_http_methods(["GET"])
+def api_unsplash_images(request):
+    """API endpoint for Unsplash image search"""
+    try:
+        unsplash_access_key = getattr(settings, 'UNSPLASH_ACCESS_KEY', None)
+        if not unsplash_access_key:
+            return JsonResponse({
+                'success': False,
+                'error': 'Unsplash access key not configured'
+            }, status=500)
+
+        query = request.GET.get('q', 'business')
+        page = max(int(request.GET.get('page', 1)), 1)
+        per_page = min(int(request.GET.get('per_page', 12)), 30)  # Unsplash max is 30
+        orientation = request.GET.get('orientation', '')
+
+        params = {
+            'query': query,
+            'page': page,
+            'per_page': per_page,
+            'order_by': 'relevant'
+        }
+        if orientation:
+            params['orientation'] = orientation
+
+        headers = {'Authorization': f'Client-ID {unsplash_access_key}'}
+        response = requests.get('https://api.unsplash.com/search/photos', headers=headers, params=params, timeout=10)
+        response.raise_for_status()
+        data = response.json()
+
+        images = []
+        for photo in data.get('results', []):
+            urls = photo.get('urls', {}) or {}
+            user = photo.get('user', {}) or {}
+            links = photo.get('links', {}) or {}
+            images.append({
+                'id': photo.get('id'),
+                'preview_url': urls.get('small') or urls.get('thumb'),
+                'thumbnail_url': urls.get('thumb') or urls.get('small'),
+                'large_url': urls.get('regular') or urls.get('full') or urls.get('raw'),
+                'tags': photo.get('alt_description') or photo.get('description') or '',
+                'user': user.get('name'),
+                'user_url': (user.get('links') or {}).get('html') if user else None,
+                'source_page': links.get('html'),
+                'downloads': photo.get('downloads'),
+                'likes': photo.get('likes'),
+                'width': photo.get('width'),
+                'height': photo.get('height'),
+            })
+
+        return JsonResponse({
+            'success': True,
+            'images': images,
+            'pagination': {
+                'current_page': page,
+                'per_page': per_page,
+                'total_hits': data.get('total', 0),
+                'total_pages': (data.get('total', 0) + per_page - 1) // per_page
+            }
+        })
+
+    except requests.RequestException as e:
+        return JsonResponse({
+            'success': False,
+            'error': f'Unsplash API error: {str(e)}'
+        }, status=500)
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'error': str(e)
+        }, status=500)
+
+
+@require_http_methods(["GET"])
+def api_pexels_images(request):
+    """API endpoint for Pexels image search"""
+    try:
+        pexels_api_key = getattr(settings, 'PEXELS_API_KEY', None)
+        if not pexels_api_key:
+            return JsonResponse({
+                'success': False,
+                'error': 'Pexels API key not configured'
+            }, status=500)
+
+        query = request.GET.get('q', 'business')
+        page = max(int(request.GET.get('page', 1)), 1)
+        per_page = min(int(request.GET.get('per_page', 12)), 80)  # Pexels max is 80
+        orientation = request.GET.get('orientation', '')
+
+        params = {
+            'query': query,
+            'page': page,
+            'per_page': per_page
+        }
+        if orientation:
+            params['orientation'] = orientation
+
+        headers = {'Authorization': pexels_api_key}
+        response = requests.get('https://api.pexels.com/v1/search', headers=headers, params=params, timeout=10)
+        response.raise_for_status()
+        data = response.json()
+
+        images = []
+        for photo in data.get('photos', []):
+            src = photo.get('src', {}) or {}
+            images.append({
+                'id': photo.get('id'),
+                'preview_url': src.get('medium') or src.get('small'),
+                'thumbnail_url': src.get('small') or src.get('tiny'),
+                'large_url': src.get('large') or src.get('large2x') or src.get('original'),
+                'tags': photo.get('alt') or '',
+                'user': photo.get('photographer'),
+                'user_url': photo.get('photographer_url'),
+                'source_page': photo.get('url'),
+                'width': photo.get('width'),
+                'height': photo.get('height'),
+            })
+
+        return JsonResponse({
+            'success': True,
+            'images': images,
+            'pagination': {
+                'current_page': page,
+                'per_page': per_page,
+                'total_hits': data.get('total_results', len(images)),
+                'total_pages': (data.get('total_results', len(images)) + per_page - 1) // per_page
+            }
+        })
+
+    except requests.RequestException as e:
+        return JsonResponse({
+            'success': False,
+            'error': f'Pexels API error: {str(e)}'
+        }, status=500)
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'error': str(e)
+        }, status=500)
+
+
+@require_http_methods(["GET"])
 def api_template_categories(request):
     """API endpoint for template categories"""
     try:
@@ -792,12 +933,16 @@ def api_pixabay_images(request):
     except requests.RequestException as e:
         return JsonResponse({
             'success': False,
-            'error': f'Pixabay API error: {str(e)}'
-        }, status=500)
+            'error': f'Pixabay API error: {str(e)}',
+            'cliparts': [],
+            'pagination': {'current_page': 1, 'per_page': per_page, 'total_hits': 0, 'total_pages': 0}
+        })
     except Exception as e:
         return JsonResponse({
             'success': False,
-            'error': str(e)
+            'error': str(e),
+            'cliparts': [],
+            'pagination': {'current_page': 1, 'per_page': per_page, 'total_hits': 0, 'total_pages': 0}
         }, status=500)
 
 
@@ -823,6 +968,8 @@ def api_user_templates(request):
                         'name': template.name,
                         'thumbnail': template.thumbnail.url if template.thumbnail else None,
                         'svg_file': template.svg_file.url if template.svg_file else None,
+                        'json_data': template.json_data,
+                        'preview_image': template.preview_image.url if template.preview_image else None,
                         'width_mm': template.width_mm,
                         'height_mm': template.height_mm,
                         'bleed_mm': template.bleed_mm,
@@ -839,6 +986,76 @@ def api_user_templates(request):
             'templates': templates_data
         })
 
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'error': str(e)
+        }, status=500)
+
+
+@require_http_methods(["GET"])
+def api_pixabay_cliparts(request):
+    """API endpoint for Pixabay vector/illustration search for cliparts"""
+    try:
+        pixabay_api_key = getattr(settings, 'PIXABAY_API_KEY', None)
+        if not pixabay_api_key:
+            return JsonResponse({
+                'success': False,
+                'error': 'Pixabay API key not configured'
+            }, status=500)
+
+        query = request.GET.get('q', 'icon')
+        page = max(int(request.GET.get('page', 1)), 1)
+        per_page = min(int(request.GET.get('per_page', 12)), 50)
+        orientation = request.GET.get('orientation', 'all')
+
+        params = {
+            'key': pixabay_api_key,
+            'q': query,
+            'page': page,
+            'per_page': per_page,
+            'image_type': 'vector',
+            'orientation': orientation,
+            'safesearch': 'true',
+            'order': 'popular'
+        }
+
+        response = requests.get('https://pixabay.com/api/', params=params, timeout=10)
+        response.raise_for_status()
+        data = response.json()
+
+        cliparts = []
+        for img in data.get('hits', []):
+            cliparts.append({
+                'id': img.get('id'),
+                'preview_url': img.get('previewURL'),
+                'thumbnail_url': img.get('previewURL'),
+                'large_url': img.get('vectorURL') or img.get('largeImageURL') or img.get('imageURL'),
+                'tags': img.get('tags'),
+                'user': img.get('user'),
+                'views': img.get('views'),
+                'downloads': img.get('downloads'),
+                'likes': img.get('likes'),
+                'width': img.get('imageWidth'),
+                'height': img.get('imageHeight')
+            })
+
+        return JsonResponse({
+            'success': True,
+            'cliparts': cliparts,
+            'pagination': {
+                'current_page': page,
+                'per_page': per_page,
+                'total_hits': data.get('totalHits', 0),
+                'total_pages': (data.get('totalHits', 0) + per_page - 1) // per_page
+            }
+        })
+
+    except requests.RequestException as e:
+        return JsonResponse({
+            'success': False,
+            'error': f'Pixabay API error: {str(e)}'
+        }, status=500)
     except Exception as e:
         return JsonResponse({
             'success': False,

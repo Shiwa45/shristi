@@ -1,535 +1,702 @@
-{% extends 'services/static_products/product_detail.html' %}
+{% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
+{% load dynamic_form_tags %}
+
+{% block title %}{{ product.name }} | {{ block.super }}{% endblock %}
 
 {% block extra_css %}
-{{ block.super }}
 <style>
-    /* Marketing Material Styles - Matching Book Printing Theme */
-    .marketing-material-container {
-        background: #ffffff;
-        padding: 3rem 4rem;
-        box-shadow: none;
-        border: none;
-        margin-top: 0;
-        margin-left: 0;
-        width: 100%;
-        max-width: 1400px;
-        flex: 1;
-        min-width: 0;
+    /* --- VARIABLES & RESET --- */
+    :root {
+        --primary: #7c3aed;
+        /* Purple accent color */
+        --primary-hover: #6d28d9;
+        --primary-light: #f3e8ff;
+        --text-main: #111827;
+        --text-muted: #6b7280;
+        --border-color: #e5e7eb;
+        --bg-light: #f9fafb;
+        --success: #059669;
+        --danger: #ef4444;
     }
 
-    .marketing-material-header {
-        color: #1a1a1a;
-        padding: 0 0 2rem 0;
-        border-radius: 0;
-        margin-bottom: 3rem;
-        text-align: left;
-        border-bottom: 2px solid #e5e7eb;
+    /* --- LAYOUT CONTAINERS --- */
+    .product-page-container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        box-sizing: border-box;
     }
 
-    .marketing-material-title {
-        font-size: 2.25rem;
-        font-weight: 700;
-        margin-bottom: 0.75rem;
-        color: #1a1a1a;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    /* Breadcrumb */
+    .breadcrumb {
+        font-size: 14px;
+        color: var(--text-muted);
+        margin-bottom: 30px;
     }
 
-    .marketing-material-subtitle {
-        opacity: 0.8;
-        font-size: 1.125rem;
-        color: #666666;
-        font-weight: 400;
-        line-height: 1.6;
+    .breadcrumb a {
+        color: var(--text-muted);
+        text-decoration: none;
+        transition: color 0.2s;
     }
 
-    /* Form Sections - Matching Book Printing Style */
-    .form-section {
-        margin-bottom: 2rem;
-        padding: 1.5rem 0;
-        border-radius: 0;
-        border: none;
-        border-bottom: 1px solid #e5e7eb;
-        transition: all 0.3s ease;
-        position: relative;
-        background: transparent;
-        box-shadow: none;
+    .breadcrumb a:hover {
+        color: var(--primary);
     }
 
-    .form-section.enabled {
-        border-bottom: 1px solid #e5e7eb;
-        background: transparent;
-        box-shadow: none;
+    .breadcrumb span {
+        margin: 0 8px;
+        color: #d1d5db;
     }
 
-    .form-section.disabled {
-        opacity: 0.5;
-        pointer-events: none;
-        background: transparent;
-        border-bottom: 1px solid #e5e7eb;
-    }
-
-    .form-section.completed {
-        border-bottom: 1px solid #e5e7eb;
-        background: transparent;
-        box-shadow: none;
-    }
-
-    .section-header {
-        display: flex;
-        align-items: flex-start;
-        gap: 1.25rem;
-        margin-bottom: 2rem;
-        padding-bottom: 0;
-    }
-
-    .section-number {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        background: #f3f4f6;
-        color: #9ca3af;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 600;
-        font-size: 0.95rem;
-        flex-shrink: 0;
-        margin-top: 0;
-        border: none;
-        box-shadow: none;
-    }
-
-    .form-section.enabled .section-number {
-        background: #3b82f6;
-        color: white;
-        border: none;
-        box-shadow: none;
-    }
-
-    .form-section.completed .section-number {
-        background: #10b981;
-        color: white;
-        border: none;
-        box-shadow: none;
-    }
-
-    .section-title {
-        font-size: 1.625rem;
-        font-weight: 700;
-        color: #1a1a1a;
-        margin: 0;
-        line-height: 1.3;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    }
-
-    .section-description {
-        color: #6b7280;
-        margin-bottom: 2rem;
-        line-height: 1.6;
-        font-size: 0.9375rem;
-        margin-top: 0.5rem;
-    }
-
-    /* Option Groups - Matching Book Printing Style */
-    .option-group {
-        display: flex;
-        gap: 0.75rem;
-        flex-wrap: wrap;
-    }
-
-    .option-btn {
-        padding: 0.75rem 1.5rem;
-        background: #f8f9fa;
-        border: 1px solid #e9ecef;
-        border-radius: 6px;
-        cursor: pointer;
-        font-size: 0.9rem;
-        transition: all 0.2s ease;
-        color: #495057;
+    .breadcrumb .active {
+        color: var(--text-main);
         font-weight: 500;
     }
 
-    .option-btn:hover {
-        background: #e9ecef;
-        border-color: #3b82f6;
-    }
-
-    .option-btn.active {
-        background: #3b82f6;
-        color: white;
-        border-color: #3b82f6;
-    }
-
-    /* Size Inputs */
-    .size-inputs {
+    /* Main Grid Layout */
+    .product-main-grid {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
+        grid-template-columns: 1.1fr 1fr;
+        gap: 60px;
+        margin-bottom: 80px;
+        align-items: start;
     }
 
-    .form-group {
-        margin-bottom: 1.5rem;
+    /* --- LEFT COLUMN: IMAGE GALLERY --- */
+    .gallery-container {
+        position: sticky;
+        top: 20px;
     }
 
-    .form-label {
+    .main-image-wrapper {
+        width: 100%;
+        aspect-ratio: 1/1;
+        background: var(--bg-light);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        overflow: hidden;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+    .main-image-wrapper img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        transition: transform 0.3s ease;
+    }
+
+    .main-image-wrapper:hover img {
+        transform: scale(1.03);
+    }
+
+    .thumbnail-list {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 12px;
+    }
+
+    .thumb-item {
+        aspect-ratio: 1/1;
+        border: 2px solid transparent;
+        border-radius: 8px;
+        overflow: hidden;
+        cursor: pointer;
+        opacity: 0.7;
+        transition: all 0.2s;
+        background: #fff;
+    }
+
+    .thumb-item.active,
+    .thumb-item:hover {
+        border-color: var(--primary);
+        opacity: 1;
+    }
+
+    .thumb-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* --- RIGHT COLUMN: CONFIGURATION --- */
+    .product-details {
+        padding-top: 10px;
+    }
+
+    .product-title {
+        font-size: 32px;
+        font-weight: 800;
+        color: var(--text-main);
+        line-height: 1.2;
+        margin-bottom: 12px;
+    }
+
+    .page-title-block {
+        margin-bottom: 20px;
+    }
+
+    .page-title-block .product-title {
+        margin-bottom: 10px;
+    }
+
+    .product-meta {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        font-size: 14px;
+        color: var(--text-muted);
+        margin-bottom: 25px;
+    }
+
+    .rating-stars {
+        color: #f59e0b;
+    }
+
+    .stock-badge {
+        color: var(--success);
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    /* Price Block */
+    .price-container {
+        background: var(--bg-light);
+        padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+        border: 1px solid var(--border-color);
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+    }
+
+    .current-price {
+        font-size: 36px;
+        font-weight: 700;
+        color: var(--primary);
+    }
+
+    .price-tax-text {
+        font-size: 13px;
+        color: var(--text-muted);
+    }
+
+    /* --- FIELD CONTAINER --- */
+    .config-card {
+        background: #fdfdfd;
+        border: 1px solid #d9d9d9;
+        border-radius: 12px;
+        padding: 0;
+        margin-bottom: 28px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    }
+
+    .config-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 18px;
+        border-bottom: 1px solid #e5e7eb;
+        font-weight: 700;
+        font-size: 15px;
+        color: var(--text-main);
+        background: #f7f7f7;
+    }
+
+    .config-card-header .share-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 600;
+        color: var(--primary);
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .config-card-body {
+        padding: 18px;
+    }
+
+    /* --- CUSTOM FIELD STYLING (For your dynamic tag) --- */
+    /* This styling attempts to make standard inputs look better */
+    .dynamic-fields-wrapper label {
         display: block;
         font-weight: 600;
-        color: #1a1a1a;
-        margin-bottom: 0.5rem;
-        font-size: 0.9rem;
+        margin-bottom: 8px;
+        color: var(--text-main);
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
     }
 
-    .form-input {
+    .dynamic-fields-wrapper {
+        max-width: 420px;
+    }
+
+    .dynamic-fields-wrapper select,
+    .dynamic-fields-wrapper input[type="text"],
+    .dynamic-fields-wrapper input[type="number"] {
         width: 100%;
-        padding: 0.75rem;
-        border: 1px solid #e9ecef;
-        border-radius: 6px;
-        font-size: 0.9rem;
-        transition: border-color 0.3s ease;
+        max-width: 340px;
+        padding: 12px 14px;
+        border: 1px solid #d1d5db;
+        border-radius: 10px;
+        margin-bottom: 18px;
+        font-size: 15px;
+        background: #f8fafc;
     }
 
-    .form-input:focus {
-        outline: none;
-        border-color: #3b82f6;
-        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+    /* --- KRAFTIX STYLE GRID (If you use the manual loop below) --- */
+    .config-section {
+        margin-bottom: 25px;
     }
 
-    .estimate-note {
-        font-size: 0.8rem;
-        color: #6c757d;
-        margin-top: 0.25rem;
+    .section-label {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--text-main);
+        margin-bottom: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
     }
 
-    /* Responsive Design */
-    @media (max-width: 1024px) {
-        .marketing-material-container {
-            padding: 2rem 3rem;
-        }
+    .options-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        gap: 12px;
+    }
+
+    .visual-radio {
+        display: none;
+    }
+
+    .tile-label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 16px 12px;
+        background: #f9fafb;
+        border: 1.5px solid #e5e7eb;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        min-height: 82px;
+        user-select: none;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    }
+
+    .tile-label:hover {
+        border-color: var(--primary);
+        background: #f4f0ff;
+        box-shadow: 0 8px 18px rgba(124, 58, 237, 0.08);
+        transform: translateY(-1px);
+    }
+
+    .tile-label::after {
+        content: '';
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        border: 1.5px solid #e5e7eb;
+        background: #fff;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
+        opacity: 0;
+        transform: scale(0.9);
+        transition: all 0.15s ease;
+    }
+
+    .visual-radio:checked+.tile-label {
+        background-color: #f2ecff;
+        border-color: var(--primary);
+        color: var(--primary);
+        box-shadow: 0 8px 18px rgba(124, 58, 237, 0.1);
+    }
+
+    .visual-radio:checked+.tile-label::after {
+        opacity: 1;
+        transform: scale(1);
+        border-color: var(--primary);
+        background: radial-gradient(circle at center, var(--primary) 45%, #fff 46%);
+    }
+
+    .tile-name {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 4px;
+        line-height: 1.3;
+        letter-spacing: 0.01em;
+    }
+
+    .tile-price {
+        font-size: 12px;
+        color: var(--text-muted);
+    }
+
+    .visual-radio:checked+.tile-label .tile-price {
+        color: var(--primary-hover);
+        font-weight: 600;
+    }
+
+    /* Upload Zone */
+    .upload-zone {
+        border: 2px dashed #cbd5e1;
+        border-radius: 12px;
+        padding: 30px 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        background: #f8fafc;
+        margin-top: 20px;
+    }
+
+    .upload-zone:hover {
+        border-color: var(--primary);
+        background: var(--primary-light);
+    }
+
+    /* Sticky Action Bar */
+    .action-bar {
+        position: sticky;
+        bottom: 20px;
+        background: #fff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        border: 1px solid var(--border-color);
+        margin-top: 40px;
+        z-index: 50;
+        display: flex;
+        gap: 15px;
+        align-items: center;
+    }
+
+    .total-display {
+        flex: 1;
+    }
+
+    .total-label {
+        font-size: 12px;
+        color: var(--text-muted);
+        text-transform: uppercase;
+    }
+
+    .total-amount {
+        font-size: 24px;
+        font-weight: 800;
+        color: var(--text-main);
+    }
+
+    .btn-add-cart {
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 16px 32px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-add-cart:hover {
+        background: var(--primary-hover);
+    }
+
+    .specs-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .specs-table tr {
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .specs-table th {
+        padding: 15px 0;
+        text-align: left;
+        width: 250px;
+        color: var(--text-main);
+    }
+
+    .specs-table td {
+        padding: 15px 0;
+        color: var(--text-muted);
+    }
+
+    .related-title {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .related-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 30px;
+    }
+
+    .related-card {
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        overflow: hidden;
+        transition: transform 0.2s;
+        display: block;
+        text-decoration: none;
+        background: #fff;
+    }
+
+    .related-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .related-img-box {
+        height: 200px;
+        background: var(--bg-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .related-img-box img {
+        max-height: 100%;
+        max-width: 100%;
+        object-fit: contain;
+    }
+
+    .related-info {
+        padding: 15px;
+    }
+
+    .r-name {
+        font-weight: 600;
+        color: var(--text-main);
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .r-price {
+        color: var(--primary);
+        font-weight: 600;
+        font-size: 14px;
     }
 
     @media (max-width: 768px) {
-        .marketing-material-container {
-            padding: 1.5rem 2rem;
-        }
-
-        .marketing-material-title {
-            font-size: 1.875rem;
-        }
-
-        .marketing-material-subtitle {
-            font-size: 1rem;
-        }
-
-        .size-inputs {
+        .product-main-grid {
             grid-template-columns: 1fr;
+            gap: 30px;
         }
 
-        .option-group {
-            flex-direction: column;
+        .gallery-container {
+            position: static;
+        }
+
+        .action-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: 0;
+            border-radius: 0;
+            border-top: 1px solid var(--border-color);
+            padding: 15px;
+        }
+
+        .related-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .product-page-container {
+            padding-bottom: 100px;
         }
     }
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 {% endblock %}
 
-{% block product_options_panel %}
-<!-- Replace the generic options panel with marketing material specific form -->
-<div class="marketing-material-container">
-    <!-- Marketing Material Options Header -->
-    <div class="marketing-material-header">
-        <h2 class="marketing-material-title">Customize Your {{ product.name }}</h2>
-        <p class="marketing-material-subtitle">Choose your {{ category.name|lower }} specifications to get started with your printing project.</p>
-    </div>
+{% block content %}
+<div class="product-page-container">
 
-    <div class="sequential-form" data-category="{{ category_slug }}">
-        {% csrf_token %}
-        
-        <!-- Section 1: Size -->
-        <div class="form-section enabled" data-section="size" data-section-number="1">
-            <div class="section-header">
-                <div class="section-number">1</div>
-                <div class="section-title">Size</div>
-            </div>
-            <div class="section-description">
-                Choose the dimensions for your {{ product.name|lower }}.
-            </div>
-            
-            <div class="size-inputs">
-                <div class="form-group">
-                    <label class="form-label">Width (mm)</label>
-                    <input type="number" class="form-input" id="width" name="width" step="0.1" min="1" placeholder="90" required oninput="calculatePrice()">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Height (mm)</label>
-                    <input type="number" class="form-input" id="height" name="height" step="0.1" min="1" placeholder="50" required oninput="calculatePrice()">
-                </div>
-            </div>
-        </div>
+    <nav class="breadcrumb">
+        <a href="/">Home</a> <span>/</span>
+        <a href="#">{{ product.category.name|default:"Products" }}</a> <span>/</span>
+        <span class="active">{{ product.name }}</span>
+    </nav>
 
-        <!-- Section 2: Paper -->
-        <div class="form-section enabled" data-section="paper" data-section-number="2">
-            <div class="section-header">
-                <div class="section-number">2</div>
-                <div class="section-title">Paper</div>
-            </div>
-            <div class="section-description">
-                Select the paper quality and weight for your {{ product.name|lower }}.
-            </div>
-            
-            <div class="option-group">
-                <button type="button" class="option-btn active" onclick="selectOption(this, 'paper', '300gsm')">300 GSM</button>
-                <button type="button" class="option-btn" onclick="selectOption(this, 'paper', '250gsm')">250 GSM</button>
-                <button type="button" class="option-btn" onclick="selectOption(this, 'paper', '350gsm')">350 GSM</button>
-            </div>
-        </div>
+    <div class="page-title-block">
+        <h1 class="product-title">{{ product.name }}</h1>
 
-        <!-- Section 3: Printing -->
-        <div class="form-section enabled" data-section="printing" data-section-number="3">
-            <div class="section-header">
-                <div class="section-number">3</div>
-                <div class="section-title">Printing</div>
+        <div class="product-meta">
+            <div class="rating-stars">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                    class="fas fa-star"></i><i class="fas fa-star"></i>
+                <span style="color: var(--text-muted); margin-left:5px;">(4.9/5)</span>
             </div>
-            <div class="section-description">
-                Choose printing options for your {{ product.name|lower }}.
+            <div class="stock-badge">
+                <i class="fas fa-check-circle"></i> In Stock
             </div>
-            
-            <div class="option-group">
-                <button type="button" class="option-btn active" onclick="selectOption(this, 'printing_side', 'front')">Front Side</button>
-                <button type="button" class="option-btn" onclick="selectOption(this, 'printing_side', 'both')">Both Sides</button>
-            </div>
-        </div>
-
-        <!-- Section 4: Finish -->
-        <div class="form-section enabled" data-section="finish" data-section-number="4">
-            <div class="section-header">
-                <div class="section-number">4</div>
-                <div class="section-title">Finish</div>
-            </div>
-            <div class="section-description">
-                Select finishing options for your {{ product.name|lower }}.
-            </div>
-            
-            <div class="option-group">
-                <button type="button" class="option-btn active" onclick="selectOption(this, 'lamination', 'none')">None</button>
-                <button type="button" class="option-btn" onclick="selectOption(this, 'lamination', 'matt')">Matt Lamination</button>
-                <button type="button" class="option-btn" onclick="selectOption(this, 'lamination', 'glossy')">Glossy Lamination</button>
-            </div>
-        </div>
-
-        <!-- Section 5: Delivery -->
-        <div class="form-section enabled" data-section="delivery" data-section-number="5">
-            <div class="section-header">
-                <div class="section-number">5</div>
-                <div class="section-title">Delivery</div>
-            </div>
-            <div class="section-description">
-                Choose your preferred delivery timeline.
-            </div>
-            
-            <div class="option-group">
-                <button type="button" class="option-btn active" onclick="selectOption(this, 'delivery', '2days')">2 Business Days</button>
-                <button type="button" class="option-btn" onclick="selectOption(this, 'delivery', '4days')">4 Business Days</button>
-            </div>
-        </div>
-
-        <!-- Section 6: Quantity -->
-        <div class="form-section enabled" data-section="quantity" data-section-number="6">
-            <div class="section-header">
-                <div class="section-number">6</div>
-                <div class="section-title">Quantity</div>
-            </div>
-            <div class="section-description">
-                Enter the quantity you need for your {{ product.name|lower }}.
-            </div>
-            
-            <div class="form-group">
-                <input type="number" class="form-input" name="quantity" id="quantity" min="100" step="50" value="100" required oninput="calculatePrice()">
-                <div class="estimate-note">MOQ: 100pcs</div>
-            </div>
+            <div>SKU: {{ product.sku|default:"KRAFT-001" }}</div>
         </div>
     </div>
+
+    <div class="product-main-grid">
+        <div class="gallery-container">
+            <div class="main-image-wrapper">
+                {% if product.featured_image %}
+                <img id="mainImage" src="{{ product.featured_image.url }}" alt="{{ product.name }}">
+                {% else %}
+                <i class="fas fa-image fa-3x" style="color: #ccc;"></i>
+                {% endif %}
+            </div>
+
+            <div class="thumbnail-list">
+                {% if product.featured_image %}
+                <div class="thumb-item active" onclick="switchImage(this, '{{ product.featured_image.url }}')">
+                    <img src="{{ product.featured_image.url }}">
+                </div>
+                {% endif %}
+                {% if product.images %}
+                {% for img in product.images.all %}
+                <div class="thumb-item" onclick="switchImage(this, '{{ img.image.url }}')">
+                    <img src="{{ img.image.url }}">
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="product-details">
+
+
+            <form id="addToCartForm" method="POST" action="#" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="product_id" value="{{ product.id }}">
+
+                <div class="config-card">
+                    <div class="config-card-header">
+                        <span>Get Started</span>
+                        <a class="share-link" href="#">
+                            <i class="fas fa-share-alt"></i>
+                            Share
+                        </a>
+                    </div>
+                    <div class="config-card-body">
+                        <div class="dynamic-fields-wrapper">
+                            {% render_product_form_fields product %}
+                        </div>
+
+                        <div class="config-section" style="margin-bottom: 0;">
+                            <div class="section-label">Upload Design</div>
+                            <div class="upload-zone" onclick="document.getElementById('designFile').click()">
+                                <i class="fas fa-cloud-upload-alt fa-2x"
+                                    style="color: var(--primary); margin-bottom: 10px;"></i>
+                                <div style="font-weight: 500; color: var(--text-main);">Click to upload your artwork
+                                </div>
+                                <div style="font-size: 12px; color: var(--text-muted);">Supports PDF, AI, CDR (Max 50MB)
+                                </div>
+                                <input type="file" id="designFile" name="design_file" hidden
+                                    onchange="fileSelected(this)">
+                                <div id="fileNameDisplay"
+                                    style="margin-top:10px; font-size:13px; color:var(--success); font-weight:600;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-bar">
+                    <div class="total-display">
+                        <div class="total-label">Total Amount</div>
+                        <div class="total-amount" id="stickyTotal">₹{{ product.base_price|intcomma }}</div>
+                    </div>
+                    <button type="button" class="btn-add-cart" onclick="submitToCart()">
+                        <span>Add to Cart</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% include 'services/static_products/partials/product_tabs.html' %}
+    <br>
+    <br>
+    <br>
+    <!-- Related Products -->
+    {% include 'services/static_products/partials/related_products.html' %}
+
 </div>
 {% endblock %}
 
-{% block pricing_calculator %}
-<div class="pricing-calculator" style="max-width: 600px; width: 100%; margin: 0 auto; padding: 20px;">
-    
-    <h3 style="font-size: 18px; font-weight: 600; color: #333; margin-bottom: 20px; text-align: center;">
-        Pricing Calculator
-    </h3>
-
-    <div class="pricing-breakdown" style="border: 1px solid #ddd; border-radius: 4px; padding: 20px; background: #f8f9fa;">
-        <!-- Dynamic specifications will be added here by JavaScript -->
-        <div id="marketing-specifications">
-            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
-                <span style="color: #666; font-size: 14px;">Product:</span>
-                <span style="color: #333; font-size: 14px; font-weight: 500;">{{ product.name }}</span>
-            </div>
-        </div>
-
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
-            <span style="color: #666; font-size: 14px;">Cost Per Item:</span>
-            <span style="color: #333; font-size: 14px; font-weight: 500;" id="cost-per-unit">₹1.60</span>
-        </div>
-
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
-            <span style="color: #666; font-size: 14px;">Subtotal:</span>
-            <span style="color: #333; font-size: 14px; font-weight: 500;" id="subtotal">₹160.00</span>
-        </div>
-
-        <div id="discount-row" style="display: none; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span style="color: #28a745; font-size: 14px;">Volume Discount:</span>
-                <span style="color: #28a745; font-size: 14px; font-weight: 500;" id="discount-amount">- ₹ 0</span>
-            </div>
-        </div>
-
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #e0e0e0;">
-            <span style="color: #666; font-size: 14px;">GST (18%):</span>
-            <span style="color: #333; font-size: 14px; font-weight: 500;" id="gst-amount">₹28.80</span>
-        </div>
-
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; margin-top: 8px; border-top: 2px solid #333;">
-            <span style="color: #333; font-size: 16px; font-weight: 600;">Total:</span>
-            <span style="color: #333; font-size: 18px; font-weight: 700;" id="total-price">₹188.80</span>
-        </div>
-    </div>
-
-    <div style="margin-top: 20px;">
-        <button
-            style="width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: 500; cursor: pointer; transition: background-color 0.2s;"
-            onmouseover="this.style.backgroundColor='#0056b3'"
-            onmouseout="this.style.backgroundColor='#007bff'"
-            id="order-button" onclick="orderNow()">
-            Order Your {{ product.name }} Now
-        </button>
-    </div>
-</div>
-
+{% block extra_js %}
 <script>
-let selectedOptions = {
-    paper: '300gsm',
-    printing_side: 'front',
-    lamination: 'none',
-    delivery: '2days'
-};
-
-// Option Selection
-function selectOption(button, option, value) {
-    const group = button.parentElement;
-    group.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('active'));
-    button.classList.add('active');
-    selectedOptions[option] = value;
-    calculatePrice();
-}
-
-// Price Calculation
-function calculatePrice() {
-    const quantity = parseInt(document.getElementById('quantity').value) || 100;
-    const width = parseFloat(document.getElementById('width').value) || 90;
-    const height = parseFloat(document.getElementById('height').value) || 50;
-    
-    // Base pricing (per item)
-    let basePrice = 1.60; // Starting price for marketing materials
-    
-    // Adjust price based on options
-    if (selectedOptions.printing_side === 'both') {
-        basePrice *= 1.5;
+    // 1. Image Switcher
+    function switchImage(thumbElement, imageUrl) {
+        const mainImg = document.getElementById('mainImage');
+        if (!mainImg) return;
+        mainImg.style.opacity = '0.5';
+        setTimeout(() => {
+            mainImg.src = imageUrl;
+            mainImg.style.opacity = '1';
+        }, 200);
+        document.querySelectorAll('.thumb-item').forEach(el => el.classList.remove('active'));
+        thumbElement.classList.add('active');
     }
-    
-    if (selectedOptions.lamination === 'matt') {
-        basePrice += 0.30;
-    } else if (selectedOptions.lamination === 'glossy') {
-        basePrice += 0.40;
-    }
-    
-    if (selectedOptions.delivery === '2days') {
-        basePrice += 0.20;
-    }
-    
-    // Calculate quantity discount
-    let discount = 0;
-    if (quantity >= 1000) {
-        discount = 0.15; // 15% discount
-    } else if (quantity >= 500) {
-        discount = 0.10; // 10% discount
-    } else if (quantity >= 250) {
-        discount = 0.05; // 5% discount
-    }
-    
-    const subtotal = basePrice * quantity;
-    const discountAmount = subtotal * discount;
-    const finalSubtotal = subtotal - discountAmount;
-    const gst = finalSubtotal * 0.18;
-    const total = finalSubtotal + gst;
-    
-    // Update display
-    document.getElementById('cost-per-unit').textContent = `₹${basePrice.toFixed(2)}`;
-    document.getElementById('subtotal').textContent = `₹${subtotal.toFixed(2)}`;
-    document.getElementById('total-price').textContent = `₹${total.toFixed(2)}`;
-    document.getElementById('gst-amount').textContent = `₹${gst.toFixed(2)}`;
-    
-    // Show/hide discount row
-    const discountRow = document.getElementById('discount-row');
-    if (discount > 0) {
-        discountRow.style.display = 'block';
-        document.getElementById('discount-amount').textContent = `- ₹${discountAmount.toFixed(2)}`;
-    } else {
-        discountRow.style.display = 'none';
-    }
-    
-    // Update specifications
-    updateSpecificationsSummary();
-}
 
-function updateSpecificationsSummary() {
-    const specificationsDiv = document.getElementById('marketing-specifications');
-    const width = document.getElementById('width').value || 90;
-    const height = document.getElementById('height').value || 50;
-    const quantity = document.getElementById('quantity').value || 100;
-    
-    let specificationsHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
-            <span style="color: #666; font-size: 14px;">Product:</span>
-            <span style="color: #333; font-size: 14px; font-weight: 500;">{{ product.name }}</span>
-        </div>
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
-            <span style="color: #666; font-size: 14px;">Size:</span>
-            <span style="color: #333; font-size: 14px; font-weight: 500;">${width} x ${height} mm</span>
-        </div>
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
-            <span style="color: #666; font-size: 14px;">Paper:</span>
-            <span style="color: #333; font-size: 14px; font-weight: 500;">${selectedOptions.paper.toUpperCase()}</span>
-        </div>
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
-            <span style="color: #666; font-size: 14px;">Printing:</span>
-            <span style="color: #333; font-size: 14px; font-weight: 500;">${selectedOptions.printing_side === 'both' ? 'Both Sides' : 'Front Side'}</span>
-        </div>
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
-            <span style="color: #666; font-size: 14px;">Finish:</span>
-            <span style="color: #333; font-size: 14px; font-weight: 500;">${selectedOptions.lamination === 'none' ? 'None' : selectedOptions.lamination === 'matt' ? 'Matt Lamination' : 'Glossy Lamination'}</span>
-        </div>
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
-            <span style="color: #666; font-size: 14px;">Delivery:</span>
-            <span style="color: #333; font-size: 14px; font-weight: 500;">${selectedOptions.delivery === '2days' ? '2 Business Days' : '4 Business Days'}</span>
-        </div>
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
-            <span style="color: #666; font-size: 14px;">Quantity:</span>
-            <span style="color: #333; font-size: 14px; font-weight: 500;">${quantity} pcs</span>
-        </div>
-    `;
-    
-    specificationsDiv.innerHTML = specificationsHTML;
-}
+    // 2. Tab Switcher
+    function switchTab(btnElement, tabId) {
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        const activeContent = document.getElementById(tabId);
+        if (activeContent) activeContent.classList.add('active');
+        if (btnElement) btnElement.classList.add('active');
+    }
 
-function orderNow() {
-    // Handle order logic
-    alert('Order functionality will be implemented');
-}
+    // 3. File Upload
+    function fileSelected(input) {
+        const display = document.getElementById('fileNameDisplay');
+        if (input.files && input.files[0]) {
+            display.textContent = 'Selected: ' + input.files[0].name;
+        } else {
+            display.textContent = '';
+        }
+    }
 
-// Initialize
-document.addEventListener('DOMContentLoaded', function() {
-    calculatePrice();
-});
+    // 4. Add to Cart
+    function submitToCart() {
+        const btn = document.querySelector('.btn-add-cart');
+        const originalContent = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adding...';
+        btn.disabled = true;
+        setTimeout(() => {
+            btn.style.background = '#059669';
+            btn.innerHTML = '<i class="fas fa-check"></i> Added!';
+            setTimeout(() => {
+                btn.innerHTML = originalContent;
+                btn.style.background = '';
+                btn.disabled = false;
+            }, 2000);
+        }, 1000);
+    }
 </script>
 {% endblock %}

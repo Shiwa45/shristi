@@ -879,17 +879,31 @@ document.addEventListener('DOMContentLoaded', function() {
             const colorPages = parseInt(colorPageCountInput.value) || 0;
             totalPages = bwPages + colorPages;
         }
-        
+
         const bindingOptions = document.querySelectorAll('.binding-option[data-min-pages="30"]');
         bindingOptions.forEach(option => {
+            const input = option.querySelector('input');
             if (totalPages < 30) {
                 option.classList.add('disabled');
-                option.querySelector('input').disabled = true;
+                input.disabled = true;
+                if (input.checked) input.checked = false;
             } else {
                 option.classList.remove('disabled');
-                option.querySelector('input').disabled = false;
+                input.disabled = false;
             }
         });
+
+        // Disable saddle stitch for 49+ pages
+        const saddleOption = document.querySelector('.binding-option[data-value="saddle_stitch"]');
+        if (saddleOption) {
+            const saddleInput = saddleOption.querySelector('input');
+            const disableSaddle = totalPages >= 49;
+            saddleOption.classList.toggle('disabled', disableSaddle);
+            saddleInput.disabled = disableSaddle;
+            if (disableSaddle && saddleInput.checked) {
+                saddleInput.checked = false;
+            }
+        }
     }
     
     // Add event listeners for page count changes

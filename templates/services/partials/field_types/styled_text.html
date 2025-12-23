@@ -1,0 +1,92 @@
+{% load dynamic_form_tags %}
+<!-- templates/services/partials/field_types/styled_text.html -->
+<div class="styled-text-wrapper">
+    <div class="text-input-container">
+        <input type="text" 
+               id="{{ field.field_name }}" 
+               name="{{ field.field_name }}" 
+               class="styled-text-input"
+               placeholder="{{ field.placeholder }}"
+               {% if field.default_value %}value="{{ field.default_value }}"{% endif %}
+               {% if form_data and form_data|get_item:field.field_name %}value="{{ form_data|get_item:field.field_name }}"{% endif %}
+               {% if field.is_required %}required{% endif %}
+               data-field-type="text"
+               oninput="handleTextChange(this)">
+        
+        <!-- Input icon -->
+        <div class="input-icon">
+            <i class="fas fa-edit"></i>
+        </div>
+        
+        <!-- Character counter (if max length is set) -->
+        {% if field.max_value %}
+        <div class="char-counter">
+            <span class="current-count">0</span>/<span class="max-count">{{ field.max_value }}</span>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+.styled-text-wrapper {
+    position: relative;
+}
+
+.text-input-container {
+    position: relative;
+}
+
+.styled-text-input {
+    width: 100%;
+    padding: 0.75rem 3rem 0.75rem 1rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    background-color: white;
+    transition: all 0.3s ease;
+}
+
+.styled-text-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.input-icon {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+    pointer-events: none;
+}
+
+.char-counter {
+    position: absolute;
+    right: 1rem;
+    bottom: -1.5rem;
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+</style>
+
+<script>
+function handleTextChange(textInput) {
+    const charCounter = textInput.parentElement.querySelector('.char-counter .current-count');
+    if (charCounter) {
+        charCounter.textContent = textInput.value.length;
+    }
+    
+    document.dispatchEvent(new CustomEvent('fieldChange', {
+        detail: {
+            fieldName: textInput.name,
+            value: textInput.value,
+            fieldType: 'text',
+            fieldElement: textInput
+        }
+    }));
+}
+</script>
+
+
+

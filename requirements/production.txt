@@ -1,8 +1,11 @@
 # Core Django
 Django==4.2.7
 django-cors-headers==4.3.1
+
+# Crispy Forms
 django-crispy-forms>=2.3
 crispy-bootstrap5==2025.6
+crispy-tailwind==1.0.3
 
 # Database
 psycopg2-binary==2.9.9
@@ -21,9 +24,5 @@ Pillow==10.2.0
 requests==2.31.0
 python-dateutil==2.8.2
 
-# Excel/Data processing (if needed)
+# Excel/Data processing
 openpyxl==3.1.2
-
-# Optional: If using Celery for async tasks
-# celery==5.3.4
-# redis==5.0.1

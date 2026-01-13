@@ -100,7 +100,11 @@ class ProductFormFieldInline(admin.StackedInline):
     model = ProductFormField
     form = ProductFormFieldForm
     extra = 0
-    classes = ('collapse',)
+class ProductFormFieldInline(admin.StackedInline):
+    model = ProductFormField
+    form = ProductFormFieldForm
+    extra = 0
+    # classes = ('collapse',) # Removed to show all fields by default
     fieldsets = (
         ('Field Basics', {
             'fields': ('field_section', 'field_name', 'field_label', 'field_type', 'order', 'section_order', 'is_required')
@@ -298,6 +302,9 @@ class ProductFormFieldAdmin(admin.ModelAdmin):
     search_fields = ('field_label', 'field_name', 'static_product__name')
     ordering = ('static_product', 'section_order', 'order')
     autocomplete_fields = ('static_product',)
+    
+    class Media:
+        js = ('admin/js/json_editor.js',)
 
 
 # Custom admin site configuration

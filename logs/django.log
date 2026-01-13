@@ -44420,3 +44420,290 @@ Watching for file changes with StatReloader
 "GET /static/images/logo.png HTTP/1.1" 404 1972
 "GET /services/stationery/corporate-letter-head/ HTTP/1.1" 200 102936
 "GET /static/images/logo.png HTTP/1.1" 404 1972
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 113422
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /media/sliders/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_l0hEaGV.png HTTP/1.1" 200 128368
+"GET /media/sliders/hero-book_reVocCn_wPsQ8OM.png HTTP/1.1" 200 1516868
+"GET /media/sliders/1222-removebg-preview_eMvyRYP.png HTTP/1.1" 200 217710
+"GET /static/img/no_design.png HTTP/1.1" 200 158509
+"GET /media/products/featured/texture-business-card.jpeg HTTP/1.1" 200 106931
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2002
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 5954
+"GET /media/categories/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_I4HUQtR.png HTTP/1.1" 200 128368
+"GET /media/categories/1222-removebg-preview.png HTTP/1.1" 200 217710
+"GET /media/categories/OV14KD0_SfKT8t6.jpg HTTP/1.1" 200 684371
+"GET /media/categories/hero-book_T5aF2VE.png HTTP/1.1" 200 1493235
+Not Found: /flutter_service_worker.js
+"GET /flutter_service_worker.js?v=2601907023 HTTP/1.1" 404 6009
+Not Found: /flutter_service_worker.js
+"GET /flutter_service_worker.js?v=2601907023 HTTP/1.1" 404 6009
+/home/shiwansh/shristi/apps/services/admin.py changed, reloading.
+Watching for file changes with StatReloader
+/home/shiwansh/shristi/apps/services/admin.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 113422
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /media/sliders/hero-book_reVocCn_wPsQ8OM.png HTTP/1.1" 200 1516868
+"GET /media/sliders/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_l0hEaGV.png HTTP/1.1" 200 128368
+"GET /media/sliders/1222-removebg-preview_eMvyRYP.png HTTP/1.1" 200 217710
+"GET /static/img/no_design.png HTTP/1.1" 200 158509
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2002
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 1996
+"GET /media/products/featured/texture-business-card.jpeg HTTP/1.1" 200 106931
+"GET /media/categories/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_I4HUQtR.png HTTP/1.1" 200 128368
+"GET /media/categories/1222-removebg-preview.png HTTP/1.1" 200 217710
+"GET /media/categories/OV14KD0_SfKT8t6.jpg HTTP/1.1" 200 684371
+"GET /media/categories/hero-book_T5aF2VE.png HTTP/1.1" 200 1493235
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 5954
+"GET /admin/ HTTP/1.1" 302 0
+"GET /admin/login/?next=/admin/ HTTP/1.1" 200 4174
+"POST /admin/login/?next=/admin/ HTTP/1.1" 200 4342
+"POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+"GET /admin/ HTTP/1.1" 200 23994
+"GET /admin/services/staticproduct/ HTTP/1.1" 200 72429
+"GET /static/admin/css/custom_admin.css HTTP/1.1" 404 2005
+"GET /static/admin/js/json_editor.js HTTP/1.1" 200 8061
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/services/staticproduct/78/change/ HTTP/1.1" 200 130073
+"GET /static/admin/css/custom_admin.css HTTP/1.1" 404 2005
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /static/admin/img/icon-unknown.svg HTTP/1.1" 200 655
+"GET /static/admin/img/tooltag-arrowright.svg HTTP/1.1" 200 280
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 113422
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2002
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 5954
+Not Found: /flutter_service_worker.js
+"GET /flutter_service_worker.js?v=2601907023 HTTP/1.1" 404 6009
+"GET /services/marketing-material/classic-shape/static/ HTTP/1.1" 200 102171
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /media/products/bifold_brochure.png HTTP/1.1" 200 492512
+"GET /media/products/address_labels.png HTTP/1.1" 200 617445
+Not Found: /flutter_service_worker.js
+"GET /flutter_service_worker.js?v=2601907023 HTTP/1.1" 404 6009
+"GET /services/all-products/ HTTP/1.1" 200 82267
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /media/products/hero/WhatsApp_Image_2025-10-17_at_2.08.46_PM_1.jpeg HTTP/1.1" 200 77335
+"GET /media/products/featured/on-demand-books-printing.jpeg HTTP/1.1" 200 124179
+"GET /media/products/featured/banner-media.jpeg HTTP/1.1" 200 247315
+"GET /media/products/hero/WhatsApp_Image_2025-10-17_at_1.57.29_PM-removebg-preview.png HTTP/1.1" 200 420704
+"GET /media/products/hero/WhatsApp_Image_2025-10-17_at_2.15.01_PM.jpeg HTTP/1.1" 200 382183
+"GET /media/products/hero/WhatsApp_Image_2025-10-17_at_2.00.10_PM.jpeg HTTP/1.1" 200 669490
+Not Found: /flutter_service_worker.js
+"GET /flutter_service_worker.js?v=2601907023 HTTP/1.1" 404 6009
+"GET / HTTP/1.1" 200 113422
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2002
+Not Found: /flutter_service_worker.js
+"GET /flutter_service_worker.js?v=2601907023 HTTP/1.1" 404 6009
+"GET /services/marketing-material/bi-fold-brochure/ HTTP/1.1" 200 107005
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+Not Found: /flutter_service_worker.js
+"GET /flutter_service_worker.js?v=2601907023 HTTP/1.1" 404 6009
+Not Found: /flutter_service_worker.js
+"GET /flutter_service_worker.js?v=2601907023 HTTP/1.1" 404 6009
+"GET / HTTP/1.1" 200 113422
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2002
+Not Found: /flutter_service_worker.js
+"GET /flutter_service_worker.js?v=2601907023 HTTP/1.1" 404 6009
+Not Found: /flutter_service_worker.js
+"GET /flutter_service_worker.js?v=2601907023 HTTP/1.1" 404 6009
+Not Found: /flutter_service_worker.js
+"GET /flutter_service_worker.js?v=2601907023 HTTP/1.1" 404 6009
+"GET /services/stationery/corporate-letter-head/ HTTP/1.1" 200 102936
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /media/products/featured/corporate-letter-head.jpeg HTTP/1.1" 200 215830
+Not Found: /flutter_service_worker.js
+"GET /flutter_service_worker.js?v=2601907023 HTTP/1.1" 404 6009
+"GET /services/stationery/envelopes-10x-45/ HTTP/1.1" 200 105245
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+Not Found: /flutter_service_worker.js
+"GET /flutter_service_worker.js?v=2601907023 HTTP/1.1" 404 6009
+"GET /services/stationery/black-white-bill-book/ HTTP/1.1" 200 109425
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+Not Found: /flutter_service_worker.js
+"GET /flutter_service_worker.js?v=2601907023 HTTP/1.1" 404 6009
+Not Found: /flutter_service_worker.js
+"GET /flutter_service_worker.js?v=2601907023 HTTP/1.1" 404 6009
+"GET /services/stationery/standard-business-card/ HTTP/1.1" 200 105996
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /media/products/featured/standard-business-card.jpeg HTTP/1.1" 200 136672
+"GET /static/images/corner-styles/straight-corners.svg HTTP/1.1" 200 315
+"GET /static/images/corner-styles/rounded-corners.svg HTTP/1.1" 200 314
+Not Found: /flutter_service_worker.js
+"GET /flutter_service_worker.js?v=2601907023 HTTP/1.1" 404 6009
+Not Found: /flutter_service_worker.js
+"GET /flutter_service_worker.js?v=2601907023 HTTP/1.1" 404 6009
+"GET /admin/ HTTP/1.1" 302 0
+"GET /admin/login/?next=/admin/ HTTP/1.1" 200 4174
+"GET /static/admin/css/dark_mode.css HTTP/1.1" 304 0
+"GET /static/admin/css/base.css HTTP/1.1" 304 0
+"GET /static/admin/js/theme.js HTTP/1.1" 304 0
+"GET /static/admin/css/login.css HTTP/1.1" 304 0
+"GET /static/admin/css/nav_sidebar.css HTTP/1.1" 304 0
+"GET /static/admin/css/responsive.css HTTP/1.1" 304 0
+"GET /static/admin/js/nav_sidebar.js HTTP/1.1" 304 0
+Not Found: /flutter_service_worker.js
+"GET /flutter_service_worker.js?v=2601907023 HTTP/1.1" 404 6009
+"POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+"GET /admin/ HTTP/1.1" 200 23994
+"GET /static/admin/css/dashboard.css HTTP/1.1" 304 0
+"GET /static/admin/img/icon-addlink.svg HTTP/1.1" 304 0
+"GET /static/admin/img/icon-changelink.svg HTTP/1.1" 304 0
+"GET /static/admin/img/icon-deletelink.svg HTTP/1.1" 304 0
+Not Found: /flutter_service_worker.js
+"GET /flutter_service_worker.js?v=2601907023 HTTP/1.1" 404 6009
+"GET /admin/services/staticproduct/ HTTP/1.1" 200 72429
+"GET /static/admin/css/changelists.css HTTP/1.1" 304 0
+"GET /static/admin/css/forms.css HTTP/1.1" 304 0
+"GET /static/admin/js/jquery.init.js HTTP/1.1" 304 0
+"GET /static/admin/css/custom_admin.css HTTP/1.1" 404 2005
+"GET /static/admin/js/core.js HTTP/1.1" 304 0
+"GET /static/admin/js/json_editor.js HTTP/1.1" 200 8061
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 304 0
+"GET /static/admin/js/actions.js HTTP/1.1" 304 0
+"GET /static/admin/css/widgets.css HTTP/1.1" 304 0
+"GET /static/admin/js/urlify.js HTTP/1.1" 304 0
+"GET /static/admin/js/prepopulate.js HTTP/1.1" 304 0
+"GET /static/admin/img/search.svg HTTP/1.1" 304 0
+"GET /static/admin/img/icon-no.svg HTTP/1.1" 304 0
+"GET /static/admin/img/icon-yes.svg HTTP/1.1" 304 0
+"GET /static/admin/js/filters.js HTTP/1.1" 304 0
+"GET /static/admin/img/tooltag-add.svg HTTP/1.1" 304 0
+"GET /static/admin/img/sorting-icons.svg HTTP/1.1" 304 0
+"GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 304 0
+Not Found: /flutter_service_worker.js
+"GET /flutter_service_worker.js?v=2601907023 HTTP/1.1" 404 6009
+"GET /admin/services/staticproduct/69/change/ HTTP/1.1" 200 173213
+"GET /static/admin/css/custom_admin.css HTTP/1.1" 404 2005
+"GET /static/admin/js/prepopulate_init.js HTTP/1.1" 304 0
+"GET /static/admin/js/inlines.js HTTP/1.1" 200 15628
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /static/admin/img/icon-unknown.svg HTTP/1.1" 304 0
+"GET /static/admin/js/change_form.js HTTP/1.1" 304 0
+"GET /static/admin/img/tooltag-arrowright.svg HTTP/1.1" 304 0
+"GET /static/admin/img/inline-delete.svg HTTP/1.1" 304 0
+Not Found: /flutter_service_worker.js
+"GET /flutter_service_worker.js?v=2601907023 HTTP/1.1" 404 6009
+Not Found: /flutter_service_worker.js
+"GET /flutter_service_worker.js?v=2601907023 HTTP/1.1" 404 6009
+"GET /admin/services/staticproduct/69/change/ HTTP/1.1" 200 173213
+"GET /static/admin/css/custom_admin.css HTTP/1.1" 404 2005
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+Not Found: /flutter_service_worker.js
+"GET /flutter_service_worker.js?v=2601907023 HTTP/1.1" 404 6009
+Not Found: /flutter_service_worker.js
+"GET /flutter_service_worker.js?v=2601907023 HTTP/1.1" 404 6009
+/home/shiwansh/shristi/apps/services/admin.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /admin/ HTTP/1.1" 302 0
+"GET /admin/login/?next=/admin/ HTTP/1.1" 200 4174
+"GET /static/admin/css/dark_mode.css HTTP/1.1" 304 0
+"GET /static/admin/js/theme.js HTTP/1.1" 304 0
+"GET /static/admin/css/nav_sidebar.css HTTP/1.1" 304 0
+"GET /static/admin/css/login.css HTTP/1.1" 200 951
+"GET /static/admin/js/nav_sidebar.js HTTP/1.1" 304 0
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 5954
+"GET / HTTP/1.1" 200 113422
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /media/sliders/hero-book_reVocCn_wPsQ8OM.png HTTP/1.1" 200 1516868
+"GET /media/sliders/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_l0hEaGV.png HTTP/1.1" 200 128368
+"GET /media/sliders/1222-removebg-preview_eMvyRYP.png HTTP/1.1" 200 217710
+"GET /static/img/no_design.png HTTP/1.1" 200 158509
+"GET /media/products/featured/texture-business-card.jpeg HTTP/1.1" 200 106931
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2002
+"GET /media/categories/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_I4HUQtR.png HTTP/1.1" 200 128368
+"GET /media/categories/1222-removebg-preview.png HTTP/1.1" 200 217710
+"GET /media/categories/OV14KD0_SfKT8t6.jpg HTTP/1.1" 200 684371
+"GET /media/categories/hero-book_T5aF2VE.png HTTP/1.1" 200 1493235
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 113422
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /media/sliders/hero-book_reVocCn_wPsQ8OM.png HTTP/1.1" 200 1516868
+"GET /media/sliders/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_l0hEaGV.png HTTP/1.1" 304 0
+"GET /media/sliders/1222-removebg-preview_eMvyRYP.png HTTP/1.1" 304 0
+"GET /static/img/no_design.png HTTP/1.1" 304 0
+"GET /media/products/featured/texture-business-card.jpeg HTTP/1.1" 304 0
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2002
+"GET /media/categories/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_I4HUQtR.png HTTP/1.1" 304 0
+"GET /media/categories/OV14KD0_SfKT8t6.jpg HTTP/1.1" 304 0
+"GET /media/categories/1222-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/categories/hero-book_T5aF2VE.png HTTP/1.1" 200 1493235
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 5954
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 113422
+"GET /static/images/logo.png HTTP/1.1" 404 1972
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 1996
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 2002
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 5954
+"GET /admin/ HTTP/1.1" 302 0
+"GET /admin/login/?next=/admin/ HTTP/1.1" 200 4174
+"GET /static/admin/css/base.css HTTP/1.1" 304 0
+"GET /static/admin/css/dark_mode.css HTTP/1.1" 304 0
+"GET /static/admin/css/nav_sidebar.css HTTP/1.1" 304 0
+"GET /static/admin/css/login.css HTTP/1.1" 304 0
+"GET /static/admin/css/responsive.css HTTP/1.1" 304 0
+"GET /static/admin/js/theme.js HTTP/1.1" 304 0
+"GET /static/admin/js/nav_sidebar.js HTTP/1.1" 304 0
+"POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+"GET /admin/ HTTP/1.1" 200 23994
+"GET /static/admin/css/dashboard.css HTTP/1.1" 304 0
+"GET /static/admin/img/icon-addlink.svg HTTP/1.1" 304 0
+"GET /static/admin/img/icon-changelink.svg HTTP/1.1" 304 0
+"GET /static/admin/img/icon-deletelink.svg HTTP/1.1" 304 0
+"GET /admin/services/staticproduct/ HTTP/1.1" 200 72429
+"GET /static/admin/css/changelists.css HTTP/1.1" 304 0
+"GET /static/admin/css/forms.css HTTP/1.1" 304 0
+"GET /static/admin/css/custom_admin.css HTTP/1.1" 404 2005
+"GET /static/admin/js/json_editor.js HTTP/1.1" 200 8061
+"GET /static/admin/js/jquery.init.js HTTP/1.1" 304 0
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 285314
+"GET /static/admin/js/core.js HTTP/1.1" 304 0
+"GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 325171
+"GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 304 0
+"GET /static/admin/js/actions.js HTTP/1.1" 304 0
+"GET /static/admin/js/urlify.js HTTP/1.1" 304 0
+"GET /static/admin/js/prepopulate.js HTTP/1.1" 304 0
+"GET /static/admin/css/widgets.css HTTP/1.1" 304 0
+"GET /static/admin/img/icon-no.svg HTTP/1.1" 304 0
+"GET /static/admin/img/search.svg HTTP/1.1" 304 0
+"GET /static/admin/img/icon-yes.svg HTTP/1.1" 304 0
+"GET /static/admin/js/filters.js HTTP/1.1" 304 0
+"GET /static/admin/img/tooltag-add.svg HTTP/1.1" 304 0
+"GET /static/admin/img/sorting-icons.svg HTTP/1.1" 304 0
+"GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 304 0
+"GET /admin/services/staticproduct/56/change/ HTTP/1.1" 200 171129
+"GET /static/admin/css/custom_admin.css HTTP/1.1" 404 2005
+"GET /static/admin/js/inlines.js HTTP/1.1" 304 0
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /static/admin/js/prepopulate_init.js HTTP/1.1" 304 0
+"GET /static/admin/img/icon-unknown.svg HTTP/1.1" 304 0
+"GET /static/admin/js/change_form.js HTTP/1.1" 304 0
+"GET /static/admin/img/tooltag-arrowright.svg HTTP/1.1" 304 0
+"GET /static/admin/img/inline-delete.svg HTTP/1.1" 304 0
+"GET /admin/ HTTP/1.1" 200 23994

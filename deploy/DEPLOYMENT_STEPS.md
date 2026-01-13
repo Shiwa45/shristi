@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Quick deployment commands for AWS EC2
+# Run these commands on your AWS server
+
+echo "Connecting to AWS EC2..."
+echo "ssh -i wire.pem ubuntu@13.61.189.208"
+echo ""
+echo "Once connected, run these commands:"
+echo ""
+echo "# 1. Clone the repository"
+echo "cd /home/ubuntu"
+echo "git clone git@github.com:Shiwa45/shristi.git || (cd shristi && git pull)"
+echo ""
+echo "# 2. Run the deployment script"
+echo "cd shristi"
+echo "chmod +x deploy/deploy.sh"
+echo "bash deploy/deploy.sh"
+echo ""
+echo "# 3. Edit environment variables"
+echo "nano .env"
+echo "# Update SECRET_KEY, ALLOWED_HOSTS, and database settings"
+echo ""
+echo "# 4. Restart services"
+echo "sudo systemctl restart gunicorn"
+echo "sudo systemctl restart nginx"
+echo ""
+echo "# 5. Check status"
+echo "sudo systemctl status gunicorn"
+echo "sudo systemctl status nginx"
+echo ""
+echo "Your app will be available at: http://13.61.189.208"

@@ -1,7 +1,21 @@
 # apps/core/admin.py
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import HomepageSlider, Page, ContactSubmission, Testimonial, FAQCategory, FAQ
+from .models import (
+    HomepageSlider,
+    Page,
+    ContactSubmission,
+    Testimonial,
+    FAQCategory,
+    FAQ,
+    NoDesignSection,
+    NoDesignFeature,
+    SiteSetting,
+    SiteNavLink,
+    FooterLinkGroup,
+    FooterLink,
+    SocialLink,
+)
 
 @admin.register(HomepageSlider)
 class HomepageSliderAdmin(admin.ModelAdmin):
@@ -143,3 +157,113 @@ class FAQAdmin(admin.ModelAdmin):
 
 # Add inline to FAQCategoryAdmin
 FAQCategoryAdmin.inlines = [FAQInline]
+
+
+class NoDesignFeatureInline(admin.TabularInline):
+    model = NoDesignFeature
+    extra = 1
+    fields = ('text', 'icon_class', 'is_active', 'order')
+
+
+@admin.register(NoDesignSection)
+class NoDesignSectionAdmin(admin.ModelAdmin):
+    list_display = ('title', 'highlight_text', 'is_active', 'order', 'updated_at')
+    list_filter = ('is_active', 'updated_at')
+    list_editable = ('is_active', 'order')
+    search_fields = ('title', 'highlight_text', 'description')
+
+    fieldsets = (
+        ('Content', {
+            'fields': ('title', 'highlight_text', 'description')
+        }),
+        ('Call to Action', {
+            'fields': ('cta_text', 'cta_url')
+        }),
+        ('Image', {
+            'fields': ('image', 'image_static_path', 'image_alt_text')
+        }),
+        ('Settings', {
+            'fields': ('is_active', 'order')
+        }),
+    )
+
+    inlines = [NoDesignFeatureInline]
+
+
+class SiteNavLinkInline(admin.TabularInline):
+    model = SiteNavLink
+    extra = 1
+    fields = ('label', 'url', 'position', 'is_active', 'order')
+
+
+class SocialLinkInline(admin.TabularInline):
+    model = SocialLink
+    extra = 1
+    fields = ('label', 'url', 'icon_svg', 'is_active', 'order')
+
+
+@admin.register(SiteSetting)
+class SiteSettingAdmin(admin.ModelAdmin):
+    list_display = ('site_name', 'contact_email', 'contact_phone', 'is_active', 'updated_at')
+    list_filter = ('is_active', 'updated_at')
+    list_editable = ('is_active',)
+    search_fields = ('site_name', 'contact_email', 'contact_phone')
+
+    fieldsets = (
+        ('Branding', {
+            'fields': ('site_name', 'logo', 'logo_static_path', 'logo_alt_text')
+        }),
+        ('Footer About', {
+            'fields': ('footer_about_title', 'footer_about_text')
+        }),
+        ('Services Video', {
+            'fields': ('services_video_url', 'services_video_poster')
+        }),
+        ('Contact Info', {
+            'fields': ('contact_heading', 'contact_phone', 'contact_email', 'contact_address')
+        }),
+        ('Business Hours', {
+            'fields': ('business_hours_heading', 'business_hours')
+        }),
+        ('Copyright', {
+            'fields': ('copyright_text',)
+        }),
+        ('Settings', {
+            'fields': ('is_active',)
+        }),
+    )
+
+    inlines = [SiteNavLinkInline, SocialLinkInline]
+
+
+class FooterLinkInline(admin.TabularInline):
+    model = FooterLink
+    extra = 1
+    fields = ('label', 'url', 'is_active', 'order')
+
+
+@admin.register(FooterLinkGroup)
+class FooterLinkGroupAdmin(admin.ModelAdmin):
+    list_display = ('title', 'is_active', 'order')
+    list_filter = ('is_active',)
+    list_editable = ('is_active', 'order')
+    search_fields = ('title',)
+
+    fieldsets = (
+        ('Content', {
+            'fields': ('site_settings', 'title')
+        }),
+        ('Settings', {
+            'fields': ('is_active', 'order')
+        }),
+    )
+
+    inlines = [FooterLinkInline]
+
+
+@admin.register(FooterLink)
+class FooterLinkAdmin(admin.ModelAdmin):
+    list_display = ('label', 'group', 'is_active', 'order')
+    list_filter = ('is_active',)
+    list_editable = ('is_active', 'order')
+    search_fields = ('label',)

@@ -654,6 +654,40 @@ Drishthi Printing - Professional Quality Custom Printing
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div class="text-white">
+                    {% if no_design_section %}
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">
+                        {{ no_design_section.title }}
+                        <span class="text-yellow-300">{{ no_design_section.highlight_text }}</span>
+                    </h2>
+                    <p class="text-lg text-purple-100 mb-8">
+                        {{ no_design_section.description }}
+                    </p>
+                    <div class="space-y-4 mb-8">
+                        {% for feature in no_design_section.features.all %}
+                        {% if feature.is_active %}
+                        <div class="flex items-center">
+                            <div class="w-6 h-6 bg-yellow-300 rounded-full flex items-center justify-center mr-4">
+                                <i class="{{ feature.icon_class }} text-purple-800 text-sm"></i>
+                            </div>
+                            <span class="text-purple-100 font-medium">{{ feature.text }}</span>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% if no_design_section.cta_url %}
+                    <a href="{{ no_design_section.cta_url }}"
+                        class="inline-flex items-center bg-yellow-300 text-purple-800 px-8 py-4 rounded-full font-bold hover:bg-yellow-200 transition-all duration-300 transform hover:scale-105">
+                        <i class="fas fa-palette mr-2"></i>
+                        {{ no_design_section.cta_text }}
+                    </a>
+                    {% else %}
+                    <a href="{% url 'core:contact' %}"
+                        class="inline-flex items-center bg-yellow-300 text-purple-800 px-8 py-4 rounded-full font-bold hover:bg-yellow-200 transition-all duration-300 transform hover:scale-105">
+                        <i class="fas fa-palette mr-2"></i>
+                        {{ no_design_section.cta_text }}
+                    </a>
+                    {% endif %}
+                    {% else %}
                     <h2 class="text-3xl md:text-4xl font-bold mb-6">
                         No Design? <span class="text-yellow-300">No Problem!</span>
                     </h2>
@@ -692,10 +726,19 @@ Drishthi Printing - Professional Quality Custom Printing
                         <i class="fas fa-palette mr-2"></i>
                         Get Free Design
                     </a>
+                    {% endif %}
                 </div>
                 <div class="relative">
+                    {% if no_design_section and no_design_section.image %}
+                    <img src="{{ no_design_section.image.url }}" alt="{{ no_design_section.image_alt_text }}"
+                        class="w-full max-w-lg mx-auto">
+                    {% elif no_design_section %}
+                    <img src="{% static no_design_section.image_static_path %}" alt="{{ no_design_section.image_alt_text }}"
+                        class="w-full max-w-lg mx-auto">
+                    {% else %}
                     <img src="{% static 'img/no_design.png' %}" alt="Professional Design Team"
                         class="w-full max-w-lg mx-auto">
+                    {% endif %}
                 </div>
             </div>
         </div>

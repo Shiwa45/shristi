@@ -627,8 +627,7 @@
                 <div class="action-bar">
                     <div class="total-display">
                         <div class="total-label">Total Amount</div>
-                        <div class="total-amount" id="stickyTotal" data-base-price="{{ product.base_price }}">₹{{
-                            product.base_price|intcomma }}</div>
+                        <div class="total-amount" id="stickyTotal" data-base-price="{{ product.base_price }}">₹0</div>
                     </div>
                     <button type="button" class="btn-add-cart" onclick="submitToCart()">
                         <span>Add to Cart</span>
@@ -639,6 +638,7 @@
         </div>
     </div>
 
+    {% include 'services/static_products/partials/service_info_section.html' %}
     {% include 'services/static_products/partials/product_tabs.html' %}
     <br>
     <br>

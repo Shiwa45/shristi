@@ -181,6 +181,14 @@ def get_item(dictionary, key):
         return dictionary.get(key, '')
     return ''
 
+
+@register.filter
+def split_lines(value):
+    """Split text into non-empty lines."""
+    if not value:
+        return []
+    return [line.strip() for line in str(value).splitlines() if line.strip()]
+
 @register.simple_tag
 def get_section_icon(section_key):
     """Get appropriate icon for form section"""

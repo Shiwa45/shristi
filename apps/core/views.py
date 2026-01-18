@@ -7,7 +7,15 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.db.models import Q
 
-from .models import HomepageSlider, Page, ContactSubmission, Testimonial, FAQCategory, FAQ
+from .models import (
+    HomepageSlider,
+    Page,
+    ContactSubmission,
+    Testimonial,
+    FAQCategory,
+    FAQ,
+    NoDesignSection,
+)
 from apps.services.models import ServiceCategory, StaticProduct
 
 
@@ -18,6 +26,12 @@ def home_view(request):
     design_enabled_products = StaticProduct.objects.filter(is_active=True, design_tool_enabled=True)[:6]
     service_categories = ServiceCategory.objects.filter(is_active=True).order_by('order')[:4]
     testimonials = Testimonial.objects.filter(is_active=True, is_featured=True).order_by('order')[:6]
+    no_design_section = (
+        NoDesignSection.objects.filter(is_active=True)
+        .prefetch_related('features')
+        .order_by('order')
+        .first()
+    )
     
     context = {
         'sliders': sliders,
@@ -25,6 +39,7 @@ def home_view(request):
         'design_enabled_products': design_enabled_products,
         'service_categories': service_categories,
         'testimonials': testimonials,
+        'no_design_section': no_design_section,
     }
     return render(request, 'core/home.html', context)
 
@@ -118,6 +133,16 @@ def contact_submit_view(request):
     except Exception as e:
         messages.error(request, 'Sorry, there was an error sending your message. Please try again.')
         return redirect('core:contact')
+
+
+@require_http_methods(["POST"])
+def newsletter_signup_view(request):
+    """Lightweight newsletter signup endpoint for the contact page."""
+    email = request.POST.get('email', '').strip()
+    if not email:
+        return JsonResponse({'success': False, 'message': 'Email is required.'}, status=400)
+
+    return JsonResponse({'success': True, 'message': 'Thanks for subscribing!'})
 
 
 def page_view(request, slug):

@@ -6,9 +6,14 @@ from django.urls import reverse
 from django.utils.safestring import mark_safe
 import json
 from .models import (
-    ServiceCategory, StaticProduct, StaticProductImage,
-    StaticProductFAQ, StaticProductSample, StaticProductTestimonial,
-    ProductFormField
+    ServiceCategory,
+    StaticProduct,
+    StaticProductImage,
+    StaticProductFAQ,
+    StaticProductSample,
+    StaticProductTestimonial,
+    ProductFormField,
+    ServiceInfoBlock,
 )
 
 # apps/services/admin.py - Updated for Static Products
@@ -174,6 +179,12 @@ class ProductTestimonialInline(admin.TabularInline):
     extra = 1
     fields = ('customer_name', 'customer_company', 'testimonial', 'rating', 'order', 'is_active')
 
+
+class ServiceInfoBlockInline(admin.TabularInline):
+    model = ServiceInfoBlock
+    extra = 1
+    fields = ('title', 'body', 'bullet_points', 'order', 'is_active')
+
 @admin.register(StaticProduct)
 class StaticProductAdmin(admin.ModelAdmin):
     form = StaticProductForm
@@ -226,7 +237,14 @@ class StaticProductAdmin(admin.ModelAdmin):
         }),
     )
     
-    inlines = [ProductFormFieldInline, ProductImageInline, ProductFAQInline, ProductSampleInline, ProductTestimonialInline]
+    inlines = [
+        ProductFormFieldInline,
+        ProductImageInline,
+        ProductFAQInline,
+        ProductSampleInline,
+        ProductTestimonialInline,
+        ServiceInfoBlockInline,
+    ]
     
     # Temporarily remove readonly fields to debug
     # def get_readonly_fields(self, request, obj=None):

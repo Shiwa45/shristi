@@ -738,6 +738,27 @@ class StaticProductFAQ(models.Model):
         return f"{self.product.name} - {self.question[:50]}"
 
 
+class ServiceInfoBlock(models.Model):
+    """Content blocks shown on service detail pages"""
+    product = models.ForeignKey(StaticProduct, on_delete=models.CASCADE, related_name='info_blocks')
+    title = models.CharField(max_length=200)
+    body = models.TextField(blank=True)
+    bullet_points = models.TextField(
+        blank=True,
+        help_text="One point per line",
+    )
+    is_active = models.BooleanField(default=True)
+    order = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ['order']
+        verbose_name = "Service Info Block"
+        verbose_name_plural = "Service Info Blocks"
+
+    def __str__(self):
+        return f"{self.product.name} - {self.title}"
+
+
 class StaticProductSample(models.Model):
     """Product samples and templates"""
     product = models.ForeignKey(StaticProduct, on_delete=models.CASCADE, related_name='samples')

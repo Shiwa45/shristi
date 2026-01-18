@@ -1,0 +1,183 @@
+{% load static %}
+{% load dynamic_form_tags %}
+
+{% if product.info_blocks.all %}
+<section class="service-info-section">
+    <div class="service-info-container">
+        <div class="service-info-grid">
+            <div class="service-accordion">
+                {% for block in product.info_blocks.all %}
+                    {% if block.is_active %}
+                    <div class="service-accordion-item">
+                        <button type="button" class="service-accordion-toggle" aria-expanded="false">
+                            <span class="service-accordion-title">{{ block.title }}</span>
+                            <span class="service-accordion-icon">+</span>
+                        </button>
+                        <div class="service-accordion-panel">
+                            <div class="service-accordion-panel-grid">
+                            {% if block.title|lower == 'how to order' and site_settings and site_settings.services_video_url %}
+                            <div class="service-video-card">
+                                <div class="service-video-frame">
+                                    <video controls {% if site_settings.services_video_poster %}poster="{{ site_settings.services_video_poster.url }}"{% endif %}>
+                                        <source src="{{ site_settings.services_video_url }}">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                            </div>
+                            {% endif %}
+                            <div class="service-accordion-text">
+                            {% if block.body %}
+                            <div class="service-accordion-body">{{ block.body|linebreaksbr }}</div>
+                            {% endif %}
+                            {% if block.bullet_points %}
+                            <ul class="service-accordion-list">
+                                {% for point in block.bullet_points|split_lines %}
+                                <li>{{ point }}</li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .service-info-section {
+        padding: 48px 0;
+        background: #fff;
+    }
+    .service-info-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 32px;
+    }
+    .service-info-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 32px;
+        align-items: start;
+    }
+    .service-accordion-item {
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        background: #fff;
+        margin-bottom: 16px;
+        overflow: hidden;
+    }
+    .service-accordion-toggle {
+        width: 100%;
+        padding: 18px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #fafafa;
+        font-weight: 600;
+        color: #1f2937;
+        text-align: left;
+        border: none;
+        cursor: pointer;
+    }
+    .service-accordion-icon {
+        font-size: 20px;
+        color: #0f766e;
+        transition: transform 0.2s ease;
+    }
+    .service-accordion-panel {
+        display: none;
+        padding: 18px 20px 20px;
+        border-top: 1px solid #e5e7eb;
+    }
+    .service-accordion-panel-grid {
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+        flex-direction: column;
+    }
+    .service-accordion-text {
+        flex: 1;
+        min-width: 0;
+    }
+    .service-accordion-panel.is-open {
+        display: block;
+    }
+    .service-accordion-body {
+        color: #374151;
+        font-size: 15px;
+        line-height: 1.6;
+        margin-bottom: 16px;
+    }
+    .service-accordion-list {
+        list-style: disc;
+        padding-left: 18px;
+        color: #1f2937;
+        font-size: 15px;
+        line-height: 1.6;
+        margin: 0;
+    }
+    .service-accordion-item.is-open .service-accordion-icon {
+        transform: rotate(45deg);
+    }
+    .service-video-card {
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        padding: 16px;
+        background: #f9fafb;
+        width: 100%;
+        max-width: 320px;
+        flex-shrink: 0;
+    }
+    .service-video-frame video {
+        width: 100%;
+        border-radius: 8px;
+        display: block;
+    }
+    @media (max-width: 640px) {
+        .service-info-container {
+            padding: 0 16px;
+        }
+    }
+    @media (min-width: 768px) {
+        .service-accordion-panel-grid {
+            flex-direction: row-reverse;
+        }
+    }
+</style>
+
+<script>
+    (function () {
+        const items = document.querySelectorAll('.service-accordion-item');
+        if (!items.length) return;
+
+        items.forEach((item) => {
+            const button = item.querySelector('.service-accordion-toggle');
+            const panel = item.querySelector('.service-accordion-panel');
+            if (!button || !panel) return;
+
+            button.addEventListener('click', () => {
+                const isOpen = item.classList.contains('is-open');
+
+                items.forEach((other) => {
+                    other.classList.remove('is-open');
+                    const otherPanel = other.querySelector('.service-accordion-panel');
+                    const otherButton = other.querySelector('.service-accordion-toggle');
+                    if (otherPanel) otherPanel.classList.remove('is-open');
+                    if (otherButton) otherButton.setAttribute('aria-expanded', 'false');
+                });
+
+                if (!isOpen) {
+                    item.classList.add('is-open');
+                    panel.classList.add('is-open');
+                    button.setAttribute('aria-expanded', 'true');
+                }
+            });
+        });
+    })();
+</script>
+{% endif %}

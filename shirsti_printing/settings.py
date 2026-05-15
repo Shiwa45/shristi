@@ -88,7 +88,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'shirsti_printing.wsgi.application'
 
 # Database
-if IS_VERCEL:
+if IS_VERCEL and os.environ.get('DB_HOST'):
+    # Use PostgreSQL on Vercel if credentials are provided
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -100,6 +101,7 @@ if IS_VERCEL:
         }
     }
 else:
+    # Use SQLite for local dev and temporary Vercel deployments
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',

@@ -8,5 +8,9 @@ sys.path.insert(0, project_root)
 # Set the Django settings module
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'shirsti_printing.settings')
 
+# Setup Django
+import django
+django.setup()
+
 # Import the handler from django-vercel
 from django_vercel import handler

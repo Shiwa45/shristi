@@ -100,8 +100,17 @@ if IS_VERCEL and os.environ.get('DB_HOST'):
             'PORT': os.environ.get('DB_PORT', '5432'),
         }
     }
+elif IS_VERCEL:
+    # Use temporary SQLite on Vercel (in writable /tmp directory)
+    # Note: Data won't persist across deployments
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': '/tmp/db.sqlite3',
+        }
+    }
 else:
-    # Use SQLite for local dev and temporary Vercel deployments
+    # Use SQLite for local dev
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',

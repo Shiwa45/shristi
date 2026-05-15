@@ -181,11 +181,6 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'handlers': {
-        'file': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': BASE_DIR / 'logs' / 'django.log',
-        },
         'console': {
             'level': 'INFO',
             'class': 'logging.StreamHandler',
@@ -193,12 +188,21 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers': ['file', 'console'],
+            'handlers': ['console'] if IS_VERCEL else ['console'],
             'level': 'INFO',
             'propagate': True,
         },
     },
 }
+
+# Add file logging for local development only
+if not IS_VERCEL:
+    LOGGING['handlers']['file'] = {
+        'level': 'INFO',
+        'class': 'logging.FileHandler',
+        'filename': BASE_DIR / 'logs' / 'django.log',
+    }
+    LOGGING['loggers']['django']['handlers'] = ['file', 'console']
 
 # Third-party API Keys
 PIXABAY_API_KEY = config('PIXABAY_API_KEY', default='27347-23fd1708b1c4f768195a5093b')

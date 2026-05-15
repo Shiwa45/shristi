@@ -1,8 +1,9 @@
 import os
 import sys
 
-# Add the project directory to the sys.path
-sys.path.insert(0, os.path.dirname(__file__))
+# Add the project root directory to the sys.path
+project_root = os.path.dirname(os.path.dirname(__file__))
+sys.path.insert(0, project_root)
 
 # Set the Django settings module
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'shirsti_printing.settings')

@@ -21,17 +21,30 @@ from apps.services.models import ServiceCategory, StaticProduct
 
 def home_view(request):
     """Homepage view with slider and featured products"""
-    sliders = HomepageSlider.objects.filter(is_active=True).order_by('order')
-    featured_products = StaticProduct.objects.filter(is_active=True, is_featured=True)[:6]
-    design_enabled_products = StaticProduct.objects.filter(is_active=True, design_tool_enabled=True)[:6]
-    service_categories = ServiceCategory.objects.filter(is_active=True).order_by('order')[:4]
-    testimonials = Testimonial.objects.filter(is_active=True, is_featured=True).order_by('order')[:6]
-    no_design_section = (
-        NoDesignSection.objects.filter(is_active=True)
-        .prefetch_related('features')
-        .order_by('order')
-        .first()
-    )
+    try:
+        sliders = HomepageSlider.objects.filter(is_active=True).order_by('order')
+        featured_products = StaticProduct.objects.filter(is_active=True, is_featured=True)[:6]
+        design_enabled_products = StaticProduct.objects.filter(is_active=True, design_tool_enabled=True)[:6]
+        service_categories = ServiceCategory.objects.filter(is_active=True).order_by('order')[:4]
+        testimonials = Testimonial.objects.filter(is_active=True, is_featured=True).order_by('order')[:6]
+        no_design_section = (
+            NoDesignSection.objects.filter(is_active=True)
+            .prefetch_related('features')
+            .order_by('order')
+            .first()
+        )
+    except Exception as e:
+        # Handle case where tables don't exist yet (e.g., during first deployment)
+        from django.db.utils import OperationalError
+        if isinstance(e, OperationalError) or 'no such table' in str(e):
+            sliders = []
+            featured_products = []
+            design_enabled_products = []
+            service_categories = []
+            testimonials = []
+            no_design_section = None
+        else:
+            raise
     
     context = {
         'sliders': sliders,

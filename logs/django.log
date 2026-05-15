@@ -45851,3 +45851,28 @@ Not Found: /favicon.ico
 "GET /static/images/logo.png HTTP/1.1" 404 1972
 "GET /media/products/bifold_brochure.png HTTP/1.1" 200 492512
 "GET /media/products/address_labels.png HTTP/1.1" 200 617445
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 117053
+"GET /static/images/logo.png HTTP/1.1" 404 1905
+"GET /media/sliders/hero-book_reVocCn_wPsQ8OM.png HTTP/1.1" 200 1516868
+"GET /media/sliders/1222-removebg-preview_eMvyRYP.png HTTP/1.1" 200 217710
+"GET /media/sliders/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_l0hEaGV.png HTTP/1.1" 200 128368
+"GET /static/img/no_design.png HTTP/1.1" 200 158509
+"GET /static/images/avatar-david.svg HTTP/1.1" 404 1929
+"GET /static/images/avatar-sarah.svg HTTP/1.1" 404 1929
+"GET /static/images/avatar-michael.svg HTTP/1.1" 404 1935
+"GET /media/products/featured/texture-business-card.jpeg HTTP/1.1" 200 106931
+"GET /media/categories/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_I4HUQtR.png HTTP/1.1" 200 128368
+"GET /media/categories/1222-removebg-preview.png HTTP/1.1" 200 217710
+"GET /media/categories/OV14KD0_SfKT8t6.jpg HTTP/1.1" 200 684371
+"GET /media/categories/hero-book_T5aF2VE.png HTTP/1.1" 200 1493235
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4886
+C:\Users\easyian\shristi\shirsti_printing\settings.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\easyian\shristi\shirsti_printing\settings.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\easyian\shristi\shirsti_printing\settings.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\easyian\shristi\shirsti_printing\settings.py changed, reloading.

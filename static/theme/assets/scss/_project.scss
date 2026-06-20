@@ -1,0 +1,379 @@
+.project-image-items {
+    margin-top: 30px;
+    position: relative;
+    overflow: hidden;
+
+    img {
+        @include imgw;
+    }
+
+    br {
+        display: block !important;
+    }
+
+    &::before {
+        position: absolute;
+        content: "";
+        left: 0;
+        bottom: -500px;
+        width: 100%;
+        height: 100%;
+        background-image: -moz-linear-gradient(90deg, rgb(112, 0, 254) 0%, rgba(112, 0, 254, 0) 100%);
+        background-image: -webkit-linear-gradient(90deg, rgb(112, 0, 254) 0%, rgba(112, 0, 254, 0) 100%);
+        background-image: -ms-linear-gradient(90deg, rgb(112, 0, 254) 0%, rgba(112, 0, 254, 0) 100%);
+        -webkit-transition: 0.5s;
+        transition: 0.5s;
+        visibility: hidden;
+        opacity: 0;
+    }
+
+    .project-content {
+        position: absolute;
+        bottom: -100px;
+        left: 40px;
+        @include flex;
+        justify-content: space-between;
+        right: 40px;
+        opacity: 0;
+        visibility: hidden;
+        @include transition;
+
+        .content {
+            h6 {
+                margin-bottom: 5px;
+                font-weight: 500;
+                color: $white;
+            }
+            
+            h3 {
+                a {
+                    color: $white;
+                }
+            }
+        }
+
+        .icon-btn {
+            @include flex;
+            gap: 10px;
+
+            .icon {
+                width: 40px;
+                height: 40px;
+                color: $white;
+                background-color: transparent;
+                text-align: center;
+                display: inline-block;
+                line-height: 40px;
+                border: 1px solid $white;
+                @include transition;
+
+                &:hover {
+                    background-color: $white;
+                    color: $header-color;
+                }
+            }
+        }
+    }
+
+    .hover-button {
+        position: absolute;
+        top: 50%;
+        inset-inline-start: 0;
+        transform: translateY(-50%) rotate(10deg);
+        opacity: 0;
+        transition: opacity .3s, transform .7s cubic-bezier(0.23, 1, 0.32, 1);
+        margin: -250px 0 0 -50px;
+        overflow: hidden;
+        z-index: 9;
+        visibility: hidden;
+        width: 110px;
+        height: 110px;
+        text-align: center;
+        border-radius: 50%;
+        background-color: $white;
+        color: $header-color;
+        font-size: 16px;
+        font-weight: 500;
+        display: inline;
+        padding-top: 35px;
+        line-height: 1.2;
+    }
+
+    &:hover {
+        .hover-button {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        &::before {
+            bottom: 0;
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .project-content {
+            opacity: 1;
+            visibility: visible;
+            bottom: 40px;
+        }
+    }
+}
+
+.project-section {
+    .project-dot .swiper-pagination-bullet {
+        width: 250px;
+        height: 2px;
+        border-radius: 0;
+        background: #d4d4d4;
+        opacity: 1;
+        transition: 0.6s;
+        margin: 0 !important;
+
+        @include breakpoint (max-xl){
+            width: 80px;
+        }
+    }
+
+    
+    .project-dot .swiper-pagination-bullet-active {
+        opacity: 1;
+        background: $theme-color;
+    }
+    
+    // .project-dot .swiper-pagination-bullet button {
+    //     display: none;
+    // }
+}
+
+.project-image {
+    position: relative;
+    margin-top: 24px;
+    height: 345px;
+    overflow: hidden;
+
+    img {
+        @include imgw;
+        object-fit: cover;
+    }
+
+    &.style-2 {
+        height: 715px;
+    }
+
+    &.style-3 {
+        height: 205px;
+    }
+
+    .portfolio-content {
+        position: absolute;
+        left: 15px;
+        right: 15px;
+        bottom: -100px;
+        @include transition;
+        opacity: 0;
+        visibility: hidden;
+
+        h3 {
+            background: #04D493;
+            padding: 15px 15px;
+            color: $white;
+            line-height: 1;
+            font-family: $body-font;
+            font-size: 16px;
+            max-width: 170px;
+
+            a {
+                color: $white;
+            }
+            
+            &:hover {
+                background-color: $theme-color;
+            }
+        }
+
+        h4 {
+            padding: 7px 30px;
+            line-height: 1;
+            background: rgba(255, 255, 255, 0.3);
+            color: $white;
+            display: inline-block;
+        }
+    }
+
+    &:hover {
+        .portfolio-content {
+            bottom: 30px;
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+}
+
+.project-details-wrapper {
+    .project-details-image {
+        margin-bottom: 50px;
+
+        img {
+            @include imgw;
+        }
+    }
+
+    .project-details-content {
+        h2 {
+            font-weight: 500;
+        }
+
+        h3 {
+            font-size: 30px;
+            font-weight: 500;
+        }
+
+        .list {
+            margin-top: 20px;
+
+            li {
+                i {
+                    color: $theme-color;
+                    margin-right: 10px;
+                }
+                &:not(:last-child){
+                    margin-bottom: 15px;
+                }
+            }
+        }
+    }
+
+    .project-sidebar-widget {
+        padding: 40px 30px;
+        background-color: $bg-color;
+        margin-bottom: 30px;
+
+        .wid-title {
+            margin-bottom: 15px;
+
+            h3 {
+                position: relative;
+                padding-bottom: 15px;
+                display: inline-block;
+                font-size: 22px;
+                font-weight: 600;
+
+                &::before {
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 50px;
+                    height: 2px;
+                    content: "";
+                    background-color: $theme-color;
+                }
+            }
+        }
+
+        .case-content-box {
+
+            .case-infobox {
+                li {
+                    color: $header-color;
+                    font-weight: 600;
+                    padding: 20px 0;
+    
+                    &:not(:last-child){
+                        border-bottom: 1px solid #d7d7d7;
+                    }
+                }
+            }
+
+            .theme-btn {
+                width: 100%;
+                margin-top: 18px;
+                text-align: center;
+
+                i {
+                    margin-left: 0;
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
+}
+
+.relative-project-items {
+    margin-top: 30px;
+
+    .thumb {
+        img {
+            @include imgw;
+        }
+    }
+
+    .content {
+        margin-top: 20px;
+
+        h3 {
+            margin-bottom: 5px;
+        }
+    }
+}
+
+.project-box-items-3 {
+    .thumb {
+        position: relative;
+        overflow: hidden;
+        
+        img {
+            @include imgw;
+        }
+
+        .content {
+            position: absolute;
+            bottom: -100px;
+            left: 40px;
+            right: 40px;
+            background-color: $white;
+            padding: 18px 30px;
+            @include transition;
+
+            .icon {
+                width: 40px;
+                height: 40px;
+                display: inline-block;
+                border-radius: 50%;
+                line-height: 40px;
+                text-align: center;
+                background-color: $theme-color;
+                color: $white;
+                position: absolute;
+                top: 50%;
+                right: 30px;
+                transform: translateY(-50%);
+
+                &:hover {
+                    background-color: $header-color;
+                }
+            }
+
+            p {
+                margin-bottom: 5px;
+            }
+
+            h3 {
+                a {
+                    &:hover {
+                        color: $theme-color;
+                    }
+                }
+            }
+        }
+    }
+
+    &:hover {
+        .thumb {
+            .content {
+                visibility: visible;
+                opacity: 1;
+                bottom: 40px;
+            }
+        }
+    }
+}

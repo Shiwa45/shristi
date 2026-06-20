@@ -1,0 +1,70 @@
+
+//>>>>> Section Title Start <<<<<//
+
+.section-title {
+	position: relative;
+	z-index: 99;
+	margin-bottom: 30px;
+
+	@include breakpoint (max-md){
+		margin-bottom: 0;
+	}
+
+	.sub-title {
+		padding: 8px 30px;
+		border-radius: 30px;
+		display: inline-block;
+		background: linear-gradient(90deg, rgba(73, 81, 254, 0.112) 24%, rgba(73, 81, 254, 0.112) 38%, rgba(148, 69, 211, 0.112) 62%, rgba(223, 57, 167, 0.112) 100%);
+		margin-bottom: 20px;
+		
+		span {
+			background: $color-gradient-1;
+			display: inline-block;
+			font-weight: 600;
+			text-transform: uppercase;
+			background-clip: text;
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			font-size: 14px;
+			
+		}
+	}
+
+}
+
+.section-title-area {
+	@include flex;
+	justify-content: space-between;
+
+	@include breakpoint (max-lg){
+		flex-wrap: wrap;
+		gap: 0;
+		text-align: center;
+		justify-content: center;
+	}
+
+	@include breakpoint (max-md){
+		gap: 20px;
+	}
+}
+
+.center {
+	text-align: center;
+	margin: 0 auto;
+}
+
+.section-bg {
+	background-color: $bg-color;
+}
+
+
+.section-padding{
+	padding: 120px 0;
+	@include breakpoint(max-xl){
+		padding: 100px 0;
+	}
+	@include breakpoint(max-lg){
+		padding: 80px 0;
+	}
+}
+

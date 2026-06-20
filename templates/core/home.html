@@ -1,1079 +1,1026 @@
-{% extends 'base.html' %}
+﻿{% extends 'base.html' %}
 {% load static %}
 
-{% block title %}
-Drishthi Printing - Professional Quality Custom Printing
-{% endblock %}
-
-{% block extra_css %}
-<style>
-    /* Modern Hero Slider Styles */
-    .hero-slider {
-        position: relative;
-        overflow: hidden;
-        min-height: 60vh;
-    }
-
-    .slider-container {
-        position: relative;
-        width: 100%;
-        height: 100%;
-    }
-
-    .hero-slide {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        transform: translateX(50px);
-    }
-
-    .hero-slide.active {
-        opacity: 1;
-        visibility: visible;
-        position: relative;
-        transform: translateX(0);
-    }
-
-    .hero-slide.prev {
-        transform: translateX(-50px);
-    }
-
-    .slider-content {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 60vh;
-        padding: 2rem 0;
-    }
-
-    .hero-text {
-        animation: slideInUp 0.8s ease-out 0.3s both;
-    }
-
-    .hero-image {
-        animation: slideInRight 0.8s ease-out 0.5s both;
-    }
-
-    @media (max-width: 768px) {
-        .hero-slider,
-        .slider-content {
-            min-height: 50vh;
-        }
-    }
-
-    @keyframes slideInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @keyframes slideInRight {
-        from {
-            opacity: 0;
-            transform: translateX(30px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-
-    /* Navigation Arrows */
-    .slider-btn {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background: rgba(255, 255, 255, 0.95);
-        border: none;
-        border-radius: 50%;
-        width: 60px;
-        height: 60px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-        transition: all 0.3s ease;
-        z-index: 10;
-    }
-
-    .slider-btn:hover {
-        background: white;
-        transform: translateY(-50%) scale(1.1);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    .prev-btn {
-        left: 30px;
-    }
-
-    .next-btn {
-        right: 30px;
-    }
-
-    .slider-dots {
-        position: absolute;
-        bottom: 30px;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        gap: 12px;
-        z-index: 10;
-    }
-
-    .dot {
-        width: 14px;
-        height: 14px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.5);
-        cursor: pointer;
-        transition: all 0.3s ease;
-        border: 2px solid transparent;
-    }
-
-    .dot.active {
-        background: white;
-        transform: scale(1.2);
-        border-color: rgba(255, 255, 255, 0.3);
-    }
-
-    /* Product Categories Section */
-    .categories-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 2rem;
-        margin-top: 3rem;
-        max-width: 1200px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    /* Desktop: Maximum 4 columns */
-    @media (min-width: 1200px) {
-        .categories-grid {
-            grid-template-columns: repeat(4, 1fr);
-        }
-    }
-
-    /* Tablet: 2-3 columns */
-    @media (min-width: 768px) and (max-width: 1199px) {
-        .categories-grid {
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        }
-    }
-
-    /* Category Card - Adapted from Product Card */
-    .category-card {
-        display: block;
-        background: #ffffff;
-        border-radius: 18px;
-        overflow: hidden;
-        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
-        transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-        border: 1px solid #e5e7eb;
-        text-decoration: none;
-    }
-
-    .category-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 20px 50px rgba(102, 126, 234, 0.16);
-        border-color: rgba(102, 126, 234, 0.25);
-    }
-
-    .category-image-container {
-        position: relative;
-        aspect-ratio: 4 / 3;
-        overflow: hidden;
-        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-    }
-
-    .category-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.3s ease;
-    }
-
-    .category-card:hover .category-image {
-        transform: scale(1.05);
-    }
-
-    .category-image-fallback {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        font-size: 3rem;
-    }
-
-    .category-content {
-        padding: 1.25rem 1.5rem 1.5rem;
-    }
-
-    .category-title {
-        font-size: 1.1rem;
-        font-weight: 700;
-        color: #1f2937;
-        transition: color 0.2s ease;
-        margin-bottom: 0.3rem;
-        display: block;
-    }
-
-    .category-card:hover .category-title {
-        color: #667eea;
-    }
-
-    .category-subtext {
-        font-size: 0.9rem;
-        color: #6b7280;
-    }
-
-    /* Image loading states */
-    .category-image[loading="lazy"] {
-        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-    }
-
-    .category-image:not([src]) {
-        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    }
-
-    @keyframes pulse {
-
-        0%,
-        100% {
-            opacity: 1;
-        }
-
-        50% {
-            opacity: .5;
-        }
-    }
-
-    /* No Design Section */
-    .no-design-section {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .no-design-section::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3Ccircle cx='10' cy='10' r='4'/%3E%3Ccircle cx='50' cy='10' r='4'/%3E%3Ccircle cx='10' cy='50' r='4'/%3E%3Ccircle cx='50' cy='50' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    }
-
-    .no-design-content {
-        position: relative;
-        z-index: 2;
-    }
-
-    /* Design Tool Products */
-    .design-products-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 2rem;
-    }
-
-    .design-product-card {
-        background: white;
-        border-radius: 24px;
-        overflow: hidden;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-        transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        backdrop-filter: blur(10px);
-        position: relative;
-    }
-
-    .design-product-card:hover {
-        transform: translateY(-16px) rotateY(5deg);
-        box-shadow: 0 32px 64px rgba(0, 0, 0, 0.2);
-    }
-
-    .design-product-image {
-        position: relative;
-        height: 220px;
-        overflow: hidden;
-        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-    }
-
-    .design-product-card:hover .design-product-image img {
-        transform: scale(1.15) rotate(2deg);
-    }
-
-    .design-badge {
-        position: absolute;
-        top: 16px;
-        right: 16px;
-        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-        color: white;
-        padding: 8px 16px;
-        border-radius: 20px;
-        font-size: 0.8rem;
-        font-weight: 600;
-        box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
-        z-index: 3;
-    }
-
-    .design-product-content {
-        padding: 2rem;
-    }
-
-    .design-product-title {
-        font-size: 1.4rem;
-        font-weight: 700;
-        color: #1f2937;
-        margin-bottom: 0.75rem;
-        transition: color 0.3s ease;
-    }
-
-    .design-product-card:hover .design-product-title {
-        color: #667eea;
-    }
-
-    .design-buttons {
-        display: flex;
-        gap: 1rem;
-        margin-top: 1.5rem;
-    }
-
-    .design-btn-primary {
-        flex: 1;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 12px 20px;
-        border-radius: 12px;
-        font-weight: 600;
-        text-decoration: none;
-        text-align: center;
-        transition: all 0.3s ease;
-    }
-
-    .design-btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-        color: white;
-        text-decoration: none;
-    }
-
-    .design-btn-secondary {
-        flex: 1;
-        background: #f8fafc;
-        color: #374151;
-        padding: 12px 20px;
-        border-radius: 12px;
-        font-weight: 600;
-        text-decoration: none;
-        text-align: center;
-        border: 1px solid #e5e7eb;
-        transition: all 0.3s ease;
-    }
-
-    .design-btn-secondary:hover {
-        background: #e2e8f0;
-        transform: translateY(-1px);
-        color: #374151;
-        text-decoration: none;
-    }
-
-    /* Testimonials */
-    .testimonial-card {
-        background: white;
-        padding: 2rem;
-        border-radius: 20px;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-        text-align: center;
-        transition: all 0.3s ease;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .testimonial-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-    }
-
-    .testimonial-avatar {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        margin: 0 auto 1.5rem;
-        object-fit: cover;
-        border: 4px solid #f8fafc;
-    }
-
-    .testimonial-stars {
-        display: flex;
-        justify-content: center;
-        gap: 4px;
-        margin-bottom: 1.5rem;
-    }
-
-    .testimonial-quote {
-        font-style: italic;
-        color: #6b7280;
-        margin-bottom: 1.5rem;
-        line-height: 1.6;
-    }
-
-    .testimonial-author {
-        font-weight: 600;
-        color: #1f2937;
-        margin-bottom: 0.25rem;
-    }
-
-    .testimonial-role {
-        font-size: 0.9rem;
-        color: #9ca3af;
-    }
-
-    /* Mobile Responsive */
-    @media (max-width: 768px) {
-        .hero-slide {
-            min-height: 60vh;
-        }
-
-        .slider-content {
-            min-height: 60vh;
-        }
-
-        .slider-btn {
-            width: 50px;
-            height: 50px;
-        }
-
-        .prev-btn {
-            left: 15px;
-        }
-
-        .next-btn {
-            right: 15px;
-        }
-
-        .categories-grid {
-            grid-template-columns: 1fr;
-            gap: 2rem;
-            max-width: none;
-            margin-top: 2rem;
-        }
-
-        .category-card {
-            aspect-ratio: 1 / 1;
-        }
-
-        .category-name {
-            padding: 0.75rem;
-        }
-
-        .design-products-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .design-product-card:hover {
-            transform: translateY(-8px);
-        }
-
-        .design-buttons {
-            flex-direction: column;
-        }
-    }
-</style>
-{% endblock %}
+{% block title %}Home{% endblock %}
+{% block meta_description %}Shirsti Printing — Professional book printing, business card printing, brochures and all custom printing services in India.{% endblock %}
 
 {% block content %}
-<!-- Hero Slider Section -->
-<section class="hero-slider">
-    <div class="slider-container">
-        {% for slide in sliders %}
-        <div class="hero-slide {% if forloop.first %}active{% endif %}" data-slide="{{ forloop.counter }}">
-            <div
-                class="slider-content bg-gradient-to-br {{ slide.background_gradient_from|default:'from-blue-50' }} {{ slide.background_gradient_via|default:'via-indigo-50' }} {{ slide.background_gradient_to|default:'to-purple-50' }}">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                        <div class="hero-text">
-                            {% if slide.subtitle %}
-                            <span class="text-gray-700 font-semibold text-sm tracking-wide uppercase mb-4 block">{{ slide.subtitle }}</span>
-                            {% endif %}
-                            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
-                                {{ slide.title }}
-                            </h1>
-                            {% if slide.description %}
-                            <p class="text-lg text-gray-700 mb-8 max-w-lg">
-                                {{ slide.description }}
-                            </p>
-                            {% endif %}
-                            <div class="flex flex-col sm:flex-row gap-4">
-                                {% if slide.primary_cta_text and slide.primary_cta_url %}
-                                <a href="{{ slide.primary_cta_url }}"
-                                    class="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-700 text-white font-semibold rounded-full hover:from-purple-700 hover:to-purple-800 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                                    <i class="fas fa-rocket mr-2"></i>
-                                    {{ slide.primary_cta_text }}
-                                </a>
-                                {% endif %}
-                                {% if slide.secondary_cta_text and slide.secondary_cta_url %}
-                                <a href="{{ slide.secondary_cta_url }}"
-                                    class="inline-flex items-center justify-center px-8 py-4 border-2 border-purple-600 text-purple-600 font-semibold rounded-full hover:bg-purple-600 hover:text-white transition-all duration-300">
-                                    <i class="fas fa-play-circle mr-2"></i>
-                                    {{ slide.secondary_cta_text }}
-                                </a>
-                                {% endif %}
-                            </div>
+
+<style>
+    /* ── Hero section: ~25% smaller than original ── */
+    .hero-3 {
+        padding: 109px 0 64px !important;
+    }
+    @media (max-width: 991px) {
+        .hero-3 { padding-top: 86px !important; }
+    }
+    .hero-3 .hero-image {
+        height: 348px !important;
+    }
+    /* Scale down text content proportionally */
+    .hero-3 .hero-content h6 {
+        font-size: 16px !important;
+        margin-bottom: 12px !important;
+    }
+    .hero-3 .hero-content h1 {
+        font-size: 41px !important;
+        margin-bottom: 17px !important;
+        line-height: 1.25 !important;
+    }
+    @media (max-width: 991px) {
+        .hero-3 .hero-content h1 { font-size: 35px !important; }
+    }
+    @media (max-width: 767px) {
+        .hero-3 .hero-content h1 { font-size: 29px !important; }
+    }
+    .hero-3 .hero-content p {
+        font-size: 19px !important;
+    }
+    .hero-3 .hero-button {
+        margin-top: 23px !important;
+    }
+    .hero-3 .hero-button .theme-btn {
+        padding: 12px 29px !important;
+        font-size: 19px !important;
+    }
+
+    /* ── No Design section: white text on blue CTA background ── */
+    .no-design-banner .section-title .sub-title span {
+        color: #fff;
+        border-color: rgba(255,255,255,0.4);
+        background: rgba(255,255,255,0.15);
+    }
+    .no-design-banner .section-title h2 {
+        color: #fff;
+    }
+    .no-design-banner > p {
+        color: rgba(255,255,255,0.88);
+    }
+    .no-design-banner .list-item ul li {
+        color: #fff;
+        font-weight: 500;
+        font-size: 16px;
+        margin-bottom: 14px;
+    }
+    .no-design-banner .list-item ul li i {
+        color: #ffe066;
+        margin-right: 10px;
+        font-size: 14px;
+    }
+    .no-design-banner .theme-btn {
+        background-color: #fff !important;
+        color: #3b2bbf !important;
+        font-weight: 700;
+    }
+    .no-design-banner .theme-btn:hover {
+        background-color: #ffe066 !important;
+        color: #3b2bbf !important;
+    }
+    .no-design-banner .quality-image img {
+        max-width: 100%;
+        height: auto;
+        filter: drop-shadow(0 20px 40px rgba(0,0,0,0.25));
+    }
+
+    /* ── Shop banner product images ── */
+    .product-right-img,
+    .product-right-img-2 {
+        width: 100%;
+        height: 220px;
+        overflow: hidden;
+        border-radius: 8px;
+    }
+    .product-right-img img,
+    .product-right-img-2 img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+    }
+    /* Keep decorative shape overlays from clipping */
+    .product-right-img-shape,
+    .product-right-img-shape-2 {
+        pointer-events: none;
+    }
+
+    /* ── Shop product card images ── */
+    .shop-items .shop-image {
+        height: 240px;
+        overflow: hidden;
+    }
+    .shop-items .shop-image > img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+    }
+
+    /* ── Uniform category thumbnails ── */
+    .shop-catagories-item .thumb {
+        width: 100%;
+        height: 220px;
+        overflow: hidden;
+        border-radius: 12px;
+        background-color: #f5f5f5;
+    }
+    .shop-catagories-item .thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+        transition: transform 0.4s ease-in-out;
+    }
+    .shop-catagories-item:hover .thumb img {
+        transform: scale(1.05);
+    }
+</style>
+
+<!-- ===== Hero Slider ===== -->
+<section class="hero-section-3">
+    <div class="swiper-dot-2">
+        <div class="dots"></div>
+    </div>
+    <div class="swiper hero-slider">
+        <div class="swiper-wrapper">
+
+            {% if sliders %}
+                {% for slide in sliders %}
+                <div class="swiper-slide">
+                    <div class="hero-3">
+                        <div class="hero-bg bg-cover"
+                             style="background-image: url('{% static 'assets/img/hero/hero-bg-1.jpg' %}');">
                         </div>
-                        <div class="hero-image">
-                            {% if slide.image %}
-                            <img src="{{ slide.image.url }}" alt="{{ slide.title }}"
-                                class="w-full max-w-lg mx-auto drop-shadow-2xl">
-                            {% else %}
-                            <img src="{% static 'images/hero-book.png' %}" alt="{{ slide.title }}"
-                                class="w-full max-w-lg mx-auto drop-shadow-2xl">
-                            {% endif %}
+                        <div class="container">
+                            <div class="row g-4 align-items-center">
+                                <div class="col-lg-6">
+                                    <div class="hero-content">
+                                        {% if slide.subtitle %}<h6>{{ slide.subtitle }}</h6>{% endif %}
+                                        <h1>{{ slide.title }}</h1>
+                                        {% if slide.description %}<p>{{ slide.description }}</p>{% endif %}
+                                    </div>
+                                    <div class="hero-button">
+                                        <a href="{{ slide.primary_cta_url|default:slide.cta_url|default:'#' }}" class="theme-btn">
+                                            {{ slide.primary_cta_text|default:slide.cta_text|default:'Shop Now' }}
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="hero-image">
+                                        {% if slide.image %}
+                                            <img src="{{ slide.image.url }}" alt="{{ slide.title }}">
+                                        {% else %}
+                                            <img src="{% static 'assets/img/hero/hero-1.png' %}" alt="{{ slide.title }}">
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        {% empty %}
-        <!-- Fallback slide -->
-        <div class="hero-slide active" data-slide="1">
-            <div class="slider-content bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                        <div class="hero-text">
-                            <span
-                                class="text-gray-700 font-semibold text-sm tracking-wide uppercase mb-4 block">Professional
-                                Printing Services</span>
-                            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
-                                Quality Custom Printing Solutions
-                            </h1>
-                            <p class="text-lg text-gray-700 mb-8 max-w-lg">
-                                Transform your ideas into premium printed materials that leave a lasting impression.
-                            </p>
-                            <div class="flex flex-col sm:flex-row gap-4">
-                                <a href="{% url 'services:categories' %}"
-                                    class="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-700 text-white font-semibold rounded-full hover:from-purple-700 hover:to-purple-800 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                                    <i class="fas fa-rocket mr-2"></i>
-                                    Get Started
-                                </a>
-                                <a href="{% url 'core:about' %}"
-                                    class="inline-flex items-center justify-center px-8 py-4 border-2 border-purple-600 text-purple-600 font-semibold rounded-full hover:bg-purple-600 hover:text-white transition-all duration-300">
-                                    <i class="fas fa-play-circle mr-2"></i>
-                                    View Portfolio
-                                </a>
+                {% endfor %}
+            {% else %}
+                <!-- Fallback slide 1 -->
+                <div class="swiper-slide">
+                    <div class="hero-3">
+                        <div class="hero-bg bg-cover" style="background-image: url('{% static 'assets/img/hero/hero-bg-1.jpg' %}');"></div>
+                        <div class="container">
+                            <div class="row g-4 align-items-center">
+                                <div class="col-lg-6">
+                                    <div class="hero-content">
+                                        <h6>Custom Printing</h6>
+                                        <h1>Professional Printing For Your Business</h1>
+                                        <p>Turn your ideas into premium print products that leave a lasting impression.</p>
+                                    </div>
+                                    <div class="hero-button">
+                                        <a href="{% url 'services:home' %}" class="theme-btn">Explore Services</a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="hero-image">
+                                        <img src="{% static 'assets/img/hero/hero-1.png' %}" alt="Printing Services">
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="hero-image">
-                            <img src="{% static 'images/hero-book.png' %}" alt="Professional Printing"
-                                class="w-full max-w-lg mx-auto drop-shadow-2xl">
                         </div>
                     </div>
                 </div>
+                <!-- Fallback slide 2 -->
+                <div class="swiper-slide">
+                    <div class="hero-3">
+                        <div class="hero-bg bg-cover" style="background-image: url('{% static 'assets/img/hero/hero-bg-2.jpg' %}');"></div>
+                        <div class="container">
+                            <div class="row g-4 align-items-center">
+                                <div class="col-lg-6">
+                                    <div class="hero-content">
+                                        <h6>Book Printing</h6>
+                                        <h1>High Quality Book Printing Services</h1>
+                                        <p>Professional book printing with multiple binding and finishing options.</p>
+                                    </div>
+                                    <div class="hero-button">
+                                        <a href="{% url 'services:home' %}" class="theme-btn">Order Now</a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="hero-image">
+                                        <img src="{% static 'assets/img/hero/hero-2.png' %}" alt="Book Printing">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Fallback slide 3 -->
+                <div class="swiper-slide">
+                    <div class="hero-3">
+                        <div class="hero-bg bg-cover" style="background-image: url('{% static 'assets/img/hero/hero-bg-1.jpg' %}');"></div>
+                        <div class="container">
+                            <div class="row g-4 align-items-center">
+                                <div class="col-lg-6">
+                                    <div class="hero-content">
+                                        <h6>Marketing Material</h6>
+                                        <h1>Standout Marketing Print Materials</h1>
+                                        <p>Brochures, flyers, business cards and more — all printed to perfection.</p>
+                                    </div>
+                                    <div class="hero-button">
+                                        <a href="{% url 'services:home' %}" class="theme-btn">Get Started</a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="hero-image">
+                                        <img src="{% static 'assets/img/hero/hero-1.png' %}" alt="Marketing Printing">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+        </div><!-- /swiper-wrapper -->
+    </div><!-- /hero-slider -->
+</section>
+
+<!-- ===== Shop Categories Slider ===== -->
+<section class="shop-catagories-section-3 fix section-padding">
+    <div class="container">
+        <div class="swiper catagory-product-slider">
+            <div class="swiper-wrapper">
+
+                {% if service_categories %}
+                    {% for category in service_categories %}
+                    <div class="swiper-slide">
+                        <div class="shop-catagories-item">
+                            <div class="thumb">
+                                {% if category.image %}
+                                    <img src="{{ category.image.url }}" alt="{{ category.name }}">
+                                {% else %}
+                                    <img src="{% static 'assets/img/catagories/10.png' %}" alt="{{ category.name }}">
+                                {% endif %}
+                            </div>
+                            <div class="content">
+                                <h3><a href="{{ category.get_absolute_url }}">{{ category.name }}</a></h3>
+                                <p>{{ category.static_products.count }} Product{{ category.static_products.count|pluralize }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    {% for i in "123456"|make_list %}
+                    <div class="swiper-slide">
+                        <div class="shop-catagories-item">
+                            <div class="thumb"><img src="{% static 'assets/img/catagories/10.png' %}" alt="Category"></div>
+                            <div class="content"><h3><a href="{% url 'services:home' %}">Printing Services</a></h3><p>Quality Printing</p></div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+
             </div>
         </div>
-        {% endfor %}
+    </div>
+</section>
 
-        {% if sliders|length > 1 %}
-        <!-- Navigation Arrows -->
-        <button class="slider-btn prev-btn" onclick="prevSlide()">
-            <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-            </svg>
-        </button>
-        <button class="slider-btn next-btn" onclick="nextSlide()">
-            <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-            </svg>
-        </button>
+<!-- ===== Shop Banners ===== -->
+<section class="shop-banner-section-2 fix section-padding pt-0">
+    <div class="container">
+        <div class="row g-4">
+            {% if service_categories %}
+                {% for category in service_categories|slice:":2" %}
+                <div class="col-xl-6 col-lg-6 col-md-6 wow img-custom-anim-top" data-wow-duration="1.5s" data-wow-delay="0.{{ forloop.counter }}s">
+                    <div class="shop-banner-items{% if not forloop.first %} bg-2{% endif %}">
+                        <div class="row g-4 align-items-center">
+                            <div class="{% if forloop.first %}col-xl-5 col-lg-7 col-md-5{% else %}col-xl-4 col-lg-7 col-md-4{% endif %}">
+                                <div class="shop-banner-content">
+                                    <span>{% if forloop.first %}LATEST DESIGN{% else %}CUSTOM PRINTS{% endif %}</span>
+                                    <h3>{{ category.name }}</h3>
+                                    <a href="{{ category.get_absolute_url }}" class="theme-btn">Shop Now</a>
+                                </div>
+                            </div>
+                            <div class="{% if forloop.first %}col-xl-7 col-lg-5 col-md-7{% else %}col-xl-8 col-lg-5 col-md-8{% endif %}">
+                                <div class="product-right-wrapper">
+                                    <div class="product-right-img{% if not forloop.first %}-2{% endif %}">
+                                        {% if category.image %}
+                                            <img src="{{ category.image.url }}" alt="{{ category.name }}">
+                                        {% elif forloop.first %}
+                                            <img src="{% static 'assets/img/product/product-1.png' %}" alt="{{ category.name }}">
+                                        {% else %}
+                                            <img src="{% static 'assets/img/product/product-2.png' %}" alt="{{ category.name }}">
+                                        {% endif %}
+                                        <div class="product-right-img-shape{% if not forloop.first %}-2{% endif %}">
+                                            {% if forloop.first %}
+                                                <img src="{% static 'assets/img/product/product-box-shape1.png' %}" alt="">
+                                            {% else %}
+                                                <img src="{% static 'assets/img/product/product-box-shape2.png' %}" alt="">
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-xl-6 col-lg-6 col-md-6 wow img-custom-anim-top" data-wow-duration="1.5s" data-wow-delay="0.1s">
+                    <div class="shop-banner-items">
+                        <div class="row g-4 align-items-center">
+                            <div class="col-xl-5 col-lg-7 col-md-5">
+                                <div class="shop-banner-content">
+                                    <span>LATEST DESIGN</span>
+                                    <h3>Book Printing Services</h3>
+                                    <a href="{% url 'services:home' %}" class="theme-btn">Shop Now</a>
+                                </div>
+                            </div>
+                            <div class="col-xl-7 col-lg-5 col-md-7">
+                                <div class="product-right-wrapper">
+                                    <div class="product-right-img">
+                                        <img src="{% static 'assets/img/product/product-1.png' %}" alt="Book Printing">
+                                        <div class="product-right-img-shape">
+                                            <img src="{% static 'assets/img/product/product-box-shape1.png' %}" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 wow img-custom-anim-top" data-wow-duration="1.5s" data-wow-delay="0.2s">
+                    <div class="shop-banner-items bg-2">
+                        <div class="row g-4 align-items-center">
+                            <div class="col-xl-4 col-lg-7 col-md-4">
+                                <div class="shop-banner-content">
+                                    <span>CUSTOM PRINTS</span>
+                                    <h3>Business Card Design</h3>
+                                    <a href="{% url 'services:home' %}" class="theme-btn">Shop Now</a>
+                                </div>
+                            </div>
+                            <div class="col-xl-8 col-lg-5 col-md-8">
+                                <div class="product-right-wrapper">
+                                    <div class="product-right-img-2">
+                                        <img src="{% static 'assets/img/product/product-2.png' %}" alt="Business Cards">
+                                        <div class="product-right-img-shape-2">
+                                            <img src="{% static 'assets/img/product/product-box-shape2.png' %}" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
 
-        <!-- Dots Indicator -->
-        <div class="slider-dots">
-            {% for slide in sliders %}
-            <span class="dot {% if forloop.first %}active{% endif %}" data-slide="{{ forloop.counter }}"
-                onclick="currentSlideGoto({{ forloop.counter }})"></span>
+
+<!-- ===== Shop Section ===== -->
+<section class="shop-section fix section-padding pt-0">
+    <div class="container">
+        <div class="section-title text-center">
+            <div class="sub-title wow fadeInUp">
+                <span>Our Products</span>
+            </div>
+            <h2 class="split-text right">Browse Our Printing Products</h2>
+        </div>
+
+        {% if shop_categories %}
+        <div class="product-header mt-4 mt-md-0">
+            <ul class="nav">
+                {% for cat in shop_categories %}
+                <li class="nav-item wow fadeInUp" data-wow-delay=".{{ forloop.counter }}s">
+                    <a href="#cat-{{ cat.slug }}" data-bs-toggle="tab"
+                       class="nav-link{% if forloop.first %} active{% endif %}">
+                        {{ cat.name }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="tab-content">
+            {% for cat in shop_categories %}
+            <div id="cat-{{ cat.slug }}"
+                 class="tab-pane fade{% if forloop.first %} show active{% endif %}">
+                <div class="row g-4 mt-2">
+                    {% for product in cat.active_products %}
+                    <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
+                         data-wow-delay=".{{ forloop.counter }}s">
+                        <div class="shop-items style-2">
+                            <div class="shop-image">
+                                {% if product.featured_image %}
+                                    <img src="{{ product.featured_image.url }}" alt="{{ product.name }}">
+                                {% elif product.hero_image %}
+                                    <img src="{{ product.hero_image.url }}" alt="{{ product.name }}">
+                                {% else %}
+                                    <img src="{% static 'assets/img/shop/01.jpg' %}" alt="{{ product.name }}">
+                                {% endif %}
+                                <ul class="product-icon d-grid justify-content-center align-items-center">
+                                    <li>
+                                        <a href="{{ product.get_absolute_url }}">
+                                            <i class="far fa-eye"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ product.get_absolute_url }}">
+                                            <i class="fal fa-cart-plus"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                                {% if product.is_featured %}
+                                <div class="offer-text">Featured</div>
+                                {% endif %}
+                            </div>
+                            <div class="shop-content">
+                                <h5><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h5>
+                                <ul class="price-list">
+                                    <li>From ₹{{ product.base_price }}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="col-12 text-center py-5">
+                        <p class="text-muted">Products coming soon.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
             {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-5">
+            <p class="text-muted">Our product catalogue is being updated. Check back soon!</p>
         </div>
         {% endif %}
+
+        <div class="text-center mt-5 wow fadeInUp" data-wow-delay=".3s">
+            <a href="{% url 'services:home' %}" class="theme-btn">View All Services</a>
+        </div>
+    </div>
+                </section>
+
+<!-- ===== No Design? No Problem! ===== -->
+<section class="good-quality-section fix section-padding bg-cover" style="background-image: url('{% static 'assets/img/cta-bg.png' %}');">
+    <div class="container">
+        <div class="good-quality-wrapper">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-5 text-center wow fadeInUp" data-wow-delay=".3s">
+                    <div class="quality-image reveal fix">
+                        {% if no_design_section and no_design_section.image %}
+                            <img src="{{ no_design_section.image.url }}" alt="{{ no_design_section.image_alt_text }}">
+                        {% elif no_design_section %}
+                            <img src="{% static no_design_section.image_static_path %}" alt="{{ no_design_section.image_alt_text }}">
+                        {% else %}
+                            <img src="{% static 'assets/img/quality.png' %}" alt="Professional Design Team">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="good-quality-content no-design-banner">
+                        <div class="section-title">
+                            <div class="sub-title wow fadeInUp">
+                                <span>{% if no_design_section %}{{ no_design_section.title }}{% else %}No Design?{% endif %}</span>
+                            </div>
+                            <h2 class="split-text right">
+                                {% if no_design_section %}
+                                    {{ no_design_section.highlight_text }}
+                                {% else %}
+                                    No Problem! We've <br> Got You Covered
+                                {% endif %}
+                            </h2>
+                        </div>
+                        <p class="mt-3 mt-md-0 wow fadeInUp" data-wow-delay=".5s">
+                            {% if no_design_section %}
+                                {{ no_design_section.description }}
+                            {% else %}
+                                Don't have a design? Our expert design team will create stunning, professional designs tailored to your brand and requirements at no extra cost.
+                            {% endif %}
+                        </p>
+                        <div class="list-item mt-4">
+                            <ul class="wow fadeInUp" data-wow-delay=".3s">
+                                {% if no_design_section %}
+                                    {% for feature in no_design_section.features.all %}
+                                        {% if feature.is_active %}
+                                        <li><i class="{{ feature.icon_class }}"></i> {{ feature.text }}</li>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    <li><i class="far fa-check-circle"></i> Free Design Consultation</li>
+                                    <li><i class="far fa-check-circle"></i> Professional Design Team</li>
+                                    <li><i class="far fa-check-circle"></i> Unlimited Revisions</li>
+                                    <li><i class="far fa-check-circle"></i> 24-Hour Design Turnaround</li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                        <div class="mt-4 wow fadeInUp" data-wow-delay=".5s">
+                            {% if no_design_section and no_design_section.cta_url %}
+                                <a href="{{ no_design_section.cta_url }}" class="theme-btn">
+                                    <i class="fas fa-palette me-2"></i> {{ no_design_section.cta_text }}
+                                </a>
+                            {% else %}
+                                <a href="{% url 'core:contact' %}" class="theme-btn">
+                                    <i class="fas fa-palette me-2"></i>
+                                    {% if no_design_section %}{{ no_design_section.cta_text }}{% else %}Get Free Design{% endif %}
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 
-<!-- Product Categories Section -->
-<section class="py-16 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Our Product Categories</h2>
-            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                Discover our comprehensive range of printing services designed to meet all your business needs
+<!-- ===== Design Tool Products ===== -->
+{% if design_enabled_products %}
+<section class="shop-section fix section-padding section-bg">
+    <div class="container">
+        <div class="section-title text-center">
+            <div class="sub-title wow fadeInUp">
+                <span>Design It Yourself</span>
+            </div>
+            <h2 class="split-text right">Design-Enabled Products</h2>
+            <p class="wow fadeInUp mt-3" data-wow-delay=".3s">
+                Use our powerful design tool to create stunning designs from scratch or customise our professional templates.
             </p>
         </div>
-
-        <div class="categories-grid">
-            {% for category in service_categories %}
-            <a href="{% url 'services:category' category.slug %}" class="category-card">
-                <div class="category-image-container">
-                    {% if category.image %}
-                    <img src="{{ category.image.url }}" alt="{{ category.name }}" class="category-image" loading="lazy">
-                    {% else %}
-                    <div class="category-image-fallback">
-                        <i class="{{ category.icon|default:'fas fa-print' }}"></i>
+        <div class="row g-4 mt-3">
+            {% for product in design_enabled_products %}
+            <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay=".{{ forloop.counter }}s">
+                <div class="shop-items style-2">
+                    <div class="shop-image">
+                        {% if product.featured_image %}
+                            <img src="{{ product.featured_image.url }}" alt="{{ product.name }}">
+                        {% elif product.hero_image %}
+                            <img src="{{ product.hero_image.url }}" alt="{{ product.name }}">
+                        {% else %}
+                            <img src="{% static 'assets/img/shop/01.jpg' %}" alt="{{ product.name }}">
+                        {% endif %}
+                        <ul class="product-icon d-grid justify-content-center align-items-center">
+                            <li>
+                                <a href="{{ product.get_absolute_url }}">
+                                    <i class="far fa-eye"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ product.get_absolute_url }}">
+                                    <i class="fas fa-palette"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="offer-text">Design Tool</div>
                     </div>
-                    {% endif %}
+                    <div class="shop-content">
+                        <h5><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h5>
+                        <p class="text-muted small mb-2">{{ product.short_description|truncatewords:10 }}</p>
+                        <ul class="price-list">
+                            <li>From ₹{{ product.base_price }}</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="category-content">
-                    <h3 class="category-title">{{ category.name }}</h3>
-                    <p class="category-subtext">View Products</p>
-                </div>
-            </a>
+            </div>
             {% endfor %}
         </div>
+        <div class="text-center mt-5 wow fadeInUp" data-wow-delay=".3s">
+            <a href="{% url 'services:home' %}" class="theme-btn">See All Design-Enabled Products <i class="far fa-arrow-right"></i></a>
+        </div>
+    </div>
+</section>
+{% endif %}
 
-
+<!-- ===== How It Works ===== -->
+<section class="how-works-section fix section-padding">
+    <div class="container">
+        <div class="row g-4 align-items-center">
+            <div class="col-xl-3 col-lg-4 col-md-6">
+                <div class="how-works-content">
+                    <h2 class="split-text right">How It Works?</h2>
+                    <p class="wow fadeInUp" data-wow-delay=".3s">Let us show you how your product comes to life.</p>
+                    <a href="{% url 'core:contact' %}" class="theme-btn wow fadeInUp" data-wow-delay=".5s">Get Started</a>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay=".3s">
+                <div class="how-work-items">
+                    <div class="thumb"><img src="{% static 'assets/img/process-icon/01.png' %}" alt="Step 1"></div>
+                    <div class="content">
+                        <h4>Choose Your Product</h4>
+                        <p>Select from our wide range of printing services.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay=".5s">
+                <div class="how-work-items">
+                    <div class="thumb"><img src="{% static 'assets/img/process-icon/02.png' %}" alt="Step 2"></div>
+                    <div class="content">
+                        <h4>Upload Your Design</h4>
+                        <p>Send us your artwork or let our team design for you.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay=".7s">
+                <div class="how-work-items">
+                    <div class="thumb"><img src="{% static 'assets/img/process-icon/03.png' %}" alt="Step 3"></div>
+                    <div class="content">
+                        <h4>Receive Your Order</h4>
+                        <p>We print and deliver to your doorstep on time.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 
-<!-- No Design? No Problem Section -->
-<section class="no-design-section py-16">
-    <div class="no-design-content">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div class="text-white">
-                    {% if no_design_section %}
-                    <h2 class="text-3xl md:text-4xl font-bold mb-6">
-                        {{ no_design_section.title }}
-                        <span class="text-yellow-300">{{ no_design_section.highlight_text }}</span>
-                    </h2>
-                    <p class="text-lg text-purple-100 mb-8">
-                        {{ no_design_section.description }}
-                    </p>
-                    <div class="space-y-4 mb-8">
-                        {% for feature in no_design_section.features.all %}
-                        {% if feature.is_active %}
-                        <div class="flex items-center">
-                            <div class="w-6 h-6 bg-yellow-300 rounded-full flex items-center justify-center mr-4">
-                                <i class="{{ feature.icon_class }} text-purple-800 text-sm"></i>
+<!-- ===== Quality Section ===== -->
+<section class="good-quality-section fix section-padding bg-cover" style="background-image: url('{% static 'assets/img/feature-printing-bg.jpg' %}');">
+    <div class="container">
+        <div class="good-quality-wrapper">
+            <div class="row g-4">
+                <div class="col-lg-7 wow fadeInUp" data-wow-delay=".3s">
+                    <div class="quality-image reveal fix">
+                        <img src="{% static 'assets/img/quality.png' %}" alt="Quality Printing">
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="good-quality-content">
+                        <div class="section-title">
+                            <div class="sub-title wow fadeInUp">
+                                <span>QUALITY AT ITS BEST</span>
                             </div>
-                            <span class="text-purple-100 font-medium">{{ feature.text }}</span>
+                            <h2 class="split-text right">
+                                What Do We Mean By <br> Good Quality?
+                            </h2>
+                        </div>
+                        <p class="mt-3 mt-md-0 wow fadeInUp" data-wow-delay=".5s">
+                            We use the finest materials and state-of-the-art printing technology to ensure every product meets the highest standards of quality and craftsmanship.
+                        </p>
+                        <div class="list-item">
+                            <ul class="wow fadeInUp" data-wow-delay=".3s">
+                                <li><i class="far fa-check"></i> Precise Sizing</li>
+                                <li><i class="far fa-check"></i> Accurate Colors</li>
+                                <li><i class="far fa-check"></i> Durable Material</li>
+                            </ul>
+                            <ul class="wow fadeInUp" data-wow-delay=".5s">
+                                <li><i class="far fa-check"></i> Edge Perfection</li>
+                                <li><i class="far fa-check"></i> Attention to Details</li>
+                                <li><i class="far fa-check"></i> Eco-Friendly Inks</li>
+                            </ul>
+                        </div>
+                        <a href="{% url 'core:contact' %}" class="theme-btn wow fadeInUp" data-wow-delay=".3s">Request a Quote</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== About Section ===== -->
+<section class="about-section fix section-padding section-bg">
+    <div class="container">
+        <div class="about-wrapper-3">
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-6">
+                    <div class="about-image-3 reveal">
+                        {% if about_section and about_section.image %}
+                            <img src="{{ about_section.image.url }}" alt="About Shirsti Printing">
+                        {% else %}
+                            <img src="{% static 'assets/img/about/01.png' %}" alt="About Shirsti Printing">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="about-content">
+                        <div class="section-title">
+                            <div class="sub-title wow fadeInUp">
+                                <span>About Us</span>
+                            </div>
+                            <h2 class="split-text right">
+                                {% if about_section %}
+                                    {{ about_section.title }}
+                                {% else %}
+                                    Produce Stunning Printing <br> For Your Business
+                                {% endif %}
+                            </h2>
+                        </div>
+                        <p class="mt-3 mt-md-0 wow fadeInUp" data-wow-delay=".5s">
+                            {% if about_section %}
+                                {{ about_section.description }}
+                            {% else %}
+                                We are Shirsti Printing Company — your trusted partner for professional printing services. With years of experience and cutting-edge equipment, we deliver premium quality prints on time, every time.
+                            {% endif %}
+                        </p>
+
+                        {% if about_section and about_section.video_url %}
+                        <div class="video-items">
+                            <div class="video-thumb wow fadeInUp" data-wow-delay=".3s">
+                                <img src="{% if about_section.video_thumbnail %}{{ about_section.video_thumbnail.url }}{% else %}{% static 'assets/img/about/video-bg.jpg' %}{% endif %}" alt="About Video">
+                                <div class="video-box">
+                                    <a href="{{ about_section.video_url }}" class="video-btn ripple video-popup">
+                                        <i class="fas fa-play"></i>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                         {% endif %}
-                        {% endfor %}
+
+                        <div class="about-list-items">
+                            <ul class="wow fadeInUp" data-wow-delay=".3s">
+                                {% if about_features %}
+                                    {% for feature in about_features %}
+                                    <li><i class="far fa-check"></i> {{ feature.text }}</li>
+                                    {% endfor %}
+                                {% else %}
+                                    <li><i class="far fa-check"></i> Premium Quality Printing</li>
+                                    <li><i class="far fa-check"></i> Fast & Reliable Delivery</li>
+                                    <li><i class="far fa-check"></i> Expert Design Support</li>
+                                    <li><i class="far fa-check"></i> Eco-Friendly Materials</li>
+                                {% endif %}
+                            </ul>
+                        </div>
+
+                        <a href="{% url 'core:about' %}" class="theme-btn wow fadeInUp" data-wow-delay=".5s">
+                            Learn More <i class="far fa-arrow-right"></i>
+                        </a>
                     </div>
-                    {% if no_design_section.cta_url %}
-                    <a href="{{ no_design_section.cta_url }}"
-                        class="inline-flex items-center bg-yellow-300 text-purple-800 px-8 py-4 rounded-full font-bold hover:bg-yellow-200 transition-all duration-300 transform hover:scale-105">
-                        <i class="fas fa-palette mr-2"></i>
-                        {{ no_design_section.cta_text }}
-                    </a>
-                    {% else %}
-                    <a href="{% url 'core:contact' %}"
-                        class="inline-flex items-center bg-yellow-300 text-purple-800 px-8 py-4 rounded-full font-bold hover:bg-yellow-200 transition-all duration-300 transform hover:scale-105">
-                        <i class="fas fa-palette mr-2"></i>
-                        {{ no_design_section.cta_text }}
-                    </a>
-                    {% endif %}
-                    {% else %}
-                    <h2 class="text-3xl md:text-4xl font-bold mb-6">
-                        No Design? <span class="text-yellow-300">No Problem!</span>
-                    </h2>
-                    <p class="text-lg text-purple-100 mb-8">
-                        Don't have a design? Our expert design team will create stunning, professional designs tailored
-                        to your brand and requirements at no extra cost.
-                    </p>
-                    <div class="space-y-4 mb-8">
-                        <div class="flex items-center">
-                            <div class="w-6 h-6 bg-yellow-300 rounded-full flex items-center justify-center mr-4">
-                                <i class="fas fa-check text-purple-800 text-sm"></i>
-                            </div>
-                            <span class="text-purple-100 font-medium">Free Design Consultation</span>
-                        </div>
-                        <div class="flex items-center">
-                            <div class="w-6 h-6 bg-yellow-300 rounded-full flex items-center justify-center mr-4">
-                                <i class="fas fa-check text-purple-800 text-sm"></i>
-                            </div>
-                            <span class="text-purple-100 font-medium">Professional Design Team</span>
-                        </div>
-                        <div class="flex items-center">
-                            <div class="w-6 h-6 bg-yellow-300 rounded-full flex items-center justify-center mr-4">
-                                <i class="fas fa-check text-purple-800 text-sm"></i>
-                            </div>
-                            <span class="text-purple-100 font-medium">Unlimited Revisions</span>
-                        </div>
-                        <div class="flex items-center">
-                            <div class="w-6 h-6 bg-yellow-300 rounded-full flex items-center justify-center mr-4">
-                                <i class="fas fa-check text-purple-800 text-sm"></i>
-                            </div>
-                            <span class="text-purple-100 font-medium">24-Hour Design Turnaround</span>
-                        </div>
-                    </div>
-                    <a href="{% url 'core:contact' %}"
-                        class="inline-flex items-center bg-yellow-300 text-purple-800 px-8 py-4 rounded-full font-bold hover:bg-yellow-200 transition-all duration-300 transform hover:scale-105">
-                        <i class="fas fa-palette mr-2"></i>
-                        Get Free Design
-                    </a>
-                    {% endif %}
-                </div>
-                <div class="relative">
-                    {% if no_design_section and no_design_section.image %}
-                    <img src="{{ no_design_section.image.url }}" alt="{{ no_design_section.image_alt_text }}"
-                        class="w-full max-w-lg mx-auto">
-                    {% elif no_design_section %}
-                    <img src="{% static no_design_section.image_static_path %}" alt="{{ no_design_section.image_alt_text }}"
-                        class="w-full max-w-lg mx-auto">
-                    {% else %}
-                    <img src="{% static 'img/no_design.png' %}" alt="Professional Design Team"
-                        class="w-full max-w-lg mx-auto">
-                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Design Tool Products Section -->
-<section class="py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Design-Enabled Products</h2>
-            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                Use our powerful design tool to create stunning designs from scratch or customize our professional
-                templates
-            </p>
-        </div>
 
-        <div class="design-products-grid">
-            {% for product in design_enabled_products %}
-            <div class="design-product-card">
-                <div class="design-product-image">
-                    {% if product.featured_image %}
-                    <img src="{{ product.featured_image.url }}" alt="{{ product.name }}"
-                        class="w-full h-full object-cover transition-transform duration-500">
-                    {% elif product.hero_image %}
-                    <img src="{{ product.hero_image.url }}" alt="{{ product.name }}"
-                        class="w-full h-full object-cover transition-transform duration-500">
-                    {% else %}
-                    <div
-                        class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
-                        <i class="fas fa-image text-gray-400 text-4xl"></i>
+<!-- ===== Testimonials ===== -->
+<section class="testimonial-section fix section-bg section-padding">
+    <div class="container">
+        <div class="section-title text-center">
+            <div class="sub-title wow fadeInUp">
+                <span>Our Clients Say</span>
+            </div>
+            <h2 class="split-text right">
+                Here's What Our Customers <br> Say About Us
+            </h2>
+        </div>
+        <div class="swiper testimonial-slider-3">
+            <div class="swiper-wrapper">
+
+                {% if testimonials %}
+                    {% for testimonial in testimonials %}
+                    <div class="swiper-slide">
+                        <div class="testimonial-box-items style-2">
+                            <div class="client-info">
+                                <div class="client-item">
+                                    <div class="client-img bg-cover"
+                                         style="background-image: url('{% if testimonial.avatar %}{{ testimonial.avatar.url }}{% else %}{% static 'assets/img/testimonial/01.png' %}{% endif %}');">
+                                    </div>
+                                    <div class="content">
+                                        <h4>{{ testimonial.name }}</h4>
+                                        <span>{{ testimonial.designation|default:"Customer" }}</span>
+                                    </div>
+                                </div>
+                                <div class="star">
+                                    {% for i in "12345"|make_list %}
+                                        {% if forloop.counter <= testimonial.rating %}
+                                            <i class="fas fa-star"></i>
+                                        {% else %}
+                                            <i class="far fa-star"></i>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <p>{{ testimonial.testimonial }}</p>
+                        </div>
                     </div>
-                    {% endif %}
-                    <div class="design-badge">
-                        <i class="fas fa-palette mr-1"></i> Design Tool
+                    {% endfor %}
+                {% else %}
+                    <!-- Fallback testimonials -->
+                    <div class="swiper-slide">
+                        <div class="testimonial-box-items style-2">
+                            <div class="client-info">
+                                <div class="client-item">
+                                    <div class="client-img bg-cover" style="background-image: url('{% static 'assets/img/testimonial/01.png' %}');"></div>
+                                    <div class="content"><h4>Rajesh Kumar</h4><span>Business Owner</span></div>
+                                </div>
+                                <div class="star">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                            <p>Shirsti Printing delivered exceptional quality books for our publishing house. The binding, paper quality and print clarity were exactly what we needed. Highly recommended!</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="testimonial-box-items style-2">
+                            <div class="client-info">
+                                <div class="client-item">
+                                    <div class="client-img bg-cover" style="background-image: url('{% static 'assets/img/testimonial/02.png' %}');"></div>
+                                    <div class="content"><h4>Priya Sharma</h4><span>Marketing Manager</span></div>
+                                </div>
+                                <div class="star">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                            <p>We ordered brochures and business cards for our trade show. The turnaround was fast and the quality was outstanding. Our clients were impressed!</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="testimonial-box-items style-2">
+                            <div class="client-info">
+                                <div class="client-item">
+                                    <div class="client-img bg-cover" style="background-image: url('{% static 'assets/img/testimonial/01.png' %}');"></div>
+                                    <div class="content"><h4>Amit Verma</h4><span>Author</span></div>
+                                </div>
+                                <div class="star">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                            <p>As a self-publishing author, I needed a reliable printing partner. Shirsti Printing exceeded my expectations — professional staff, great pricing and perfect print quality.</p>
+                        </div>
+                    </div>
+                {% endif %}
+
+            </div>
+            <div class="swiper-dot mt-5">
+                <div class="dot"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FAQ Section ===== -->
+<section class="faq-section fix section-padding">
+    <div class="container">
+        <div class="faq-wrapper">
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="faq-image-2">
+                        <div class="faq-img reveal fix">
+                            <img src="{% static 'assets/img/faq/03.jpg' %}" alt="FAQ">
+                            {% if faq_video_url %}
+                            <a href="{{ faq_video_url }}" class="video-btn ripple video-popup">
+                                <i class="fas fa-play"></i>
+                            </a>
+                            {% endif %}
+                        </div>
+                        <div class="faq-img-2 wow img-custom-anim-top" data-wow-duration="1.5s" data-wow-delay="0.1s">
+                            <img src="{% static 'assets/img/faq/04.jpg' %}" alt="FAQ">
+                        </div>
                     </div>
                 </div>
+                <div class="col-lg-6">
+                    <div class="faq-content">
+                        <div class="section-title">
+                            <div class="sub-title wow fadeInUp">
+                                <span>Frequently Asked Questions</span>
+                            </div>
+                            <h2 class="split-text right">
+                                What Our Clients Ask <br> About Shirsti Printing
+                            </h2>
+                        </div>
+                        <div class="faq-accordion mt-3 mt-md-0">
+                            <div class="accordion" id="faqAccordion">
 
-                <div class="design-product-content">
-                    <h3 class="design-product-title">{{ product.name }}</h3>
-                    <p class="text-gray-600 text-sm mb-4">{{ product.short_description|truncatewords:15 }}</p>
+                                {% if faqs %}
+                                    {% for faq in faqs|slice:":5" %}
+                                    <div class="accordion-item mb-4 wow fadeInUp" data-wow-delay=".{{ forloop.counter }}s">
+                                        <h5 class="accordion-header">
+                                            <button class="accordion-button {% if not forloop.first %}collapsed{% endif %}"
+                                                    type="button" data-bs-toggle="collapse"
+                                                    data-bs-target="#faq{{ forloop.counter }}"
+                                                    aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
+                                                <span>{{ forloop.counter }}.</span> {{ faq.question }}
+                                            </button>
+                                        </h5>
+                                        <div id="faq{{ forloop.counter }}"
+                                             class="accordion-collapse {% if forloop.first %}show{% else %}collapse{% endif %}"
+                                             data-bs-parent="#faqAccordion">
+                                            <div class="accordion-body">{{ faq.answer }}</div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <div class="accordion-item mb-4 wow fadeInUp" data-wow-delay=".3s">
+                                        <h5 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" aria-expanded="true">
+                                                <span>1.</span> What file formats do you accept for printing?
+                                            </button>
+                                        </h5>
+                                        <div id="faq1" class="accordion-collapse show" data-bs-parent="#faqAccordion">
+                                            <div class="accordion-body">We accept PDF, AI, EPS, PSD, TIFF and high-resolution JPG files. PDF is our preferred format for best results.</div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item mb-4 wow fadeInUp" data-wow-delay=".5s">
+                                        <h5 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                                <span>2.</span> What is the minimum order quantity?
+                                            </button>
+                                        </h5>
+                                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                            <div class="accordion-body">Minimum order quantities vary by product. For books, the minimum is 25 copies. For business cards and flyers, we accept as low as 100 pieces.</div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item mb-4 wow fadeInUp" data-wow-delay=".7s">
+                                        <h5 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                                <span>3.</span> How long does delivery take?
+                                            </button>
+                                        </h5>
+                                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                            <div class="accordion-body">Standard delivery is 5–7 working days after proof approval. Rush orders may be available — contact us for details.</div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item wow fadeInUp" data-wow-delay=".9s">
+                                        <h5 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                                <span>4.</span> Do you offer design services?
+                                            </button>
+                                        </h5>
+                                        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                            <div class="accordion-body">Yes! Our professional design team can create custom artwork for your print projects. Design fees are quoted separately based on complexity.</div>
+                                        </div>
+                                    </div>
+                                {% endif %}
 
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="text-2xl font-bold text-purple-600">₹{{ product.base_price }}</span>
-                        <span class="text-sm text-gray-500">Starting price</span>
+                            </div>
+                        </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-                    <div class="design-buttons">
-                        <a href="{% url 'design_tool:product' product.slug %}" class="design-btn-primary">
-                            <i class="fas fa-palette mr-2"></i>Design Now
-                        </a>
-                        <a href="{% url 'services:static_product_detail' product.category.slug product.slug %}"
-                            class="design-btn-secondary">
-                            View Details
-                        </a>
+<!-- ===== Final CTA ===== -->
+<section class="cta-section-3">
+    <div class="container">
+        <div class="cta-wrapper-3 bg-cover" style="background-image: url('{% static 'assets/img/cta-bg-3.jpg' %}');">
+            <div class="cta-content">
+                <h2 class="split-text right">
+                    Ready to Create Some <br> Custom Print Products?
+                </h2>
+                <a href="{% url 'core:contact' %}" class="theme-btn wow fadeInUp" data-wow-delay=".5s">Contact Us</a>
+            </div>
+            <div class="cta-shape reveal fix">
+                <img src="{% static 'assets/img/cta-2-shape2.png' %}" alt="">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== News / Blog Section ===== -->
+{% if blog_posts %}
+<section class="news-section fix section-padding pt-0">
+    <div class="container">
+        <div class="section-title text-center">
+            <div class="sub-title wow fadeInUp"><span>Latest News & Blog</span></div>
+            <h2 class="split-text right">Latest News & Blog</h2>
+        </div>
+        <div class="row">
+            {% for post in blog_posts|slice:":3" %}
+            <div class="col-xl-4 col-lg-6">
+                <div class="single-news-style-1 reveal fix">
+                    <div class="news-image">
+                        {% if post.featured_image %}
+                            <img src="{{ post.featured_image.url }}" alt="{{ post.title }}">
+                        {% else %}
+                            <img src="{% static 'assets/img/news/01.jpg' %}" alt="{{ post.title }}">
+                        {% endif %}
+                        <div class="post-cat">
+                            <a href="#" class="cat-name">{{ post.category|default:"Printing" }}</a>
+                        </div>
+                    </div>
+                    <div class="news-content">
+                        <div class="author-item mb-3">
+                            <span><i class="far fa-calendar-alt"></i> {{ post.published_at|date:"M d, Y" }}</span>
+                        </div>
+                        <h3><a href="#">{{ post.title }}</a></h3>
+                        <a href="#" class="theme-btn style-2 mt-3">Read More <i class="far fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
             {% endfor %}
         </div>
-
-        <div class="text-center mt-12">
-            <a href="{% url 'services:search' %}?design_tool=true"
-                class="inline-flex items-center bg-gradient-to-r from-purple-600 to-purple-700 text-white px-8 py-4 rounded-full font-semibold hover:from-purple-700 hover:to-purple-800 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                <span>See All Design-Enabled Products</span>
-                <i class="fas fa-arrow-right ml-2"></i>
-            </a>
-        </div>
     </div>
 </section>
+{% endif %}
 
-<!-- Testimonials Section -->
-<section class="py-16 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">What Our Clients Say</h2>
-            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                Don't just take our word for it - hear from our satisfied customers who trust us with their printing
-                needs.
-            </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {% for testimonial in testimonials %}
-            <div class="testimonial-card">
-                <div class="mb-6">
-                    {% if testimonial.image %}
-                    <img src="{{ testimonial.image.url }}" alt="{{ testimonial.name }}" class="testimonial-avatar">
-                    {% else %}
-                    <img src="{% static 'images/avatar-default.svg' %}" alt="{{ testimonial.name }}"
-                        class="testimonial-avatar">
-                    {% endif %}
-
-                    <div class="testimonial-stars">
-                        {% for i in "12345"|slice:":"|add:testimonial.rating|stringformat:"s" %}
-                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        {% endfor %}
-                    </div>
-                </div>
-
-                <blockquote class="testimonial-quote">
-                    "{{ testimonial.content }}"
-                </blockquote>
-
-                <div>
-                    <div class="testimonial-author">{{ testimonial.name }}</div>
-                    <div class="testimonial-role">{{ testimonial.position }}, {{ testimonial.company }}</div>
-                </div>
-            </div>
-            {% empty %}
-            <!-- Default testimonials when no testimonials in database -->
-            <div class="testimonial-card">
-                <div class="mb-6">
-                    <img src="{% static 'images/avatar-david.svg' %}" alt="Rajesh Kumar" class="testimonial-avatar">
-                    <div class="testimonial-stars">
-                        {% for i in "12345" %}
-                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        {% endfor %}
-                    </div>
-                </div>
-                <blockquote class="testimonial-quote">
-                    "Drishthi Printing delivered exceptional quality business cards for our startup. The design team
-                    understood our vision perfectly and the turnaround time was incredibly fast!"
-                </blockquote>
-                <div>
-                    <div class="testimonial-author">Rajesh Kumar</div>
-                    <div class="testimonial-role">CEO, TechStart Solutions</div>
-                </div>
-            </div>
-
-            <div class="testimonial-card">
-                <div class="mb-6">
-                    <img src="{% static 'images/avatar-sarah.svg' %}" alt="Priya Sharma" class="testimonial-avatar">
-                    <div class="testimonial-stars">
-                        {% for i in "12345" %}
-                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        {% endfor %}
-                    </div>
-                </div>
-                <blockquote class="testimonial-quote">
-                    "We needed 1000 brochures for our product launch in just 2 days. Drishthi Printing not only met our
-                    deadline but exceeded our quality expectations. Highly recommended!"
-                </blockquote>
-                <div>
-                    <div class="testimonial-author">Priya Sharma</div>
-                    <div class="testimonial-role">Marketing Director, InnovateNow</div>
-                </div>
-            </div>
-
-            <div class="testimonial-card">
-                <div class="mb-6">
-                    <img src="{% static 'images/avatar-michael.svg' %}" alt="Amit Patel" class="testimonial-avatar">
-                    <div class="testimonial-stars">
-                        {% for i in "12345" %}
-                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        {% endfor %}
-                    </div>
-                </div>
-                <blockquote class="testimonial-quote">
-                    "The free design service was a game-changer for us. We had no idea what we wanted, but their design
-                    team created something amazing that perfectly represented our brand."
-                </blockquote>
-                <div>
-                    <div class="testimonial-author">Amit Patel</div>
-                    <div class="testimonial-role">Owner, Local Restaurant Chain</div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-
-<!-- Contact & More Section -->
-<section class="py-16 bg-gradient-to-r from-purple-600 to-purple-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Get Started?</h2>
-        <p class="text-xl text-purple-200 mb-8 max-w-2xl mx-auto">
-            Get an instant quote, speak with our experts, or start designing your products today
-        </p>
-
-        <div class="flex flex-col sm:flex-row justify-center gap-6">
-            <a href="{% url 'core:contact' %}"
-                class="inline-flex items-center bg-white text-purple-600 px-8 py-4 rounded-full font-bold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                <i class="fas fa-envelope mr-2"></i>
-                Get Free Quote
-            </a>
-            <a href="tel:+919876543210"
-                class="inline-flex items-center border-2 border-white text-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-purple-600 transition-all duration-300">
-                <i class="fas fa-phone mr-2"></i>
-                Call Now: +91 98765 43210
-            </a>
-            <a href="{% url 'services:categories' %}"
-                class="inline-flex items-center bg-yellow-300 text-purple-800 px-8 py-4 rounded-full font-bold hover:bg-yellow-200 transition-all duration-300 transform hover:scale-105">
-                <i class="fas fa-rocket mr-2"></i>
-                Browse Services
-            </a>
-        </div>
-
-        <!-- Contact Info -->
-        <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div class="text-white">
-                <i class="fas fa-map-marker-alt text-2xl mb-4 text-yellow-300"></i>
-                <h3 class="font-semibold mb-2">Visit Us</h3>
-                <p class="text-purple-200">Mumbai, India</p>
-            </div>
-            <div class="text-white">
-                <i class="fas fa-clock text-2xl mb-4 text-yellow-300"></i>
-                <h3 class="font-semibold mb-2">Business Hours</h3>
-                <p class="text-purple-200">Mon - Sat: 9:00 AM - 7:00 PM</p>
-            </div>
-            <div class="text-white">
-                <i class="fas fa-envelope text-2xl mb-4 text-yellow-300"></i>
-                <h3 class="font-semibold mb-2">Email Us</h3>
-                <p class="text-purple-200">info@drishthiprinting.com</p>
-            </div>
-        </div>
-    </div>
-</section>
-{% endblock %}
-
-{% block extra_js %}
-<script>
-    // Hero Slider Functionality
-    let currentSlide = 1;
-    const totalSlides = {{ sliders|length|default:"1" }};
-    let slideInterval;
-
-    function showSlide(n) {
-        const slides = document.querySelectorAll('.hero-slide');
-        const dots = document.querySelectorAll('.dot');
-
-        if (n > totalSlides) currentSlide = 1;
-        if (n < 1) currentSlide = totalSlides;
-
-        // Hide all slides
-        slides.forEach((slide, index) => {
-            slide.classList.remove('active', 'prev');
-            if (index + 1 === currentSlide) {
-                slide.classList.add('active');
-            } else if (index + 1 === (currentSlide === 1 ? totalSlides : currentSlide - 1)) {
-                slide.classList.add('prev');
-            }
-        });
-
-        // Update dots
-        dots.forEach((dot, index) => {
-            dot.classList.toggle('active', index + 1 === currentSlide);
-        });
-    }
-
-    function nextSlide() {
-        currentSlide++;
-        showSlide(currentSlide);
-    }
-
-    function prevSlide() {
-        currentSlide--;
-        showSlide(currentSlide);
-    }
-
-    function currentSlideGoto(n) {
-        currentSlide = n;
-        showSlide(currentSlide);
-    }
-
-    function startAutoplay() {
-        if (totalSlides > 1) {
-            slideInterval = setInterval(nextSlide, 5000);
-        }
-    }
-
-    function stopAutoplay() {
-        if (slideInterval) {
-            clearInterval(slideInterval);
-        }
-    }
-
-    // Initialize slider
-    document.addEventListener('DOMContentLoaded', function () {
-        showSlide(currentSlide);
-        startAutoplay();
-
-        // Pause autoplay on hover
-        const sliderContainer = document.querySelector('.slider-container');
-        if (sliderContainer) {
-            sliderContainer.addEventListener('mouseenter', stopAutoplay);
-            sliderContainer.addEventListener('mouseleave', startAutoplay);
-        }
-    });
-
-    // Keyboard navigation
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'ArrowLeft') {
-            prevSlide();
-        } else if (e.key === 'ArrowRight') {
-            nextSlide();
-        }
-    });
-
-    // Intersection Observer for animations
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver(function (entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, observerOptions);
-
-    // Observe elements for entrance animations
-    document.addEventListener('DOMContentLoaded', function () {
-        const animatedElements = document.querySelectorAll('.category-card, .design-product-card, .testimonial-card');
-        animatedElements.forEach(element => {
-            element.style.opacity = '0';
-            element.style.transform = 'translateY(30px)';
-            element.style.transition = 'all 0.6s ease-out';
-            observer.observe(element);
-        });
-    });
-</script>
 {% endblock %}

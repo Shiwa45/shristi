@@ -1,0 +1,137 @@
+//>>>>> Component Button Here <<<<<//
+.theme-btn {
+    background-color: $theme-color;
+    color: $white;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 23px 54px;
+    border-radius: 0;
+    text-transform: uppercase;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    z-index: 1;
+    line-height: 1;
+
+    &::before {
+        content: "";
+        background-color: $header-color;
+        width: 0;
+        height: 50%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: all 0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+        z-index: -1;
+    }
+
+    &::after {
+        content: "";
+        background-color: $header-color;
+        width: 0;
+        height: 50%;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        transition: all 0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+        z-index: -1;
+    }
+
+    &.border-style {
+        background-color: transparent;
+        color: $header-color;
+        border: 1px solid $border-color;
+
+        &::before,&::after {
+           background-color: $theme-color;
+        }
+    }
+
+    i {
+        margin-left: 10px;
+    }
+
+    &:hover {
+       color: $white;
+
+        &::before,&::after {
+            width: 100%;
+        }
+    }
+
+
+    &.bg-white {
+        background-color: $white;
+        color: $header-color;
+
+        &:hover {
+            color: $white;
+        }
+    }
+
+
+    @include breakpoint (max-md){
+        padding: 20px 32px;
+    }
+
+    @include breakpoint (max-sm){
+        padding: 18px 30px;
+        font-size: 14px;
+    }
+}
+
+.link-btn {
+    text-transform: capitalize;
+    font-size: 16px;
+    color: $header-color;
+    font-weight: 600;
+    
+
+    span {
+        background-image: linear-gradient($theme-color,$theme-color);
+        background-position: 0 95%;
+        background-repeat: no-repeat;
+        background-size: 0% 2px;
+        display: inline-block;
+        @include transition;
+    }
+
+    i {
+        margin-left: 10px;
+        font-size: 16px;
+        @include transition;
+        font-size: 12px;
+        width: 25px;
+        height: 25px;
+        line-height: 25px;
+        border-radius: 25px;
+        background-color: $theme-color;
+        text-align: center;
+        color: $white;
+    }
+
+    &:hover {
+       span {
+            color: $theme-color;
+            background-size: 100% 1px;
+       }
+    }
+
+    &.link-btn-2 {
+        span {
+            background-image: linear-gradient($theme-color-2,$theme-color-2);
+        }
+
+        i {
+            background-color: $theme-color-2;
+        }
+
+        &:hover {
+            span {
+                color: $theme-color-2;
+            }
+        }
+    }
+}
+
+//>>>>> Component Button End <<<<<//

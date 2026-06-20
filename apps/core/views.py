@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.core.mail import send_mail
 from django.conf import settings
-from django.db.models import Q
+from django.db.models import Q, Prefetch
 
 from .models import (
     HomepageSlider,
@@ -21,6 +21,19 @@ from apps.services.models import ServiceCategory, StaticProduct
 
 def home_view(request):
     """Homepage view with slider and featured products"""
+    product_placeholders = [
+        'Book Printing',
+        'Business Cards',
+        'Brochures',
+        'Stationery',
+        'Flyers',
+        'Calendars',
+        'Posters',
+        'Letterheads',
+    ]
+
+    SHOP_CATEGORY_SLUGS = ['book-printing', 'marketing-material', 'paper-boxes', 'stationery']
+
     try:
         sliders = HomepageSlider.objects.filter(is_active=True).order_by('order')
         featured_products = StaticProduct.objects.filter(is_active=True, is_featured=True)[:6]
@@ -33,8 +46,21 @@ def home_view(request):
             .order_by('order')
             .first()
         )
+        shop_categories = (
+            ServiceCategory.objects.filter(
+                slug__in=SHOP_CATEGORY_SLUGS,
+                is_active=True,
+            )
+            .prefetch_related(
+                Prefetch(
+                    'static_products',
+                    queryset=StaticProduct.objects.filter(is_active=True).order_by('order'),
+                    to_attr='active_products',
+                )
+            )
+            .order_by('order')
+        )
     except Exception as e:
-        # Handle case where tables don't exist yet (e.g., during first deployment)
         from django.db.utils import OperationalError
         if isinstance(e, OperationalError) or 'no such table' in str(e):
             sliders = []
@@ -43,16 +69,19 @@ def home_view(request):
             service_categories = []
             testimonials = []
             no_design_section = None
+            shop_categories = []
         else:
             raise
-    
+
     context = {
         'sliders': sliders,
         'featured_products': featured_products,
         'design_enabled_products': design_enabled_products,
         'service_categories': service_categories,
+        'shop_categories': shop_categories,
         'testimonials': testimonials,
         'no_design_section': no_design_section,
+        'product_placeholders': product_placeholders,
     }
     return render(request, 'core/home.html', context)
 

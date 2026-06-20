@@ -1,0 +1,343 @@
+.faq-wrapper {
+    .faq-image {
+        height: 580px;
+        position: relative;
+
+        @include breakpoint (max-md){
+           height: 500px;
+        }
+
+        @include breakpoint (max-sm){
+            height: 400px;
+        }
+
+        img {
+            @include imgw;
+            object-fit: cover;
+        }
+
+        .button-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+
+            @include breakpoint (max-xl){
+               display: none;
+            }
+
+            span {
+                font-weight: 600;
+                color: $white;
+            }
+
+            .video-btn {
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 80px;
+                background-color: $white;
+                color: $theme-color;
+                display: inline-block;
+            }
+
+            .ripple {
+                &::before,&::after {
+                    width: 80px;
+                    height: 80px;
+                    box-shadow: 0 0 0 0 rgba(112, 0, 254, 0.5);
+                }
+            }
+        }
+    }
+
+    .faq-content {
+        margin-left: 40px;
+
+        @include breakpoint (max-xl){
+            margin-left: 0;
+        }
+
+        .accordion-item {
+            border: none !important;
+            background-color: $white;
+            box-shadow: $shadow;
+    
+            .accordion-header { 
+                .accordion-button { 
+                    font-weight: 600;
+                    color: $header-color;
+                    letter-spacing: -.2px;
+                    border: none !important;
+                    border-radius: 0;
+                    box-shadow: none;
+                    background-color: $white;
+                    padding: 30px 30px 0;
+                    text-transform: capitalize;
+                    font-size: 20px;
+                   // box-shadow: $shadow;
+    
+                    @include breakpoint (max-xl){
+                        font-size: 20px;
+                    }
+    
+                    @include breakpoint (max-sm){
+                        font-size: 18px;
+                        padding: 20px 20px 0;
+                    }
+    
+                    span {
+                        margin-right: 20px;
+                    }
+    
+                    &::after {
+                        content: "\f324";
+                        font-family: $fa;
+                        background: transparent;
+                        font-weight: 500;
+                        transition: all 0.3s ease-in-out !important;
+                        color: $header-color;
+                        font-size: 16px;
+                    }
+                    &:not(.collapsed)::after {
+                        content: "\f325";
+                        font-family: $fa;
+                        background: transparent;
+                        font-weight: 500;
+                        color: $theme-color;
+                    }
+    
+                    &.collapsed {
+                        background-color: $white;
+                        box-shadow: $shadow;
+                        padding: 25px 30px;
+                        color: $header-color;
+                    }
+                }
+            }
+    
+            .accordion-collapse { 
+                box-shadow: $shadow;
+                .accordion-body {
+                    padding-left: 70px;
+                    padding-top: 15px;
+                    padding-right: 40px;
+                    color: $text-color;
+                    background-color: $white;
+                    padding-bottom: 28px;
+    
+                    @include breakpoint (max-md){
+                        padding-left: 60px;
+                    }
+    
+                    @include breakpoint (max-sm){
+                        padding-left: 50px;
+                        padding-bottom: 20px;
+                    }
+                }
+            }
+        }
+
+        &.style-2 {
+            margin-left: 0;
+        }
+    }
+
+    .faq-image-2 {
+        position: relative;
+
+        .faq-img {
+            max-width: 480px;
+            position: relative;
+
+            .video-btn {
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 80px;
+                background-color: $white;
+                color: $theme-color;
+                display: inline-block;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+                z-index: 9;
+            }
+
+            .ripple {
+                &::before,&::after {
+                    width: 80px;
+                    height: 80px;
+                    box-shadow: 0 0 0 0 rgba(112, 0, 254, 0.5);
+                }
+            }
+
+            img {
+                @include imgw;
+            }
+        }
+
+        .faq-img-2 {
+            position: absolute;
+            bottom: -22%;
+            right: 0;
+
+            @include breakpoint (max-lg){
+                bottom: 0;
+            }
+
+            @include breakpoint (max-sm){
+                max-width: 200px;
+
+                img {
+                    @include imgw;
+                }
+            }
+        }
+    }
+}
+
+.pricing-single-items {
+    margin-top: 30px;
+    background-color: $white;
+    box-shadow: $shadow;
+    padding: 40px;
+    border-radius: 10px;
+    @include transition;
+
+    .pricing-header {
+        .post-head {
+            background-color: $theme-color;
+            color: $white;
+            font-size: 16px;
+            font-weight: 500;
+            display: inline-block;
+            padding: 3px 10px;
+            padding: 7px 14px;
+            border-radius: 5px;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+    
+        p {
+            font-weight: 500;
+        }
+    
+        h2 {
+            margin-top: 20px;
+            font-size: 42px;
+
+            sub {
+                font-size: 16px;
+                font-weight: 500;
+                margin-left: -5px;    
+                color: $text-color;
+            }
+        }
+    }
+
+    .price-list {
+        margin-top: 30px;
+        border-top: 1px solid $border-color;
+        padding-top: 30px;
+
+        li {
+            font-weight: 400;
+            font-size: 18px;
+
+            &:not(:last-child){
+                margin-bottom: 15px;
+            }
+
+            i {
+                color: $theme-color;
+                margin-right: 10px;
+            }
+        }
+    }
+
+    .pricing-button {
+        margin-top: 40px;
+
+        .theme-btn {
+            width: 100%;
+            text-align: center;
+
+            @include breakpoint (max-xxl){
+                padding: 20px 30px;
+            }
+        }
+    }
+
+    &:hover {
+        transform: translateY(-10px);
+    }
+
+    &.active {
+        background-color: $theme-color;
+
+        .pricing-header {
+            .post-head {
+                background-color: $white;
+                color: $header-color;
+            }
+        
+            p {
+               color: $white;
+            }
+        
+            h2 {
+               color: $white;
+    
+                sub {
+                    color: $white;
+                }
+            }
+        }
+    
+        .price-list {
+            border-top: 1px solid $white;
+
+            li {
+                 color: $white;
+    
+                i {
+                    color: $white;
+                }
+            }
+        }
+    
+        .pricing-button {
+            .theme-btn {
+                width: 100%;
+                text-align: center;
+                background-color: $header-color;
+
+                &::before,&::after {
+                    background-color: $white;
+                }
+
+                &:hover {
+                    color: $header-color;
+                }
+            }
+        }
+    }
+}
+
+.pricing-section {
+    position: relative;
+
+    .pricing-shape {
+        position: absolute;
+        top: 10%;
+        left: 5%;
+
+        @include breakpoint (max-xl){
+            display: none;
+        }
+    }
+}

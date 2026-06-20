@@ -1,0 +1,137 @@
+.testimonial-wrapper {
+    margin-right: -40%;
+
+    @include breakpoint (max-lg){
+        margin-right: 0;
+    }
+}
+
+.testimonial-box-items {
+    margin-top: 30px;
+    background-color: $white;
+    padding: 30px;
+
+    .star {
+        color: #ecb332;
+        margin-bottom: 15px;
+    }
+
+    p {
+        font-size: 18px;
+        color: $header-color;
+    }
+
+    .client-info {
+        margin-top: 30px;
+        @include flex;
+        gap: 20px;
+
+        .client-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: $bg-color;
+        }
+
+        .content {
+            h4 {
+                font-weight: 600;
+                margin-bottom: 5px;
+            }
+        }
+    }
+
+    &.style-2 {
+        padding: 50px 40px;
+        .client-info {
+            margin-top: 0;
+            justify-content: space-between;
+            margin-bottom: 20px;
+
+           .client-item {
+                @include flex;
+                gap: 15px;
+           }
+        }
+
+        .star {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.testimonial-single-items {
+    text-align: center;
+    position: relative;
+    z-index: 9;
+
+    .testi-img {
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        background-color: $bg-color;
+        margin: 0 auto;
+    }
+
+    p {
+        font-size: 28px;
+        font-weight: 600;
+        color: $header-color;
+        line-height: 150%;
+        margin-top: 30px;
+
+        @include breakpoint (max-xl){
+           font-size: 24px;
+        }
+
+        @include breakpoint (max-lg){
+            font-size: 22px;
+        }
+
+        @include breakpoint (max-md){
+            font-size: 20px;
+        }
+
+        @include breakpoint (max-sm){
+           font-size: 18px;
+           font-weight: 500;
+        }
+    }
+
+    .client-info {
+        margin-top: 25px;
+
+        h3 {
+            font-size: 26px;
+            font-weight: 600;
+
+            @include breakpoint (max-sm){
+                font-size: 22px;
+            }
+        }
+    }
+}
+
+.testimonial-section {
+    position: relative;
+
+    .shape-1 {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+
+        @include breakpoint (max-xl){
+            display: none;
+        }
+    }
+
+    .shape-2 {
+        position: absolute;
+        right: 0;
+        top: 0;
+
+        @include breakpoint (max-xl){
+            display: none;
+        }
+    }
+}

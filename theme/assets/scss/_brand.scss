@@ -1,0 +1,40 @@
+.brand-wrapper {
+     margin-top: -5px;
+
+     h6 {
+         font-size: 22px;
+         position: relative;
+         margin-bottom: 50px;
+         color: $header-color;
+         font-weight: 700;
+ 
+         &::before {
+             position: absolute;
+             top: 15px;
+             left: 35px;
+             content: "";
+             height: 1px;
+             width: 450px;
+             background-color: $theme-color;
+ 
+             @include breakpoint (max-xxl){
+                 display: none;
+             }
+         }
+ 
+         &::after {
+             position: absolute;
+             top: 15px;
+             right: 35px;
+             content: "";
+             height: 1px;
+             width: 450px;
+             background-color: $theme-color;
+ 
+             @include breakpoint (max-xxl){
+                 display: none;
+             }
+         }
+     }
+
+ }

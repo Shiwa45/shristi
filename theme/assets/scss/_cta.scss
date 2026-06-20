@@ -1,0 +1,415 @@
+.cta-content {
+    .section-title {
+        margin-bottom: 50px;
+
+        h2 {
+            font-size: 80px;
+
+            @include breakpoint (max-lg){
+               font-size: 68px;
+            }
+
+            @include breakpoint (max-md){
+                font-size: 52px;
+            }
+
+            @include breakpoint (max-sm){
+                font-size: 42px;
+            }
+        }
+
+        span {
+            font-weight: 600;
+            display: inline-block;
+            text-transform: capitalize;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+    }
+}
+
+.cta-contact-item {
+    @include flex;
+    justify-content: space-between;
+
+    @include breakpoint (max-xl){
+        flex-wrap: wrap;
+        gap: 30px;
+        justify-content: center;
+        text-align: center;
+    }
+
+    h2 {
+        color: $white;
+    }
+
+    .theme-btn {
+        background-color: $white;
+        color: $header-color;
+
+        &:hover {
+            color: $white;
+        }
+    }
+}
+
+.deal-wrapper {
+    .deal-content {
+        p {
+            font-weight: 500;
+        }
+
+        .coming-soon {
+            margin-top: 40px;
+            margin-bottom: 50px;
+
+            @include breakpoint (max-md){
+               margin-bottom: 40px;
+            }
+
+            @include breakpoint (max-sm){
+               margin-top: 30px;
+               margin-bottom: 30px;
+            }
+
+            ul {
+                @include flex;
+                gap: 15px;
+
+                li {
+                    font-weight: 500;
+                    text-align: center;
+
+                    span {
+                        display: block;
+                        width: 70px;
+                        height: 70px;
+                        line-height: 70px;
+                        text-align: center;
+                        border-radius: 50%;
+                        background-color: $white;
+                        font-weight: 600;
+                        color: $header-color;
+                        margin-bottom: 5px;
+                        font-size: 22px;
+                    }
+                }
+            }
+        }
+    }
+
+    .deal-image {
+        position: relative;
+
+        .thumb {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+
+            @include breakpoint (max-xl){
+                img {
+                    @include imgw;
+                }
+            }
+        }
+
+        .deal-shape {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            z-index: 1;
+
+            @include breakpoint (max-xl){
+                top: 50%;
+                right: initial;
+                left: 50%;
+                transform: translate(-50%,-50%);
+                bottom: initial;
+                img {
+                    @include imgw;
+                }
+            }
+        }
+    }
+}
+
+.cta-items-2 {
+    padding: 80px 0;
+    position: relative;
+    z-index: 9;
+    text-align: center;
+
+    @include breakpoint (max-xl){
+       padding: initial;
+    }
+
+    .section-title {
+        .sub-title {
+            span {
+                color: $white !important;
+                -webkit-text-fill-color: initial;
+            }
+        }
+
+        h2 {
+            font-size: 72px;
+
+            @include breakpoint (max-lg){
+                font-size: 60px;
+            }
+
+            @include breakpoint (max-md){
+                font-size: 50px;
+            }
+
+            @include breakpoint (max-sm){
+                font-size: 40px;
+            }
+        }
+    }
+
+    .theme-btn {
+        background-color: $white;
+        color: $header-color;
+
+        &:hover {
+            color: $white;
+        }
+    }
+}
+
+.cta-section {
+    position: relative;
+
+    .cta-shape-1 {
+        position: absolute;
+        top: 10%;
+        left: 0;
+
+        @include breakpoint (max-xxxl){
+           display: none;
+        }
+    }
+
+    .cta-shape-2 {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+
+         @include breakpoint (max-xxxl){
+           display: none;
+        }
+    }
+
+    .offer-shape {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        @include breakpoint (max-xxl){
+            display: none;
+        }
+    }
+
+    .offer-shape-2 {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+
+        @include breakpoint (max-xxl){
+            display: none;
+        }
+    }
+}
+
+.cta-wrapper-2 {
+    @include flex;
+    justify-content: space-between;
+    padding: 100px 0je ;
+
+    @include breakpoint (max-lg){
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: center;
+        padding: 40px 0;
+    }
+
+    .content {
+        h2 {
+            font-size: 60px;
+            color: $white;
+            margin-bottom: 20px;
+
+            @include breakpoint (max-md){
+                font-size: 52px;
+            }
+
+            @include breakpoint (max-sm){
+                font-size: 40px;
+            }
+        }
+
+        h3 {
+            color: $white;
+            font-size: 25px;
+        }
+
+        .button-items {
+            @include flex;
+            gap: 10px;
+            margin-top: 40px;
+
+            @include breakpoint (max-lg){
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .theme-btn {
+                background-color: $white;
+                color: $header-color;
+
+                &:hover {
+                    color: $white;
+                }
+
+                &.style-2 {
+                    background-color: $header-color;
+                    color: $white;
+
+                    &::before,&::after {
+                        background-color: $white;
+                    }
+
+                    &:hover {
+                        color: $header-color;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.cta-section-3 {
+    position: relative;
+
+    &::before {
+        @include before;
+        background-color: $bg-color;
+        top: 50%;
+    }
+}
+
+.cta-wrapper-3 {
+    padding: 80px;
+    position: relative;
+    // @include flex;
+    // justify-content: space-between;
+    margin-top: 65px;
+
+    @include breakpoint (max-xl){
+        margin-top: 85px;
+    }
+
+    @include breakpoint (max-lg){
+        text-align: center;
+        margin-top: initial;
+    }
+
+    .cta-content {
+        h2 {
+            color: $white;
+            margin-bottom: 40px;
+        }
+
+        .theme-btn {
+            background-color: $white;
+            color: $header-color;
+
+            &::before,&::after {
+                background-color: $header-color;
+            }
+
+            &:hover {
+                color: $white;
+            }
+        }
+    }
+
+    .cta-shape {
+        position: absolute;
+        right: 80px;
+        bottom: 0;
+
+        @include breakpoint (max-lg){
+            display: none;
+        }
+    }
+}
+
+.instagram-banner-items {
+    .banner-image {
+        position: relative;
+
+        @include breakpoint (max-md){
+            height: 450px;
+
+            img {
+                object-fit: cover
+            }
+        }
+
+        @include breakpoint (max-sm){
+            height: 380px;
+        }
+
+        img {
+            @include imgw;
+        }
+
+        &::before {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            content: "";
+            background: $black;
+            opacity: 0.6;
+            transform: scale(1, 0);
+            transition: transform 500ms ease;
+            transform-origin: bottom center;
+            z-index: 1;
+        }
+
+        .icon {
+            position: absolute;
+            width: 68px;
+            height: 68px;
+            line-height: 68px;
+            text-align: center;
+            border-radius: 50%;
+            background-color: $theme-color;
+            font-size: 28px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            z-index: 99;
+            color: $white;
+            opacity: 0;
+            @include transition;
+        }
+    }
+
+    &:hover {
+        .banner-image {
+            &::before {
+                transform: scale(1, 1);
+                transform-origin: top center;
+            }
+            .icon {
+                opacity: 1;
+            }
+        }
+    }
+}

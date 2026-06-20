@@ -1,7 +1,7 @@
 # ========================
 # Core Django Dependencies
 # ========================
-Django==4.2.7
+Django>=5.2,<6.0
 Pillow
 python-decouple==3.8
 

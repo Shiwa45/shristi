@@ -1,0 +1,564 @@
+.hero-1 {
+   position: relative;
+   z-index: 9;
+   overflow: hidden;
+   padding: 120px 0 120px;
+
+    .swiper-dot-2 {
+        position: absolute;
+        top: 50%;
+        right: 5%;
+        width: 20px;
+    }
+
+   .swiper {
+        overflow: initial;
+   }
+
+   &::before {
+        @include before;
+        z-index: -1;
+        background: linear-gradient(90deg, rgb(73, 81, 254) 24%, rgb(73, 81, 254) 38%, rgb(148, 69, 211) 62%, rgb(223, 57, 167) 100%);
+        opacity: .4;
+   }
+
+   .hero-content {
+        opacity: 0;
+        z-index: 3;
+        position: relative;
+        transform: translateY(-150px);
+
+        h1 {
+            color: $black;
+            margin-bottom: 30px;
+
+            @include breakpoint (max-xl){
+                font-size: 60px;
+            }
+
+            @include breakpoint (max-lg){
+                font-size: 68px;
+            }
+
+            @include breakpoint (max-md){
+                font-size: 54px;
+            }
+
+            @include breakpoint (max-sm){
+                font-size: 42px;
+                margin-bottom: 25px;
+            }
+        }
+
+        p {
+            font-weight: 500;
+            font-size: 18px;
+            color: $black;
+
+            @include breakpoint (max-sm){
+                font-size: 16px;
+            }
+        }
+   }
+
+    .hero-button {
+        margin-top: 50px;
+        transform: translateY(150px);
+		opacity: 0;
+
+        @include breakpoint (max-md){
+        margin-top: 35px;
+        }
+
+        @include breakpoint (max-sm){
+            margin-top: 25px;
+        }
+    }
+
+   .hero-image {
+         position: relative;
+
+        @include breakpoint (max-lg){
+           text-align: center;
+        }
+
+        .hero-img {
+            position: relative;
+            transform: translateY(150px);
+            opacity: 0;
+        }
+
+        .mockup-shape {
+            position: absolute;
+            top: 14px;
+            left: -32%;
+            transform: translateX(-150px);
+            opacity: 0;
+
+            @include breakpoint (max-lg){
+               left: 0;
+            }
+
+            @include breakpoint (max-sm){
+                display: none;
+            }
+        }
+        
+        .hero-img {
+            position: relative;
+
+            .circle-shape {
+                position: absolute;
+                top: 50%;
+                left: 34%;
+                transform: translate(-50%,-50%);
+                z-index: -1;
+    
+                @include breakpoint (max-lg){
+                   left: 50%;
+                }
+            }    
+        }
+        
+        .cup-shape {
+            position: absolute;
+            bottom: 0;
+            left: -100px;
+            transform: translateY(150px);
+            opacity: 0;
+
+            @include breakpoint (max-lg){
+                left: 0;
+            }
+        }
+
+        .t-shirt-shape {
+            position: absolute;
+            right: 50px;
+            top: 30px;
+            transform: translateX(150px);
+            opacity: 0;
+        }
+
+        .cap-shape {
+            position: absolute;
+            bottom: -15%;
+            right: 0;
+            transform: translateY(150px);
+            opacity: 0;
+        }
+   }
+
+    .swiper-slide.swiper-slide-active {
+            
+        .hero-content{
+            opacity: 1;
+            transform: translateY(0px);
+            transition: all 1500ms ease;
+        }
+
+        .hero-button {
+            opacity: 1;
+            transform: translateY(0px);
+            transition: all 2000ms ease;
+        }
+
+        .hero-image {
+            .mockup-shape {
+                opacity: 1;
+                transform: translateX(0px);
+                transition: all 3500ms ease;
+            }
+
+            .cup-shape {
+                opacity: 1;
+                transform: translateY(0px);
+                transition: all 3000ms ease;
+            }
+
+            .cap-shape {
+                opacity: 1;
+                transform: translateY(0px);
+                transition: all 3500ms ease;
+            }
+
+            .hero-img  {
+                opacity: 1;
+                transform: translateY(0px);
+                transition: all 1500ms ease;
+            }
+
+            .t-shirt-shape {
+                opacity: 1;
+                transform: translateX(0px);
+                transition: all 2500ms ease;
+            }
+        }
+    }
+}
+
+.hero-2 {
+    position: relative;
+    padding: 185px 0 185px;
+
+    @include breakpoint (max-xl){
+        padding: 150px 0 150px;
+    }
+   
+    @include breakpoint (max-sm){
+        padding: 120px 0 120px;
+    }
+
+    .hero-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        -webkit-transition: opacity 1500ms ease-in, -webkit-transform 7000ms ease;
+        transition: opacity 1500ms ease-in, -webkit-transform 7000ms ease;
+        transition: transform 9000ms ease, opacity 1500ms ease-in;
+        transition: transform 9000ms ease, opacity 1500ms ease-in, -webkit-transform 9000ms ease;
+
+        &::before {
+            @include before;
+            background-color: rgba(25, 13, 78, 0.6);
+            z-index: 1;
+        }
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 9;
+        text-align: center;
+        opacity: 0;
+        z-index: 3;
+        transform: translateY(-150px);
+
+        h6 {
+            color: $white;
+            letter-spacing: 1.2px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: $white;
+            font-size: 110px;
+            line-height: 1;
+
+            @include breakpoint (max-xxl){
+                font-size: 80px;
+            }
+
+            @include breakpoint (max-lg){
+                font-size: 70px;
+            }
+
+            @include breakpoint (max-md){
+                font-size: 55px;
+            }
+
+            @include breakpoint (max-sm){
+                font-size: 42px;
+            }
+        }
+    }
+
+    .hero-button {
+        margin-top: 50px;
+        text-align: center;
+        transform: translateY(150px);
+		opacity: 0;
+
+        @include breakpoint (max-md){
+           margin-top: 30px;
+        }
+    }
+}
+
+.hero-section-2 {
+    position: relative;
+
+    .swiper-slide.swiper-slide-active {
+        .hero-bg{
+            -webkit-transform: scale(1.35);
+            transform: scale(1.35);
+        }
+        
+        .hero-content{
+            opacity: 1;
+            transform: translateY(0px);
+            transition: all 2500ms ease;
+        }
+
+        .hero-button  {
+            opacity: 1;
+            transform: translateY(0px);
+            transition: all 2500ms ease;
+        }
+    }
+
+    .swiper-dot {
+        position: absolute;
+        bottom: 5%;
+        left: 50%;
+        z-index: 99;
+        transform: translateX(-50%);
+
+        .swiper-pagination-bullet {
+            background-color: $white;
+        }
+    }
+
+    .array-button{
+        position: initial;
+         @include breakpoint (max-xl){
+             display: none;
+        }
+
+        .array-prev, .array-next {
+            position: absolute;
+            top: 50%;
+            left: 2%;
+            z-index: 9;
+            background-color: transparent;
+            border: 1px solid $white;
+            color: $white;
+            width: 70px;
+            height:70px;
+            line-height: 70px;
+            font-size: 20px;
+
+            &:hover {
+                background-color: $theme-color;
+                color: $white;
+                border-color: $theme-color;
+            }
+        }
+
+         
+        .array-next {
+            left: auto;
+            right: 2%;
+        }
+     }
+}
+
+.hero-3 {
+    position: relative;
+    padding: 190px 0 110px;
+    z-index: 9;
+    overflow: hidden;
+
+    @include breakpoint (max-lg){
+        padding-top: 150px;
+    }
+    .hero-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+    }
+
+    .hero-content {
+        opacity: 0;
+        z-index: 3;
+        position: relative;
+        transform: translateY(-150px);
+
+        @include breakpoint (max-md){
+            text-align: center;
+        }
+
+        h6 {
+            color: $white;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            color: $white;
+            margin-bottom: 25px;
+
+            @include breakpoint (max-lg){
+                font-size: 62px;
+            }
+
+            @include breakpoint (max-md){
+                font-size: 50px;
+            }
+
+            @include breakpoint (max-sm){
+                font-size: 38px;
+            }
+        }
+
+        p {
+            color: $white;
+            font-weight: 500;
+        }
+    }
+
+    .hero-button {
+        margin-top: 40px;
+        transform: translateY(150px);
+		opacity: 0;
+
+        @include breakpoint (max-md){
+            text-align: center;
+        }
+
+        .theme-btn {
+            background-color: $white;
+            color: $header-color;
+
+           &:hover {
+                color: $white;
+           }
+        }
+    }
+
+    .hero-image {
+        position: relative;
+        z-index: 3;
+        transform: translateY(150px);
+		opacity: 0;
+        height: 605px;
+
+        img {
+            @include imgw;
+            object-fit: cover;
+        }
+
+        @include breakpoint (max-md){
+            height: initial;
+        }
+    }
+    
+}
+
+.hero-section-3 {
+    position: relative;
+    .swiper-slide.swiper-slide-active {
+        
+        .hero-content{
+            opacity: 1;
+            transform: translateY(0px);
+            transition: all 2500ms ease;
+        }
+
+        .hero-button,.hero-image  {
+            opacity: 1;
+            transform: translateY(0px);
+            transition: all 2500ms ease;
+        }
+    }
+}
+
+.hero-4 {
+    padding: 140px 0 140px;
+
+    @include breakpoint (max-md){
+        padding: 120px 0;
+    }
+
+    .hero-content {
+        @include breakpoint (max-md){
+            text-align: center;
+        }
+
+        h1 {
+            font-weight: 700;
+            text-transform: capitalize;
+
+            @include breakpoint (max-md){
+               font-size: 55px;
+            }
+        
+            @include breakpoint (max-sm){
+               font-size: 40px;
+            }
+
+            strong {
+                font-weight: 700;
+            }
+
+            background: linear-gradient(90.07deg, #FF4E8D 32.43%, #AE34E8 58.79%, #7000fe 105.32%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p {
+            font-size: 20px;
+            margin-top: 30px;
+        }
+
+        .hero-list {
+            font-size: 18px;
+            font-weight: 500;
+            color: $header-color;
+            margin-top: 30px;
+            margin-bottom: 50px;
+
+            @include breakpoint (max-md){
+               margin-bottom: 30px;
+            }
+
+            li {
+                &:not(:last-child){
+                    margin-bottom: 15px;
+                }
+
+                i {
+                    color: $theme-color;
+                    margin-right: 10px;
+                }
+            }
+        }
+
+        .theme-btn {
+            background-color: $header-color;
+
+            &::before,&::after {
+                background-color: $theme-color;
+            }
+        }
+    }
+
+    .hero-thumb {
+        img {
+            @include imgw;
+            border-radius: 20px;
+        }
+
+        &.style-2 {
+            margin-top: 24px;
+        }
+
+        &.style-3 {
+            margin-top: 50px;
+
+            @include breakpoint (max-lg){
+                margin-top: 0;
+            }
+        }
+
+        &.animation-1 {
+            animation: translateX2 4s forwards infinite alternate;
+        }
+
+        &.animation-2 {
+            animation: translateY2 4s forwards infinite alternate;
+        }
+    }
+}

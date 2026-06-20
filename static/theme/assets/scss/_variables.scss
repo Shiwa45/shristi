@@ -1,0 +1,34 @@
+
+:root {
+    --body: #fff;
+    --black: #000;
+    --white: #fff;
+    --theme: #7000fe;
+    --theme2: #7000fe;
+    --header: #09052F;
+    --base: #7000fe;
+    --text: #767676;
+    --text2: #8A8C94;
+    --border: #EEEFF4;
+    --button: #1C2539;
+    --button2: #030734;
+    --ratting: #F09815;
+    --bg: #f3f5ff;
+    --color-gradient-1: linear-gradient(90.07deg, #FF4E8D 32.43%, #AE34E8 58.79%, #7000fe 105.32%);
+    ---box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+}
+
+// Theme Color - Default Colors
+$black: var(--black);
+$white: var(--white);
+$theme-color: var(--theme);
+$theme-color-2: var(--theme2);
+$text-color: var(--text);
+$ratting-color: var(--ratting);
+$text-color-2: var(--text2);
+$header-color: var(--header);
+$border-color: var(--border);
+$bg-color: var(--bg);
+$color-gradient-1: var(--color-gradient-1);
+$shadow: var(---box-shadow);

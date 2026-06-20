@@ -14,7 +14,10 @@ IS_VERCEL = os.environ.get('VERCEL') == '1'
 SECRET_KEY = config('SECRET_KEY', default='your-secret-key-here')
 DEBUG = config('DEBUG', default=True, cast=bool) and not IS_VERCEL
 
-ALLOWED_HOSTS = ['*'] if DEBUG else ['.vercel.app', 'localhost', '127.0.0.1']
+allowed_hosts = config('ALLOWED_HOSTS', default='')
+ALLOWED_HOSTS = ['*'] if DEBUG else [host.strip() for host in allowed_hosts.split(',') if host.strip()]
+if not ALLOWED_HOSTS and not DEBUG:
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 # Application definition
 DJANGO_APPS = [
@@ -109,12 +112,23 @@ elif IS_VERCEL:
             'NAME': '/tmp/db.sqlite3',
         }
     }
+elif config('DB_ENGINE', default='') == 'django.db.backends.postgresql':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': config('DB_NAME'),
+            'USER': config('DB_USER'),
+            'PASSWORD': config('DB_PASSWORD'),
+            'HOST': config('DB_HOST', default='localhost'),
+            'PORT': config('DB_PORT', default='5432'),
+        }
+    }
 else:
-    # Use SQLite for local dev
+    # Use SQLite for local dev or simple EC2 deployments
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+            'NAME': config('DB_NAME', default=BASE_DIR / 'db.sqlite3'),
         }
     }
 
@@ -182,10 +196,14 @@ CELERY_BROKER_URL = config('REDIS_URL', default='redis://localhost:6379')
 CELERY_RESULT_BACKEND = config('REDIS_URL', default='redis://localhost:6379')
 
 # CORS settings
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-]
+cors_allowed_origins = config('CORS_ALLOWED_ORIGINS', default='')
+CORS_ALLOWED_ORIGINS = (
+    [origin.strip() for origin in cors_allowed_origins.split(',') if origin.strip()]
+    or [
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+    ]
+)
 
 # Logging
 LOGGING = {

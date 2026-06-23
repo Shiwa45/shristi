@@ -1,22 +1,22 @@
 {% load dynamic_form_tags %}
 
-<div class="dynamic-form-sections space-y-6">
+<div class="dfs-wrap">
     {% for section_key, section in sections %}
     {% if section.fields %}
-    <div class="form-section border-b border-gray-100 pb-6 last:border-0">
+    <div class="dfs-section">
         {% if section.name != "Product Specifications" and section.name != "Quantity & Pricing" %}
-        <div class="section-header mb-4">
-            <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider flex items-center">
-                <i class="{% get_section_icon section_key %} mr-2 text-gray-400"></i>
+        <div class="dfs-section-header">
+            <h3 class="dfs-section-title">
+                <i class="{% get_section_icon section_key %}"></i>
                 {{ section.display_name }}
             </h3>
             {% if section.description %}
-            <p class="text-xs text-gray-500 mt-1">{{ section.description }}</p>
+            <p class="dfs-section-desc">{{ section.description }}</p>
             {% endif %}
         </div>
         {% endif %}
 
-        <div class="section-fields grid grid-cols-1 gap-4">
+        <div class="dfs-fields">
             {% for field in section.fields %}
             {% render_form_field field form_data %}
             {% endfor %}
@@ -25,3 +25,18 @@
     {% endif %}
     {% endfor %}
 </div>
+
+<style>
+.dfs-wrap { display: flex; flex-direction: column; gap: 8px; }
+.dfs-section { border-bottom: 1px solid #f0f0f0; padding-bottom: 4px; }
+.dfs-section:last-child { border-bottom: none; }
+.dfs-section-header { margin-bottom: 12px; }
+.dfs-section-title {
+    font-size: .82rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .06em; color: #6b7280;
+    display: flex; align-items: center; gap: 6px; margin: 0 0 4px;
+}
+.dfs-section-title i { color: var(--theme, #7000fe); }
+.dfs-section-desc { font-size: .78rem; color: #9ca3af; margin: 0; }
+.dfs-fields { display: flex; flex-direction: column; gap: 20px; }
+</style>

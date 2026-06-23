@@ -4,7 +4,7 @@
 <div class="styled-radio-wrapper">
     {% if field.field_name == 'interior_color' %}
     <!-- VISUAL GRID FOR INTERIOR COLOR -->
-    <div class="radio-options grid gap-3" style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+    <div class="radio-options" style="display:grid; gap:12px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
         {% for option in field.get_options %}
             <div class="radio-option-card" onclick="selectRadioCard(this)">
                 <input type="radio"
@@ -97,7 +97,7 @@
 
     {% elif field.field_name == 'binding_type' or field.field_name == 'binding' %}
     <!-- VISUAL GRID FOR BINDING TYPE -->
-    <div class="radio-options grid gap-3" style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+    <div class="radio-options" style="display:grid; gap:12px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
         {% for option in field.get_options %}
             <div class="radio-option-card">
                 <input type="radio"
@@ -187,7 +187,7 @@
 
     {% elif field.field_name == 'paper_type' or field.field_name == 'paper' %}
     <!-- VISUAL GRID FOR PAPER TYPE -->
-    <div class="radio-options grid gap-3" style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+    <div class="radio-options" style="display:grid; gap:12px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
         {% for option in field.get_options %}
             <div class="radio-option-card">
                 <input type="radio"
@@ -283,8 +283,8 @@
 
     {% else %}
     <!-- DEFAULT RADIO LAYOUT -->
-    <div class="radio-options grid gap-3"
-         style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+    <div class="radio-options"
+         style="display:grid; gap:12px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
 
         {% for option in field.get_options %}
             <div class="radio-option-card">
@@ -386,15 +386,15 @@
 }
 
 .radio-card:hover {
-    border-color: #3b82f6;
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+    border-color: var(--theme);
+    box-shadow: 0 4px 12px rgba(112, 0, 254, 0.15);
     transform: translateY(-2px);
 }
 
 .radio-input:checked + .radio-label .radio-card {
-    border-color: #3b82f6;
-    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+    border-color: var(--theme);
+    background: linear-gradient(135deg, #faf7ff 0%, #ede9fe 100%);
+    box-shadow: 0 4px 12px rgba(112, 0, 254, 0.2);
 }
 
 .radio-indicator {
@@ -409,8 +409,8 @@
 }
 
 .radio-input:checked + .radio-label .radio-indicator {
-    border-color: #3b82f6;
-    background: #3b82f6;
+    border-color: var(--theme);
+    background: var(--theme);
 }
 
 .radio-dot {
@@ -441,7 +441,7 @@
 }
 
 .radio-input:checked + .radio-label .radio-title {
-    color: #1e40af;
+    color: var(--theme);
 }
 
 .radio-description {
@@ -479,7 +479,7 @@
     right: -8px;
     width: 24px;
     height: 24px;
-    background: #3b82f6;
+    background: var(--theme);
     color: white;
     border-radius: 50%;
     display: flex;
@@ -557,6 +557,7 @@
 .radio-option-card[data-category="premium"] .radio-input:checked + .radio-label .selection-check {
     background: #d97706;
 }
+
 </style>
 
 <script>

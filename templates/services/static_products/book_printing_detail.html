@@ -1,5 +1,7 @@
-{% extends 'services/static_products/product_detail.html' %}
+﻿{% extends 'services/static_products/product_detail.html' %}
 {% load static %}
+
+{% block hero_style %}padding: 60px 0 35px;{% endblock %}
 
 {% block extra_css %}
 {{ block.super }}
@@ -281,7 +283,8 @@
         font-size: 1rem;
         font-weight: 400;
         text-align: left;
-        background: #ffffff;
+        background: #ffffff !important;
+        color: #1f2937 !important;
     }
 
     .page-input:focus {
@@ -394,14 +397,9 @@
     /* Binding Type Options - Lulu.com Style */
     .binding-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
         gap: 1rem;
-    }
-
-    @media (min-width: 1024px) {
-        .binding-grid {
-            grid-template-columns: repeat(4, 1fr);
-        }
+        overflow: hidden;
     }
 
     .binding-option {
@@ -413,6 +411,7 @@
         transition: all 0.2s ease;
         position: relative;
         background: #ffffff;
+        overflow: hidden;
     }
 
     .binding-option:hover {
@@ -447,22 +446,23 @@
     }
 
     .binding-option.disabled::after {
-        content: '🔒 Not Available';
+        content: 'Not Available';
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         background: rgba(255, 255, 255, 0.95);
         color: #666;
-        padding: 6px 10px;
+        padding: 4px 8px;
         border-radius: 4px;
-        font-size: 0.75rem;
+        font-size: 0.7rem;
         font-weight: 500;
-        white-space: nowrap;
+        white-space: normal;
+        word-break: break-word;
         z-index: 3;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         border: 1px solid #e5e7eb;
-        max-width: 90%;
+        width: 80%;
         text-align: center;
     }
 
@@ -894,6 +894,8 @@
     .quantity-input-container input[type="number"] {
         font-size: 1.125rem;
         font-weight: 500;
+        color: #1f2937 !important;
+        background: #ffffff !important;
     }
 
     /* Design checkbox options styling */
@@ -1053,6 +1055,19 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+    }
+
+    /* Reduce hero height by 50% on book printing page */
+    .pd-hero {
+        padding: 60px 0 35px !important;
+    }
+    .pd-hero .pd-image-wrap {
+        min-height: 140px !important;
+    }
+    @media (max-width: 767px) {
+        .pd-hero {
+            padding: 50px 0 25px !important;
         }
     }
 </style>

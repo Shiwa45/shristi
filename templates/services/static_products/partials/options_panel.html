@@ -9,12 +9,12 @@
         </div>
     {% else %}
         <!-- Fallback message if no fields exist -->
-        <div class="no-fields-message bg-gray-50 rounded-xl p-8 text-center">
-            <i class="fas fa-cogs text-4xl text-gray-400 mb-4"></i>
-            <h3 class="text-lg font-semibold text-gray-700 mb-2">Product Configuration</h3>
-            <p class="text-gray-600 mb-4">This product doesn't have custom options configured yet.</p>
-            <a href="{% url 'orders:quote_request' %}" class="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                <i class="fas fa-quote-right mr-2"></i>
+        <div class="no-fields-message" style="background:#f8f9fa;border-radius:12px;padding:32px;text-align:center;border:2px dashed #d1d5db;">
+            <i class="fas fa-cogs" style="font-size:2.5rem;color:#9ca3af;display:block;margin-bottom:12px;"></i>
+            <h3 style="font-size:1rem;font-weight:700;color:#374151;margin-bottom:8px;">Product Configuration</h3>
+            <p style="color:#6b7280;margin-bottom:16px;">This product doesn't have custom options configured yet.</p>
+            <a href="{% url 'orders:quote_request' %}" class="btn" style="background:var(--theme,#7000fe);color:#fff;border:none;padding:10px 24px;border-radius:8px;display:inline-flex;align-items:center;gap:8px;text-decoration:none;">
+                <i class="fas fa-quote-right"></i>
                 Request Custom Quote
             </a>
         </div>
@@ -22,69 +22,67 @@
 
     <!-- Design Upload Section -->
     {% if product.design_tool_enabled %}
-    <div class="design-section bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-6 mt-8 border border-purple-200">
-        <div class="design-section-header mb-6">
-            <h3 class="text-lg font-semibold text-gray-900 flex items-center">
-                <i class="fas fa-palette text-purple-600 mr-3"></i>
+    <div class="design-section" style="background:linear-gradient(135deg,#faf7ff 0%,#fdf2f8 100%);border-radius:12px;padding:24px;margin-top:24px;border:1px solid rgba(112,0,254,.15);">
+        <div class="design-section-header" style="margin-bottom:20px;">
+            <h3 style="font-size:1rem;font-weight:700;color:#1f2937;display:flex;align-items:center;gap:10px;margin:0 0 4px;">
+                <i class="fas fa-palette" style="color:var(--theme,#7000fe);"></i>
                 Design Your Product
             </h3>
-            <p class="text-sm text-gray-600 mt-1">Choose how you want to provide your design</p>
+            <p style="font-size:.85rem;color:#6b7280;margin:0;">Choose how you want to provide your design</p>
         </div>
-        
-        <div class="design-options grid md:grid-cols-2 gap-4">
+
+        <div class="design-options" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
             <!-- Upload Design -->
             <div class="design-option">
-                <div class="design-card bg-white border-2 border-gray-200 rounded-xl p-6 text-center hover:border-blue-400 hover:shadow-md transition-all duration-300 cursor-pointer group">
-                    <div class="design-icon w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-200 transition-colors">
-                        <i class="fas fa-cloud-upload-alt text-blue-600 text-2xl"></i>
+                <div class="design-card" style="background:#fff;border:2px solid #e5e7eb;border-radius:12px;padding:20px;text-align:center;cursor:pointer;transition:border-color .2s,box-shadow .2s;">
+                    <div style="width:56px;height:56px;background:#eff6ff;border-radius:10px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;">
+                        <i class="fas fa-cloud-upload-alt" style="font-size:1.5rem;color:#3b82f6;"></i>
                     </div>
-                    <h4 class="font-bold text-gray-900 mb-2">Upload Your Design</h4>
-                    <p class="text-sm text-gray-600 mb-4">Upload ready-to-print files</p>
-                    <div class="file-formats">
-                        <span class="inline-block bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs mr-1">PDF</span>
-                        <span class="inline-block bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs mr-1">AI</span>
-                        <span class="inline-block bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">PNG</span>
+                    <h4 style="font-weight:700;color:#1f2937;margin:0 0 6px;font-size:.95rem;">Upload Your Design</h4>
+                    <p style="font-size:.82rem;color:#6b7280;margin:0 0 12px;">Upload ready-to-print files</p>
+                    <div>
+                        <span style="display:inline-block;background:#f3f4f6;color:#374151;padding:2px 8px;border-radius:4px;font-size:.72rem;margin-right:4px;">PDF</span>
+                        <span style="display:inline-block;background:#f3f4f6;color:#374151;padding:2px 8px;border-radius:4px;font-size:.72rem;margin-right:4px;">AI</span>
+                        <span style="display:inline-block;background:#f3f4f6;color:#374151;padding:2px 8px;border-radius:4px;font-size:.72rem;">PNG</span>
                     </div>
-                    <!-- Hidden file input -->
-                    <input type="file" class="hidden" accept=".pdf,.ai,.png,.jpg,.jpeg" multiple id="design-upload">
+                    <input type="file" style="display:none;" accept=".pdf,.ai,.png,.jpg,.jpeg" multiple id="design-upload">
                 </div>
             </div>
-            
+
             <!-- Design Tool -->
-            <a href="{% url 'design_tool:editor' category.slug product.slug %}" class="design-option block">
-                <div class="design-card bg-white border-2 border-gray-200 rounded-xl p-6 text-center hover:border-purple-400 hover:shadow-md transition-all duration-300 group">
-                    <div class="design-icon w-16 h-16 bg-purple-100 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-200 transition-colors">
-                        <i class="fas fa-paint-brush text-purple-600 text-2xl"></i>
+            <a href="{% url 'design_tool:editor' category.slug product.slug %}" class="design-option" style="text-decoration:none;display:block;">
+                <div class="design-card" style="background:#fff;border:2px solid #e5e7eb;border-radius:12px;padding:20px;text-align:center;transition:border-color .2s,box-shadow .2s;height:100%;">
+                    <div style="width:56px;height:56px;background:#faf7ff;border-radius:10px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;">
+                        <i class="fas fa-paint-brush" style="font-size:1.5rem;color:var(--theme,#7000fe);"></i>
                     </div>
-                    <h4 class="font-bold text-gray-900 mb-2">Use Design Tool</h4>
-                    <p class="text-sm text-gray-600 mb-4">Create custom designs online</p>
-                    <div class="features">
-                        <span class="inline-block bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs mr-1">Templates</span>
-                        <span class="inline-block bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs mr-1">Fonts</span>
-                        <span class="inline-block bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">Images</span>
+                    <h4 style="font-weight:700;color:#1f2937;margin:0 0 6px;font-size:.95rem;">Use Design Tool</h4>
+                    <p style="font-size:.82rem;color:#6b7280;margin:0 0 12px;">Create custom designs online</p>
+                    <div>
+                        <span style="display:inline-block;background:#f3f4f6;color:#374151;padding:2px 8px;border-radius:4px;font-size:.72rem;margin-right:4px;">Templates</span>
+                        <span style="display:inline-block;background:#f3f4f6;color:#374151;padding:2px 8px;border-radius:4px;font-size:.72rem;margin-right:4px;">Fonts</span>
+                        <span style="display:inline-block;background:#f3f4f6;color:#374151;padding:2px 8px;border-radius:4px;font-size:.72rem;">Images</span>
                     </div>
                 </div>
             </a>
         </div>
-        
+
         <!-- File Upload Area (Hidden by default) -->
-        <div id="upload-dropzone" class="hidden mt-6">
-            <div class="upload-zone border-2 border-dashed border-purple-300 rounded-xl p-8 text-center bg-white/50 hover:border-purple-400 transition-colors">
-                <i class="fas fa-cloud-upload-alt text-4xl text-purple-400 mb-4"></i>
-                <p class="text-gray-600 mb-2">Drag & drop your files here or <span class="text-purple-600 font-medium cursor-pointer">browse files</span></p>
-                <p class="text-sm text-gray-500">Supported formats: PDF, AI, PNG, JPG (min 300 DPI)</p>
+        <div id="upload-dropzone" style="display:none;margin-top:20px;">
+            <div class="upload-zone" style="border:2px dashed rgba(112,0,254,.35);border-radius:12px;padding:32px;text-align:center;background:rgba(255,255,255,.5);">
+                <i class="fas fa-cloud-upload-alt" style="font-size:2.5rem;color:rgba(112,0,254,.5);display:block;margin-bottom:12px;"></i>
+                <p style="color:#374151;margin:0 0 6px;">Drag &amp; drop your files here or <span style="color:var(--theme,#7000fe);font-weight:600;cursor:pointer;">browse files</span></p>
+                <p style="font-size:.82rem;color:#6b7280;margin:0;">Supported formats: PDF, AI, PNG, JPG (min 300 DPI)</p>
             </div>
-            
+
             <!-- File Preview -->
-            <div id="file-preview" class="hidden mt-4">
-                <div class="bg-white rounded-lg p-4 border border-gray-200">
-                    <h4 class="font-semibold text-gray-900 mb-3 flex items-center">
-                        <i class="fas fa-file-alt text-blue-600 mr-2"></i>
-                        Uploaded Files
+            <div id="file-preview" style="display:none;margin-top:16px;">
+                <div style="background:#fff;border-radius:8px;padding:16px;border:1px solid #e5e7eb;">
+                    <h4 style="font-weight:600;color:#1f2937;margin:0 0 12px;display:flex;align-items:center;gap:8px;font-size:.92rem;">
+                        <i class="fas fa-file-alt" style="color:#3b82f6;"></i> Uploaded Files
                     </h4>
-                    <div id="file-list" class="space-y-2"></div>
-                    <button type="button" id="clear-files" class="mt-3 text-red-600 hover:text-red-800 text-sm font-medium">
-                        <i class="fas fa-trash mr-1"></i>Clear All Files
+                    <div id="file-list"></div>
+                    <button type="button" id="clear-files" style="margin-top:12px;background:none;border:none;color:#ef4444;cursor:pointer;font-size:.85rem;font-weight:600;padding:0;">
+                        <i class="fas fa-trash"></i> Clear All Files
                     </button>
                 </div>
             </div>
@@ -184,19 +182,9 @@
 }
 
 /* Mobile responsive */
-@media (max-width: 768px) {
+@media (max-width: 640px) {
     .design-options {
-        grid-template-columns: 1fr;
-    }
-    
-    .design-card {
-        padding: 1rem;
-    }
-    
-    .design-icon {
-        width: 48px;
-        height: 48px;
-        margin-bottom: 1rem;
+        grid-template-columns: 1fr !important;
     }
 }
 </style>
@@ -213,8 +201,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (uploadCard && uploadZone) {
         uploadCard.addEventListener('click', function() {
-            uploadZone.classList.toggle('hidden');
-            if (!uploadZone.classList.contains('hidden')) {
+            const isHidden = uploadZone.style.display === 'none' || uploadZone.style.display === '';
+            uploadZone.style.display = isHidden ? 'block' : 'none';
+            if (isHidden) {
                 uploadZone.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
         });
@@ -258,7 +247,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function handleFiles(files) {
         if (files.length > 0) {
             displayFiles(files);
-            filePreview?.classList.remove('hidden');
+            if (filePreview) filePreview.style.display = 'block';
         }
     }
 
@@ -305,8 +294,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Clear files
     clearFilesBtn?.addEventListener('click', function() {
         if (fileInput) fileInput.value = '';
-        filePreview?.classList.add('hidden');
-        fileList.innerHTML = '';
+        if (filePreview) filePreview.style.display = 'none';
+        if (fileList) fileList.innerHTML = '';
     });
 
     // Remove individual file

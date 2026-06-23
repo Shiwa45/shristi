@@ -29,7 +29,7 @@ def render_product_form_fields(product, form_data=None):
     if not fields.exists():
         # If no dynamic fields exist, try to create default fields based on product name/category
         default_fields_html = create_default_fields_for_product(product)
-        return default_fields_html
+        return mark_safe(default_fields_html)
 
     form_data = form_data or {}
 
@@ -54,11 +54,11 @@ def render_product_form_fields(product, form_data=None):
     # Sort sections by order
     sorted_sections = sorted(sections.items(), key=lambda x: x[1]['order'])
 
-    return render_to_string('services/partials/dynamic_form_sections.html', {
+    return mark_safe(render_to_string('services/partials/dynamic_form_sections.html', {
         'sections': sorted_sections,
         'form_data': form_data,
         'product': product
-    })
+    }))
 
 @register.simple_tag
 def render_form_field(field, form_data=None, field_id_prefix=""):

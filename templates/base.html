@@ -279,18 +279,6 @@
     <div class="header-top-section">
         <div class="container-fluid">
             <div class="header-top-wrapper">
-                <ul class="contact-list">
-                    <li>
-                        <i class="far fa-envelope"></i>
-                        <a href="mailto:{% if site_settings %}{{ site_settings.email }}{% else %}info@shirsti.com{% endif %}" class="link">
-                            {% if site_settings %}{{ site_settings.email }}{% else %}info@shirsti.com{% endif %}
-                        </a>
-                    </li>
-                    <li>
-                        <i class="fas fa-map-marker-alt"></i>
-                        {% if site_settings %}{{ site_settings.address }}{% else %}New Delhi, India{% endif %}
-                    </li>
-                </ul>
                 <div class="header-top-right">
                     <div class="social-icon d-flex align-items-center">
                         {% if site_settings %}
@@ -307,6 +295,18 @@
                         {% endif %}
                     </div>
                 </div>
+                <ul class="contact-list">
+                    <li>
+                        <i class="far fa-envelope"></i>
+                        <a href="mailto:{% if site_settings %}{{ site_settings.contact_email }}{% else %}info@shirsti.com{% endif %}" class="link">
+                            {% if site_settings %}{{ site_settings.contact_email }}{% else %}info@shirsti.com{% endif %}
+                        </a>
+                    </li>
+                    <li>
+                        <i class="fas fa-map-marker-alt"></i>
+                        {% if site_settings %}{{ site_settings.contact_address }}{% else %}New Delhi, India{% endif %}
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

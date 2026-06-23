@@ -8,6 +8,14 @@
 
 <style>
     /* ── Hero section: ~25% smaller than original ── */
+    .hero-section-3 .swiper-dot-2 {
+        position: absolute;
+        right: 2%;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+        width: 20px;
+    }
     .hero-3 {
         padding: 109px 0 64px !important;
     }
@@ -16,6 +24,15 @@
     }
     .hero-3 .hero-image {
         height: 348px !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .hero-3 .hero-image img {
+        width: 100% !important;
+        height: auto !important;
+        max-height: 348px !important;
+        object-fit: contain !important;
     }
     /* Scale down text content proportionally */
     .hero-3 .hero-content h6 {
@@ -104,12 +121,16 @@
         pointer-events: none;
     }
 
-    /* ── Shop product card images ── */
+    /* ── Shop product card images — square like theme's 300×300 samples ── */
     .shop-items .shop-image {
-        height: 240px;
+        position: relative;
+        width: 100%;
+        aspect-ratio: 1 / 1;
         overflow: hidden;
     }
-    .shop-items .shop-image > img {
+    .shop-items .shop-image img {
+        position: absolute;
+        inset: 0;
         width: 100%;
         height: 100%;
         object-fit: cover;
@@ -263,45 +284,10 @@
     </div><!-- /hero-slider -->
 </section>
 
-<!-- ===== Shop Categories Slider ===== -->
-<section class="shop-catagories-section-3 fix section-padding">
-    <div class="container">
-        <div class="swiper catagory-product-slider">
-            <div class="swiper-wrapper">
+<br>
+<br>
+<br>
 
-                {% if service_categories %}
-                    {% for category in service_categories %}
-                    <div class="swiper-slide">
-                        <div class="shop-catagories-item">
-                            <div class="thumb">
-                                {% if category.image %}
-                                    <img src="{{ category.image.url }}" alt="{{ category.name }}">
-                                {% else %}
-                                    <img src="{% static 'assets/img/catagories/10.png' %}" alt="{{ category.name }}">
-                                {% endif %}
-                            </div>
-                            <div class="content">
-                                <h3><a href="{{ category.get_absolute_url }}">{{ category.name }}</a></h3>
-                                <p>{{ category.static_products.count }} Product{{ category.static_products.count|pluralize }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                {% else %}
-                    {% for i in "123456"|make_list %}
-                    <div class="swiper-slide">
-                        <div class="shop-catagories-item">
-                            <div class="thumb"><img src="{% static 'assets/img/catagories/10.png' %}" alt="Category"></div>
-                            <div class="content"><h3><a href="{% url 'services:home' %}">Printing Services</a></h3><p>Quality Printing</p></div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                {% endif %}
-
-            </div>
-        </div>
-    </div>
-</section>
 
 <!-- ===== Shop Banners ===== -->
 <section class="shop-banner-section-2 fix section-padding pt-0">
@@ -437,20 +423,12 @@
                                     <img src="{% static 'assets/img/shop/01.jpg' %}" alt="{{ product.name }}">
                                 {% endif %}
                                 <ul class="product-icon d-grid justify-content-center align-items-center">
-                                    <li>
-                                        <a href="{{ product.get_absolute_url }}">
-                                            <i class="far fa-eye"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ product.get_absolute_url }}">
-                                            <i class="fal fa-cart-plus"></i>
-                                        </a>
-                                    </li>
+                                    <li><a href="#"><i class="far fa-heart"></i></a></li>
+                                    <li><a href="{{ product.get_absolute_url }}"><i class="far fa-exchange"></i></a></li>
+                                    <li><a href="{{ product.get_absolute_url }}"><i class="far fa-eye"></i></a></li>
+                                    <li><a href="{{ product.get_absolute_url }}"><i class="fal fa-cart-plus"></i></a></li>
                                 </ul>
-                                {% if product.is_featured %}
-                                <div class="offer-text">Featured</div>
-                                {% endif %}
+                                {% if product.is_featured %}<div class="offer-text">Featured</div>{% endif %}
                             </div>
                             <div class="shop-content">
                                 <h5><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h5>
@@ -579,22 +557,15 @@
                             <img src="{% static 'assets/img/shop/01.jpg' %}" alt="{{ product.name }}">
                         {% endif %}
                         <ul class="product-icon d-grid justify-content-center align-items-center">
-                            <li>
-                                <a href="{{ product.get_absolute_url }}">
-                                    <i class="far fa-eye"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ product.get_absolute_url }}">
-                                    <i class="fas fa-palette"></i>
-                                </a>
-                            </li>
+                            <li><a href="#"><i class="far fa-heart"></i></a></li>
+                            <li><a href="{{ product.get_absolute_url }}"><i class="far fa-exchange"></i></a></li>
+                            <li><a href="{{ product.get_absolute_url }}"><i class="far fa-eye"></i></a></li>
+                            <li><a href="{{ product.get_absolute_url }}"><i class="fal fa-cart-plus"></i></a></li>
                         </ul>
                         <div class="offer-text">Design Tool</div>
                     </div>
                     <div class="shop-content">
                         <h5><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h5>
-                        <p class="text-muted small mb-2">{{ product.short_description|truncatewords:10 }}</p>
                         <ul class="price-list">
                             <li>From ₹{{ product.base_price }}</li>
                         </ul>
@@ -652,48 +623,6 @@
     </div>
 </section>
 
-<!-- ===== Quality Section ===== -->
-<section class="good-quality-section fix section-padding bg-cover" style="background-image: url('{% static 'assets/img/feature-printing-bg.jpg' %}');">
-    <div class="container">
-        <div class="good-quality-wrapper">
-            <div class="row g-4">
-                <div class="col-lg-7 wow fadeInUp" data-wow-delay=".3s">
-                    <div class="quality-image reveal fix">
-                        <img src="{% static 'assets/img/quality.png' %}" alt="Quality Printing">
-                    </div>
-                </div>
-                <div class="col-lg-5">
-                    <div class="good-quality-content">
-                        <div class="section-title">
-                            <div class="sub-title wow fadeInUp">
-                                <span>QUALITY AT ITS BEST</span>
-                            </div>
-                            <h2 class="split-text right">
-                                What Do We Mean By <br> Good Quality?
-                            </h2>
-                        </div>
-                        <p class="mt-3 mt-md-0 wow fadeInUp" data-wow-delay=".5s">
-                            We use the finest materials and state-of-the-art printing technology to ensure every product meets the highest standards of quality and craftsmanship.
-                        </p>
-                        <div class="list-item">
-                            <ul class="wow fadeInUp" data-wow-delay=".3s">
-                                <li><i class="far fa-check"></i> Precise Sizing</li>
-                                <li><i class="far fa-check"></i> Accurate Colors</li>
-                                <li><i class="far fa-check"></i> Durable Material</li>
-                            </ul>
-                            <ul class="wow fadeInUp" data-wow-delay=".5s">
-                                <li><i class="far fa-check"></i> Edge Perfection</li>
-                                <li><i class="far fa-check"></i> Attention to Details</li>
-                                <li><i class="far fa-check"></i> Eco-Friendly Inks</li>
-                            </ul>
-                        </div>
-                        <a href="{% url 'core:contact' %}" class="theme-btn wow fadeInUp" data-wow-delay=".3s">Request a Quote</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
 <!-- ===== About Section ===== -->
 <section class="about-section fix section-padding section-bg">

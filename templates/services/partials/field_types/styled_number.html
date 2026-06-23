@@ -133,6 +133,9 @@
 </div>
 
 <style>
+/* Utility */
+.hidden { display: none !important; }
+
 /* Number Input Styles */
 .styled-number-wrapper {
     position: relative;
@@ -163,8 +166,8 @@
 
 .styled-number-input:focus {
     outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    border-color: var(--theme);
+    box-shadow: 0 0 0 3px rgba(112, 0, 254, 0.1);
 }
 
 .number-controls {
@@ -226,8 +229,8 @@
 
 .styled-text-input:focus {
     outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    border-color: var(--theme);
+    box-shadow: 0 0 0 3px rgba(112, 0, 254, 0.1);
 }
 
 .input-icon {
@@ -264,8 +267,8 @@
 
 .file-upload-area:hover,
 .file-upload-area.drag-over {
-    border-color: #3b82f6;
-    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border-color: var(--theme);
+    background: linear-gradient(135deg, #faf7ff 0%, #ede9fe 100%);
 }
 
 .file-input {
@@ -293,7 +296,7 @@
 }
 
 .browse-link {
-    color: #3b82f6;
+    color: var(--theme);
     font-weight: 600;
     text-decoration: underline;
 }
@@ -381,14 +384,14 @@
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: #3b82f6;
+    background: var(--theme);
     cursor: pointer;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
 }
 
 .styled-range-input::-webkit-slider-thumb:hover {
-    background: #2563eb;
+    background: #5a00d4;
     transform: scale(1.1);
 }
 
@@ -396,7 +399,7 @@
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: #3b82f6;
+    background: var(--theme);
     cursor: pointer;
     border: none;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -546,7 +549,7 @@ function displayFiles(files, fieldName) {
                         <div class="file-size">${formatFileSize(file.size)}</div>
                     </div>
                 </div>
-                <button type="button" onclick="removeFile(${index}, '${fieldName}')" class="text-red-500 hover:text-red-700">
+                <button type="button" onclick="removeFile(${index}, '${fieldName}')" style="background:none;border:none;color:#ef4444;cursor:pointer;padding:4px;font-size:16px;">
                     <i class="fas fa-times"></i>
                 </button>
             `;

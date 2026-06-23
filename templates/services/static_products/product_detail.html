@@ -2,375 +2,257 @@
 {% load static %}
 
 {% block title %}{{ product.name }} - {{ category.name }} | {{ block.super }}{% endblock %}
-
 {% block meta_description %}{{ product.meta_description|default:product.short_description|truncatewords:20 }} Professional printing services with quality guaranteed.{% endblock %}
 
 {% block extra_css %}
 <style>
-/* QinPrinting Style Enhancements */
-.hero-gradient {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+/* ── Product Detail Page — PrinNow Theme ── */
+.pd-hero {
+    background-size: cover;
+    background-position: center;
+    padding: 120px 0 70px;
     position: relative;
     overflow: hidden;
 }
-
-.hero-gradient::before {
+.pd-hero::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3Ccircle cx='10' cy='10' r='4'/%3E%3Ccircle cx='50' cy='10' r='4'/%3E%3Ccircle cx='10' cy='50' r='4'/%3E%3Ccircle cx='50' cy='50' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    inset: 0;
+    background: rgba(9, 5, 47, 0.55);
+    pointer-events: none;
+}
+.pd-hero .pd-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(112,0,254,.18); border: 1px solid rgba(112,0,254,.35);
+    color: #c084fc; border-radius: 30px; padding: 5px 14px;
+    font-size: 12.5px; font-weight: 600; margin-bottom: 18px;
+}
+.pd-hero h1 { font-size: clamp(1.8rem,4vw,2.8rem); font-weight: 800; color: #fff; margin-bottom: 12px; position: relative; }
+.pd-hero p { color: rgba(255,255,255,.80); line-height: 1.6; position: relative; margin-bottom: 24px; }
+.pd-hero .pd-price-box {
+    background: rgba(255,255,255,.10); border: 1px solid rgba(255,255,255,.2);
+    border-radius: 14px; padding: 20px 24px; display: inline-block;
+}
+.pd-hero .pd-price-box .big-price { font-size: 2.2rem; font-weight: 800; color: #fff; line-height: 1; }
+.pd-hero .pd-price-box .price-label { font-size: .82rem; color: rgba(255,255,255,.65); margin-top: 4px; }
+.pd-hero .pd-trust { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+.pd-hero .pd-trust-item {
+    background: rgba(255,255,255,.10); border-radius: 10px;
+    padding: 10px 16px; display: flex; align-items: center; gap: 8px;
+    font-size: .82rem; color: #fff; font-weight: 500;
+}
+.pd-hero .pd-trust-item i { color: #c084fc; font-size: 1rem; }
+.pd-hero .pd-image-wrap {
+    border-radius: 16px; overflow: hidden;
+    background: rgba(255,255,255,.08);
+    display: flex; align-items: center; justify-content: center; min-height: 280px;
+}
+.pd-hero .pd-image-wrap img { width: 100%; height: auto; display: block; }
+.pd-hero .pd-image-placeholder {
+    text-align: center; padding: 40px; color: rgba(255,255,255,.5);
+}
+.pd-hero .pd-image-placeholder i { font-size: 3rem; display: block; margin-bottom: 10px; }
+
+/* ── Main body ── */
+.pd-body { padding: 60px 0 80px; background: #fff; }
+
+.pd-section-title {
+    font-size: 1.4rem; font-weight: 800; color: var(--header);
+    margin-bottom: 6px; display: flex; align-items: center; gap: 10px;
+}
+.pd-section-title i { color: var(--theme); font-size: 1.1rem; }
+
+/* Gallery */
+.pd-gallery { margin-bottom: 40px; }
+.pd-gallery-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+.pd-gallery-grid img {
+    width: 100%; aspect-ratio: 4/3; object-fit: cover;
+    border-radius: 10px; transition: transform .3s;
+}
+.pd-gallery-grid img:hover { transform: scale(1.04); }
+
+/* Options panel wrap */
+.pd-options-wrap {
+    background: #f8f9fa; border-radius: 16px; padding: 28px; margin-bottom: 32px;
 }
 
-.breadcrumb-nav {
-    background: white;
-    padding: 1rem 0;
-    border-bottom: 1px solid #e5e7eb;
-    margin-top: 80px; /* Account for fixed header */
+/* Help box */
+.pd-help-box {
+    background: linear-gradient(135deg, #09052F 0%, #2d00a8 100%);
+    border-radius: 14px; padding: 24px; color: #fff; margin-top: 24px;
 }
+.pd-help-box h5 { font-weight: 700; margin-bottom: 14px; font-size: 1rem; }
+.pd-help-box .help-row { display: flex; align-items: center; gap: 10px; font-size: .88rem; margin-bottom: 10px; color: rgba(255,255,255,.85); }
+.pd-help-box .help-row i { color: #c084fc; width: 16px; }
 
-.breadcrumb {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.875rem;
-    color: #6b7280;
+/* Features section */
+.pd-features { padding: 60px 0; background: #f8f9fa; }
+.pd-feature-icon {
+    width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 16px;
+    background: var(--color-gradient-1);
+    display: flex; align-items: center; justify-content: center;
 }
+.pd-feature-icon i { font-size: 1.5rem; color: #fff; }
+.pd-feature-title { font-weight: 700; color: var(--header); margin-bottom: 6px; }
+.pd-feature-desc { font-size: .88rem; color: #6b7280; }
 
-.breadcrumb a {
-    color: #6b7280;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
+/* Pricing table */
+.pd-pricing-table { width: 100%; border-collapse: collapse; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 14px rgba(0,0,0,.08); }
+.pd-pricing-table th { background: var(--color-gradient-1); color: #fff; padding: 13px 16px; text-align: center; font-weight: 600; }
+.pd-pricing-table td { padding: 12px 16px; text-align: center; border-bottom: 1px solid #f0f0f0; font-size: .9rem; }
+.pd-pricing-table tr:last-child td { border-bottom: none; }
+.pd-pricing-table tr:hover td { background: #f8f4ff; }
 
-.breadcrumb a:hover {
-    color: #667eea;
-}
+/* CTA */
+.pd-cta { background: var(--color-gradient-1); padding: 60px 0; text-align: center; }
+.pd-cta h2 { color: #fff; font-weight: 800; margin-bottom: 12px; }
+.pd-cta p { color: rgba(255,255,255,.85); margin-bottom: 28px; }
 
-.pricing-card {
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
-}
-
-.pricing-card:hover {
-    border-color: #667eea;
-    transform: translateY(-2px);
-}
-
-.specification-grid {
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-}
-
-.trust-indicator {
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-}
-
-.trust-indicator:hover {
-    transform: scale(1.05);
-}
-
-.cta-gradient {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-.feature-icon {
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-}
-
-.tab-button {
-    transition: all 0.3s ease;
-}
-
-.tab-button.active {
-    border-color: #667eea !important;
-    color: #667eea !important;
-}
-
-.product-gallery img {
-    transition: transform 0.3s ease;
-}
-
-.product-gallery img:hover {
-    transform: scale(1.05);
-}
-
-/* QinPrinting style table for pricing */
-.pricing-table {
-    border-collapse: collapse;
-    width: 100%;
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.pricing-table th,
-.pricing-table td {
-    padding: 12px;
-    text-align: center;
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.pricing-table th {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    font-weight: 600;
-}
-
-.pricing-table tr:last-child td {
-    border-bottom: none;
-}
-
-.pricing-table tr:hover {
-    background: #f8fafc;
-}
-
-.instant-quote-btn {
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    color: white;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-weight: 600;
-    text-decoration: none;
-    display: inline-block;
-    transition: all 0.3s ease;
-}
-
-.instant-quote-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
-    text-decoration: none;
-    color: white;
+@media (max-width: 767px) {
+    .pd-gallery-grid { grid-template-columns: repeat(2,1fr); }
+    .pd-hero { padding: 100px 0 50px; }
 }
 </style>
 {% endblock %}
 
 {% block content %}
 
-<!-- Hero Section -->
-<section class="bg-blue-50 text-Black py-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div class="grid lg:grid-cols-2 gap-12 items-center">
-            <!-- Product Info -->
-            <div>
+<!-- ===== Hero ===== -->
+<section class="pd-hero" style="background-image: url('{% static 'assets/img/hero/hero-bg-1.jpg' %}'); {% block hero_style %}{% endblock %}">
+    <div class="container">
+        <div class="row g-4 align-items-center">
+            <div class="col-lg-6">
                 {% if product.is_featured %}
-                <div class="inline-flex items-center bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
-                    <i class="fas fa-star text-yellow-300 mr-2"></i>
-                    <span class="text-sm font-medium">Featured Product</span>
-                </div>
+                <div class="pd-badge"><i class="fas fa-star"></i> Featured Product</div>
                 {% endif %}
-                
-                <h1 class="text-4xl lg:text-5xl font-bold mb-6">{{ product.name }}</h1>
-                <p class="text-xl mb-8 text-black/90 leading-relaxed">
-                    {{ product.description|default:product.short_description }}
-                </p>
-                
-                <!-- Trust Indicators -->
-                <div class="grid grid-cols-3 gap-4 mb-8">
-                    <div class="trust-indicator bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center">
-                        <i class="fas fa-shipping-fast text-2xl mb-2 text-green-300"></i>
-                        <div class="text-sm font-medium">Free Shipping</div>
-                        <div class="text-xs text-black/80">Orders over ₹2000</div>
-                    </div>
-                    <div class="trust-indicator bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center">
-                        <i class="fas fa-medal text-2xl mb-2 text-yellow-300"></i>
-                        <div class="text-sm font-medium">Premium Quality</div>
-                        <div class="text-xs text-black/80">25+ years experience</div>
-                    </div>
-                    <div class="trust-indicator bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center">
-                        <i class="fas fa-clock text-2xl mb-2 text-blue-300"></i>
-                        <div class="text-sm font-medium">Quick Turnaround</div>
-                        <div class="text-xs text-black/80">3-5 business days</div>
-                    </div>
+                <h1>{{ product.name }}</h1>
+                <p>{{ product.description|default:product.short_description }}</p>
+
+                <div class="pd-price-box">
+                    <div class="big-price">₹{{ product.base_price }}</div>
+                    <div class="price-label">Starting price {{ product.price_unit }}{% if product.minimum_quantity %} · Min. {{ product.minimum_quantity }} pcs{% endif %}</div>
                 </div>
 
-                <!-- Starting Price -->
-                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 inline-block">
-                    <div class="text-3xl font-bold mb-1">₹{{ product.base_price }}</div>
-                    <div class="text-sm text-black/80">Starting price {{ product.price_unit }}</div>
-                    {% if product.minimum_quantity %}
-                    <div class="text-xs text-white/70 mt-1">Minimum order: {{ product.minimum_quantity }} pieces</div>
-                    {% endif %}
+                <div class="pd-trust">
+                    <div class="pd-trust-item"><i class="fas fa-shipping-fast"></i> Pan India Delivery</div>
+                    <div class="pd-trust-item"><i class="fas fa-medal"></i> Premium Quality</div>
+                    <div class="pd-trust-item"><i class="fas fa-clock"></i> 3–5 Day Turnaround</div>
                 </div>
             </div>
-
-            <!-- Product Image -->
-            <div class="relative">
-                <div class=" backdrop-blur-sm rounded-2xl p-2">
+            <div class="col-lg-6">
+                <div class="pd-image-wrap">
                     {% if product.hero_image %}
-                        <img src="{{ product.hero_image.url }}" 
-                             alt="{{ product.name }}" 
-                             class="">
+                        <img src="{{ product.hero_image.url }}" alt="{{ product.name }}">
+                    {% elif product.featured_image %}
+                        <img src="{{ product.featured_image.url }}" alt="{{ product.name }}">
                     {% else %}
-                        <div class="w-full h-80 bg-white/20 rounded-lg flex items-center justify-center">
-                            <div class="text-center">
-                                <i class="fas fa-print text-6xl mb-4 text-white/60"></i>
-                                <p class="text-lg font-medium">{{ product.name }}</p>
-                                <p class="text-sm text-white/80">Professional Quality</p>
-                            </div>
+                        <div class="pd-image-placeholder">
+                            <i class="fas fa-print"></i>
+                            <p>{{ product.name }}</p>
                         </div>
                     {% endif %}
                 </div>
-                
-                {% if product.design_tool_enabled %}
-                <!-- Floating Design Feature -->
-                <div class="absolute -bottom-6 -left-6 bg-white rounded-lg shadow-xl p-4">
-                    <div class="text-center">
-                        <i class="fas fa-palette text-purple-600 text-2xl mb-2"></i>
-                        <div class="text-sm font-semibold text-gray-900">Custom Design</div>
-                        <div class="text-xs text-gray-600">Tool Available</div>
-                    </div>
-                </div>
-                {% endif %}
             </div>
         </div>
     </div>
 </section>
 
-<!-- Main Content -->
-<section class="bg-white py-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid lg:grid-cols-3 gap-12">
-            <!-- Product Options & Gallery (2/3 width) -->
-            <div class="lg:col-span-2">
-                <!-- Product Gallery -->
+<!-- ===== Main Content ===== -->
+<div class="pd-body">
+    <div class="container">
+        <div class="row g-5">
+
+            <!-- Left: Gallery + Options -->
+            <div class="col-lg-8">
+
                 {% if product.gallery_images.exists or product.featured_image %}
-                <div class="mb-12">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-                        <i class="fas fa-images text-blue-600 mr-3"></i>
-                        Product Gallery
-                    </h2>
-                    <div class="product-gallery grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div class="pd-gallery">
+                    <h2 class="pd-section-title"><i class="fas fa-images"></i> Product Gallery</h2>
+                    <div class="pd-gallery-grid mt-3">
                         {% if product.featured_image %}
-                        <img src="{{ product.featured_image.url }}" 
-                             alt="{{ product.name }} - Featured" 
-                             class="w-full h-32 object-cover rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer">
+                        <img src="{{ product.featured_image.url }}" alt="{{ product.name }}">
                         {% endif %}
-                        
                         {% for image in product.gallery_images.all %}
-                        <img src="{{ image.image.url }}" 
-                             alt="{{ product.name }} - Gallery {{ forloop.counter }}" 
-                             class="w-full h-32 object-cover rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer">
+                        <img src="{{ image.image.url }}" alt="{{ product.name }} {{ forloop.counter }}">
                         {% endfor %}
                     </div>
                 </div>
                 {% endif %}
 
-                <!-- Product Options Panel -->
                 {% block product_options_panel %}
-                <div class="specification-grid rounded-2xl p-8">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-8 flex items-center">
-                        <i class="fas fa-cogs text-purple-600 mr-3"></i>
-                        Customize Your Order
-                    </h2>
-
-                    <!-- Include your existing options panel -->
+                <div class="pd-options-wrap">
+                    <h2 class="pd-section-title mb-4"><i class="fas fa-cogs"></i> Customize Your Order</h2>
                     {% include 'services/static_products/partials/options_panel.html' %}
                 </div>
                 {% endblock %}
+
+                {% include 'services/static_products/partials/product_tabs.html' %}
             </div>
 
-            <!-- Pricing Calculator (1/3 width) -->
-            <div class="lg:col-span-1">
-                <div class="sticky top-8">
-                    <!-- Include your existing pricing calculator -->
+            <!-- Right: Calculator + Help -->
+            <div class="col-lg-4">
+                <div style="position:sticky; top:100px;">
                     {% block pricing_calculator %}
                     {% include 'services/static_products/partials/pricing_calculator.html' %}
                     {% endblock %}
 
-                    <!-- Contact Support -->
-                    <div class="bg-blue-50 rounded-xl p-6 mt-8">
-                        <h4 class="font-bold text-blue-900 mb-3 flex items-center">
-                            <i class="fas fa-headset text-blue-600 mr-2"></i>
-                            Need Help?
-                        </h4>
-                        <p class="text-blue-800 text-sm mb-4">Our printing experts are here to assist you with your order.</p>
-                        <div class="space-y-2 text-sm">
-                            <div class="flex items-center text-blue-700">
-                                <i class="fas fa-phone w-4 mr-2"></i>
-                                <span>+91 98765 43210</span>
-                            </div>
-                            <div class="flex items-center text-blue-700">
-                                <i class="fas fa-envelope w-4 mr-2"></i>
-                                <span>info@drishthiprinting.com</span>
-                            </div>
-                            <div class="flex items-center text-blue-700">
-                                <i class="fas fa-clock w-4 mr-2"></i>
-                                <span>Mon-Fri: 9AM-6PM</span>
-                            </div>
+                    <div class="pd-help-box mt-4">
+                        <h5><i class="fas fa-headset me-2"></i>Need Help?</h5>
+                        <div class="help-row"><i class="fas fa-phone"></i> +91 98765 43210</div>
+                        <div class="help-row"><i class="fas fa-envelope"></i>
+                            {% if site_settings %}{{ site_settings.contact_email }}{% else %}info@shirsti.com{% endif %}
+                        </div>
+                        <div class="help-row"><i class="fas fa-clock"></i> Mon–Fri: 9 AM – 6 PM</div>
+                    </div>
                 </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ===== Why Choose Us ===== -->
+<section class="pd-features">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 style="font-weight:800;color:var(--header);">Why Choose Our {{ product.name }}?</h2>
+            <p class="text-muted">Premium quality, advanced technology, and expert support at every step.</p>
+        </div>
+        <div class="row g-4 text-center">
+            <div class="col-lg-3 col-md-6">
+                <div class="pd-feature-icon"><i class="fas fa-award"></i></div>
+                <div class="pd-feature-title">Premium Quality</div>
+                <p class="pd-feature-desc">25+ years of printing excellence with state-of-the-art equipment.</p>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="pd-feature-icon"><i class="fas fa-shipping-fast"></i></div>
+                <div class="pd-feature-title">Fast Delivery</div>
+                <p class="pd-feature-desc">Quick turnaround times with reliable shipping nationwide.</p>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="pd-feature-icon"><i class="fas fa-palette"></i></div>
+                <div class="pd-feature-title">Custom Design</div>
+                <p class="pd-feature-desc">Professional design services and unlimited customisation options.</p>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="pd-feature-icon"><i class="fas fa-headset"></i></div>
+                <div class="pd-feature-title">Expert Support</div>
+                <p class="pd-feature-desc">Dedicated customer support to guide you through every step.</p>
             </div>
         </div>
     </div>
 </section>
 
-
-<!-- Product Information Tabs -->
-<section class="bg-white py-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Include your existing product tabs -->
-        {% include 'services/static_products/partials/product_tabs.html' %}
-    </div>
-</section>
-
-<!-- Features Section -->
-<section class="bg-gray-50 py-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold text-gray-900 mb-4">Why Choose Our {{ product.name }}?</h2>
-            <p class="text-xl text-gray-600 max-w-3xl mx-auto">We combine premium quality materials, advanced printing technology, and exceptional customer service to deliver outstanding results.</p>
-        </div>
-        
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div class="text-center">
-                <div class="feature-icon w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-award text-2xl text-white"></i>
-                </div>
-                <h3 class="font-bold text-gray-900 mb-2">Premium Quality</h3>
-                <p class="text-gray-600 text-sm">25+ years of printing excellence with state-of-the-art equipment</p>
-            </div>
-            
-            <div class="text-center">
-                <div class="feature-icon w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-shipping-fast text-2xl text-white"></i>
-                </div>
-                <h3 class="font-bold text-gray-900 mb-2">Fast Delivery</h3>
-                <p class="text-gray-600 text-sm">Quick turnaround times with reliable shipping nationwide</p>
-            </div>
-            
-            <div class="text-center">
-                <div class="feature-icon w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-palette text-2xl text-white"></i>
-                </div>
-                <h3 class="font-bold text-gray-900 mb-2">Custom Design</h3>
-                <p class="text-gray-600 text-sm">Professional design services and unlimited customization options</p>
-            </div>
-            
-            <div class="text-center">
-                <div class="feature-icon w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-headset text-2xl text-white"></i>
-                </div>
-                <h3 class="font-bold text-gray-900 mb-2">Expert Support</h3>
-                <p class="text-gray-600 text-sm">Dedicated customer support to guide you through every step</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Related Products -->
+<!-- ===== Related Products ===== -->
 {% if related_products %}
-<section class="bg-white py-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Include your existing related products -->
+<section class="section-padding bg-white">
+    <div class="container">
         {% include 'services/static_products/partials/related_products.html' %}
     </div>
 </section>
 {% endif %}
 
-<!-- JSON Data for JavaScript -->
+<!-- JSON Data -->
 <script id="product-data" type="application/json">
 {
     "id": {{ product.id }},
@@ -387,37 +269,20 @@
     "designToolEnabled": {{ product.design_tool_enabled|yesno:"true,false" }}
 }
 </script>
-
 <script>
-// Tab functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const tabButtons = document.querySelectorAll('.tab-button');
-    const tabContents = document.querySelectorAll('.tab-content');
-    
-    tabButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const targetTab = this.getAttribute('data-tab');
-            
-            // Remove active class from all buttons and contents
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-            tabContents.forEach(content => content.classList.add('hidden'));
-            
-            // Add active class to clicked button and show corresponding content
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.tab-button').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var target = this.getAttribute('data-tab');
+            document.querySelectorAll('.tab-button').forEach(function (b) { b.classList.remove('active'); });
+            document.querySelectorAll('.tab-content').forEach(function (c) { c.classList.add('hidden'); });
             this.classList.add('active');
-            document.getElementById(targetTab).classList.remove('hidden');
-        });
-    });
-    
-    // Gallery image click functionality
-    const galleryImages = document.querySelectorAll('.product-gallery img');
-    galleryImages.forEach(img => {
-        img.addEventListener('click', function() {
-            // You can implement a lightbox or modal here
-            console.log('Gallery image clicked:', this.src);
+            var el = document.getElementById(target);
+            if (el) el.classList.remove('hidden');
         });
     });
 });
 </script>
 <script src="{% static 'js/products/dynamic-pricing-calculator.js' %}"></script>
 
-{% endblock %} 
+{% endblock %}

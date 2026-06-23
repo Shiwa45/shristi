@@ -1,50 +1,80 @@
 {% load dynamic_form_tags %}
 
-<div class="form-field-container {{ field|get_field_css_classes }} mb-6" data-field-name="{{ field.field_name }}">
-    <label class="block text-sm font-semibold text-gray-800 mb-3">
+<div class="rf-wrap mb-4" data-field-name="{{ field.field_name }}">
+    <label class="rf-label">
         {{ field.field_label }}
-        {% if field.is_required %}<span class="text-red-500">*</span>{% endif %}
+        {% if field.is_required %}<span style="color:#ef4444;">*</span>{% endif %}
     </label>
 
     {% if field.help_text %}
-    <p class="text-xs text-gray-500 mb-3 -mt-1">{{ field.help_text }}</p>
+    <p class="rf-help"><i class="fas fa-info-circle"></i> {{ field.help_text }}</p>
     {% endif %}
 
-    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+    <div class="rf-grid">
         {% for option in field_options %}
-        <label class="visual-option-card group relative flex cursor-pointer rounded-xl border border-gray-200 bg-white p-4 shadow-sm focus:outline-none transition-all duration-200 hover:border-purple-400 hover:shadow-md">
-            <input type="radio" 
-                   name="{{ field.field_name }}" 
-                   value="{{ option.value }}" 
-                   class="sr-only peer" 
-                   {% if current_value == option.value %}checked{% endif %} 
-                   {% if field.is_required %}required{% endif %}
-                   data-price-modifier="{{ option.price_modifier }}">
-            
-            <span class="flex flex-1 flex-col text-center">
-                <span class="block text-sm font-medium text-gray-900 group-hover:text-purple-700 peer-checked:text-purple-800 transition-colors">
-                    {{ option.label }}
-                </span>
-                
-                {% if option.description %}
-                <span class="mt-1 text-xs text-gray-500">{{ option.description }}</span>
-                {% endif %}
-                
-                {% if option.price_modifier > 0 %}
-                <span class="mt-2 inline-block rounded-full bg-purple-50 px-2 py-0.5 text-xs font-semibold text-purple-700">
-                    +₹{{ option.price_modifier }}
-                </span>
-                {% endif %}
-            </span>
-
-            <!-- Active Border -->
-            <span class="pointer-events-none absolute -inset-px rounded-xl border-2 border-transparent peer-checked:border-purple-600" aria-hidden="true"></span>
-            
-            <!-- Checkmark -->
-            <span class="absolute -top-2 -right-2 hidden h-6 w-6 items-center justify-center rounded-full bg-purple-600 text-white shadow-sm ring-2 ring-white peer-checked:flex transform scale-0 peer-checked:scale-100 transition-transform duration-200">
-                <svg class="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-            </span>
+        <label class="rf-option">
+            <input type="radio"
+                   name="{{ field.field_name }}"
+                   value="{{ option.value }}"
+                   class="rf-input"
+                   data-price-modifier="{{ option.price_modifier }}"
+                   {% if current_value == option.value %}checked{% endif %}
+                   {% if field.is_required %}required{% endif %}>
+            <div class="rf-card">
+                <div class="rf-check-ring"><div class="rf-check-dot"></div></div>
+                <div class="rf-content">
+                    <div class="rf-title">{{ option.label }}</div>
+                    {% if option.description %}
+                    <div class="rf-desc">{{ option.description }}</div>
+                    {% endif %}
+                    {% if option.price_modifier > 0 %}
+                    <div class="rf-price">+₹{{ option.price_modifier }}</div>
+                    {% endif %}
+                </div>
+                <span class="rf-tick"><i class="fas fa-check"></i></span>
+            </div>
         </label>
         {% endfor %}
     </div>
 </div>
+
+<style>
+.rf-label { display: block; font-weight: 600; font-size: .9rem; color: #1f2937; margin-bottom: 4px; }
+.rf-help  { font-size: .78rem; color: #6b7280; margin-bottom: 10px; display: flex; align-items: center; gap: 4px; }
+.rf-grid  { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
+.rf-option { cursor: pointer; display: block; }
+.rf-input  { position: absolute; opacity: 0; pointer-events: none; width:1px; height:1px; }
+.rf-card {
+    border: 2px solid #e5e7eb; border-radius: 10px; padding: 12px 14px;
+    display: flex; align-items: flex-start; gap: 10px;
+    background: #fff; position: relative; transition: border-color .2s, background .2s;
+    cursor: pointer;
+}
+.rf-card:hover { border-color: var(--theme, #7000fe); background: #faf7ff; }
+.rf-input:checked + .rf-card {
+    border-color: var(--theme, #7000fe);
+    background: #faf7ff;
+    box-shadow: 0 2px 8px rgba(112,0,254,.12);
+}
+.rf-check-ring {
+    width: 18px; height: 18px; min-width: 18px; border-radius: 50%;
+    border: 2px solid #d1d5db; display: flex; align-items: center; justify-content: center;
+    margin-top: 2px; transition: border-color .2s, background .2s;
+}
+.rf-input:checked + .rf-card .rf-check-ring { border-color: var(--theme, #7000fe); background: var(--theme, #7000fe); }
+.rf-check-dot { width: 7px; height: 7px; border-radius: 50%; background: #fff; transform: scale(0); transition: transform .2s; }
+.rf-input:checked + .rf-card .rf-check-dot { transform: scale(1); }
+.rf-content { flex: 1; }
+.rf-title { font-weight: 600; font-size: .88rem; color: #374151; }
+.rf-input:checked + .rf-card .rf-title { color: var(--theme, #7000fe); }
+.rf-desc  { font-size: .78rem; color: #6b7280; margin-top: 2px; line-height: 1.4; }
+.rf-price { font-size: .78rem; font-weight: 700; color: var(--theme, #7000fe); margin-top: 4px; }
+.rf-tick  {
+    position: absolute; top: -8px; right: -8px;
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--theme, #7000fe); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; opacity: 0; transform: scale(0); transition: opacity .2s, transform .2s;
+}
+.rf-input:checked + .rf-card .rf-tick { opacity: 1; transform: scale(1); }
+</style>

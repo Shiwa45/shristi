@@ -1,54 +1,105 @@
 {% load dynamic_form_tags %}
 
-<div class="form-field-container {{ field|get_field_css_classes }} mb-6" data-field-name="{{ field.field_name }}">
-    <label class="block text-sm font-semibold text-gray-800 mb-3">
+<style>
+.ig-wrap { margin-bottom: 4px; }
+.ig-label { font-weight: 600; font-size: .9rem; color: #1f2937; margin-bottom: 4px; display: block; }
+.ig-help  { font-size: .78rem; color: #6b7280; margin-bottom: 10px; display: flex; align-items: center; gap: 4px; }
+.ig-grid  {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)) !important;
+    gap: 10px !important;
+}
+.ig-option { cursor: pointer; display: block; }
+.ig-option input[type="radio"] {
+    position: absolute !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    width: 1px !important;
+    height: 1px !important;
+}
+.ig-card {
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 10px 8px 8px;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    transition: border-color .2s, box-shadow .2s, background .2s;
+    background: #fff;
+    position: relative;
+    user-select: none;
+    cursor: pointer;
+}
+.ig-card:hover { border-color: var(--theme, #7000fe); background: #faf7ff; }
+.ig-option input:checked + .ig-card {
+    border-color: var(--theme, #7000fe);
+    background: #faf7ff;
+    box-shadow: 0 2px 10px rgba(112,0,254,.15);
+}
+.ig-img-box {
+    width: 100% !important;
+    height: 80px !important;
+    min-height: 80px !important;
+    max-height: 80px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-bottom: 8px !important;
+    overflow: hidden !important;
+}
+.ig-img-box img {
+    display: block !important;
+    width: 100% !important;
+    height: 80px !important;
+    max-width: 100% !important;
+    max-height: 80px !important;
+    object-fit: contain !important;
+}
+.ig-title { font-size: .75rem; font-weight: 600; color: #1f2937; text-align: center; line-height: 1.3; }
+.ig-option input:checked + .ig-card .ig-title { color: var(--theme, #7000fe); }
+.ig-price { font-size: .72rem; font-weight: 700; color: var(--theme, #7000fe); margin-top: 3px; }
+.ig-check {
+    position: absolute; top: 6px; right: 6px;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--theme, #7000fe); color: #fff;
+    display: flex !important; align-items: center; justify-content: center;
+    font-size: 9px; opacity: 0; transition: opacity .2s;
+}
+.ig-option input:checked + .ig-card .ig-check { opacity: 1; }
+</style>
+
+<div class="ig-wrap" data-field-name="{{ field.field_name }}">
+    <label class="ig-label">
         {{ field.field_label }}
-        {% if field.is_required %}<span class="text-red-500">*</span>{% endif %}
+        {% if field.is_required %}<span style="color:#ef4444;">*</span>{% endif %}
     </label>
 
     {% if field.help_text %}
-    <p class="text-xs text-gray-500 mb-3 flex items-center">
-        <i class="fas fa-info-circle mr-1"></i> {{ field.help_text }}
-    </p>
+    <p class="ig-help"><i class="fas fa-info-circle"></i> {{ field.help_text }}</p>
     {% endif %}
 
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div class="ig-grid">
         {% for option in field_options %}
-        <label class="image-grid-option cursor-pointer group">
-            <input type="radio" name="{{ field.field_name }}" value="{{ option.value }}" {% if current_value == option.value %}checked{% endif %} {% if field.is_required %}required{% endif %} data-price-modifier="{{ option.price_modifier }}" class="hidden peer">
-            
-            <div class="relative border-2 border-gray-300 rounded-lg p-3 transition-all duration-200 hover:border-purple-400 hover:shadow-md peer-checked:border-purple-600 peer-checked:bg-purple-50 peer-checked:shadow-lg flex flex-col items-center justify-center aspect-square">
-                
+        <label class="ig-option">
+            <input type="radio"
+                   name="{{ field.field_name }}"
+                   value="{{ option.value }}"
+                   data-price-modifier="{{ option.price_modifier }}"
+                   {% if current_value == option.value %}checked{% endif %}
+                   {% if field.is_required %}required{% endif %}>
+            <div class="ig-card">
+                <div class="ig-check"><i class="fas fa-check"></i></div>
                 {% if option.image_url %}
-                <div class="w-full flex-1 flex items-center justify-center mb-2">
-                    <img src="{{ option.image_url }}" alt="{{ option.label }}" class="max-w-full max-h-full object-contain">
+                <div class="ig-img-box">
+                    <img src="{{ option.image_url }}" alt="{{ option.label }}">
                 </div>
                 {% endif %}
-                
-                <div class="text-center mt-auto">
-                    <div class="font-medium text-xs text-gray-800 group-hover:text-purple-700 peer-checked:text-purple-700">
-                        {{ option.label }}
-                    </div>
-                    
-                    {% if option.price_modifier > 0 %}
-                    <div class="text-xs text-green-600 mt-0.5">
-                        +₹{{ option.price_modifier }}
-                    </div>
-                    {% endif %}
-                </div>
-
-                <div class="absolute top-2 right-2 w-5 h-5 rounded-full bg-purple-600 text-white flex items-center justify-center opacity-0 peer-checked:opacity-100 transition-opacity">
-                    <i class="fas fa-check text-xs"></i>
-                </div>
+                <div class="ig-title">{{ option.label }}</div>
+                {% if option.price_modifier > 0 %}
+                <div class="ig-price">+₹{{ option.price_modifier }}</div>
+                {% endif %}
             </div>
         </label>
         {% endfor %}
     </div>
 </div>
-
-<style>
-.image-grid-option input[type="radio"]:focus + div {
-    outline: 2px solid #9333ea;
-    outline-offset: 2px;
-}
-</style>

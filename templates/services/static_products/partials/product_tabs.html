@@ -1,29 +1,54 @@
-<!-- Redesigned Product Tabs: compact, card-style, accessible tabs -->
-<div class="product-tabs-card max-w-6xl mx-auto px-4">
+<!-- Product Tabs: Specifications / Samples / Reviews / FAQ -->
+<div class="product-tabs-card" style="margin:0 auto;padding:0 4px;">
     <style>
-    /* minimal scoped styles to avoid touching global CSS */
-    .pt-card { background: linear-gradient(180deg,#fff,#fbfdff); border-radius:12px; box-shadow:0 6px 20px rgba(16,24,40,0.06); overflow:hidden }
+    .pt-card { background:linear-gradient(180deg,#fff,#fbfdff); border-radius:12px; box-shadow:0 6px 20px rgba(16,24,40,0.06); overflow:hidden }
     .pt-tablist { display:flex; gap:8px; padding:12px; background:#f3f6fb; justify-content:space-between; flex-wrap:wrap }
-    .pt-tab { flex:1 0 120px; text-align:center; padding:6px 8px; border-radius:8px; cursor:pointer; font-weight:600; color:#334155; min-width:75px; max-width:140px }
-    .pt-tab[aria-selected="true"] { background:linear-gradient(90deg,#667eea,#764ba2); color:white; box-shadow:0 6px 18px rgba(102,126,234,0.18) }
+    .pt-tab { flex:1 0 120px; text-align:center; padding:6px 8px; border-radius:8px; cursor:pointer; font-weight:600; color:#334155; min-width:75px; max-width:140px; border:none; background:transparent; font-size:.9rem; }
+    .pt-tab[aria-selected="true"] { background:linear-gradient(90deg,var(--theme,#7000fe),#9f3ffd); color:white; box-shadow:0 6px 18px rgba(112,0,254,0.18) }
     .pt-panel { padding:20px; display:none }
     .pt-panel.active { display:block }
     .pt-grid { display:grid; gap:16px; grid-template-columns:repeat(1,1fr) }
-    @media(min-width:768px){ .pt-grid{ grid-template-columns: 2fr 1fr } }
+    @media(min-width:768px){ .pt-grid{ grid-template-columns:2fr 1fr } }
     @media(max-width:640px){ .pt-tab{ flex:1 1 46%; min-width:90px; max-width:none; padding:8px 10px } }
+    /* content boxes */
+    .pt-box { background:#fff; border-radius:8px; padding:24px; box-shadow:0 2px 6px rgba(0,0,0,0.05); border:1px solid #f1f5f9; }
+    .pt-box-gap { margin-top:16px; }
+    /* headings */
+    .pt-h3 { font-size:1.05rem; font-weight:700; color:#111827; margin:0 0 16px; display:flex; align-items:center; gap:10px; }
+    .pt-h4 { font-size:.95rem; font-weight:700; color:#111827; margin:0 0 14px; display:flex; align-items:center; gap:8px; }
+    /* feature list */
     .feature-list { list-style:none; padding:0; margin:0; display:grid; gap:16px }
-    .feature-item { display:flex; gap:16px; align-items:flex-start; padding:12px; background:#fafbfc; border-radius:8px; border-left:3px solid #3b82f6 }
-    .feature-item .icon { width:44px; height:44px; flex-shrink:0; border-radius:10px; background:linear-gradient(135deg,#3b82f6,#1d4ed8); display:flex; align-items:center; justify-content:center; color:#fff; box-shadow:0 2px 8px rgba(59,130,246,0.15) }
+    .feature-item { display:flex; gap:16px; align-items:flex-start; padding:12px; background:#fafbfc; border-radius:8px; border-left:3px solid var(--theme,#7000fe) }
+    .feature-item .icon { width:44px; height:44px; flex-shrink:0; border-radius:10px; background:linear-gradient(135deg,var(--theme,#7000fe),#9f3ffd); display:flex; align-items:center; justify-content:center; color:#fff; box-shadow:0 2px 8px rgba(112,0,254,0.15) }
+    .ft-title { font-weight:600; color:#111827; font-size:.9rem; }
+    .ft-desc  { font-size:.8rem; color:#6b7280; margin-top:4px; }
+    /* spec table */
     .spec-table { width:100%; border-collapse:collapse; background:#fff; border-radius:8px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.04) }
-    .spec-table td{ padding:16px 20px; border-bottom:1px solid #f1f5f9; vertical-align:top }
+    .spec-table td{ padding:14px 18px; border-bottom:1px solid #f1f5f9; vertical-align:top }
     .spec-table tr:last-child td{ border-bottom:none }
     .spec-table tr:nth-child(even){ background:#fafbfc }
     .spec-label{ font-weight:500; color:#374151; font-size:13px; text-transform:capitalize; letter-spacing:0.025em }
     .spec-value{ font-weight:600; color:#111827; font-size:14px }
+    /* badge */
+    .pt-badge { display:inline-flex; align-items:center; padding:2px 10px; border-radius:20px; font-size:.72rem; font-weight:600; background:#dcfce7; color:#166534; }
+    /* samples */
     .sample-grid{ display:grid; gap:10px; grid-template-columns:repeat(2,1fr) }
     @media(min-width:1024px){ .sample-grid{ grid-template-columns:repeat(4,1fr) } }
     .sample-card{ background:#fff; border-radius:8px; overflow:hidden; box-shadow:0 2px 6px rgba(2,6,23,0.04); padding:12px; text-align:center }
+    .sample-label { font-size:.82rem; color:#6b7280; margin-top:8px; }
+    /* reviews */
+    .pt-reviews { display:flex; flex-direction:column; gap:12px; }
+    .pt-review { background:#fff; padding:16px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.05); border:1px solid #f1f5f9; }
+    .pt-review-hd { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px; }
+    .pt-review-name { font-weight:600; color:#111827; font-size:.9rem; }
+    .pt-review-date { font-size:.75rem; color:#9ca3af; margin-top:2px; }
+    .pt-stars { color:#f59e0b; font-size:1rem; letter-spacing:1px; }
+    .pt-review-text { font-size:.85rem; color:#4b5563; line-height:1.5; }
+    .pt-summary { font-size:.85rem; color:#4b5563; margin-bottom:16px; }
+    /* faq */
     .faq-item{ border-top:1px solid #eef2f6; padding:12px 0 }
+    .faq-q { font-weight:600; color:#1f2937; font-size:.9rem; margin-bottom:4px; }
+    .faq-a { color:#6b7280; font-size:.85rem; line-height:1.5; }
     </style>
 
     <div class="pt-card">
@@ -34,24 +59,23 @@
             <button role="tab" aria-selected="false" aria-controls="pt-faq" id="pt-tab-faq" data-tab="pt-faq" class="pt-tab">FAQ</button>
         </div>
 
+        <!-- SPECIFICATIONS TAB -->
         <div id="pt-specs" role="tabpanel" aria-labelledby="pt-tab-specs" class="pt-panel active">
             <div class="pt-grid">
                 <div>
-                    <div class="bg-white rounded-lg p-6 shadow-sm border border-gray-100">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
-                            <svg class="w-6 h-6 mr-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="pt-box">
+                        <h3 class="pt-h3">
+                            <svg style="width:22px;height:22px;flex-shrink:0;color:var(--theme,#7000fe);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                             Product Overview
                         </h3>
-                        <div class="prose prose-sm max-w-none">
-                            <p class="text-gray-700 leading-relaxed mb-4">{{ product.description|default:product.short_description }}</p>
-                        </div>
+                        <p style="color:#4b5563;line-height:1.65;font-size:.9rem;margin:0 0 12px;">{{ product.description|default:product.short_description }}</p>
 
                         {% if product.key_features %}
-                        <div class="mt-6">
-                            <h4 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                                <svg class="w-5 h-5 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div style="margin-top:20px;">
+                            <h4 class="pt-h4">
+                                <svg style="width:18px;height:18px;flex-shrink:0;color:#16a34a;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
                                 Key Features
@@ -60,13 +84,13 @@
                                 {% for feat in product.key_features %}
                                 <li class="feature-item">
                                     <div class="icon" aria-hidden="true">
-                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <svg style="width:18px;height:18px;" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                                         </svg>
                                     </div>
                                     <div>
-                                        <div class="font-semibold text-gray-900">{{ feat.title }}</div>
-                                        {% if feat.description %}<div class="text-sm text-gray-600 mt-1">{{ feat.description }}</div>{% endif %}
+                                        <div class="ft-title">{{ feat.title }}</div>
+                                        {% if feat.description %}<div class="ft-desc">{{ feat.description }}</div>{% endif %}
                                     </div>
                                 </li>
                                 {% endfor %}
@@ -77,9 +101,9 @@
                 </div>
 
                 <aside>
-                    <div class="bg-white rounded-lg p-6 shadow-sm border border-gray-100">
-                        <h4 class="text-base font-semibold text-gray-900 mb-4 flex items-center">
-                            <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="pt-box">
+                        <h4 class="pt-h4">
+                            <svg style="width:18px;height:18px;flex-shrink:0;color:var(--theme,#7000fe);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                             </svg>
                             Product Details
@@ -88,19 +112,19 @@
                             <tbody>
                                 <tr><td class="spec-label">Starting Price</td><td class="spec-value">₹{{ product.base_price }}</td></tr>
                                 <tr><td class="spec-label">Price Unit</td><td class="spec-value">{{ product.price_unit }}</td></tr>
-                                {% if product.minimum_quantity %}<tr><td class="spec-label">Minimum Quantity</td><td class="spec-value">{{ product.minimum_quantity }}</td></tr>{% endif %}
-                                {% if product.turnaround_time %}<tr><td class="spec-label">Turnaround Time</td><td class="spec-value">{{ product.turnaround_time }}</td></tr>{% endif %}
+                                {% if product.minimum_quantity %}<tr><td class="spec-label">Min Quantity</td><td class="spec-value">{{ product.minimum_quantity }}</td></tr>{% endif %}
+                                {% if product.turnaround_time %}<tr><td class="spec-label">Turnaround</td><td class="spec-value">{{ product.turnaround_time }}</td></tr>{% endif %}
                                 {% if product.design_tool_enabled %}
-                                <tr><td class="spec-label">Design Tool</td><td class="spec-value"><span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">Available</span></td></tr>
+                                <tr><td class="spec-label">Design Tool</td><td class="spec-value"><span class="pt-badge">Available</span></td></tr>
                                 {% endif %}
                             </tbody>
                         </table>
                     </div>
 
                     {% if product.specifications %}
-                    <div class="bg-white rounded-lg p-6 shadow-sm border border-gray-100 mt-6">
-                        <h4 class="text-base font-semibold text-gray-900 mb-4 flex items-center">
-                            <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="pt-box pt-box-gap">
+                        <h4 class="pt-h4">
+                            <svg style="width:18px;height:18px;flex-shrink:0;color:var(--theme,#7000fe);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                             </svg>
@@ -119,75 +143,77 @@
             </div>
         </div>
 
+        <!-- SAMPLES TAB -->
         <div id="pt-samples" role="tabpanel" aria-labelledby="pt-tab-samples" class="pt-panel">
-            <h3 class="text-lg font-semibold mb-4">Sample Gallery</h3>
+            <h3 class="pt-h3">Sample Gallery</h3>
             <div class="sample-grid">
-                {% comment %} If product has gallery_images use them, otherwise show placeholders {% endcomment %}
                 {% if product.gallery_images.exists %}
                     {% for img in product.gallery_images.all %}
                     <div class="sample-card">
-                        <img src="{{ img.image.url }}" alt="Sample {{ forloop.counter }} for {{ product.name }}" style="width:100%; height:140px; object-fit:cover; border-radius:6px;" />
-                        <div class="mt-2 text-sm">Sample {{ forloop.counter }}</div>
+                        <img src="{{ img.image.url }}" alt="Sample {{ forloop.counter }} for {{ product.name }}" style="width:100%;height:140px;object-fit:cover;border-radius:6px;" />
+                        <div class="sample-label">Sample {{ forloop.counter }}</div>
                     </div>
                     {% endfor %}
                 {% else %}
                     {% for i in "1234" %}
                     <div class="sample-card">
-                        <div style="height:140px; display:flex; align-items:center; justify-content:center; background:linear-gradient(180deg,#f8fafc,#eef2f7); border-radius:6px;">
-                            <div class="text-gray-400">No image</div>
+                        <div style="height:140px;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#f8fafc,#eef2f7);border-radius:6px;">
+                            <span style="color:#9ca3af;font-size:.82rem;">No image</span>
                         </div>
-                        <div class="mt-2 text-sm">Sample {{ forloop.counter }}</div>
+                        <div class="sample-label">Sample {{ forloop.counter }}</div>
                     </div>
                     {% endfor %}
                 {% endif %}
             </div>
         </div>
 
+        <!-- REVIEWS TAB -->
         <div id="pt-reviews" role="tabpanel" aria-labelledby="pt-tab-reviews" class="pt-panel">
-            <h3 class="text-lg font-semibold mb-3">Customer Reviews</h3>
-            <div class="text-sm text-gray-700 mb-4">Our customers love this product — average rating <strong>4.8</strong> (based on site reviews)</div>
-            <div class="space-y-4">
-                {% comment %} If there's a review system, loop through recent reviews. Placeholder fallback below. {% endcomment %}
+            <h3 class="pt-h3">Customer Reviews</h3>
+            <p class="pt-summary">Our customers love this product — average rating <strong>4.8</strong> (based on site reviews)</p>
+            <div class="pt-reviews">
                 {% if reviews %}
                     {% for r in reviews %}
-                    <div class="bg-white p-4 rounded-md shadow-sm">
-                        <div class="flex justify-between items-start">
+                    <div class="pt-review">
+                        <div class="pt-review-hd">
                             <div>
-                                <div class="font-semibold">{{ r.user_name|default:r.user.username }}</div>
-                                <div class="text-xs text-gray-500">{{ r.created_at|date:'M d, Y' }}</div>
+                                <div class="pt-review-name">{{ r.user_name|default:r.user.username }}</div>
+                                <div class="pt-review-date">{{ r.created_at|date:'M d, Y' }}</div>
                             </div>
-                            <div class="text-yellow-400">{% for i in "12345" %}★{% endfor %}</div>
+                            <div class="pt-stars">★★★★★</div>
                         </div>
-                        <div class="text-sm text-gray-600 mt-2">{{ r.comment }}</div>
+                        <div class="pt-review-text">{{ r.comment }}</div>
                     </div>
                     {% endfor %}
                 {% else %}
-                    <div class="bg-white p-4 rounded-md shadow-sm">No reviews yet. Be the first to review this product.</div>
+                    <div class="pt-review">
+                        <p class="pt-review-text" style="margin:0;">No reviews yet. Be the first to review this product.</p>
+                    </div>
                 {% endif %}
             </div>
         </div>
 
+        <!-- FAQ TAB -->
         <div id="pt-faq" role="tabpanel" aria-labelledby="pt-tab-faq" class="pt-panel">
-            <h3 class="text-lg font-semibold mb-3">Frequently Asked Questions</h3>
-            <div class="text-sm text-gray-700">
+            <h3 class="pt-h3">Frequently Asked Questions</h3>
+            <div>
                 <div class="faq-item">
-                    <div class="font-medium">What file formats do you accept?</div>
-                    <div class="text-gray-600 mt-1">PDF, AI, PSD, PNG, JPG (300 DPI recommended). We can assist with conversions if needed.</div>
+                    <div class="faq-q">What file formats do you accept?</div>
+                    <div class="faq-a">PDF, AI, PSD, PNG, JPG (300 DPI recommended). We can assist with conversions if needed.</div>
                 </div>
                 <div class="faq-item">
-                    <div class="font-medium">How long does production take?</div>
-                    <div class="text-gray-600 mt-1">{% if product.turnaround_time %}{{ product.turnaround_time }}{% else %}3-5 business days{% endif %}. Rush options available.</div>
+                    <div class="faq-q">How long does production take?</div>
+                    <div class="faq-a">{% if product.turnaround_time %}{{ product.turnaround_time }}{% else %}3-5 business days{% endif %}. Rush options available.</div>
                 </div>
                 <div class="faq-item">
-                    <div class="font-medium">Do you offer design services?</div>
-                    <div class="text-gray-600 mt-1">{% if product.design_service_available %}Yes — design service is available for an additional ₹{{ product.design_service_price }}.{% else %}Design service not available for this product.{% endif %}</div>
+                    <div class="faq-q">Do you offer design services?</div>
+                    <div class="faq-a">{% if product.design_service_available %}Yes — design service is available for an additional ₹{{ product.design_service_price }}.{% else %}Design service not available for this product.{% endif %}</div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-    // Minimal, accessible tab behavior (no external dependencies)
     (function(){
         const tabs = document.querySelectorAll('.pt-tab');
         const panels = document.querySelectorAll('.pt-panel');
@@ -199,10 +225,9 @@
             tab.focus();
         }
         tabs.forEach(t => t.addEventListener('click', ()=> activate(t)));
-        // keyboard support
         tabs.forEach(t => t.addEventListener('keydown', function(e){
             const idx = Array.prototype.indexOf.call(tabs, this);
-            if(e.key === 'ArrowRight') { activate(tabs[(idx+1)%tabs.length]); e.preventDefault(); }
+            if(e.key === 'ArrowRight'){ activate(tabs[(idx+1)%tabs.length]); e.preventDefault(); }
             if(e.key === 'ArrowLeft') { activate(tabs[(idx-1+tabs.length)%tabs.length]); e.preventDefault(); }
         }));
     })();

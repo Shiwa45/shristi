@@ -319,83 +319,76 @@ def cart_count_api(request):
 
 # ENHANCED CART VIEWS FOR STATIC PRODUCTS (Phase 3)
 
+@csrf_exempt
 @require_http_methods(["POST"])
 def add_static_product_to_cart(request, product_id):
-    """Add static product to cart with design integration"""
+    """Add static product to cart with optional design studio data"""
     try:
         data = json.loads(request.body)
 
-        # Get the static product
         static_product = get_object_or_404(StaticProduct, id=product_id, is_active=True)
 
-        # Extract cart data
-        quantity = int(data.get('quantity', static_product.minimum_quantity))
+        min_qty = getattr(static_product, 'minimum_quantity', None) or 1
+        quantity = max(int(data.get('quantity', min_qty)), min_qty)
         specifications = data.get('specifications', {})
-        design_id = data.get('design_id')
+        design_data = data.get('design_data')  # Fabric.js canvas JSON from studio
 
-        # Validate quantity
-        if quantity < static_product.minimum_quantity:
-            return JsonResponse({
-                'success': False,
-                'message': f'Minimum quantity is {static_product.minimum_quantity}'
-            }, status=400)
-
-        # Get or create cart
         cart = get_or_create_cart(request)
 
-        # Get user design if provided
-        user_design = None
-        if design_id and request.user.is_authenticated:
-            from apps.templates_mgmt.models import UserDesign
-            try:
-                user_design = UserDesign.objects.get(
-                    id=design_id,
-                    user=request.user,
-                    static_product=static_product
-                )
-            except UserDesign.DoesNotExist:
-                return JsonResponse({
-                    'success': False,
-                    'message': 'Design not found'
-                }, status=400)
-
-        # Check if item already exists in cart
-        existing_item = CartItem.objects.filter(
-            cart=cart,
-            static_product=static_product,
-            user_design=user_design
-        ).first()
-
-        if existing_item:
-            # Update existing item
-            existing_item.quantity += quantity
-            existing_item.specifications.update(specifications)
-            existing_item.save()
-            cart_item = existing_item
-        else:
-            # Create new cart item
-            cart_item = CartItem.objects.create(
+        # When design_data is provided (from studio), replace the existing cart item
+        # outright so the latest design is always what the customer sees.
+        if design_data:
+            existing_item = CartItem.objects.filter(
                 cart=cart,
                 static_product=static_product,
-                user_design=user_design,
-                quantity=quantity,
-                unit_price=static_product.base_price,
-                specifications=specifications
-            )
+                user_design=None,
+            ).first()
+            if existing_item:
+                existing_item.quantity = quantity
+                existing_item.specifications = specifications
+                existing_item.design_data = design_data
+                existing_item.save()
+                cart_item = existing_item
+            else:
+                cart_item = CartItem.objects.create(
+                    cart=cart,
+                    static_product=static_product,
+                    quantity=quantity,
+                    unit_price=static_product.base_price,
+                    specifications=specifications,
+                    design_data=design_data,
+                )
+        else:
+            # No design — classic add-to-cart (increment if product already in cart)
+            existing_item = CartItem.objects.filter(
+                cart=cart,
+                static_product=static_product,
+                user_design=None,
+            ).first()
+            if existing_item:
+                existing_item.quantity += quantity
+                existing_item.specifications.update(specifications)
+                existing_item.save()
+                cart_item = existing_item
+            else:
+                cart_item = CartItem.objects.create(
+                    cart=cart,
+                    static_product=static_product,
+                    quantity=quantity,
+                    unit_price=static_product.base_price,
+                    specifications=specifications,
+                )
 
-        # Calculate pricing if needed
-        if hasattr(static_product, 'get_pricing'):
-            pricing_info = static_product.get_pricing(quantity, specifications)
-            cart_item.unit_price = pricing_info.get('unit_price', static_product.base_price)
-            cart_item.save()
-
+        from django.urls import reverse
         return JsonResponse({
             'success': True,
             'message': f'{static_product.name} added to cart',
             'cart_item_id': cart_item.id,
             'cart_count': cart.total_items,
             'cart_total': str(cart.subtotal),
-            'item_total': str(cart_item.total_price)
+            'item_total': str(cart_item.total_price),
+            # Absolute URL so the design studio (different origin) can navigate directly to Django
+            'cart_url': request.build_absolute_uri(reverse('orders:cart')),
         })
 
     except Exception as e:

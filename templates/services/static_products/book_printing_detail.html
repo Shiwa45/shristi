@@ -1,7 +1,38 @@
 ﻿{% extends 'services/static_products/product_detail.html' %}
 {% load static %}
 
-{% block hero_style %}padding: 60px 0 35px;{% endblock %}
+{% block hero_section %}
+<section class="pd-hero" style="background-image: url('{% static 'assets/img/hero/hero-bg-1.jpg' %}'); padding: 60px 0 35px;">
+    <div class="container">
+        <div class="row g-4 align-items-center">
+            <div class="col-lg-6">
+                {% if product.is_featured %}
+                <div class="pd-badge"><i class="fas fa-star"></i> Featured Product</div>
+                {% endif %}
+                <h1>{{ product.name }}</h1>
+                <p>{{ product.description|default:product.short_description }}</p>
+
+
+        
+            </div>
+            <div class="col-lg-6">
+                <div class="p" style="min-height: 140px;">
+                    {% if product.hero_image %}
+                        <img src="{{ product.hero_image.url }}" alt="{{ product.name }}" width="400px" height="400px">
+                    {% elif product.featured_image %}
+                        <img src="{{ product.featured_image.url }}" alt="{{ product.name }}" width="100px" height="100px">
+                    {% else %}
+                        <div class="pd-image-placeholder">
+                            <i class="fas fa-print"></i>
+                            <p>{{ product.name }}</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock hero_section %}
 
 {% block extra_css %}
 {{ block.super }}
@@ -1058,18 +1089,6 @@
         }
     }
 
-    /* Reduce hero height by 50% on book printing page */
-    .pd-hero {
-        padding: 60px 0 35px !important;
-    }
-    .pd-hero .pd-image-wrap {
-        min-height: 140px !important;
-    }
-    @media (max-width: 767px) {
-        .pd-hero {
-            padding: 50px 0 25px !important;
-        }
-    }
 </style>
 {% endblock %}
 

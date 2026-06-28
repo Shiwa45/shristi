@@ -118,7 +118,8 @@
 {% block content %}
 
 <!-- ===== Hero ===== -->
-<section class="pd-hero" style="background-image: url('{% static 'assets/img/hero/hero-bg-1.jpg' %}'); {% block hero_style %}{% endblock %}">
+{% block hero_section %}
+<section class="pd-hero" style="background-image: url('{% static 'assets/img/hero/hero-bg-1.jpg' %}'); {{ hero_padding }}">
     <div class="container">
         <div class="row g-4 align-items-center">
             <div class="col-lg-6">
@@ -156,6 +157,7 @@
         </div>
     </div>
 </section>
+{% endblock hero_section %}
 
 <!-- ===== Main Content ===== -->
 <div class="pd-body">

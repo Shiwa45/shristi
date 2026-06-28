@@ -48320,3 +48320,1103 @@ Not Found: /favicon.ico
 "GET /media/sliders/hero_boxes_white-removebg-preview.png HTTP/1.1" 304 0
 "GET /media/sliders/hero_stationery_white-removebg-preview.png HTTP/1.1" 304 0
 "GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET / HTTP/1.1" 200 183855
+"GET /media/sliders/hero_books_white-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/sliders/hero_boxes_white-removebg-preview.png HTTP/1.1" 304 0
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /media/sliders/hero_stationery_white-removebg-preview.png HTTP/1.1" 304 0
+"GET / HTTP/1.1" 200 183868
+"GET /media/sliders/hero_books_white-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/sliders/hero_boxes_white-removebg-preview.png HTTP/1.1" 304 0
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /media/sliders/hero_stationery_white-removebg-preview.png HTTP/1.1" 304 0
+"GET /services/all-products/ HTTP/1.1" 200 85152
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /media/products/hero/annual_reports_printing.png HTTP/1.1" 200 470778
+"GET /media/products/hero/year_book_printing.png HTTP/1.1" 200 729727
+"GET /media/products/hero/comic_book_printing.png HTTP/1.1" 200 841352
+"GET /media/products/hero/coffee_table_book_printing.png HTTP/1.1" 200 757131
+"GET /media/products/hero/art_book_printing.png HTTP/1.1" 200 686069
+"GET /media/products/hero/coloring_book_printing.png HTTP/1.1" 200 785327
+"GET / HTTP/1.1" 200 183868
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/all-products/ HTTP/1.1" 200 88234
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/book-printing/childrens-book-printing/ HTTP/1.1" 200 195510
+"GET /static/js/products/dynamic-pricing-calculator.js HTTP/1.1" 200 8043
+"GET /static/img/finish/black_and_white.png HTTP/1.1" 200 215105
+"GET /static/img/finish/black_white_standard.png HTTP/1.1" 200 154746
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /static/js/categories/sequential-form-engine.js HTTP/1.1" 200 15852
+"GET /static/js/categories/category-pricing-calculator.js HTTP/1.1" 200 11788
+"GET /static/img/finish/color_premium.png HTTP/1.1" 200 275193
+"GET /static/img/paper/100gsm.jpg HTTP/1.1" 200 22612
+"GET /static/img/finish/color_standard.png HTTP/1.1" 200 148519
+"GET /static/img/finish/combine_color.png HTTP/1.1" 200 157604
+"GET /static/img/paper/70gsm.jpg HTTP/1.1" 200 18271
+"GET /static/img/binding/perfect.jpg HTTP/1.1" 200 8819
+"GET /static/img/binding/saddle.jpg HTTP/1.1" 200 5241
+"GET /static/img/binding/hardcover.jpg HTTP/1.1" 200 4560
+"GET /static/img/finish/gloss.jpg HTTP/1.1" 200 7123
+"GET /static/img/finish/matte.jpg HTTP/1.1" 200 13345
+"GET /services/book-printing/childrens-book-printing/ HTTP/1.1" 200 195233
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/book-printing/childrens-book-printing/ HTTP/1.1" 200 195233
+"GET /static/assets/css/magnific-popup.css HTTP/1.1" 200 6955
+"GET /static/assets/css/meanmenu.css HTTP/1.1" 200 2916
+"GET /static/assets/css/animate.css HTTP/1.1" 200 57095
+"GET /static/assets/css/swiper-bundle.min.css HTTP/1.1" 200 16466
+"GET /static/assets/css/font-awesome.css HTTP/1.1" 200 98789
+"GET /static/assets/css/nice-select.css HTTP/1.1" 200 4011
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /static/assets/css/bootstrap.min.css HTTP/1.1" 200 297514
+"GET /static/img/logo.svg HTTP/1.1" 200 62846
+"GET /static/js/products/dynamic-pricing-calculator.js HTTP/1.1" 200 8043
+"GET /static/assets/css/main.css HTTP/1.1" 200 215812
+"GET /static/img/finish/black_and_white.png HTTP/1.1" 200 215105
+"GET /media/products/hero/WhatsApp_Image_2026-06-22_at_2.49.59_PM.jpeg HTTP/1.1" 200 187918
+"GET /static/assets/js/jquery-3.7.1.min.js HTTP/1.1" 200 87533
+"GET /static/assets/js/viewport.jquery.js HTTP/1.1" 200 1762
+"GET /static/assets/js/gsap/gsap-scroll-to-plugin.js HTTP/1.1" 200 5766
+"GET /static/assets/js/gsap/gsap-scroll-smoother.js HTTP/1.1" 200 19844
+"GET /static/assets/js/gsap/gsap.js HTTP/1.1" 200 113633
+"GET /static/assets/js/bootstrap.bundle.min.js HTTP/1.1" 200 80663
+"GET /static/assets/js/gsap/gsap-scroll-trigger.js HTTP/1.1" 200 67013
+"GET /static/assets/js/gsap/gsap-split-text.js HTTP/1.1" 200 18876
+"GET /static/assets/js/jquery.meanmenu.min.js HTTP/1.1" 200 5997
+"GET /static/assets/js/jquery.nice-select.min.js HTTP/1.1" 200 2942
+"GET /static/assets/js/jquery.waypoints.js HTTP/1.1" 200 17946
+"GET /static/assets/js/jquery.counterup.min.js HTTP/1.1" 200 2181
+"GET /static/assets/js/swiper-bundle.min.js HTTP/1.1" 200 143281
+"GET /static/assets/js/wow.min.js HTTP/1.1" 200 8155
+"GET /static/assets/js/jquery.magnific-popup.min.js HTTP/1.1" 200 20216
+"GET /static/js/categories/sequential-form-engine.js HTTP/1.1" 200 15852
+"GET /static/js/categories/category-pricing-calculator.js HTTP/1.1" 200 11788
+"GET /static/assets/js/main.js HTTP/1.1" 200 25569
+"GET /static/img/finish/black_white_standard.png HTTP/1.1" 200 154746
+"GET /static/img/finish/color_standard.png HTTP/1.1" 200 148519
+"GET /static/img/finish/color_premium.png HTTP/1.1" 200 275193
+"GET /static/img/binding/saddle.jpg HTTP/1.1" 200 5241
+"GET /static/img/paper/100gsm.jpg HTTP/1.1" 200 22612
+"GET /static/img/binding/perfect.jpg HTTP/1.1" 200 8819
+"GET /static/img/paper/70gsm.jpg HTTP/1.1" 200 18271
+"GET /static/img/binding/hardcover.jpg HTTP/1.1" 200 4560
+"GET /static/img/finish/combine_color.png HTTP/1.1" 200 157604
+"GET /static/img/finish/gloss.jpg HTTP/1.1" 200 7123
+"GET /static/img/finish/matte.jpg HTTP/1.1" 200 13345
+"GET /media/products/featured/art_book_printing.png HTTP/1.1" 200 686069
+"GET /media/products/featured/coffee_table_book_printing.png HTTP/1.1" 200 757131
+"GET /media/products/featured/comic_book_printing.png HTTP/1.1" 200 841352
+"GET /media/products/featured/coloring_book_printing.png HTTP/1.1" 200 785327
+"GET /static/assets/img/hero/hero-bg-1.jpg HTTP/1.1" 200 157039
+"GET /static/assets/fonts/fa-solid-900.woff2 HTTP/1.1" 200 141036
+"GET /static/assets/fonts/fa-regular-400.woff2 HTTP/1.1" 200 173528
+"GET /static/assets/fonts/fa-light-300.woff2 HTTP/1.1" 200 189716
+"GET /static/assets/img/favicon.svg HTTP/1.1" 200 1888
+"GET / HTTP/1.1" 200 183868
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /media/sliders/hero_books_white-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/sliders/hero_stationery_white-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/sliders/hero_boxes_white-removebg-preview.png HTTP/1.1" 304 0
+"GET /services/all-products/ HTTP/1.1" 200 88234
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+C:\Users\easyian\shristi\apps\services\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /services/all-products/ HTTP/1.1" 200 88234
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/book-printing/childrens-book-printing/ HTTP/1.1" 200 195233
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/book-printing/childrens-book-printing/ HTTP/1.1" 200 194870
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/book-printing/childrens-book-printing/ HTTP/1.1" 200 194671
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/book-printing/childrens-book-printing/ HTTP/1.1" 200 194623
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/book-printing/childrens-book-printing/ HTTP/1.1" 200 194671
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/book-printing/childrens-book-printing/ HTTP/1.1" 200 194663
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/book-printing/childrens-book-printing/ HTTP/1.1" 200 194671
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/book-printing/childrens-book-printing/ HTTP/1.1" 200 194697
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/book-printing/childrens-book-printing/ HTTP/1.1" 200 194685
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/book-printing/childrens-book-printing/ HTTP/1.1" 200 194685
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/book-printing/childrens-book-printing/ HTTP/1.1" 200 194685
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/book-printing/childrens-book-printing/ HTTP/1.1" 200 194700
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/book-printing/childrens-book-printing/ HTTP/1.1" 200 194700
+"GET /static/assets/css/bootstrap.min.css HTTP/1.1" 200 297514
+"GET /static/assets/css/nice-select.css HTTP/1.1" 200 4011
+"GET /static/assets/css/main.css HTTP/1.1" 200 215812
+"GET /static/assets/css/font-awesome.css HTTP/1.1" 200 98789
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /static/assets/css/magnific-popup.css HTTP/1.1" 200 6955
+"GET /static/assets/css/meanmenu.css HTTP/1.1" 200 2916
+"GET /static/assets/css/swiper-bundle.min.css HTTP/1.1" 200 16466
+"GET /static/assets/css/animate.css HTTP/1.1" 200 57095
+"GET /static/img/logo.svg HTTP/1.1" 200 62846
+"GET /static/img/finish/black_and_white.png HTTP/1.1" 200 215105
+"GET /static/assets/js/viewport.jquery.js HTTP/1.1" 200 1762
+"GET /static/js/products/dynamic-pricing-calculator.js HTTP/1.1" 200 8043
+"GET /static/assets/js/jquery-3.7.1.min.js HTTP/1.1" 200 87533
+"GET /static/assets/js/bootstrap.bundle.min.js HTTP/1.1" 200 80663
+"GET /static/img/finish/black_white_standard.png HTTP/1.1" 200 154746
+"GET /static/assets/js/gsap/gsap.js HTTP/1.1" 200 113633
+"GET /static/assets/js/gsap/gsap-scroll-smoother.js HTTP/1.1" 200 19844
+"GET /static/assets/js/gsap/gsap-split-text.js HTTP/1.1" 200 18876
+"GET /static/assets/js/gsap/gsap-scroll-to-plugin.js HTTP/1.1" 200 5766
+"GET /static/assets/js/jquery.waypoints.js HTTP/1.1" 200 17946
+"GET /static/assets/js/jquery.nice-select.min.js HTTP/1.1" 200 2942
+"GET /static/assets/js/gsap/gsap-scroll-trigger.js HTTP/1.1" 200 67013
+"GET /static/assets/js/jquery.counterup.min.js HTTP/1.1" 200 2181
+"GET /static/assets/js/jquery.meanmenu.min.js HTTP/1.1" 200 5997
+"GET /static/assets/js/wow.min.js HTTP/1.1" 200 8155
+"GET /static/assets/js/jquery.magnific-popup.min.js HTTP/1.1" 200 20216
+"GET /static/assets/js/main.js HTTP/1.1" 200 25569
+"GET /static/assets/js/swiper-bundle.min.js HTTP/1.1" 200 143281
+"GET /static/js/categories/sequential-form-engine.js HTTP/1.1" 200 15852
+"GET /static/js/categories/category-pricing-calculator.js HTTP/1.1" 200 11788
+"GET /static/img/finish/color_standard.png HTTP/1.1" 200 148519
+"GET /static/img/finish/combine_color.png HTTP/1.1" 200 157604
+"GET /media/products/hero/WhatsApp_Image_2026-06-22_at_2.49.59_PM.jpeg HTTP/1.1" 200 187918
+"GET /static/img/paper/70gsm.jpg HTTP/1.1" 200 18271
+"GET /static/img/paper/100gsm.jpg HTTP/1.1" 200 22612
+"GET /static/img/finish/color_premium.png HTTP/1.1" 200 275193
+"GET /static/img/binding/saddle.jpg HTTP/1.1" 200 5241
+"GET /static/img/binding/perfect.jpg HTTP/1.1" 200 8819
+"GET /static/img/binding/hardcover.jpg HTTP/1.1" 200 4560
+"GET /static/img/finish/gloss.jpg HTTP/1.1" 200 7123
+"GET /static/img/finish/matte.jpg HTTP/1.1" 200 13345
+"GET /media/products/featured/comic_book_printing.png HTTP/1.1" 200 841352
+"GET /media/products/featured/art_book_printing.png HTTP/1.1" 200 686069
+"GET /media/products/featured/coloring_book_printing.png HTTP/1.1" 200 785327
+"GET /media/products/featured/coffee_table_book_printing.png HTTP/1.1" 200 757131
+"GET /static/assets/img/hero/hero-bg-1.jpg HTTP/1.1" 200 157039
+"GET /static/assets/fonts/fa-solid-900.woff2 HTTP/1.1" 200 141036
+"GET /static/assets/fonts/fa-regular-400.woff2 HTTP/1.1" 200 173528
+"GET /static/assets/fonts/fa-light-300.woff2 HTTP/1.1" 200 189716
+"GET /static/assets/img/favicon.svg HTTP/1.1" 200 1888
+"GET /services/book-printing/childrens-book-printing/ HTTP/1.1" 200 194695
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/book-printing/childrens-book-printing/ HTTP/1.1" 200 194679
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/book-printing/childrens-book-printing/ HTTP/1.1" 200 194688
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/book-printing/childrens-book-printing/ HTTP/1.1" 200 194688
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/book-printing/childrens-book-printing/ HTTP/1.1" 200 194688
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/book-printing/childrens-book-printing/ HTTP/1.1" 200 194688
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET / HTTP/1.1" 200 183868
+"GET /media/sliders/hero_books_white-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/sliders/hero_boxes_white-removebg-preview.png HTTP/1.1" 304 0
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /media/sliders/hero_stationery_white-removebg-preview.png HTTP/1.1" 304 0
+"GET / HTTP/1.1" 200 183856
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET / HTTP/1.1" 200 183859
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET / HTTP/1.1" 200 183831
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET / HTTP/1.1" 200 183868
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET / HTTP/1.1" 200 184131
+"GET /media/sliders/hero_books_white-removebg-preview.png HTTP/1.1" 304 0
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /media/sliders/hero_boxes_white-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/sliders/hero_stationery_white-removebg-preview.png HTTP/1.1" 304 0
+"GET / HTTP/1.1" 200 184131
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/marketing-material/button-badges/ HTTP/1.1" 200 106517
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/marketing-material/button-badges/ HTTP/1.1" 200 87435
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/marketing-material/button-badges/ HTTP/1.1" 200 106517
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET / HTTP/1.1" 200 184131
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/all-products/ HTTP/1.1" 200 88234
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/all-products/ HTTP/1.1" 200 88234
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/all-products/ HTTP/1.1" 200 86625
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET / HTTP/1.1" 200 184131
+"GET /media/sliders/hero_books_white-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/sliders/hero_boxes_white-removebg-preview.png HTTP/1.1" 304 0
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /media/sliders/hero_stationery_white-removebg-preview.png HTTP/1.1" 304 0
+"GET /about/ HTTP/1.1" 200 90053
+"GET /static/theme/assets/img/about/author.png HTTP/1.1" 200 347
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /static/theme/assets/img/about/about-1.jpg HTTP/1.1" 200 53263
+"GET /static/theme/assets/img/about/about-3.jpg HTTP/1.1" 200 25913
+"GET /static/theme/assets/img/about/about-2.jpg HTTP/1.1" 200 23208
+"GET /static/theme/assets/img/about/about-4.jpg HTTP/1.1" 200 66359
+"GET /static/theme/assets/img/service/bg-shape.png HTTP/1.1" 200 102732
+"GET /static/theme/assets/img/service/icon-2.png HTTP/1.1" 200 2567
+"GET /static/theme/assets/img/testimonial/shape-1.png HTTP/1.1" 200 30123
+"GET /static/theme/assets/img/testimonial/shape-2.png HTTP/1.1" 200 46914
+"GET /static/theme/assets/img/service/icon-1.png HTTP/1.1" 200 1782
+"GET /static/theme/assets/img/faq/01.jpg HTTP/1.1" 200 2445
+"GET /static/theme/assets/img/faq/02.jpg HTTP/1.1" 200 1719
+"GET /static/theme/assets/img/cta-2-shape2.png HTTP/1.1" 200 1655
+"GET /static/theme/assets/img/cta-bg-3.jpg HTTP/1.1" 200 132465
+"GET /static/theme/assets/img/testimonial/01.jpg HTTP/1.1" 200 1093
+"GET /static/theme/assets/img/process-icon/03.svg HTTP/1.1" 200 690567
+"GET /static/theme/assets/img/process-icon/02.svg HTTP/1.1" 200 854987
+"GET /static/theme/assets/img/process-icon/01.svg HTTP/1.1" 200 997694
+"GET /static/theme/assets/img/process-icon/04.svg HTTP/1.1" 200 1267023
+"GET / HTTP/1.1" 200 184131
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET / HTTP/1.1" 200 184131
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/stationery/standard-letter-head/ HTTP/1.1" 200 111258
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/stationery/standard-letter-head/ HTTP/1.1" 200 113641
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET / HTTP/1.1" 200 184131
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /media/sliders/hero_books_white-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/sliders/hero_boxes_white-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/sliders/hero_stationery_white-removebg-preview.png HTTP/1.1" 304 0
+"GET /services/book-printing/childrens-book-printing/ HTTP/1.1" 200 194688
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/stationery/standard-business-card/ HTTP/1.1" 200 111938
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /static/images/corner-styles/straight-corners.svg HTTP/1.1" 200 319
+"GET /static/images/corner-styles/rounded-corners.svg HTTP/1.1" 200 318
+"GET /services/stationery/standard-business-card/ HTTP/1.1" 200 114261
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/stationery/standard-business-card/ HTTP/1.1" 200 100697
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/stationery/standard-business-card/ HTTP/1.1" 200 113937
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/stationery/standard-business-card/ HTTP/1.1" 200 114261
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/stationery/standard-business-card/ HTTP/1.1" 200 100697
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/stationery/standard-business-card/ HTTP/1.1" 200 108283
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /static/assets/fonts/fa-brands-400.woff2 HTTP/1.1" 200 78580
+"GET /services/stationery/standard-business-card/ HTTP/1.1" 200 125544
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/stationery/standard-business-card/ HTTP/1.1" 200 124309
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/stationery/standard-business-card/ HTTP/1.1" 200 125544
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/stationery/standard-business-card/ HTTP/1.1" 200 110559
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"POST /services/stationery/standard-business-card/ HTTP/1.1" 200 110559
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"POST /services/stationery/standard-business-card/ HTTP/1.1" 200 118043
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+Not Found: /design-tool/editor/stationery/standard-business-card/
+"GET /design-tool/editor/stationery/standard-business-card/ HTTP/1.1" 404 6648
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 6231
+"GET / HTTP/1.1" 200 184131
+"GET /media/sliders/hero_books_white-removebg-preview.png HTTP/1.1" 304 0
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /media/sliders/hero_boxes_white-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/sliders/hero_stationery_white-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/products/featured/annual_reports_printing.png HTTP/1.1" 304 0
+"GET /media/products/featured/year_book_printing.png HTTP/1.1" 304 0
+"GET /media/products/featured/poster-a4.png HTTP/1.1" 304 0
+"GET /media/products/featured/poster-a3.png HTTP/1.1" 304 0
+"GET /media/products/featured/poster-custom.png HTTP/1.1" 304 0
+C:\Users\easyian\shristi\apps\design_tool\urls.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\easyian\shristi\apps\design_tool\views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /services/stationery/standard-business-card/
+Traceback (most recent call last):
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\easyian\shristi\apps\services\views.py", line 266, in product_detail
+    return static_product_detail(request, category_slug, product_slug)
+  File "C:\Users\easyian\shristi\apps\services\views.py", line 262, in static_product_detail
+    return render(request, template_name, context)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\base.py", line 155, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\base.py", line 197, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\base.py", line 519, in parse
+    raise self.error(token, e)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\base.py", line 517, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\base.py", line 519, in parse
+    raise self.error(token, e)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\base.py", line 517, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\base.py", line 519, in parse
+    raise self.error(token, e)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\base.py", line 517, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\defaulttags.py", line 1421, in url
+    viewname = parser.compile_filter(bits[1])
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\base.py", line 610, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\base.py", line 711, in __init__
+    raise TemplateSyntaxError(
+    ...<2 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Could not parse the remainder: '\'orders:quote_request\'' from '\'orders:quote_request\''
+"POST /services/stationery/standard-business-card/ HTTP/1.1" 500 227347
+Internal Server Error: /services/stationery/standard-business-card/
+Traceback (most recent call last):
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\easyian\shristi\apps\services\views.py", line 266, in product_detail
+    return static_product_detail(request, category_slug, product_slug)
+  File "C:\Users\easyian\shristi\apps\services\views.py", line 262, in static_product_detail
+    return render(request, template_name, context)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\base.py", line 155, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\base.py", line 197, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\base.py", line 519, in parse
+    raise self.error(token, e)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\base.py", line 517, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\base.py", line 519, in parse
+    raise self.error(token, e)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\base.py", line 517, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\base.py", line 519, in parse
+    raise self.error(token, e)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\base.py", line 517, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\defaulttags.py", line 1421, in url
+    viewname = parser.compile_filter(bits[1])
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\base.py", line 610, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\base.py", line 711, in __init__
+    raise TemplateSyntaxError(
+    ...<2 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Could not parse the remainder: '\'orders:quote_request\'' from '\'orders:quote_request\''
+"POST /services/stationery/standard-business-card/ HTTP/1.1" 500 227347
+"POST /services/stationery/standard-business-card/ HTTP/1.1" 200 120587
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+Internal Server Error: /design-tool/api/studio/product/
+Traceback (most recent call last):
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "C:\Users\easyian\shristi\apps\design_tool\views.py", line 85, in api_studio_product_init
+    'minimum_quantity': product.minimum_quantity or 1,
+                        ^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'StaticProduct' object has no attribute 'minimum_quantity'
+"GET /design-tool/api/studio/product/?slug=standard-business-card HTTP/1.1" 500 81634
+C:\Users\easyian\shristi\apps\design_tool\views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /design-tool/api/studio/product/
+Traceback (most recent call last):
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "C:\Users\easyian\shristi\apps\design_tool\views.py", line 122, in api_studio_product_init
+    'minimum_quantity': product.minimum_quantity or 1,
+                        ^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'StaticProduct' object has no attribute 'minimum_quantity'
+"GET /design-tool/api/studio/product/?slug=standard-business-card HTTP/1.1" 500 83366
+C:\Users\easyian\shristi\apps\design_tool\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /services/stationery/standard-business-card/ HTTP/1.1" 200 120587
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /orders/cart/ HTTP/1.1" 200 80228
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/stationery/standard-business-card/ HTTP/1.1" 200 120587
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /design-tool/api/studio/product/?slug=standard-business-card HTTP/1.1" 200 822
+"GET /media/templates/thumbnails/Screenshot_from_2025-11-18_15-18-16.png HTTP/1.1" 200 72951
+"GET /media/templates/svg/Agriculture-01_mEgkumM.svg HTTP/1.1" 200 16256
+"GET /media/templates/svg/Agriculture-01_mEgkumM.svg HTTP/1.1" 200 16256
+"GET /media/templates/svg/Agriculture-01_mEgkumM.svg HTTP/1.1" 200 16256
+"GET /media/templates/svg/Agriculture-01_mEgkumM.svg HTTP/1.1" 200 16256
+"GET /media/templates/svg/Agriculture-01_mEgkumM.svg HTTP/1.1" 200 16256
+"GET /media/templates/svg/Agriculture-01_mEgkumM.svg HTTP/1.1" 200 16256
+"GET /media/templates/svg/Agriculture-01_mEgkumM.svg HTTP/1.1" 200 16256
+"GET /media/templates/svg/Agriculture-01_mEgkumM.svg HTTP/1.1" 200 16256
+"GET /media/templates/svg/Agriculture-01_mEgkumM.svg HTTP/1.1" 200 16256
+"GET /media/templates/svg/Agriculture-01_mEgkumM.svg HTTP/1.1" 200 16256
+"GET /media/templates/svg/Agriculture-01_mEgkumM.svg HTTP/1.1" 200 16256
+"GET /media/templates/svg/Agriculture-01_mEgkumM.svg HTTP/1.1" 200 16256
+"GET /media/templates/svg/Agriculture-01_mEgkumM.svg HTTP/1.1" 200 16256
+"GET /media/templates/svg/Agriculture-01_mEgkumM.svg HTTP/1.1" 200 16256
+"GET /media/templates/svg/Agriculture-01_mEgkumM.svg HTTP/1.1" 200 16256
+"GET /media/templates/svg/Agriculture-01_mEgkumM.svg HTTP/1.1" 200 16256
+"GET /media/templates/svg/Agriculture-01_mEgkumM.svg HTTP/1.1" 200 16256
+"GET /media/templates/svg/Agriculture-01_mEgkumM.svg HTTP/1.1" 200 16256
+"GET /media/templates/svg/Agriculture-01_mEgkumM.svg HTTP/1.1" 200 16256
+C:\Users\easyian\shristi\apps\design_tool\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /media/templates/svg/Agriculture-01_mEgkumM.svg HTTP/1.1" 200 16256
+C:\Users\easyian\shristi\apps\design_tool\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /media/templates/svg/Agriculture-01_mEgkumM.svg HTTP/1.1" 200 16256
+"GET /media/templates/svg/Agriculture-01_mEgkumM.svg HTTP/1.1" 200 16256
+"GET /media/templates/svg/Agriculture-01_mEgkumM.svg HTTP/1.1" 200 16256
+"GET /design-tool/api/studio/product/?slug=standard-business-card HTTP/1.1" 200 759
+"GET /media/templates/thumbnails/Screenshot_from_2025-11-18_15-18-16.png HTTP/1.1" 200 72951
+"GET /media/templates/svg/Agriculture-01_mEgkumM.svg HTTP/1.1" 200 16256
+"GET /admin/templates_mgmt/designtemplate/ HTTP/1.1" 200 25527
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/templates_mgmt/designtemplate/1/change/ HTTP/1.1" 200 33710
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+C:\Users\easyian\shristi\apps\design_tool\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /design-tool/api/studio/product/?slug=standard-business-card HTTP/1.1" 200 759
+"GET /design-tool/api/studio/product/?slug=standard-business-card HTTP/1.1" 200 759
+"GET /design-tool/api/studio/product/?slug=standard-business-card HTTP/1.1" 200 759
+"GET /design-tool/api/studio/product/?slug=standard-business-card HTTP/1.1" 200 759
+"GET /design-tool/api/studio/product/?slug=standard-business-card HTTP/1.1" 200 759
+C:\Users\easyian\shristi\apps\design_tool\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /design-tool/api/studio/product/?slug=standard-business-card HTTP/1.1" 200 755
+"GET /design-tool/api/studio/product/?slug=standard-business-card HTTP/1.1" 200 755
+"POST /services/stationery/standard-business-card/ HTTP/1.1" 200 121815
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"POST /services/stationery/standard-business-card/ HTTP/1.1" 200 121825
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /design-tool/api/studio/product/?slug=standard-business-card HTTP/1.1" 200 755
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 184131
+"GET /media/sliders/hero_books_white-removebg-preview.png HTTP/1.1" 304 0
+"GET /static/img/logo.svg HTTP/1.1" 304 0
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /media/sliders/hero_boxes_white-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/categories/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_I4HUQtR.png HTTP/1.1" 304 0
+"GET /media/categories/hero-book_T5aF2VE.png HTTP/1.1" 304 0
+"GET /media/sliders/hero_stationery_white-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/products/hero/WhatsApp_Image_2026-06-22_at_2.49.59_PM.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/comic_book_printing.png HTTP/1.1" 304 0
+"GET /media/products/featured/coffee_table_book_printing.png HTTP/1.1" 304 0
+"GET /media/products/featured/coloring_book_printing.png HTTP/1.1" 304 0
+"GET /media/products/featured/year_book_printing.png HTTP/1.1" 304 0
+"GET /media/products/featured/art_book_printing.png HTTP/1.1" 304 0
+"GET /media/products/address_labels.png HTTP/1.1" 304 0
+"GET /media/products/bifold_brochure.png HTTP/1.1" 304 0
+"GET /media/products/featured/poster-a4.png HTTP/1.1" 304 0
+"GET /media/products/featured/on-demand-books-printing.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/poster-a3.png HTTP/1.1" 304 0
+"GET /media/products/featured/annual_reports_printing.png HTTP/1.1" 304 0
+"GET /media/products/featured/poster-custom.png HTTP/1.1" 304 0
+"GET /media/products/featured/premium-flex.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/paper-bag.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/banner-media.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/barcode-labels.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/standard-letter-head.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/circle-stickers.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/warning-labels.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/corporate-letter-head.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/texture-business-card.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/standard-business-card.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/multicolour-lanyards.jpeg HTTP/1.1" 304 0
+"GET /static/img/no_design.png HTTP/1.1" 304 0
+"GET /services/book-printing/childrens-book-printing/ HTTP/1.1" 200 194688
+"GET /static/img/finish/black_and_white.png HTTP/1.1" 304 0
+"GET /static/js/products/dynamic-pricing-calculator.js HTTP/1.1" 304 0
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /static/js/categories/sequential-form-engine.js HTTP/1.1" 304 0
+"GET /static/js/categories/category-pricing-calculator.js HTTP/1.1" 304 0
+"GET /static/img/finish/black_white_standard.png HTTP/1.1" 304 0
+"GET /static/img/finish/color_premium.png HTTP/1.1" 304 0
+"GET /static/img/finish/color_standard.png HTTP/1.1" 304 0
+"GET /static/img/finish/combine_color.png HTTP/1.1" 304 0
+"GET /static/img/paper/70gsm.jpg HTTP/1.1" 304 0
+"GET /static/img/paper/100gsm.jpg HTTP/1.1" 304 0
+"GET /static/img/binding/saddle.jpg HTTP/1.1" 304 0
+"GET /static/img/finish/gloss.jpg HTTP/1.1" 304 0
+"GET /static/img/binding/perfect.jpg HTTP/1.1" 304 0
+"GET /static/img/binding/hardcover.jpg HTTP/1.1" 304 0
+"GET /static/img/finish/matte.jpg HTTP/1.1" 304 0
+"GET / HTTP/1.1" 200 184131
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/stationery/corporate-letter-head/ HTTP/1.1" 200 111056
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+Internal Server Error: /orders/quote/request/
+Traceback (most recent call last):
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\easyian\shristi\apps\orders\views.py", line 268, in quote_request_view
+    return render(request, 'orders/quote_request.html')
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: orders/quote_request.html
+"GET /orders/quote/request/?product_id=56 HTTP/1.1" 500 95815
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 6231
+Internal Server Error: /orders/quote/request/
+Traceback (most recent call last):
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\easyian\shristi\apps\orders\views.py", line 268, in quote_request_view
+    return render(request, 'orders/quote_request.html')
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: orders/quote_request.html
+"GET /orders/quote/request/?product_id=56 HTTP/1.1" 500 95815
+"GET /services/stationery/standard-business-card/ HTTP/1.1" 200 113742
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /static/images/corner-styles/straight-corners.svg HTTP/1.1" 304 0
+"GET /static/images/corner-styles/rounded-corners.svg HTTP/1.1" 304 0
+Internal Server Error: /orders/quote/request/
+Traceback (most recent call last):
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\easyian\shristi\apps\orders\views.py", line 268, in quote_request_view
+    return render(request, 'orders/quote_request.html')
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: orders/quote_request.html
+"GET /orders/quote/request/?product_id=69 HTTP/1.1" 500 95816
+"GET / HTTP/1.1" 200 184131
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /admin/ HTTP/1.1" 200 26832
+"GET /static/admin/css/base.css HTTP/1.1" 304 0
+"GET /static/admin/css/dark_mode.css HTTP/1.1" 304 0
+"GET /static/admin/js/theme.js HTTP/1.1" 304 0
+"GET /static/admin/css/dashboard.css HTTP/1.1" 304 0
+"GET /static/admin/css/responsive.css HTTP/1.1" 304 0
+"GET /static/admin/css/nav_sidebar.css HTTP/1.1" 304 0
+"GET /static/admin/js/nav_sidebar.js HTTP/1.1" 304 0
+"GET /static/admin/img/icon-changelink.svg HTTP/1.1" 304 0
+"GET /static/admin/img/icon-addlink.svg HTTP/1.1" 304 0
+"GET /admin/services/staticproduct/ HTTP/1.1" 200 74237
+"GET /static/admin/css/changelists.css HTTP/1.1" 304 0
+"GET /static/admin/css/custom_admin.css HTTP/1.1" 404 2005
+"GET /static/admin/css/forms.css HTTP/1.1" 304 0
+"GET /static/admin/js/jquery.init.js HTTP/1.1" 304 0
+"GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 304 0
+"GET /static/admin/js/json_editor.js HTTP/1.1" 304 0
+"GET /static/admin/js/actions.js HTTP/1.1" 304 0
+"GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 304 0
+"GET /static/admin/js/core.js HTTP/1.1" 304 0
+"GET /static/admin/js/prepopulate.js HTTP/1.1" 304 0
+"GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 304 0
+"GET /static/admin/css/widgets.css HTTP/1.1" 304 0
+"GET /static/admin/js/urlify.js HTTP/1.1" 304 0
+"GET /static/admin/img/search.svg HTTP/1.1" 304 0
+"GET /static/admin/img/icon-no.svg HTTP/1.1" 304 0
+"GET /static/admin/js/filters.js HTTP/1.1" 304 0
+"GET /static/admin/img/icon-yes.svg HTTP/1.1" 304 0
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /static/admin/img/tooltag-add.svg HTTP/1.1" 304 0
+"GET /static/admin/img/sorting-icons.svg HTTP/1.1" 304 0
+"GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 304 0
+"GET /admin/services/staticproduct/?q=business HTTP/1.1" 200 28821
+"GET /static/admin/css/custom_admin.css HTTP/1.1" 404 2005
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/services/staticproduct/69/change/?_changelist_filters=q%3Dbusiness HTTP/1.1" 200 185114
+"GET /static/admin/js/inlines.js HTTP/1.1" 304 0
+"GET /static/admin/css/custom_admin.css HTTP/1.1" 404 2005
+"GET /static/admin/js/prepopulate_init.js HTTP/1.1" 304 0
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /static/admin/img/icon-unknown.svg HTTP/1.1" 304 0
+"GET /static/admin/js/change_form.js HTTP/1.1" 304 0
+"GET /static/admin/img/tooltag-arrowright.svg HTTP/1.1" 200 280
+"GET /static/admin/img/inline-delete.svg HTTP/1.1" 304 0
+"GET /admin/services/staticproduct/?q=business HTTP/1.1" 200 28821
+"GET /admin/services/staticproduct/69/change/?_changelist_filters=q%3Dbusiness HTTP/1.1" 200 185114
+"GET /static/admin/css/custom_admin.css HTTP/1.1" 404 2005
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"POST /admin/services/staticproduct/69/change/?_changelist_filters=q%3Dbusiness HTTP/1.1" 200 185831
+"GET /static/admin/css/custom_admin.css HTTP/1.1" 404 2005
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"POST /admin/services/staticproduct/69/change/?_changelist_filters=q%3Dbusiness HTTP/1.1" 200 185839
+"GET /static/admin/css/custom_admin.css HTTP/1.1" 404 2005
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"POST /admin/services/staticproduct/69/change/?_changelist_filters=q%3Dbusiness HTTP/1.1" 200 185841
+"GET /static/admin/css/custom_admin.css HTTP/1.1" 404 2005
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"POST /admin/services/staticproduct/69/change/?_changelist_filters=q%3Dbusiness HTTP/1.1" 200 186005
+"GET /static/admin/css/custom_admin.css HTTP/1.1" 404 2005
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"POST /admin/services/staticproduct/69/change/?_changelist_filters=q%3Dbusiness HTTP/1.1" 200 186170
+"GET /static/admin/css/custom_admin.css HTTP/1.1" 404 2005
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"POST /admin/services/staticproduct/69/change/?_changelist_filters=q%3Dbusiness HTTP/1.1" 302 0
+"GET /admin/services/staticproduct/?q=business HTTP/1.1" 200 29055
+"GET /static/admin/css/custom_admin.css HTTP/1.1" 404 2005
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /services/stationery/standard-business-card/ HTTP/1.1" 200 123648
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /design-tool/api/studio/product/?slug=standard-business-card HTTP/1.1" 200 755
+"GET /media/templates/thumbnails/Screenshot_from_2025-11-18_15-18-16.png HTTP/1.1" 304 0
+"GET /media/templates/svg/Agriculture-01_mEgkumM.svg HTTP/1.1" 304 0
+C:\Users\easyian\shristi\apps\templates_mgmt\models.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\easyian\shristi\apps\templates_mgmt\models.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\easyian\shristi\apps\design_tool\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\easyian\shristi\apps\design_tool\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\easyian\shristi\apps\design_tool\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /design-tool/api/studio/product/?slug=standard-business-card HTTP/1.1" 200 796
+"GET /design-tool/api/studio/product/?slug=standard-business-card HTTP/1.1" 200 796
+Forbidden (Origin checking failed - http://localhost:5173 does not match any trusted origins.): /design-tool/api/static/save/
+"POST /design-tool/api/static/save/ HTTP/1.1" 403 2554
+"GET /design-tool/api/studio/product/?slug=standard-business-card HTTP/1.1" 200 796
+"GET /design-tool/api/studio/product/?slug=standard-business-card HTTP/1.1" 200 796
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 185542
+"GET /media/sliders/hero_books_white-removebg-preview.png HTTP/1.1" 304 0
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /media/sliders/hero_boxes_white-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/sliders/hero_stationery_white-removebg-preview.png HTTP/1.1" 304 0
+"GET /services/stationery/corporate-letter-head/ HTTP/1.1" 200 112743
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/stationery/standard-business-card/ HTTP/1.1" 200 124103
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/stationery/standard-business-card/ HTTP/1.1" 200 124942
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /design-tool/api/studio/product/?slug=standard-business-card&printing_side=front_back HTTP/1.1" 200 804
+"GET /services/stationery/standard-business-card/?has_design=1 HTTP/1.1" 200 124942
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+C:\Users\easyian\shristi\apps\orders\models.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\easyian\shristi\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /design-tool/api/studio/product/?slug=standard-business-card&printing_side=front_back HTTP/1.1" 200 804
+"GET /services/stationery/standard-business-card/?has_design=1 HTTP/1.1" 200 125677
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/stationery/standard-business-card/?has_design=1 HTTP/1.1" 200 125677
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /design-tool/api/studio/product/?slug=standard-business-card HTTP/1.1" 200 796
+"GET /services/stationery/standard-business-card/?has_design=1&has_design=1 HTTP/1.1" 200 125677
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /orders/cart/ HTTP/1.1" 200 80228
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+C:\Users\easyian\shristi\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /services/stationery/standard-business-card/?has_design=1 HTTP/1.1" 200 126267
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /design-tool/api/studio/product/?slug=standard-business-card&printing_side=front_back HTTP/1.1" 200 804
+Forbidden (Origin checking failed - http://localhost:5173 does not match any trusted origins.): /orders/api/static-product/add/69/
+"POST /orders/api/static-product/add/69/ HTTP/1.1" 403 2554
+"GET /design-tool/api/studio/product/?slug=standard-business-card&printing_side=front_back HTTP/1.1" 200 804
+Forbidden (Origin checking failed - http://localhost:5173 does not match any trusted origins.): /orders/api/static-product/add/69/
+"POST /orders/api/static-product/add/69/ HTTP/1.1" 403 2554
+C:\Users\easyian\shristi\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 185542
+"GET /static/img/logo.svg HTTP/1.1" 304 0
+"GET /media/sliders/hero_books_white-removebg-preview.png HTTP/1.1" 304 0
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /media/sliders/hero_boxes_white-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/categories/hero-book_T5aF2VE.png HTTP/1.1" 304 0
+"GET /media/categories/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_I4HUQtR.png HTTP/1.1" 304 0
+"GET /media/sliders/hero_stationery_white-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/products/featured/comic_book_printing.png HTTP/1.1" 304 0
+"GET /media/products/hero/WhatsApp_Image_2026-06-22_at_2.49.59_PM.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/coffee_table_book_printing.png HTTP/1.1" 304 0
+"GET /media/products/featured/art_book_printing.png HTTP/1.1" 304 0
+"GET /media/products/featured/coloring_book_printing.png HTTP/1.1" 304 0
+"GET /media/products/featured/annual_reports_printing.png HTTP/1.1" 304 0
+"GET /media/products/featured/year_book_printing.png HTTP/1.1" 304 0
+"GET /media/products/address_labels.png HTTP/1.1" 304 0
+"GET /media/products/bifold_brochure.png HTTP/1.1" 304 0
+"GET /media/products/featured/on-demand-books-printing.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/poster-a3.png HTTP/1.1" 304 0
+"GET /media/products/featured/poster-a4.png HTTP/1.1" 304 0
+"GET /media/products/featured/poster-custom.png HTTP/1.1" 304 0
+"GET /media/products/featured/premium-flex.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/paper-bag.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/banner-media.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/barcode-labels.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/circle-stickers.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/warning-labels.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/texture-business-card.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/corporate-letter-head.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/standard-letter-head.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/standard-business-card.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/multicolour-lanyards.jpeg HTTP/1.1" 304 0
+"GET /static/img/no_design.png HTTP/1.1" 304 0
+Internal Server Error: /services/
+Traceback (most recent call last):
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\easyian\shristi\apps\services\views.py", line 106, in services_home
+    return render(request, template, context)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: services/categories.html
+"GET /services/ HTTP/1.1" 500 91805
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 6231
+"GET /services/book-printing/childrens-book-printing/ HTTP/1.1" 200 194688
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /static/img/finish/black_and_white.png HTTP/1.1" 304 0
+"GET /static/js/products/dynamic-pricing-calculator.js HTTP/1.1" 304 0
+"GET /static/js/categories/sequential-form-engine.js HTTP/1.1" 304 0
+"GET /static/img/finish/color_premium.png HTTP/1.1" 304 0
+"GET /static/js/categories/category-pricing-calculator.js HTTP/1.1" 304 0
+"GET /static/img/finish/black_white_standard.png HTTP/1.1" 304 0
+"GET /static/img/paper/70gsm.jpg HTTP/1.1" 304 0
+"GET /static/img/finish/combine_color.png HTTP/1.1" 304 0
+"GET /static/img/finish/color_standard.png HTTP/1.1" 304 0
+"GET /static/img/paper/100gsm.jpg HTTP/1.1" 304 0
+"GET /static/img/binding/perfect.jpg HTTP/1.1" 304 0
+"GET /static/img/binding/saddle.jpg HTTP/1.1" 304 0
+"GET /static/img/binding/hardcover.jpg HTTP/1.1" 304 0
+"GET /static/img/finish/gloss.jpg HTTP/1.1" 304 0
+"GET /static/img/finish/matte.jpg HTTP/1.1" 304 0
+"GET / HTTP/1.1" 200 185542
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/marketing-material/certificates/ HTTP/1.1" 200 110695
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /static/js/pricing_engine.js HTTP/1.1" 304 0
+"GET /services/marketing-material/certificates/ HTTP/1.1" 200 111071
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/stationery/standard-business-card/ HTTP/1.1" 200 126267
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /static/images/corner-styles/straight-corners.svg HTTP/1.1" 304 0
+"GET /static/images/corner-styles/rounded-corners.svg HTTP/1.1" 304 0
+"GET /services/stationery/standard-business-card/ HTTP/1.1" 200 126822
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET / HTTP/1.1" 200 185542
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/stationery/standard-business-card/ HTTP/1.1" 200 126822
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET / HTTP/1.1" 200 185542
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 185542
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/stationery/standard-business-card/ HTTP/1.1" 200 126822
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/paper-boxes/custom-paper-boxes-1/ HTTP/1.1" 200 115892
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/marketing-material/certificates/ HTTP/1.1" 200 111703
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET / HTTP/1.1" 200 185542
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /services/marketing-material/bi-fold-brochure/ HTTP/1.1" 200 114476
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET / HTTP/1.1" 200 188120
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET / HTTP/1.1" 200 188120
+"GET /static/assets/css/font-awesome.css HTTP/1.1" 200 98789
+"GET /static/assets/css/animate.css HTTP/1.1" 200 57095
+"GET /static/assets/css/magnific-popup.css HTTP/1.1" 200 6955
+"GET /static/assets/css/meanmenu.css HTTP/1.1" 200 2916
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /static/assets/css/main.css HTTP/1.1" 200 215812
+"GET /static/assets/css/nice-select.css HTTP/1.1" 200 4011
+"GET /static/assets/css/bootstrap.min.css HTTP/1.1" 200 297514
+"GET /static/assets/css/swiper-bundle.min.css HTTP/1.1" 200 16466
+"GET /media/sliders/hero_boxes_white-removebg-preview.png HTTP/1.1" 200 214627
+"GET /media/sliders/hero_books_white-removebg-preview.png HTTP/1.1" 200 291008
+"GET /static/img/logo.svg HTTP/1.1" 200 62846
+"GET /static/assets/js/viewport.jquery.js HTTP/1.1" 200 1762
+"GET /static/assets/js/gsap/gsap-scroll-to-plugin.js HTTP/1.1" 200 5766
+"GET /static/assets/js/gsap/gsap-scroll-smoother.js HTTP/1.1" 200 19844
+"GET /static/assets/js/gsap/gsap-split-text.js HTTP/1.1" 200 18876
+"GET /static/assets/js/bootstrap.bundle.min.js HTTP/1.1" 200 80663
+"GET /static/assets/js/jquery.nice-select.min.js HTTP/1.1" 200 2942
+"GET /static/assets/js/gsap/gsap.js HTTP/1.1" 200 113633
+"GET /static/assets/js/jquery-3.7.1.min.js HTTP/1.1" 200 87533
+"GET /static/assets/js/gsap/gsap-scroll-trigger.js HTTP/1.1" 200 67013
+"GET /static/assets/js/jquery.counterup.min.js HTTP/1.1" 200 2181
+"GET /static/assets/js/jquery.meanmenu.min.js HTTP/1.1" 200 5997
+"GET /static/assets/js/jquery.waypoints.js HTTP/1.1" 200 17946
+"GET /media/sliders/hero_stationery_white-removebg-preview.png HTTP/1.1" 200 94382
+"GET /static/assets/img/product/product-box-shape1.png HTTP/1.1" 200 10836
+"GET /media/categories/hero-book_T5aF2VE.png HTTP/1.1" 200 1493235
+"GET /static/assets/js/jquery.magnific-popup.min.js HTTP/1.1" 200 20216
+"GET /media/categories/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_I4HUQtR.png HTTP/1.1" 200 128368
+"GET /static/assets/img/product/product-box-shape2.png HTTP/1.1" 200 41488
+"GET /media/products/hero/WhatsApp_Image_2026-06-22_at_2.49.59_PM.jpeg HTTP/1.1" 200 187918
+"GET /static/assets/js/wow.min.js HTTP/1.1" 200 8155
+"GET /media/products/featured/comic_book_printing.png HTTP/1.1" 200 841352
+"GET /media/products/featured/coffee_table_book_printing.png HTTP/1.1" 200 757131
+"GET /media/products/featured/coloring_book_printing.png HTTP/1.1" 200 785327
+"GET /static/assets/js/main.js HTTP/1.1" 200 25569
+"GET /media/products/featured/art_book_printing.png HTTP/1.1" 200 686069
+"GET /media/products/featured/annual_reports_printing.png HTTP/1.1" 200 470778
+"GET /media/products/featured/year_book_printing.png HTTP/1.1" 200 729727
+"GET /media/products/featured/on-demand-books-printing.jpeg HTTP/1.1" 200 124179
+"GET /static/assets/fonts/fa-solid-900.woff2 HTTP/1.1" 200 141036
+"GET /static/assets/fonts/fa-light-300.woff2 HTTP/1.1" 200 189716
+"GET /static/assets/js/swiper-bundle.min.js HTTP/1.1" 200 143281
+"GET /static/assets/fonts/fa-regular-400.woff2 HTTP/1.1" 200 173528
+"GET /media/products/bifold_brochure.png HTTP/1.1" 200 492512
+"GET /static/assets/img/hero/hero-bg-1.jpg HTTP/1.1" 200 157039
+"GET /static/assets/img/shop/01.jpg HTTP/1.1" 200 1093
+"GET /media/products/address_labels.png HTTP/1.1" 200 617445
+"GET /media/products/featured/premium-flex.jpeg HTTP/1.1" 200 273238
+"GET /media/products/featured/poster-a4.png HTTP/1.1" 200 824185
+"GET /media/products/featured/paper-bag.jpeg HTTP/1.1" 200 179562
+"GET /media/products/featured/poster-custom.png HTTP/1.1" 200 828536
+"GET /media/products/featured/poster-a3.png HTTP/1.1" 200 930812
+"GET /media/products/featured/banner-media.jpeg HTTP/1.1" 200 247315
+"GET /media/products/featured/barcode-labels.jpeg HTTP/1.1" 200 209712
+"GET /media/products/featured/circle-stickers.jpeg HTTP/1.1" 200 287270
+"GET /media/products/featured/warning-labels.jpeg HTTP/1.1" 200 157964
+"GET /media/products/featured/standard-letter-head.jpeg HTTP/1.1" 200 139482
+"GET /media/products/featured/texture-business-card.jpeg HTTP/1.1" 200 106931
+"GET /media/products/featured/corporate-letter-head.jpeg HTTP/1.1" 200 215830
+"GET /media/products/featured/standard-business-card.jpeg HTTP/1.1" 200 136672
+"GET /static/assets/img/process-icon/02.png HTTP/1.1" 200 5481
+"GET /static/assets/img/process-icon/01.png HTTP/1.1" 200 5532
+"GET /static/assets/img/process-icon/03.png HTTP/1.1" 200 6699
+"GET /static/assets/img/faq/03.jpg HTTP/1.1" 200 2808
+"GET /media/products/featured/multicolour-lanyards.jpeg HTTP/1.1" 200 237443
+"GET /static/img/no_design.png HTTP/1.1" 200 158509
+"GET /static/assets/img/faq/04.jpg HTTP/1.1" 200 1463
+"GET /static/assets/img/cta-2-shape2.png HTTP/1.1" 200 1655
+"GET /static/assets/img/testimonial/01.png HTTP/1.1" 200 342
+"GET /static/assets/img/testimonial/02.png HTTP/1.1" 200 306
+"GET /static/assets/img/cta-bg.png HTTP/1.1" 200 75942
+"GET /static/assets/img/cta-bg-3.jpg HTTP/1.1" 200 132465
+"GET /static/assets/img/favicon.svg HTTP/1.1" 200 1888
+"GET /services/book-printing/comic-book-printing/ HTTP/1.1" 200 197612
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /media/products/hero/comic_book_printing.png HTTP/1.1" 304 0
+"GET / HTTP/1.1" 200 187735
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 187735
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET / HTTP/1.1" 200 188191
+"GET /static/assets/css/meanmenu.css HTTP/1.1" 200 2916
+"GET /static/assets/css/magnific-popup.css HTTP/1.1" 200 6955
+"GET /static/assets/css/font-awesome.css HTTP/1.1" 200 98789
+"GET /static/assets/css/bootstrap.min.css HTTP/1.1" 200 297514
+"GET /static/assets/css/swiper-bundle.min.css HTTP/1.1" 200 16466
+"GET /static/assets/css/animate.css HTTP/1.1" 200 57095
+"GET /static/assets/css/nice-select.css HTTP/1.1" 200 4011
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /media/sliders/hero_books_white-removebg-preview.png HTTP/1.1" 200 291008
+"GET /media/sliders/hero_boxes_white-removebg-preview.png HTTP/1.1" 200 214627
+"GET /static/assets/css/main.css HTTP/1.1" 200 215812
+"GET /static/img/logo.svg HTTP/1.1" 200 62846
+"GET /static/assets/js/gsap/gsap-scroll-to-plugin.js HTTP/1.1" 200 5766
+"GET /static/assets/js/viewport.jquery.js HTTP/1.1" 200 1762
+"GET /static/assets/js/gsap/gsap-scroll-smoother.js HTTP/1.1" 200 19844
+"GET /static/assets/js/jquery.nice-select.min.js HTTP/1.1" 200 2942
+"GET /static/assets/js/bootstrap.bundle.min.js HTTP/1.1" 200 80663
+"GET /static/assets/js/gsap/gsap-split-text.js HTTP/1.1" 200 18876
+"GET /static/assets/js/gsap/gsap.js HTTP/1.1" 200 113633
+"GET /static/assets/js/jquery-3.7.1.min.js HTTP/1.1" 200 87533
+"GET /static/assets/js/gsap/gsap-scroll-trigger.js HTTP/1.1" 200 67013
+"GET /static/assets/js/jquery.meanmenu.min.js HTTP/1.1" 200 5997
+"GET /static/assets/js/wow.min.js HTTP/1.1" 200 8155
+"GET /media/sliders/hero_stationery_white-removebg-preview.png HTTP/1.1" 200 94382
+"GET /static/assets/js/jquery.counterup.min.js HTTP/1.1" 200 2181
+"GET /media/categories/hero-book_T5aF2VE.png HTTP/1.1" 200 1493235
+"GET /static/assets/img/product/product-box-shape1.png HTTP/1.1" 200 10836
+"GET /media/categories/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_I4HUQtR.png HTTP/1.1" 200 128368
+"GET /static/assets/js/jquery.waypoints.js HTTP/1.1" 200 17946
+"GET /static/assets/img/product/product-box-shape2.png HTTP/1.1" 200 41488
+"GET /static/assets/js/main.js HTTP/1.1" 200 25569
+"GET /media/products/hero/WhatsApp_Image_2026-06-22_at_2.49.59_PM.jpeg HTTP/1.1" 200 187918
+"GET /media/products/featured/comic_book_printing.png HTTP/1.1" 200 841352
+"GET /static/assets/js/jquery.magnific-popup.min.js HTTP/1.1" 200 20216
+"GET /media/products/featured/annual_reports_printing.png HTTP/1.1" 200 470778
+"GET /media/products/featured/coffee_table_book_printing.png HTTP/1.1" 200 757131
+"GET /media/products/featured/art_book_printing.png HTTP/1.1" 200 686069
+"GET /media/products/featured/coloring_book_printing.png HTTP/1.1" 200 785327
+"GET /media/products/featured/year_book_printing.png HTTP/1.1" 200 729727
+"GET /media/products/featured/on-demand-books-printing.jpeg HTTP/1.1" 200 124179
+"GET /static/assets/img/hero/hero-bg-1.jpg HTTP/1.1" 200 157039
+"GET /static/assets/fonts/fa-solid-900.woff2 HTTP/1.1" 200 141036
+"GET /static/assets/js/swiper-bundle.min.js HTTP/1.1" 200 143281
+"GET /static/assets/fonts/fa-regular-400.woff2 HTTP/1.1" 200 173528
+"GET /static/assets/fonts/fa-light-300.woff2 HTTP/1.1" 200 189716
+"GET /static/assets/img/shop/01.jpg HTTP/1.1" 200 1093
+"GET /media/products/bifold_brochure.png HTTP/1.1" 200 492512
+"GET /media/products/address_labels.png HTTP/1.1" 200 617445
+"GET /media/products/featured/poster-custom.png HTTP/1.1" 200 828536
+"GET /media/products/featured/poster-a4.png HTTP/1.1" 200 824185
+"GET /media/products/featured/poster-a3.png HTTP/1.1" 200 930812
+"GET /media/products/featured/paper-bag.jpeg HTTP/1.1" 200 179562
+"GET /media/products/featured/banner-media.jpeg HTTP/1.1" 200 247315
+"GET /media/products/featured/premium-flex.jpeg HTTP/1.1" 200 273238
+"GET /static/assets/img/cta-bg.png HTTP/1.1" 200 75942
+"GET /static/img/no_design.png HTTP/1.1" 200 158509
+"GET /media/products/featured/texture-business-card.jpeg HTTP/1.1" 200 106931
+"GET /media/products/featured/standard-letter-head.jpeg HTTP/1.1" 200 139482
+"GET /media/products/featured/corporate-letter-head.jpeg HTTP/1.1" 200 215830
+"GET /media/products/featured/warning-labels.jpeg HTTP/1.1" 200 157964
+"GET /media/products/featured/barcode-labels.jpeg HTTP/1.1" 200 209712
+"GET /media/products/featured/circle-stickers.jpeg HTTP/1.1" 200 287270
+"GET /static/assets/img/process-icon/01.png HTTP/1.1" 200 5532
+"GET /static/assets/img/process-icon/02.png HTTP/1.1" 200 5481
+"GET /static/assets/img/faq/03.jpg HTTP/1.1" 200 2808
+"GET /static/assets/img/process-icon/03.png HTTP/1.1" 200 6699
+"GET /media/products/featured/standard-business-card.jpeg HTTP/1.1" 200 136672
+"GET /media/products/featured/multicolour-lanyards.jpeg HTTP/1.1" 200 237443
+"GET /static/assets/img/faq/04.jpg HTTP/1.1" 200 1463
+"GET /static/assets/img/testimonial/01.png HTTP/1.1" 200 342
+"GET /static/assets/img/cta-2-shape2.png HTTP/1.1" 200 1655
+"GET /static/assets/img/testimonial/02.png HTTP/1.1" 200 306
+"GET /static/assets/img/cta-bg-3.jpg HTTP/1.1" 200 132465
+"GET /static/assets/img/favicon.svg HTTP/1.1" 200 1888
+Internal Server Error: /services/
+Traceback (most recent call last):
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\easyian\shristi\apps\services\views.py", line 106, in services_home
+    return render(request, template, context)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\easyian\shristi\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: services/categories.html
+"GET /services/ HTTP/1.1" 500 91805
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 6231
+"GET / HTTP/1.1" 200 163675
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 163675
+"GET /static/img/logo.svg HTTP/1.1" 304 0
+"GET /media/sliders/hero_books_white-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/sliders/hero_boxes_white-removebg-preview.png HTTP/1.1" 304 0
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /media/categories/ee4ae781-ed0f-4702-a4bc-c056020d87da-removebg-preview_I4HUQtR.png HTTP/1.1" 304 0
+"GET /media/categories/hero-book_T5aF2VE.png HTTP/1.1" 304 0
+"GET /media/sliders/hero_stationery_white-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/products/hero/WhatsApp_Image_2026-06-22_at_2.49.59_PM.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/comic_book_printing.png HTTP/1.1" 304 0
+"GET /media/products/featured/coffee_table_book_printing.png HTTP/1.1" 304 0
+"GET /media/products/featured/coloring_book_printing.png HTTP/1.1" 304 0
+"GET /media/products/featured/art_book_printing.png HTTP/1.1" 304 0
+"GET /media/products/featured/annual_reports_printing.png HTTP/1.1" 304 0
+"GET /media/products/featured/year_book_printing.png HTTP/1.1" 304 0
+"GET /media/products/featured/on-demand-books-printing.jpeg HTTP/1.1" 304 0
+"GET /media/products/bifold_brochure.png HTTP/1.1" 304 0
+"GET /media/products/address_labels.png HTTP/1.1" 304 0
+"GET /media/products/featured/poster-a4.png HTTP/1.1" 304 0
+"GET /media/products/featured/poster-a3.png HTTP/1.1" 304 0
+"GET /media/products/featured/poster-custom.png HTTP/1.1" 304 0
+"GET /media/products/featured/premium-flex.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/banner-media.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/paper-bag.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/barcode-labels.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/circle-stickers.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/warning-labels.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/corporate-letter-head.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/texture-business-card.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/standard-letter-head.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/standard-business-card.jpeg HTTP/1.1" 304 0
+"GET /media/products/featured/multicolour-lanyards.jpeg HTTP/1.1" 304 0
+"GET /static/img/no_design.png HTTP/1.1" 304 0
+"GET /services/stationery/standard-business-card/ HTTP/1.1" 200 104955
+"GET /static/assets/css/style.css HTTP/1.1" 404 1987
+"GET /static/images/corner-styles/straight-corners.svg HTTP/1.1" 304 0
+"GET /static/images/corner-styles/rounded-corners.svg HTTP/1.1" 304 0
+"GET /design-tool/api/studio/product/?slug=standard-business-card&printing_side=front_back HTTP/1.1" 200 804
+"GET /media/templates/thumbnails/Screenshot_from_2025-11-18_15-18-16.png HTTP/1.1" 304 0
+"GET /media/templates/svg/Agriculture-01_mEgkumM.svg HTTP/1.1" 304 0

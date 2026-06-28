@@ -1,641 +1,998 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load humanize %}
 {% load dynamic_form_tags %}
 
 {% block title %}{{ product.name }} | {{ block.super }}{% endblock %}
+{% block meta_description %}{{ product.short_description|default:product.name }} — Configure and order from Shirsti Printing.{% endblock %}
 
 {% block extra_css %}
 <style>
-    /* --- VARIABLES & RESET --- */
-    :root {
-        --primary: #7c3aed;
-        /* Purple accent color */
-        --primary-hover: #6d28d9;
-        --primary-light: #f3e8ff;
-        --text-main: #111827;
-        --text-muted: #6b7280;
-        --border-color: #e5e7eb;
-        --bg-light: #f9fafb;
-        --success: #059669;
-        --danger: #ef4444;
+/* ══════════════════════════════════════════════
+   Stationery Product Detail — Kraftix-style
+══════════════════════════════════════════════ */
+
+/* ── Header: this page has a white background, so override the style-3
+   white-text nav to a solid white bar with dark text ── */
+.header-section-3 {
+    background: #fff;
+    box-shadow: 0 2px 12px rgba(0,0,0,.08);
+}
+.header-1.style-3 .header-main .main-menu ul li > a {
+    color: var(--header, #1a1a2e) !important;
+}
+.header-1.style-3 .header-main .main-menu ul li:hover > a {
+    color: var(--theme, #7000fe) !important;
+}
+/* hamburger / mobile toggle icon */
+.header-1.style-3 .mean-toggle-btn .bar { background: var(--header, #1a1a2e); }
+
+.st-page { background: #fff; }
+
+/* ── Breadcrumb ── */
+.st-bc { padding: 14px 0 4px; font-size: .82rem; color: #9ca3af; }
+.st-bc a { color: #9ca3af; text-decoration: none; transition: color .2s; }
+.st-bc a:hover { color: var(--theme, #7000fe); }
+.st-bc .bc-cur { color: #374151; }
+
+/* ── Main product section ── */
+.st-main { padding: 10px 0 56px; }
+
+/* ── Gallery: vertical thumbs LEFT, big image RIGHT ── */
+.st-gallery { display: flex; gap: 12px; align-items: flex-start; }
+
+.st-thumbs-col {
+    display: flex; flex-direction: column; gap: 8px;
+    width: 72px; min-width: 72px;
+}
+.st-thumb {
+    width: 72px; height: 72px; border: 2px solid transparent;
+    border-radius: 8px; overflow: hidden; cursor: pointer;
+    opacity: .55; transition: all .22s; background: #f3f4f6;
+    flex-shrink: 0;
+}
+.st-thumb.active, .st-thumb:hover { border-color: var(--theme, #7000fe); opacity: 1; }
+.st-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.st-thumb-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #d1d5db; }
+
+.st-main-img {
+    flex: 1; aspect-ratio: 1 / 1; border: 1px solid #e5e7eb;
+    border-radius: 12px; overflow: hidden; background: #f8f9fa;
+    display: flex; align-items: center; justify-content: center; position: relative;
+}
+.st-main-img img {
+    width: 100%; height: 100%; object-fit: contain;
+    transition: opacity .18s ease, transform .3s ease;
+}
+.st-main-img:hover img { transform: scale(1.03); }
+.st-img-fallback { font-size: 4rem; color: #d1d5db; }
+
+/* Below gallery */
+.st-rating-row {
+    display: flex; align-items: center; gap: 8px;
+    margin: 14px 0 10px; font-size: .84rem;
+}
+.st-stars { color: #f59e0b; letter-spacing: 1px; }
+.st-rev-link {
+    color: #f59e0b; font-weight: 700; text-decoration: none; font-size: .84rem;
+}
+.st-rev-link:hover { text-decoration: underline; }
+
+.st-short-desc {
+    font-size: .875rem; color: #4b5563; line-height: 1.7;
+    margin-bottom: 14px;
+}
+
+.st-pill-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.st-pill {
+    background: #1f2937; color: #fff; border-radius: 20px;
+    padding: 5px 14px; font-size: .75rem; font-weight: 700; letter-spacing: .01em;
+}
+
+/* ── RIGHT: Get Started card ── */
+.st-gs-card {
+    border: 1px solid #d1d5db; border-radius: 14px; overflow: hidden;
+    box-shadow: 0 2px 24px rgba(0,0,0,.09);
+}
+.st-gs-head {
+    padding: 15px 20px; border-bottom: 1px solid #e5e7eb;
+    display: flex; align-items: center; justify-content: space-between;
+}
+.st-gs-head h2 { font-size: 1.05rem; font-weight: 800; color: #1f2937; margin: 0; }
+.st-share-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: #6b7280; font-size: .8rem; font-weight: 600;
+    border: 1px solid #e0e0e0; padding: 5px 13px; border-radius: 8px;
+    text-decoration: none; transition: all .2s; cursor: pointer; background: #fff;
+}
+.st-share-btn:hover { color: var(--theme, #7000fe); border-color: var(--theme, #7000fe); }
+
+.st-gs-body { padding: 20px; }
+
+/* Price section inside card */
+.st-price-section {
+    border-top: 1px solid #e5e7eb; margin-top: 16px; padding-top: 14px;
+}
+.st-total-row {
+    display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 3px;
+}
+.st-total-label { font-size: .9rem; font-weight: 700; color: #1f2937; }
+.st-total-amount { font-size: 1.75rem; font-weight: 800; color: #059669; line-height: 1; }
+.st-unit-row { text-align: right; font-size: .78rem; color: #6b7280; margin-bottom: 14px; }
+
+/* Order CTA */
+.st-btn-order {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%; padding: 15px 20px; background: #1f2937; color: #fff;
+    border: none; border-radius: 10px; font-size: .97rem; font-weight: 700;
+    cursor: pointer; transition: all .25s; margin-bottom: 8px; text-decoration: none;
+}
+.st-btn-order:hover {
+    background: var(--theme, #7000fe); color: #fff;
+    transform: translateY(-2px); box-shadow: 0 8px 22px rgba(112,0,254,.28);
+}
+.st-dispatch-note {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    font-size: .78rem; color: #6b7280; margin-bottom: 12px;
+}
+.st-dispatch-note i { color: var(--theme, #7000fe); }
+
+/* Upload zone */
+.st-upload-zone {
+    border: 2px dashed #d1d5db; border-radius: 8px; padding: 14px;
+    text-align: center; cursor: pointer; transition: all .22s; background: #fafafa;
+}
+.st-upload-zone:hover { border-color: var(--theme, #7000fe); background: #faf7ff; }
+.st-upload-zone > i { color: var(--theme, #7000fe); margin-bottom: 5px; display: block; font-size: 1.2rem; }
+.uz-t { font-weight: 600; color: #374151; font-size: .8rem; }
+.uz-s { font-size: .72rem; color: #9ca3af; margin-top: 2px; }
+#stFileName { font-size: .75rem; color: #16a34a; font-weight: 600; margin-top: 6px; }
+
+/* ── Process row (3 steps, minimal) ── */
+.st-process {
+    padding: 34px 0; background: #f9fafb;
+    border-top: 1px solid #e9ecef; border-bottom: 1px solid #e9ecef;
+}
+.st-proc-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+.st-proc-step {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 0 32px 0 0; margin-right: 32px;
+    border-right: 1px solid #e5e7eb;
+}
+.st-proc-step:first-child { padding-left: 0; }
+.st-proc-step:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+.st-proc-icon-box {
+    width: 50px; height: 50px; min-width: 50px; border-radius: 10px;
+    background: #fff; border: 1px solid #e5e7eb;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.st-proc-icon-box i { font-size: 1.25rem; color: var(--theme, #7000fe); }
+.st-proc-title { font-weight: 700; color: #1f2937; font-size: .88rem; margin-bottom: 4px; }
+.st-proc-desc { font-size: .78rem; color: #6b7280; line-height: 1.55; }
+
+/* ── FAQ (2 simple accordion items) ── */
+.st-faq { padding: 28px 0 32px; background: #fff; }
+.st-faq-box {
+    border: 1px solid #e0e0e0; border-radius: 10px; overflow: hidden;
+}
+.st-faq-item { border-bottom: 1px solid #e0e0e0; }
+.st-faq-item:last-child { border-bottom: none; }
+.st-faq-trigger {
+    width: 100%; background: #fff; border: none; text-align: left;
+    padding: 17px 20px; cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    font-size: .93rem; font-weight: 600; color: #1f2937; transition: background .2s;
+}
+.st-faq-trigger:hover { background: #f9fafb; }
+.st-faq-plus {
+    width: 26px; height: 26px; min-width: 26px; border-radius: 50%;
+    border: 1.5px solid #9ca3af; background: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .78rem; font-weight: 700; color: #6b7280; transition: all .25s; line-height: 1;
+}
+.st-faq-item.open .st-faq-trigger { color: #1f2937; }
+.st-faq-item.open .st-faq-plus {
+    border-color: var(--theme, #7000fe); color: var(--theme, #7000fe); transform: rotate(45deg);
+}
+.st-faq-body { max-height: 0; overflow: hidden; transition: max-height .38s ease; }
+.st-faq-item.open .st-faq-body { max-height: 900px; }
+.st-faq-inner { padding: 2px 20px 20px; }
+
+/* How to Order steps */
+.how-steps { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+.how-step { display: flex; align-items: flex-start; gap: 12px; }
+.how-num {
+    width: 24px; height: 24px; min-width: 24px; border-radius: 50%;
+    background: var(--theme, #7000fe); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .68rem; font-weight: 800; margin-top: 2px; flex-shrink: 0;
+}
+.how-text strong { font-size: .85rem; color: #1f2937; display: block; margin-bottom: 2px; }
+.how-text span { font-size: .82rem; color: #6b7280; line-height: 1.55; }
+
+/* FAQs inside accordion */
+.faq-qas { display: flex; flex-direction: column; gap: 14px; }
+.faq-q-text { font-weight: 700; font-size: .87rem; color: #1f2937; margin-bottom: 3px; }
+.faq-a-text { font-size: .83rem; color: #4b5563; line-height: 1.65; margin: 0; }
+
+/* ── Customer Reviews ── */
+.st-reviews {
+    padding: 40px 0; background: #fff;
+    border-top: 1px solid #e9ecef;
+}
+.st-reviews-title { font-size: 1.25rem; font-weight: 800; color: #1f2937; margin-bottom: 20px; }
+.st-rev-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.st-rev-card {
+    border: 1px solid #e5e7eb; border-radius: 10px; padding: 16px 18px;
+    background: #fff; transition: box-shadow .2s;
+}
+.st-rev-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.08); }
+.st-rev-name { font-weight: 700; font-size: .88rem; color: #1f2937; margin-bottom: 4px; }
+.st-rev-stars { color: #f59e0b; font-size: .82rem; margin-bottom: 8px; }
+.st-rev-text { font-size: .83rem; color: #4b5563; line-height: 1.6; margin: 0; }
+
+/* ── Related Products ── */
+.st-related {
+    padding: 40px 0; background: #fff;
+    border-top: 1px solid #e9ecef;
+}
+
+/* Shop image square fix for related products */
+.shop-items .shop-image { aspect-ratio: 1/1; overflow: hidden; }
+.shop-items .shop-image img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ── Get Started Modal ── */
+.st-modal-overlay {
+    position: fixed; inset: 0; z-index: 9999;
+    background: rgba(9,5,47,.55); backdrop-filter: blur(3px);
+    display: flex; align-items: center; justify-content: center; padding: 20px;
+    opacity: 0; visibility: hidden; transition: opacity .28s ease, visibility .28s;
+}
+.st-modal-overlay.open { opacity: 1; visibility: visible; }
+
+.st-modal {
+    background: #fff; border-radius: 18px; width: 100%; max-width: 580px;
+    box-shadow: 0 24px 60px rgba(0,0,0,.22);
+    transform: translateY(18px) scale(.97); transition: transform .28s ease;
+    overflow: hidden;
+}
+.st-modal-overlay.open .st-modal { transform: translateY(0) scale(1); }
+
+.st-modal-head {
+    padding: 20px 22px 0; display: flex; align-items: flex-start; justify-content: space-between;
+}
+.st-modal-head h3 { font-size: 1.1rem; font-weight: 800; color: #1f2937; margin: 0 0 4px; }
+.st-modal-head p { font-size: .82rem; color: #6b7280; margin: 0; }
+.st-modal-close {
+    width: 32px; height: 32px; border: none; background: #f3f4f6; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    font-size: .85rem; color: #6b7280; flex-shrink: 0; transition: all .2s; margin-left: 12px;
+}
+.st-modal-close:hover { background: #e5e7eb; color: #1f2937; }
+
+.st-modal-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 20px 22px 22px; }
+
+.st-modal-opt {
+    border: 2px solid #e5e7eb; border-radius: 14px; padding: 22px 18px;
+    cursor: pointer; transition: all .22s; text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    background: #fff; text-decoration: none; color: inherit;
+}
+.st-modal-opt:hover { border-color: var(--theme, #7000fe); box-shadow: 0 6px 20px rgba(112,0,254,.12); transform: translateY(-2px); }
+.st-modal-opt.selected { border-color: var(--theme, #7000fe); background: #faf7ff; }
+
+.st-opt-icon {
+    width: 60px; height: 60px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+}
+.st-opt-icon.design { background: linear-gradient(135deg, #7000fe 0%, #a855f7 100%); color: #fff; }
+.st-opt-icon.upload { background: linear-gradient(135deg, #1f2937 0%, #374151 100%); color: #fff; }
+
+.st-modal-opt .opt-title { font-weight: 800; font-size: .95rem; color: #1f2937; }
+.st-modal-opt .opt-desc { font-size: .78rem; color: #6b7280; line-height: 1.5; }
+
+/* Upload sub-panel inside modal */
+.st-upload-panel {
+    padding: 0 22px 22px; display: none;
+}
+.st-upload-panel.visible { display: block; }
+.st-upload-panel-inner {
+    border: 2px dashed #d1d5db; border-radius: 10px; padding: 20px;
+    text-align: center; background: #fafafa; cursor: pointer; transition: all .22s;
+    margin-bottom: 12px;
+}
+.st-upload-panel-inner:hover { border-color: var(--theme, #7000fe); background: #faf7ff; }
+.st-upload-panel-inner i { color: var(--theme, #7000fe); font-size: 1.4rem; margin-bottom: 6px; display: block; }
+.st-upload-panel-inner .up-t { font-weight: 700; font-size: .88rem; color: #1f2937; }
+.st-upload-panel-inner .up-s { font-size: .76rem; color: #9ca3af; margin-top: 3px; }
+#stModalFileName { font-size: .8rem; color: #16a34a; font-weight: 600; margin-top: 8px; }
+.st-upload-submit {
+    width: 100%; padding: 13px 20px; background: #1f2937; color: #fff;
+    border: none; border-radius: 10px; font-size: .95rem; font-weight: 700;
+    cursor: pointer; transition: all .25s; display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.st-upload-submit:hover { background: var(--theme, #7000fe); }
+
+/* ── Responsive ── */
+@media (max-width: 991px) {
+    .st-proc-grid { grid-template-columns: 1fr; gap: 0; }
+    .st-proc-step {
+        border-right: none; border-bottom: 1px solid #e5e7eb;
+        padding: 0 0 16px; margin: 0 0 16px;
     }
-
-    /* --- LAYOUT CONTAINERS --- */
-    .product-page-container {
-        max-width: 1280px;
-        margin: 0 auto;
-        padding: 20px;
-        font-family: 'Inter', system-ui, -apple-system, sans-serif;
-        box-sizing: border-box;
-    }
-
-    /* Breadcrumb */
-    .breadcrumb {
-        font-size: 14px;
-        color: var(--text-muted);
-        margin-bottom: 30px;
-    }
-
-    .breadcrumb a {
-        color: var(--text-muted);
-        text-decoration: none;
-        transition: color 0.2s;
-    }
-
-    .breadcrumb a:hover {
-        color: var(--primary);
-    }
-
-    .breadcrumb span {
-        margin: 0 8px;
-        color: #d1d5db;
-    }
-
-    .breadcrumb .active {
-        color: var(--text-main);
-        font-weight: 500;
-    }
-
-    /* Main Grid Layout */
-    .product-main-grid {
-        display: grid;
-        grid-template-columns: 1.1fr 1fr;
-        gap: 60px;
-        margin-bottom: 80px;
-        align-items: start;
-    }
-
-    /* --- LEFT COLUMN: IMAGE GALLERY --- */
-    .gallery-container {
-        position: sticky;
-        top: 20px;
-    }
-
-    .main-image-wrapper {
-        width: 100%;
-        aspect-ratio: 1/1;
-        background: var(--bg-light);
-        border: 1px solid var(--border-color);
-        border-radius: 16px;
-        overflow: hidden;
-        margin-bottom: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-    }
-
-    .main-image-wrapper img {
-        max-width: 100%;
-        max-height: 100%;
-        object-fit: contain;
-        transition: transform 0.3s ease;
-    }
-
-    .main-image-wrapper:hover img {
-        transform: scale(1.03);
-    }
-
-    .thumbnail-list {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        gap: 12px;
-    }
-
-    .thumb-item {
-        aspect-ratio: 1/1;
-        border: 2px solid transparent;
-        border-radius: 8px;
-        overflow: hidden;
-        cursor: pointer;
-        opacity: 0.7;
-        transition: all 0.2s;
-        background: #fff;
-    }
-
-    .thumb-item.active,
-    .thumb-item:hover {
-        border-color: var(--primary);
-        opacity: 1;
-    }
-
-    .thumb-item img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    /* --- RIGHT COLUMN: CONFIGURATION --- */
-    .product-details {
-        padding-top: 10px;
-    }
-
-    .product-title {
-        font-size: 32px;
-        font-weight: 800;
-        color: var(--text-main);
-        line-height: 1.2;
-        margin-bottom: 12px;
-    }
-
-    .page-title-block {
-        margin-bottom: 20px;
-    }
-
-    .page-title-block .product-title {
-        margin-bottom: 10px;
-    }
-
-    .product-meta {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        font-size: 14px;
-        color: var(--text-muted);
-        margin-bottom: 25px;
-    }
-
-    .rating-stars {
-        color: #f59e0b;
-    }
-
-    .stock-badge {
-        color: var(--success);
-        font-weight: 500;
-        display: flex;
-        align-items: center;
-        gap: 4px;
-    }
-
-    /* Price Block */
-    .price-container {
-        background: var(--bg-light);
-        padding: 20px;
-        border-radius: 12px;
-        margin-bottom: 30px;
-        border: 1px solid var(--border-color);
-        display: flex;
-        align-items: baseline;
-        gap: 8px;
-    }
-
-    .current-price {
-        font-size: 36px;
-        font-weight: 700;
-        color: var(--primary);
-    }
-
-    .price-tax-text {
-        font-size: 13px;
-        color: var(--text-muted);
-    }
-
-    /* --- FIELD CONTAINER --- */
-    .config-card {
-        background: #fdfdfd;
-        border: 1px solid #d9d9d9;
-        border-radius: 12px;
-        padding: 0;
-        margin-bottom: 28px;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
-    }
-
-    .config-card-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 14px 18px;
-        border-bottom: 1px solid #e5e7eb;
-        font-weight: 700;
-        font-size: 15px;
-        color: var(--text-main);
-        background: #f7f7f7;
-    }
-
-    .config-card-header .share-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        font-weight: 600;
-        color: var(--primary);
-        text-decoration: none;
-        font-size: 14px;
-    }
-
-    .config-card-body {
-        padding: 18px;
-    }
-
-    /* --- CUSTOM FIELD STYLING (For your dynamic tag) --- */
-    /* This styling attempts to make standard inputs look better */
-    .dynamic-fields-wrapper label {
-        display: block;
-        font-weight: 600;
-        margin-bottom: 8px;
-        color: var(--text-main);
-        font-size: 14px;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-    }
-
-    .dynamic-fields-wrapper {
-        max-width: 420px;
-    }
-
-    .dynamic-fields-wrapper select,
-    .dynamic-fields-wrapper input[type="text"],
-    .dynamic-fields-wrapper input[type="number"] {
-        width: 100%;
-        max-width: 340px;
-        padding: 12px 14px;
-        border: 1px solid #d1d5db;
-        border-radius: 10px;
-        margin-bottom: 18px;
-        font-size: 15px;
-        background: #f8fafc;
-    }
-
-    /* --- KRAFTIX STYLE GRID (If you use the manual loop below) --- */
-    .config-section {
-        margin-bottom: 25px;
-    }
-
-    .section-label {
-        font-size: 14px;
-        font-weight: 700;
-        color: var(--text-main);
-        margin-bottom: 12px;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-    }
-
-    .options-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-        gap: 12px;
-    }
-
-    .visual-radio {
-        display: none;
-    }
-
-    .tile-label {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        padding: 16px 12px;
-        background: #f9fafb;
-        border: 1.5px solid #e5e7eb;
-        border-radius: 12px;
-        cursor: pointer;
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        min-height: 82px;
-        user-select: none;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-    }
-
-    .tile-label:hover {
-        border-color: var(--primary);
-        background: #f4f0ff;
-        box-shadow: 0 8px 18px rgba(124, 58, 237, 0.08);
-        transform: translateY(-1px);
-    }
-
-    .tile-label::after {
-        content: '';
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        width: 18px;
-        height: 18px;
-        border-radius: 50%;
-        border: 1.5px solid #e5e7eb;
-        background: #fff;
-        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
-        opacity: 0;
-        transform: scale(0.9);
-        transition: all 0.15s ease;
-    }
-
-    .visual-radio:checked+.tile-label {
-        background-color: #f2ecff;
-        border-color: var(--primary);
-        color: var(--primary);
-        box-shadow: 0 8px 18px rgba(124, 58, 237, 0.1);
-    }
-
-    .visual-radio:checked+.tile-label::after {
-        opacity: 1;
-        transform: scale(1);
-        border-color: var(--primary);
-        background: radial-gradient(circle at center, var(--primary) 45%, #fff 46%);
-    }
-
-    .tile-name {
-        font-size: 14px;
-        font-weight: 600;
-        margin-bottom: 4px;
-        line-height: 1.3;
-        letter-spacing: 0.01em;
-    }
-
-    .tile-price {
-        font-size: 12px;
-        color: var(--text-muted);
-    }
-
-    .visual-radio:checked+.tile-label .tile-price {
-        color: var(--primary-hover);
-        font-weight: 600;
-    }
-
-    /* Upload Zone */
-    .upload-zone {
-        border: 2px dashed #cbd5e1;
-        border-radius: 12px;
-        padding: 30px 20px;
-        text-align: center;
-        cursor: pointer;
-        transition: all 0.2s;
-        background: #f8fafc;
-        margin-top: 20px;
-    }
-
-    .upload-zone:hover {
-        border-color: var(--primary);
-        background: var(--primary-light);
-    }
-
-    /* Sticky Action Bar */
-    .action-bar {
-        position: sticky;
-        bottom: 20px;
-        background: #fff;
-        padding: 20px;
-        border-radius: 12px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-        border: 1px solid var(--border-color);
-        margin-top: 40px;
-        z-index: 50;
-        display: flex;
-        gap: 15px;
-        align-items: center;
-    }
-
-    .total-display {
-        flex: 1;
-    }
-
-    .total-label {
-        font-size: 12px;
-        color: var(--text-muted);
-        text-transform: uppercase;
-    }
-
-    .total-amount {
-        font-size: 24px;
-        font-weight: 800;
-        color: var(--text-main);
-    }
-
-    .btn-add-cart {
-        background: var(--primary);
-        color: white;
-        border: none;
-        padding: 16px 32px;
-        border-radius: 8px;
-        font-weight: 600;
-        font-size: 16px;
-        cursor: pointer;
-        transition: background 0.2s;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .btn-add-cart:hover {
-        background: var(--primary-hover);
-    }
-
-    .specs-table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    .specs-table tr {
-        border-bottom: 1px solid var(--border-color);
-    }
-
-    .specs-table th {
-        padding: 15px 0;
-        text-align: left;
-        width: 250px;
-        color: var(--text-main);
-    }
-
-    .specs-table td {
-        padding: 15px 0;
-        color: var(--text-muted);
-    }
-
-    @media (max-width: 768px) {
-        .product-main-grid {
-            grid-template-columns: 1fr;
-            gap: 30px;
-        }
-
-        .gallery-container {
-            position: static;
-        }
-
-        .action-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            margin: 0;
-            border-radius: 0;
-            border-top: 1px solid var(--border-color);
-            padding: 15px;
-        }
-
-        .product-page-container {
-            padding-bottom: 100px;
-        }
-    }
+    .st-proc-step:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .st-rev-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 767px) {
+    .st-gallery { flex-direction: column-reverse; }
+    .st-thumbs-col { flex-direction: row; width: 100%; min-width: unset; flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; }
+    .st-thumb { width: 60px; height: 60px; min-width: 60px; }
+}
+@media (max-width: 575px) {
+    .st-rev-grid { grid-template-columns: 1fr; }
+    .st-modal-opts { grid-template-columns: 1fr; }
+}
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 {% endblock %}
 
 {% block content %}
-<div class="product-page-container">
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="st-page">
 
-    <nav class="breadcrumb">
-        <a href="/">Home</a> <span>/</span>
-        <a href="#">{{ product.category.name|default:"Products" }}</a> <span>/</span>
-        <span class="active">{{ product.name }}</span>
-    </nav>
+    <!-- ═══ Breadcrumb ═══ -->
+    <div class="container">
+        <nav class="st-bc">
+            <a href="{% url 'core:home' %}">Home</a>
+            <span style="color:#d1d5db;margin:0 4px;">›</span>
+            <a href="{% url 'services:home' %}">Services</a>
+            {% if product.category %}
+            <span style="color:#d1d5db;margin:0 4px;">›</span>
+            <a href="{{ product.category.get_absolute_url }}">{{ product.category.name }}</a>
+            {% endif %}
+            <span style="color:#d1d5db;margin:0 4px;">›</span>
+            <span class="bc-cur">{{ product.name }}</span>
+        </nav>
+    </div>
 
-    <div class="page-title-block">
-        <h1 class="product-title">{{ product.name }}</h1>
+    <!-- ═══ Main Product Section ═══ -->
+    <div class="st-main">
+        <div class="container">
+            <div class="row g-4 g-lg-5">
 
-        <div class="product-meta">
-            <div class="rating-stars">
-                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
-                    class="fas fa-star"></i><i class="fas fa-star"></i>
-                <span style="color: var(--text-muted); margin-left:5px;">(4.9/5)</span>
+                <!-- ─ LEFT: Gallery ─ -->
+                <div class="col-lg-6">
+
+                    <h1 style="font-size:clamp(1.45rem,3vw,2rem);font-weight:800;color:#1f2937;line-height:1.2;margin:0 0 18px;">{{ product.name }}</h1>
+
+                    <div class="st-gallery">
+                        <!-- Vertical thumbnail strip -->
+                        <div class="st-thumbs-col">
+                            {% if product.featured_image %}
+                            <div class="st-thumb active" onclick="stSwitch(this,'{{ product.featured_image.url }}')">
+                                <img src="{{ product.featured_image.url }}" alt="{{ product.name }}">
+                            </div>
+                            {% endif %}
+                            {% if product.hero_image %}
+                            <div class="st-thumb" onclick="stSwitch(this,'{{ product.hero_image.url }}')">
+                                <img src="{{ product.hero_image.url }}" alt="{{ product.name }}">
+                            </div>
+                            {% endif %}
+                            {% for img in product.images.all %}
+                            <div class="st-thumb" onclick="stSwitch(this,'{{ img.image.url }}')">
+                                <img src="{{ img.image.url }}" alt="">
+                            </div>
+                            {% endfor %}
+                            {% if not product.featured_image and not product.hero_image %}
+                            <div class="st-thumb active">
+                                <div class="st-thumb-placeholder"><i class="fas fa-print"></i></div>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Main image -->
+                        <div class="st-main-img">
+                            {% if product.featured_image %}
+                                <img id="stMainImg" src="{{ product.featured_image.url }}" alt="{{ product.name }}">
+                            {% elif product.hero_image %}
+                                <img id="stMainImg" src="{{ product.hero_image.url }}" alt="{{ product.name }}">
+                            {% else %}
+                                <i class="fas fa-print st-img-fallback"></i>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Rating -->
+                    <div class="st-rating-row">
+                        <span class="st-stars">★★★★★</span>
+                        <a href="#st-reviews" class="st-rev-link">4.9 / 5 (Customer Reviews)</a>
+                    </div>
+
+                    {% if product.short_description %}
+                    <p class="st-short-desc">{{ product.short_description }}</p>
+                    {% endif %}
+
+                    <div class="st-pill-row">
+                        {% if product.minimum_quantity %}
+                        <span class="st-pill">MOQ {{ product.minimum_quantity }} pcs</span>
+                        {% endif %}
+                        <span class="st-pill">Ships in 3 Days</span>
+                        <span class="st-pill">Pan India</span>
+                    </div>
+
+                </div><!-- /col-lg-6 left -->
+
+                <!-- ─ RIGHT: Get Started card ─ -->
+                <div class="col-lg-6">
+                    <div class="st-gs-card">
+                        <div class="st-gs-head">
+                            <h2>Get Started</h2>
+                            <button class="st-share-btn" onclick="stShare(event)" type="button">
+                                <i class="fas fa-share-alt"></i> Share
+                            </button>
+                        </div>
+                        <div class="st-gs-body">
+                            <form id="stForm" method="POST" action="#" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <input type="hidden" name="product_id" value="{{ product.id }}">
+
+                                {% render_product_form_fields product %}
+
+                                <!-- Live price -->
+                                <div class="st-price-section">
+                                    <div class="st-total-row">
+                                        <span class="st-total-label">Total (GST Incl.):</span>
+                                        <span class="st-total-amount" id="stTotal" data-base="{{ product.base_price }}">₹{{ product.base_price }}</span>
+                                    </div>
+                                    <div class="st-unit-row">Unit Price: <span id="stUnit">₹{{ product.base_price }}</span></div>
+                                </div>
+
+                                <!-- CTA button -->
+                                {% if product.design_tool_enabled %}
+                                <button type="button" class="st-btn-order" onclick="stOpenModal()">
+                                    <i class="fas fa-arrow-right"></i> Get Started
+                                </button>
+                                {% else %}
+                                <button type="button" class="st-btn-order" id="stAddCartBtn" onclick="stAddToCart()">
+                                    <i class="fas fa-shopping-cart"></i> Place Order
+                                </button>
+                                {% endif %}
+                                <div class="st-dispatch-note">
+                                    <i class="fas fa-truck"></i>
+                                    Estimated Dispatch in 3–5 Business Days
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div><!-- /col-lg-6 right -->
+
             </div>
-            <div class="stock-badge">
-                <i class="fas fa-check-circle"></i> In Stock
-            </div>
-            <div>SKU: {{ product.sku|default:"KRAFT-002" }}</div>
         </div>
     </div>
 
-    <div class="product-main-grid">
-        <div class="gallery-container">
-            <div class="main-image-wrapper">
-                {% if product.featured_image %}
-                <img id="mainImage" src="{{ product.featured_image.url }}" alt="{{ product.name }}">
-                {% else %}
-                <i class="fas fa-image fa-3x" style="color: #ccc;"></i>
-                {% endif %}
-            </div>
-
-            <div class="thumbnail-list">
-                {% if product.featured_image %}
-                <div class="thumb-item active" onclick="switchImage(this, '{{ product.featured_image.url }}')">
-                    <img src="{{ product.featured_image.url }}">
+    <!-- ═══ How It Works (3 steps, minimal) ═══ -->
+    <section class="st-process">
+        <div class="container">
+            <div class="st-proc-grid">
+                <div class="st-proc-step">
+                    <div class="st-proc-icon-box"><i class="fas fa-mouse-pointer"></i></div>
+                    <div>
+                        <div class="st-proc-title">Select &amp; Order Product</div>
+                        <div class="st-proc-desc">Choose size, quantity and material of product.</div>
+                    </div>
                 </div>
-                {% endif %}
-                {% if product.images %}
-                {% for img in product.images.all %}
-                <div class="thumb-item" onclick="switchImage(this, '{{ img.image.url }}')">
-                    <img src="{{ img.image.url }}">
+                <div class="st-proc-step">
+                    <div class="st-proc-icon-box"><i class="fas fa-check-circle"></i></div>
+                    <div>
+                        <div class="st-proc-title">Get Design Approval</div>
+                        <div class="st-proc-desc">Receive approval for print on WhatsApp/email in 24 hours.</div>
+                    </div>
                 </div>
-                {% endfor %}
-                {% endif %}
+                <div class="st-proc-step">
+                    <div class="st-proc-icon-box"><i class="fas fa-shipping-fast"></i></div>
+                    <div>
+                        <div class="st-proc-title">Process &amp; Dispatch</div>
+                        <div class="st-proc-desc">Most products shipped in 2–3 business days via Bluedart, DTDC etc.</div>
+                    </div>
+                </div>
             </div>
         </div>
+    </section>
 
-        <div class="product-details">
+    <!-- ═══ FAQ (2 collapsible items) ═══ -->
+    <section class="st-faq">
+        <div class="container">
+            <div class="st-faq-box">
 
-
-            <form id="addToCartForm" method="POST" action="#" enctype="multipart/form-data">
-                {% csrf_token %}
-                <input type="hidden" name="product_id" value="{{ product.id }}">
-
-                <div class="config-card">
-                    <div class="config-card-header">
-                        <span>Get Started</span>
-                        <a class="share-link" href="#">
-                            <i class="fas fa-share-alt"></i>
-                            Share
-                        </a>
-                    </div>
-                    <div class="config-card-body">
-                        <div class="dynamic-fields-wrapper">
-                            {% render_product_form_fields product %}
+                <div class="st-faq-item">
+                    <button class="st-faq-trigger" onclick="stFaq(this)" type="button">
+                        How to Order
+                        <span class="st-faq-plus">+</span>
+                    </button>
+                    <div class="st-faq-body">
+                        <div class="st-faq-inner">
+                            <ol class="how-steps">
+                                <li class="how-step">
+                                    <span class="how-num">1</span>
+                                    <div class="how-text">
+                                        <strong>Select your specifications</strong>
+                                        <span>Choose size, quantity, material and any other options from the configurator above.</span>
+                                    </div>
+                                </li>
+                                <li class="how-step">
+                                    <span class="how-num">2</span>
+                                    <div class="how-text">
+                                        <strong>Upload your artwork</strong>
+                                        <span>Upload your design file (PDF, AI, CDR, PSD — 300 DPI, CMYK, 3 mm bleed) or request our design service.</span>
+                                    </div>
+                                </li>
+                                <li class="how-step">
+                                    <span class="how-num">3</span>
+                                    <div class="how-text">
+                                        <strong>Place your order &amp; pay</strong>
+                                        <span>Complete checkout via UPI, card, or net banking. A GST invoice is issued automatically.</span>
+                                    </div>
+                                </li>
+                                <li class="how-step">
+                                    <span class="how-num">4</span>
+                                    <div class="how-text">
+                                        <strong>Approve the proof</strong>
+                                        <span>We share a digital proof on WhatsApp/email. Production begins only after your approval.</span>
+                                    </div>
+                                </li>
+                                <li class="how-step">
+                                    <span class="how-num">5</span>
+                                    <div class="how-text">
+                                        <strong>Receive your order</strong>
+                                        <span>Printed and dispatched within 3–5 business days. Delivered pan India.</span>
+                                    </div>
+                                </li>
+                            </ol>
                         </div>
+                    </div>
+                </div>
 
-                        <div class="config-section" style="margin-bottom: 0;">
-                            <div class="section-label">Upload Design</div>
-                            <div class="upload-zone" onclick="document.getElementById('designFile').click()">
-                                <i class="fas fa-cloud-upload-alt fa-2x"
-                                    style="color: var(--primary); margin-bottom: 10px;"></i>
-                                <div style="font-weight: 500; color: var(--text-main);">Click to upload your artwork
+                <div class="st-faq-item">
+                    <button class="st-faq-trigger" onclick="stFaq(this)" type="button">
+                        FAQs
+                        <span class="st-faq-plus">+</span>
+                    </button>
+                    <div class="st-faq-body">
+                        <div class="st-faq-inner">
+                            <div class="faq-qas">
+                                <div>
+                                    <div class="faq-q-text">What file formats do you accept for printing?</div>
+                                    <p class="faq-a-text">We accept PDF, AI, CDR, PSD and high-resolution PNG/JPG (300 DPI, CMYK, 3 mm bleed). PDF is preferred for best results.</p>
                                 </div>
-                                <div style="font-size: 12px; color: var(--text-muted);">Supports PDF, AI, CDR (Max 50MB)
+                                <div>
+                                    <div class="faq-q-text">What is the minimum order quantity?</div>
+                                    <p class="faq-a-text">{% if product.minimum_quantity %}Minimum {{ product.minimum_quantity }} pcs for {{ product.name }}.{% else %}Minimum quantity depends on your chosen specification — see the quantity selector above.{% endif %} Bulk discounts apply automatically as you increase quantity.</p>
                                 </div>
-                                <input type="file" id="designFile" name="design_file" hidden
-                                    onchange="fileSelected(this)">
-                                <div id="fileNameDisplay"
-                                    style="margin-top:10px; font-size:13px; color:var(--success); font-weight:600;">
+                                <div>
+                                    <div class="faq-q-text">Will I get a proof before printing?</div>
+                                    <p class="faq-a-text">Yes. We always share a digital proof via WhatsApp or email before going to press. Production starts only after your explicit approval.</p>
+                                </div>
+                                <div>
+                                    <div class="faq-q-text">Do you offer design services if I don't have artwork?</div>
+                                    <p class="faq-a-text">Yes — our in-house designers can create or refine your artwork for a small additional charge. Contact us on WhatsApp with your requirements and brand guidelines.</p>
+                                </div>
+                                <div>
+                                    <div class="faq-q-text">How long does delivery take?</div>
+                                    <p class="faq-a-text">Most orders are printed and dispatched within 3–5 business days after proof approval. Metro cities: 1–2 extra days; tier 2/3 cities: 3–5 extra days.</p>
+                                </div>
+                                <div>
+                                    <div class="faq-q-text">What payment methods are accepted?</div>
+                                    <p class="faq-a-text">UPI, credit/debit cards, net banking and wallets. All transactions are 100 % secure and include a GST invoice.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="action-bar">
-                    <div class="total-display">
-                        <div class="total-label">Total Amount</div>
-                        <div class="total-amount" id="stickyTotal" data-base-price="{{ product.base_price }}">₹0</div>
-                    </div>
-                    <button type="button" class="btn-add-cart" onclick="submitToCart()">
-                        <span>Add to Cart</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ Customer Reviews ═══ -->
+    <section class="st-reviews" id="st-reviews">
+        <div class="container">
+            <div class="st-reviews-title">Customer Reviews</div>
+            <div class="st-rev-grid">
+                <div class="st-rev-card">
+                    <div class="st-rev-name">Rahul Sharma</div>
+                    <div class="st-rev-stars">★★★★☆</div>
+                    <p class="st-rev-text">Excellent print quality on the letterheads. Crisp text, premium paper feel and delivered right on time.</p>
                 </div>
+                <div class="st-rev-card">
+                    <div class="st-rev-name">Priya Mehta</div>
+                    <div class="st-rev-stars">★★★★★</div>
+                    <p class="st-rev-text">Vibrant print and perfect alignment — exactly what our office needed. Will definitely reorder.</p>
+                </div>
+                <div class="st-rev-card">
+                    <div class="st-rev-name">Amit Kapoor</div>
+                    <div class="st-rev-stars">★★★★★</div>
+                    <p class="st-rev-text">Quick proofing process and 3-day dispatch was accurate. Stationery looks very professional.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ Related Products ═══ -->
+    {% if related_products %}
+    <section class="st-related">
+        <div class="container">
+            {% include 'services/static_products/partials/related_products.html' %}
+        </div>
+    </section>
+    {% endif %}
+
+</div><!-- /st-page -->
+
+{% if product.design_tool_enabled %}
+<!-- ═══ Get Started Modal (design-tool products only) ═══ -->
+<div class="st-modal-overlay" id="stModal" onclick="stModalOverlayClick(event)">
+    <div class="st-modal" role="dialog" aria-modal="true" aria-labelledby="stModalTitle">
+
+        <div class="st-modal-head">
+            <div>
+                <h3 id="stModalTitle">How would you like to proceed?</h3>
+                <p>Choose to design your stationery online or upload an existing file.</p>
+            </div>
+            <button class="st-modal-close" onclick="stCloseModal()" aria-label="Close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="st-modal-opts">
+            <!-- Design Now → opens design studio in new tab -->
+            <a class="st-modal-opt"
+               href="#"
+               id="stOptDesign"
+               onclick="stLaunchStudio(event)">
+                <div class="st-opt-icon design">
+                    <i class="fas fa-paint-brush"></i>
+                </div>
+                <div class="opt-title">Design Now</div>
+                <div class="opt-desc">Use our online design tool to create your artwork from scratch or pick a ready template.</div>
+            </a>
+
+            <!-- Upload Design -->
+            <div class="st-modal-opt" id="stOptUpload" onclick="stShowUploadPanel()">
+                <div class="st-opt-icon upload">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <div class="opt-title">Upload Design</div>
+                <div class="opt-desc">Already have a ready file? Upload PDF, AI, CDR or PSD and we'll take it from there.</div>
+            </div>
+        </div>
+
+        <!-- Upload sub-panel (shown after clicking Upload Design) -->
+        <div class="st-upload-panel" id="stUploadPanel">
+            <form id="stUploadForm" method="POST" action="#" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="product_id" value="{{ product.id }}">
+                <!-- Carry over all form selections as hidden fields via JS -->
+                <div id="stHiddenFields"></div>
+
+                <div class="st-upload-panel-inner" onclick="document.getElementById('stModalFile').click()">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <div class="up-t">Click to select your design file</div>
+                    <div class="up-s">PDF, AI, CDR, PSD — Max 50 MB</div>
+                    <input type="file" id="stModalFile" name="design_file" accept=".pdf,.ai,.cdr,.psd,.png,.jpg,.jpeg" hidden onchange="stModalFileChosen(this)">
+                    <div id="stModalFileName"></div>
+                </div>
+
+                <button type="submit" class="st-upload-submit">
+                    <i class="fas fa-shopping-cart"></i> Place Order with Uploaded Design
+                </button>
             </form>
         </div>
+
     </div>
-
-    {% include 'services/static_products/partials/service_info_section.html' %}
-    {% include 'services/static_products/partials/product_tabs.html' %}
-    <br>
-    <br>
-    <br>
-    <!-- Related Products -->
-    {% include 'services/static_products/partials/related_products.html' %}
-
 </div>
+{% endif %}{# /design_tool_enabled modal #}
 {% endblock %}
 
 {% block extra_js %}
 <script>
-    // 1. Image Switcher
-    function switchImage(thumbElement, imageUrl) {
-        const mainImg = document.getElementById('mainImage');
-        if (!mainImg) return;
-        mainImg.style.opacity = '0.5';
-        setTimeout(() => {
-            mainImg.src = imageUrl;
-            mainImg.style.opacity = '1';
-        }, 200);
-        document.querySelectorAll('.thumb-item').forEach(el => el.classList.remove('active'));
-        thumbElement.classList.add('active');
-    }
+/* ── Gallery thumbnail switch ── */
+function stSwitch(thumb, url) {
+    var img = document.getElementById('stMainImg');
+    if (!img) return;
+    img.style.opacity = '.35';
+    setTimeout(function () { img.src = url; img.style.opacity = '1'; }, 160);
+    document.querySelectorAll('.st-thumb').forEach(function (t) { t.classList.remove('active'); });
+    thumb.classList.add('active');
+}
 
-    // 2. Tab Switcher
-    function switchTab(btnElement, tabId) {
-        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-        const activeContent = document.getElementById(tabId);
-        if (activeContent) activeContent.classList.add('active');
-        if (btnElement) btnElement.classList.add('active');
+/* ── Native Web Share / clipboard fallback ── */
+function stShare(e) {
+    e.preventDefault();
+    if (navigator.share) {
+        navigator.share({ title: document.title, url: window.location.href });
+    } else if (navigator.clipboard) {
+        navigator.clipboard.writeText(window.location.href).then(function () { alert('Link copied!'); });
     }
+}
 
-    // 3. File Upload
-    function fileSelected(input) {
-        const display = document.getElementById('fileNameDisplay');
-        if (input.files && input.files[0]) {
-            display.textContent = 'Selected: ' + input.files[0].name;
-        } else {
-            display.textContent = '';
-        }
-    }
-
-    // 4. Add to Cart
-    function submitToCart() {
-        const btn = document.querySelector('.btn-add-cart');
-        const originalContent = btn.innerHTML;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adding...';
-        btn.disabled = true;
-        setTimeout(() => {
-            btn.style.background = '#059669';
-            btn.innerHTML = '<i class="fas fa-check"></i> Added!';
-            setTimeout(() => {
-                btn.innerHTML = originalContent;
-                btn.style.background = '';
-                btn.disabled = false;
-            }, 2000);
-        }, 1000);
-    }
+/* ── FAQ accordion ── */
+function stFaq(trigger) {
+    var item = trigger.closest('.st-faq-item');
+    var isOpen = item.classList.contains('open');
+    document.querySelectorAll('.st-faq-item.open').forEach(function (el) { el.classList.remove('open'); });
+    if (!isOpen) item.classList.add('open');
+}
 </script>
-<script src="{% static 'js/pricing_engine.js' %}"></script>
+
+{% if product.design_tool_enabled %}
+<script>
+/* ── Design Studio launcher ── */
+var DESIGN_STUDIO_URL = "http://localhost:5173";   // dev; swap to production URL when deployed
+
+function stLaunchStudio(e) {
+    e.preventDefault();
+    var returnUrl = encodeURIComponent(window.location.href);
+    var slug = "{{ product.slug }}";
+    var name = encodeURIComponent("{{ product.name }}");
+    var id   = "{{ product.id }}";
+
+    var widthMm = '', heightMm = '', printingSide = '';
+    var form = document.getElementById('stForm');
+
+    // Values that mean "print on both sides" — must match exactly
+    var BOTH_VALUES = ['both', 'front_back', 'front and back', 'front_back_both', 'double', 'duplex'];
+
+    if (form) {
+        // ── 1. Check the printing_side field (select OR radio) ──────────
+        // Select: <select name="printing_side">
+        var psSelect = form.querySelector('select[name="printing_side"]');
+        if (psSelect) {
+            var psOpt = psSelect.options[psSelect.selectedIndex];
+            if (psOpt) {
+                var psVal = (psOpt.value || '').trim().toLowerCase();
+                if (BOTH_VALUES.indexOf(psVal) !== -1) {
+                    printingSide = 'front_back';
+                }
+            }
+        }
+
+        // Radio: <input type="radio" name="printing_side" checked>
+        if (!printingSide) {
+            var psRadio = form.querySelector('input[type="radio"][name="printing_side"]:checked');
+            if (psRadio) {
+                var psVal = (psRadio.value || '').trim().toLowerCase();
+                if (BOTH_VALUES.indexOf(psVal) !== -1) {
+                    printingSide = 'front_back';
+                }
+            }
+        }
+
+        // ── 2. Extract canvas dimensions from size/paper select options ──
+        form.querySelectorAll('select').forEach(function(sel) {
+            var opt = sel.options[sel.selectedIndex];
+            if (!opt) return;
+
+            if (!widthMm) {
+                if (opt.dataset.widthMm) {
+                    widthMm = opt.dataset.widthMm;
+                    heightMm = opt.dataset.heightMm || '';
+                } else {
+                    var m = (opt.text || '').match(/(\d+(?:\.\d+)?)\s*(?:mm)?\s*[×xX]\s*(\d+(?:\.\d+)?)\s*mm/i);
+                    if (m) { widthMm = m[1]; heightMm = m[2]; }
+                }
+            }
+        });
+    }
+
+    // Pass order context via URL params — localStorage is cross-origin between
+    // localhost:8000 (product page) and localhost:5173 (studio), so it cannot be used.
+    var fd = stCollectFormData();
+    var cartUrlAbsolute = "{{ request.scheme }}://{{ request.get_host }}{% url 'orders:cart' %}";
+    var csrfToken = '{{ csrf_token }}';
+
+    var url = DESIGN_STUDIO_URL
+        + "?product_slug=" + slug
+        + "&product_id=" + id
+        + "&product_name=" + name
+        + "&return_url=" + returnUrl
+        + "&quantity=" + fd.qty
+        + "&specs=" + encodeURIComponent(JSON.stringify(fd.specs))
+        + "&cart_url=" + encodeURIComponent(cartUrlAbsolute)
+        + "&csrf_token=" + encodeURIComponent(csrfToken);
+    if (widthMm)      { url += "&width_mm=" + widthMm + "&height_mm=" + heightMm; }
+    if (printingSide) { url += "&printing_side=" + printingSide; }
+    window.open(url, '_blank');
+    stCloseModal();
+}
+
+/* ── Design-ready banner (user returned from studio) ── */
+(function () {
+    var params = new URLSearchParams(window.location.search);
+    if (!params.has('has_design')) return;
+
+    var pending = sessionStorage.getItem('ds_pending_design');
+    if (!pending) return;
+
+    var design = JSON.parse(pending);
+    var preview = design.preview || '';
+    var orderUrl = "{% url 'orders:cart' %}";
+
+    var banner = document.createElement('div');
+    banner.id = 'stDesignBanner';
+    banner.innerHTML = '<div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">'
+        + (preview ? '<img src="' + preview + '" style="height:64px;border-radius:8px;border:1px solid #e5e7eb;" alt="Preview">' : '')
+        + '<div style="flex:1;">'
+        + '<div style="font-weight:800;color:#1f2937;margin-bottom:2px;">Your design is ready!</div>'
+        + '<div style="font-size:.82rem;color:#6b7280;">Review your selections and place the order below.</div>'
+        + '</div>'
+        + '<a href="' + orderUrl + '" class="st-btn-order" style="flex:0 0 auto;width:auto;padding:11px 22px;">'
+        + '<i class="fas fa-shopping-cart"></i> Place Order</a>'
+        + '<button onclick="document.getElementById(\'stDesignBanner\').remove()" '
+        + 'style="border:none;background:transparent;cursor:pointer;color:#9ca3af;font-size:1.2rem;">&times;</button>'
+        + '</div>';
+
+    Object.assign(banner.style, {
+        position: 'fixed', bottom: '20px', left: '50%', transform: 'translateX(-50%)',
+        background: '#fff', border: '2px solid #7000fe', borderRadius: '14px',
+        padding: '16px 20px', boxShadow: '0 8px 32px rgba(112,0,254,.2)',
+        zIndex: '9998', maxWidth: '680px', width: 'calc(100% - 40px)',
+    });
+    document.body.appendChild(banner);
+
+    // Clean URL so refresh doesn't re-show banner
+    history.replaceState(null, '', window.location.pathname);
+})();
+
+/* ── Modal ── */
+function stOpenModal() {
+    /* reset upload panel each time */
+    document.getElementById('stUploadPanel').classList.remove('visible');
+    document.getElementById('stOptUpload').classList.remove('selected');
+    document.getElementById('stModalFileName').textContent = '';
+    document.getElementById('stModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+function stCloseModal() {
+    document.getElementById('stModal').classList.remove('open');
+    document.body.style.overflow = '';
+}
+function stModalOverlayClick(e) {
+    if (e.target === document.getElementById('stModal')) stCloseModal();
+}
+function stShowUploadPanel() {
+    document.getElementById('stOptUpload').classList.add('selected');
+    var panel = document.getElementById('stUploadPanel');
+    panel.classList.add('visible');
+
+    /* copy current form selections into hidden fields so they travel with the upload form */
+    var container = document.getElementById('stHiddenFields');
+    container.innerHTML = '';
+    document.querySelectorAll('#stForm input:not([type=file]), #stForm select').forEach(function (el) {
+        if (!el.name) return;
+        if (el.type === 'radio' && !el.checked) return;
+        var h = document.createElement('input');
+        h.type = 'hidden'; h.name = el.name; h.value = el.value;
+        container.appendChild(h);
+    });
+}
+function stModalFileChosen(input) {
+    var el = document.getElementById('stModalFileName');
+    el.textContent = input.files[0] ? '✓ ' + input.files[0].name : '';
+}
+
+/* close modal on Escape */
+document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') stCloseModal();
+});
+</script>
+{% endif %}
+
+<script>
+/* ── Shared helper: collect qty + specs from #stForm ── */
+function stCollectFormData() {
+    var form  = document.getElementById('stForm');
+    var specs = {};
+    var qty   = 1;
+    if (!form) return { qty: qty, specs: specs };
+
+    form.querySelectorAll('input, select').forEach(function (el) {
+        if (!el.name) return;
+        if (el.name === 'csrfmiddlewaretoken' || el.name === 'product_id') return;
+        if (el.type === 'radio'     && !el.checked) return;
+        if (el.type === 'checkbox'  && !el.checked) return;
+        if (el.name === 'quantity' || el.type === 'number') {
+            qty = parseInt(el.value) || 1;
+        } else {
+            specs[el.name] = el.value;
+        }
+    });
+    return { qty: qty, specs: specs };
+}
+
+/* ── Add to cart (non-design products) ── */
+function stAddToCart() {
+    var d = stCollectFormData();
+    var form = document.getElementById('stForm');
+
+    var btn = document.getElementById('stAddCartBtn');
+    if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adding…'; }
+
+    fetch("{% url 'orders:add_static_product' product.id %}", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value,
+        },
+        body: JSON.stringify({ quantity: d.qty, specifications: d.specs }),
+    })
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+        if (data.success) {
+            window.location.href = "{% url 'orders:cart' %}";
+        } else {
+            alert(data.message || 'Could not add to cart. Please try again.');
+            if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-shopping-cart"></i> Place Order'; }
+        }
+    })
+    .catch(function () {
+        alert('Something went wrong. Please try again.');
+        if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-shopping-cart"></i> Place Order'; }
+    });
+}
+
+/* ── Live price recalculation ── */
+document.addEventListener('DOMContentLoaded', function () {
+    var totalEl = document.getElementById('stTotal');
+    var base = parseFloat(totalEl ? totalEl.dataset.base : 0) || 0;
+
+    function fmt(v) { return '₹' + v.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+
+    function recalc() {
+        var qty = 1;
+        var qtyEl = document.querySelector('#stForm input[type="number"]') ||
+                    document.querySelector('#stForm select[name*="qty"]') ||
+                    document.querySelector('#stForm select[name*="quantity"]');
+        if (qtyEl) qty = parseInt(qtyEl.value) || 1;
+
+        var mod = 0;
+        document.querySelectorAll('#stForm input[type="radio"]:checked').forEach(function (r) {
+            mod += parseFloat(r.dataset.priceModifier || 0);
+        });
+        document.querySelectorAll('#stForm select').forEach(function (s) {
+            var opt = s.options[s.selectedIndex];
+            if (opt) mod += parseFloat(opt.dataset.priceModifier || 0);
+        });
+
+        var unit  = base + mod;
+        var total = unit * qty * 1.18;
+
+        if (document.getElementById('stTotal')) document.getElementById('stTotal').textContent = fmt(total);
+        if (document.getElementById('stUnit'))  document.getElementById('stUnit').textContent  = fmt(unit);
+    }
+
+    var form = document.getElementById('stForm');
+    if (form) {
+        form.addEventListener('change', recalc);
+        form.addEventListener('input', recalc);
+        // Radio card clicks dispatch to document, not the form
+        form.addEventListener('click', function (e) {
+            if (e.target.closest('.rf-option, .ig-option')) recalc();
+        });
+    }
+    // Quantity +/- buttons dispatch a custom 'fieldChange' event on document
+    document.addEventListener('fieldChange', recalc);
+
+    recalc();
+
+    if (typeof $ !== 'undefined' && $.fn.niceSelect) {
+        $('.sf-wrap select').niceSelect();
+        // jQuery .trigger('change') fires jQuery events; bind explicitly so recalc runs
+        $('.sf-wrap select').on('change', recalc);
+    }
+});
+</script>
 {% endblock %}

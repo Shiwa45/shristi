@@ -23,6 +23,170 @@ import requests
 from django.utils import timezone
 
 
+@require_http_methods(["GET"])
+def api_studio_product_init(request):
+    """
+    Design Studio bootstrap endpoint.
+    Returns product canvas config + templates for that product.
+
+    Template priority:
+      1. StaticProductTemplate records linked directly to the product (Fabric.js JSON)
+      2. DesignTemplate records whose category name matches the product category (SVG/JSON)
+      3. All active DesignTemplate records as a last fallback
+    """
+    product_slug = request.GET.get('slug', '').strip()
+    if not product_slug:
+        return JsonResponse({'success': False, 'error': 'slug param required'}, status=400)
+
+    try:
+        product = StaticProduct.objects.select_related('category').get(
+            slug=product_slug, is_active=True
+        )
+    except StaticProduct.DoesNotExist:
+        return JsonResponse({'success': False, 'error': 'Product not found'}, status=404)
+
+    from apps.templates_mgmt.models import StaticProductTemplate, DesignTemplate, TemplateCategory
+
+    templates_data = []
+
+    # ── 1. Direct product templates (Fabric.js JSON) ─────────────────
+    for t in StaticProductTemplate.objects.filter(static_product=product, is_active=True).order_by('order', 'name'):
+        templates_data.append({
+            'id': f'spt-{t.id}',
+            'name': t.name,
+            'description': t.description,
+            'thumbnail': t.thumbnail.url if t.thumbnail else None,
+            'preview_image': t.preview_image.url if t.preview_image else None,
+            'category': t.category,
+            'is_featured': t.is_featured,
+            'is_premium': t.is_premium,
+            'side': t.side or '',
+            'type': 'json',
+            'template_data': t.template_data,
+            'svg_url': None,
+        })
+
+    # ── 2. DesignTemplate records matched by category name ────────────
+    # Try to match by product category name (case-insensitive word overlap)
+    product_cat_words = set(product.category.name.lower().split())
+
+    matched_categories = [
+        c for c in TemplateCategory.objects.filter(is_active=True)
+        if set(c.name.lower().split()) & product_cat_words
+    ]
+
+    if matched_categories:
+        design_templates = DesignTemplate.objects.filter(
+            category__in=matched_categories, is_active=True
+        ).select_related('category').order_by('-created_at')
+    else:
+        # Fallback: return all active DesignTemplates
+        design_templates = DesignTemplate.objects.filter(is_active=True).select_related('category').order_by('-created_at')
+
+    for t in design_templates:
+        templates_data.append({
+            'id': f'dt-{t.id}',
+            'name': t.name,
+            'description': t.description,
+            'thumbnail': t.thumbnail.url if t.thumbnail else None,
+            'preview_image': t.preview_image.url if t.preview_image else None,
+            'category': t.category.name,
+            'is_featured': False,
+            'is_premium': t.is_premium,
+            'side': t.side or '',
+            'type': 'json' if t.json_data else 'svg',
+            'template_data': t.json_data,
+            'svg_url': t.svg_file.url if t.svg_file else None,
+        })
+
+    # ── Canvas size ───────────────────────────────────────────────────
+    import re as _re
+    PX_PER_MM = 300 / 25.4
+
+    # Priority 1: explicit mm params passed from the product page
+    _w_param = request.GET.get('width_mm')
+    _h_param = request.GET.get('height_mm')
+    if _w_param and _h_param:
+        try:
+            cw = round(float(_w_param) * PX_PER_MM)
+            ch = round(float(_h_param) * PX_PER_MM)
+        except (ValueError, TypeError):
+            cw, ch = 0, 0
+    else:
+        cw, ch = 0, 0
+
+    # Priority 2: admin-set pixel canvas dimensions
+    if not (cw and ch):
+        cw = product.canvas_width or 0
+        ch = product.canvas_height or 0
+
+    # Priority 3: parse mm from specifications field (e.g. {'Size': '90mm × 54mm'})
+    if not (cw and ch):
+        specs = product.specifications or {}
+        for _key in ('Size', 'Dimensions', 'size', 'dimensions'):
+            _size_str = specs.get(_key, '')
+            if _size_str:
+                _m = _re.search(r'(\d+(?:\.\d+)?)\s*(?:mm)?\s*[×xX]\s*(\d+(?:\.\d+)?)\s*mm', str(_size_str))
+                if _m:
+                    cw = round(float(_m.group(1)) * PX_PER_MM)
+                    ch = round(float(_m.group(2)) * PX_PER_MM)
+                    break
+
+    # Priority 4: category/name keyword defaults (much better than falling back to A4)
+    if not (cw and ch):
+        _cat  = (product.category.name if product.category else '').lower()
+        _pname = product.name.lower()
+        _DEFAULTS = [
+            (['business card', 'visiting card', 'name card', 'business cards'], 90, 54),
+            (['postcard', 'post card'],                                          148, 105),
+            (['sticker', 'label', 'round sticker', 'die cut'],                  76, 76),
+            (['a6', 'flyer a6'],                                                 105, 148),
+            (['a5', 'flyer a5', 'leaflet'],                                      148, 210),
+            (['a4', 'flyer a4', 'letter'],                                       210, 297),
+            (['a3'],                                                              297, 420),
+            (['brochure', 'catalog', 'catalogue', 'booklet'],                   210, 297),
+            (['banner'],                                                          850, 600),
+        ]
+        for _keywords, _w, _h in _DEFAULTS:
+            if any(kw in _cat or kw in _pname for kw in _keywords):
+                cw = round(_w * PX_PER_MM)
+                ch = round(_h * PX_PER_MM)
+                break
+
+    # Priority 5: absolute fallback — A4
+    if not (cw and ch):
+        cw, ch = 2480, 3508
+
+    width_mm  = round(cw / PX_PER_MM, 2)
+    height_mm = round(ch / PX_PER_MM, 2)
+
+    # Printing sides: URL param wins (set by the product page form selection),
+    # otherwise default to single-sided
+    _sides_param = request.GET.get('printing_side', '').strip().lower()
+    printing_sides = ['front', 'back'] if _sides_param in ('front_back', 'both', '2') else ['front']
+
+    return JsonResponse({
+        'success': True,
+        'product': {
+            'id': product.id,
+            'name': product.name,
+            'slug': product.slug,
+            'category_slug': product.category.slug,
+            'category_name': product.category.name,
+            'canvas_width_px': cw,
+            'canvas_height_px': ch,
+            'width_mm': width_mm,
+            'height_mm': height_mm,
+            'bleed_mm': 3,
+            'safe_mm': 5,
+            'base_price': str(product.base_price),
+            'minimum_quantity': getattr(product, 'minimum_quantity', None) or 1,
+            'printing_sides': printing_sides,
+        },
+        'templates': templates_data,
+    })
+
+
 def design_tool_view(request, product_slug=None):
     """Main design tool interface"""
     product = None

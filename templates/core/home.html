@@ -62,10 +62,16 @@
     }
 
     /* ── No Design section: white text on blue CTA background ── */
+    .no-design-banner .section-title .sub-title {
+        background: rgba(255,255,255,0.18);
+        border: 1px solid rgba(255,255,255,0.3);
+    }
     .no-design-banner .section-title .sub-title span {
-        color: #fff;
-        border-color: rgba(255,255,255,0.4);
-        background: rgba(255,255,255,0.15);
+        color: #fff !important;
+        -webkit-text-fill-color: #fff !important;
+        background: transparent !important;
+        background-clip: initial !important;
+        -webkit-background-clip: initial !important;
     }
     .no-design-banner .section-title h2 {
         color: #fff;
@@ -454,7 +460,7 @@
         {% endif %}
 
         <div class="text-center mt-5 wow fadeInUp" data-wow-delay=".3s">
-            <a href="{% url 'services:home' %}" class="theme-btn">View All Services</a>
+            <a href="{% url 'services:all_products' %}" class="theme-btn">View All Services</a>
         </div>
     </div>
                 </section>
@@ -624,7 +630,7 @@
 </section>
 
 
-<!-- ===== About Section ===== -->
+<!-- ===== About Section
 <section class="about-section fix section-padding section-bg">
     <div class="container">
         <div class="about-wrapper-3">
@@ -698,6 +704,7 @@
     </div>
 </section>
 
+ ===== -->
 
 <!-- ===== Testimonials ===== -->
 <section class="testimonial-section fix section-bg section-padding">

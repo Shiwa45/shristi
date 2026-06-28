@@ -60,7 +60,10 @@ class CartItem(models.Model):
     
     # Product specifications (size, paper type, etc.)
     specifications = models.JSONField(default=dict, blank=True)
-    
+
+    # Design data from the design studio (Fabric.js canvas JSON, keyed by side)
+    design_data = models.JSONField(null=True, blank=True)
+
     # Timestamps
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

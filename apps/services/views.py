@@ -230,6 +230,7 @@ def static_product_detail(request, category_slug, product_slug):
     # Add category-specific context
     if category.slug == 'book-printing':
         context.update({
+            'hero_padding': 'padding: 60px 0 35px;',
             'min_quantity': 25,
             'min_pages': 4,
             'binding_page_limit': 30,

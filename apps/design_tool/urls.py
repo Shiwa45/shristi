@@ -41,4 +41,7 @@ urlpatterns = [
     path('api/pixabay/cliparts/', views.api_pixabay_cliparts, name='api_pixabay_cliparts'),
     path('api/unsplash/images/', views.api_unsplash_images, name='api_unsplash_images'),
     path('api/pexels/images/', views.api_pexels_images, name='api_pexels_images'),
+
+    # Design Studio integration
+    path('api/studio/product/', views.api_studio_product_init, name='api_studio_product_init'),
 ]

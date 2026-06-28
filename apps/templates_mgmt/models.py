@@ -17,11 +17,20 @@ class TemplateCategory(models.Model):
         return self.name
 
 
+SIDE_CHOICES = [
+    ('', 'Both / Generic'),
+    ('front', 'Front'),
+    ('back', 'Back'),
+]
+
+
 class DesignTemplate(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     category = models.ForeignKey(TemplateCategory, on_delete=models.CASCADE, related_name='templates')
-    
+    side = models.CharField(max_length=10, choices=SIDE_CHOICES, blank=True, default='',
+                             help_text="Which side this template is for. Leave blank for generic/both.")
+
     # File storage
     thumbnail = models.ImageField(upload_to='templates/thumbnails/')
     preview_image = models.ImageField(upload_to='templates/previews/', blank=True)
@@ -80,6 +89,8 @@ class StaticProductTemplate(models.Model):
     static_product = models.ForeignKey('services.StaticProduct', on_delete=models.CASCADE, related_name='design_templates')
     name = models.CharField(max_length=200)
     description = models.TextField(blank=True)
+    side = models.CharField(max_length=10, choices=SIDE_CHOICES, blank=True, default='',
+                             help_text="Which side this template is for. Leave blank for generic/both.")
 
     # Template data
     template_data = models.JSONField(help_text="Fabric.js template JSON")

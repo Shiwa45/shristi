@@ -40,122 +40,121 @@
             object-fit: contain;
         }
 
-        /* ── Services Mega Menu ── */
+        /* ══════════════════════════════════════════════════════
+           Services Mega Menu
+           #megaDropdown lives OUTSIDE the nav <ul> as a direct
+           child of .mega-menu-wrapper — no theme ul/li/a rules
+           can reach it. Pure div + a, no ul/li inside.
+           Hover managed by JS (.mega-open toggle).
+        ══════════════════════════════════════════════════════ */
+
         .mega-menu-wrapper { position: relative; }
-        .mega-services-parent {
-            position: static !important;
-        }
-        .mega-services-parent > .mega-dropdown {
+
+        /* ── Mega panel ── */
+        #megaDropdown {
             position: absolute;
-            left: 0;
-            right: 0;
-            top: 100%;
-            min-width: 100%;
-            width: auto;
+            left: 0; right: 0; top: 100%;
             display: flex;
-            gap: 0;
-            padding: 28px 40px 32px;
+            flex-direction: row;
+            padding: 28px 36px 32px;
             background: #fff;
-            border-top: 3px solid var(--theme);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.10);
-            border-radius: 0 0 12px 12px;
+            border-top: 3px solid var(--theme, #7000fe);
+            box-shadow: 0 16px 48px rgba(0,0,0,.14);
+            border-radius: 0 0 14px 14px;
+            z-index: 99999;
             visibility: hidden;
             opacity: 0;
             pointer-events: none;
-            transform: translateY(12px);
-            transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
-            z-index: 99999;
+            transform: translateY(14px);
+            transition: opacity .22s ease, transform .22s ease, visibility .22s ease;
         }
-        .mega-services-parent:hover > .mega-dropdown {
+        #megaDropdown.mega-open {
             visibility: visible;
             opacity: 1;
             pointer-events: auto;
             transform: translateY(0);
         }
-        /* Each category column */
-        .mega-col {
+
+        /* ── Category columns ── */
+        .mc {
             flex: 1;
-            min-width: 180px;
-            padding: 0 20px;
+            min-width: 155px;
+            padding: 0 22px;
             border-right: 1px solid #f0f0f0;
+            display: flex;
+            flex-direction: column;
         }
-        .mega-col:last-child { border-right: none; }
-        .mega-col-title {
-            display: block !important;
-            font-size: 13px !important;
-            font-weight: 700 !important;
-            color: var(--theme) !important;
-            text-transform: uppercase !important;
-            letter-spacing: 1px !important;
-            padding: 0 0 12px !important;
-            margin-bottom: 12px !important;
-            border-bottom: 2px solid #f0f0f0 !important;
-            background: none !important;
-        }
-        .mega-col-title:hover {
-            background: none !important;
-            color: var(--header) !important;
-        }
-        /* Reset nested ul so theme submenu styles don't apply */
-        .mega-dropdown .mega-col > ul,
-        .mega-dropdown .mega-group > ul {
-            position: static !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-            transform: none !important;
-            box-shadow: none !important;
-            min-width: auto !important;
-            background: none !important;
-            border: none !important;
-            padding: 0 !important;
-        }
-        .mega-dropdown li { width: auto !important; }
-        /* Product links */
-        .mega-col > ul > li > a,
-        .mega-group > ul > li > a {
-            font-size: 14px !important;
-            font-weight: 500 !important;
-            color: var(--header) !important;
-            padding: 5px 0 !important;
-            border: none !important;
+        .mc:first-child { padding-left: 0; }
+        .mc:last-child  { border-right: none; padding-right: 0; }
+
+        /* ── Column heading link ── */
+        .mc-title {
             display: block;
-            transition: color 0.2s, padding-left 0.2s;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--theme, #7000fe);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+            text-decoration: none;
+            white-space: nowrap;
         }
-        .mega-col > ul > li > a:hover,
-        .mega-group > ul > li > a:hover {
-            color: var(--theme) !important;
-            background: none !important;
-            padding-left: 6px !important;
+        .mc-title:hover { color: #1f2937; }
+
+        /* ── Standalone product link inside a column ── */
+        .mc-link {
+            display: block;
+            font-size: 13.5px;
+            font-weight: 500;
+            color: #374151;
+            padding: 5px 0;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: color .16s ease, padding-left .16s ease;
         }
-        /* Group heading */
-        .mega-group-title {
+        .mc-link:hover { color: var(--theme, #7000fe); padding-left: 6px; }
+
+        /* ── Group container ── */
+        .mg { margin-bottom: 4px; }
+
+        /* ── Group heading ── */
+        .mg-title {
+            display: block;
+            font-size: 10.5px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            color: #9ca3af;
+            padding: 10px 0 5px;
+        }
+
+        /* ── Group product links ── */
+        .mg-link {
             display: block;
             font-size: 13px;
-            font-weight: 700;
-            color: var(--header);
-            padding: 8px 0 4px;
+            font-weight: 500;
+            color: #374151;
+            padding: 4px 0 4px 10px;
+            border-left: 2px solid #e5e7eb;
+            text-decoration: none;
+            white-space: nowrap;
+            margin-bottom: 1px;
+            transition: color .16s ease, border-color .16s ease, padding-left .16s ease;
         }
-        .mega-group > ul {
-            padding-left: 8px !important;
-            border-left: 2px solid #f0f0f0 !important;
-            margin-bottom: 6px;
+        .mg-link:hover {
+            color: var(--theme, #7000fe);
+            border-color: var(--theme, #7000fe);
+            padding-left: 14px;
         }
-        /* Featured star */
-        .mega-star { color: var(--theme); font-size: 11px; }
 
-        /* Keep meanmenu (mobile) working — hide mega-only extras on small screens */
+        /* ── Featured star ── */
+        .mc-star, .mg-star { color: var(--theme, #7000fe); font-size: 10px; }
+
+        /* ── Mobile: panel is outside the nav; hide it on small screens ── */
         @media (max-width: 1199px) {
-            .mega-services-parent > .mega-dropdown {
-                position: static !important;
-                display: none;
-                box-shadow: none;
-                border: none;
-                transform: none;
-                padding: 0;
-                flex-direction: column;
-            }
-            .mega-services-parent.meanclose > .mega-dropdown { display: flex; }
-            .mega-col { border-right: none; padding: 4px 0; }
+            #megaDropdown { display: none !important; }
         }
     </style>
 </head>
@@ -339,52 +338,9 @@
                                     <li>
                                         <a href="{% url 'core:about' %}">About Us</a>
                                     </li>
-                                    <!-- Services Mega Menu -->
-                                    <li class="has-dropdown mega-services-parent">
+                                    <!-- Services — dropdown lives outside nav as sibling of header-main -->
+                                    <li id="megaServicesLi">
                                         <a href="{% url 'services:home' %}">Services</a>
-                                        <ul class="submenu mega-dropdown">
-                                            {% if services_menu %}
-                                                {% for category in services_menu %}
-                                                <li class="mega-col">
-                                                    <a href="{{ category.url }}" class="mega-col-title">{{ category.name }}</a>
-                                                    <ul>
-                                                        {% for item in category.menu_items %}
-                                                            {% if item.type == 'group' %}
-                                                            <li class="mega-group">
-                                                                <span class="mega-group-title">{{ item.name }}</span>
-                                                                <ul>
-                                                                    {% for product in item.products %}
-                                                                    <li>
-                                                                        <a href="{{ product.url }}">
-                                                                            {{ product.name }}{% if product.is_featured %} <span class="mega-star">★</span>{% endif %}
-                                                                        </a>
-                                                                    </li>
-                                                                    {% endfor %}
-                                                                </ul>
-                                                            </li>
-                                                            {% else %}
-                                                            <li>
-                                                                <a href="{{ item.url }}">
-                                                                    {{ item.name }}{% if item.is_featured %} <span class="mega-star">★</span>{% endif %}
-                                                                </a>
-                                                            </li>
-                                                            {% endif %}
-                                                        {% endfor %}
-                                                    </ul>
-                                                </li>
-                                                {% endfor %}
-                                            {% else %}
-                                                <li class="mega-col">
-                                                    <a href="{% url 'services:home' %}" class="mega-col-title">Printing Services</a>
-                                                    <ul>
-                                                        <li><a href="{% url 'services:home' %}">Book Printing</a></li>
-                                                        <li><a href="{% url 'services:home' %}">Business Cards</a></li>
-                                                        <li><a href="{% url 'services:home' %}">Brochures</a></li>
-                                                        <li><a href="{% url 'services:home' %}">Stationery</a></li>
-                                                    </ul>
-                                                </li>
-                                            {% endif %}
-                                        </ul>
                                     </li>
                                     <li class="has-dropdown">
                                         <a href="#">Pages</a>
@@ -423,10 +379,42 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                </div><!-- /header-main -->
+
+                <!-- Mega menu panel — outside nav so theme ul/li/a rules don't apply -->
+                <div id="megaDropdown">
+                    {% if services_menu %}
+                        {% for category in services_menu %}
+                        <div class="mc">
+                            <a href="{{ category.url }}" class="mc-title">{{ category.name }}</a>
+                            {% for item in category.menu_items %}
+                                {% if item.type == 'group' %}
+                                <div class="mg">
+                                    <span class="mg-title">{{ item.name }}</span>
+                                    {% for product in item.products %}
+                                    <a href="{{ product.url }}" class="mg-link">{{ product.name }}{% if product.is_featured %} <span class="mg-star">★</span>{% endif %}</a>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                <a href="{{ item.url }}" class="mc-link">{{ item.name }}{% if item.is_featured %} <span class="mc-star">★</span>{% endif %}</a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="mc">
+                            <a href="{% url 'services:home' %}" class="mc-title">Printing Services</a>
+                            <a href="{% url 'services:home' %}" class="mc-link">Book Printing</a>
+                            <a href="{% url 'services:home' %}" class="mc-link">Business Cards</a>
+                            <a href="{% url 'services:home' %}" class="mc-link">Brochures</a>
+                            <a href="{% url 'services:home' %}" class="mc-link">Stationery</a>
+                        </div>
+                    {% endif %}
+                </div><!-- /megaDropdown -->
+
+            </div><!-- /mega-menu-wrapper -->
+        </div><!-- /container-fluid -->
+    </div><!-- /header-sticky -->
 </header>
 
 <!-- Search Overlay -->
@@ -600,6 +588,38 @@
 <script src="{% static 'assets/js/jquery.magnific-popup.min.js' %}"></script>
 <script src="{% static 'assets/js/wow.min.js' %}"></script>
 <script src="{% static 'assets/js/main.js' %}"></script>
+
+<!-- ── Mega menu: JS-managed hover (avoids all CSS specificity fights) ── -->
+<script>
+(function () {
+    var li     = document.getElementById('megaServicesLi');
+    var panel  = document.getElementById('megaDropdown');
+    if (!li || !panel) return;
+
+    var timer;
+    var DELAY = 120; // ms before closing (lets mouse move from trigger into panel)
+
+    function open() {
+        clearTimeout(timer);
+        panel.classList.add('mega-open');
+    }
+    function scheduleClose() {
+        timer = setTimeout(function () {
+            panel.classList.remove('mega-open');
+        }, DELAY);
+    }
+
+    li.addEventListener('mouseenter', open);
+    li.addEventListener('mouseleave', scheduleClose);
+    panel.addEventListener('mouseenter', open);
+    panel.addEventListener('mouseleave', scheduleClose);
+
+    // Close on Escape
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') panel.classList.remove('mega-open');
+    });
+})();
+</script>
 
 {% block extra_js %}{% endblock %}
 </body>

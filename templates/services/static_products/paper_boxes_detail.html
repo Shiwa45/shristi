@@ -672,7 +672,7 @@ function stFaq(trigger) {
 {% if product.design_tool_enabled %}
 <script>
 /* ── Design Studio launcher ── */
-var DESIGN_STUDIO_URL = "http://localhost:5173";
+var DESIGN_STUDIO_URL = window.location.origin + "/design-studio/";
 
 function stLaunchStudio(e) {
     e.preventDefault();

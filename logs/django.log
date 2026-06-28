@@ -49420,3 +49420,4 @@ Watching for file changes with StatReloader
 "GET /design-tool/api/studio/product/?slug=standard-business-card&printing_side=front_back HTTP/1.1" 200 804
 "GET /media/templates/thumbnails/Screenshot_from_2025-11-18_15-18-16.png HTTP/1.1" 304 0
 "GET /media/templates/svg/Agriculture-01_mEgkumM.svg HTTP/1.1" 304 0
+Watching for file changes with StatReloader

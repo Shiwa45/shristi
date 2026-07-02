@@ -227,10 +227,12 @@ LOGGING = {
 
 # Add file logging for local development only
 if not IS_VERCEL:
+    log_dir = BASE_DIR / 'logs'
+    log_dir.mkdir(parents=True, exist_ok=True)
     LOGGING['handlers']['file'] = {
         'level': 'INFO',
         'class': 'logging.FileHandler',
-        'filename': BASE_DIR / 'logs' / 'django.log',
+        'filename': log_dir / 'django.log',
     }
     LOGGING['loggers']['django']['handlers'] = ['file', 'console']
 

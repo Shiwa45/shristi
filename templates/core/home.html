@@ -156,6 +156,17 @@
         object-position: center;
         display: block;
     }
+    /* Make the whole product image clickable → product detail page */
+    .shop-items .shop-image .shop-image-link {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        display: block;
+    }
+    /* Keep the hover action icons clickable above the image link */
+    .shop-items .shop-image .product-icon {
+        z-index: 3;
+    }
 
     /* ── Uniform category thumbnails ── */
     .shop-catagories-item .thumb {
@@ -434,6 +445,7 @@
                          data-wow-delay=".{{ forloop.counter }}s">
                         <div class="shop-items style-2">
                             <div class="shop-image">
+                                <a href="{{ product.get_absolute_url }}" class="shop-image-link" aria-label="View {{ product.name }}">
                                 {% if product.featured_image %}
                                     <img src="{{ product.featured_image.url }}" alt="{{ product.name }}">
                                 {% elif product.hero_image %}
@@ -441,6 +453,7 @@
                                 {% else %}
                                     <img src="{% static 'assets/img/shop/01.jpg' %}" alt="{{ product.name }}">
                                 {% endif %}
+                                </a>
                                 <ul class="product-icon d-grid justify-content-center align-items-center">
                                     <li><a href="#"><i class="far fa-heart"></i></a></li>
                                     <li><a href="{{ product.get_absolute_url }}"><i class="far fa-exchange"></i></a></li>

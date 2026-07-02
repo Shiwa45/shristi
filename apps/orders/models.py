@@ -294,7 +294,7 @@ class QuoteRequest(models.Model):
         return f"Quote {self.quote_number}"
 
     def save(self, *args, **kwargs):
-        if not self.quote_number:
+        if not self.quote_number or self.quote_number == 'Q0000':
             self.quote_number = self.generate_quote_number()
         super().save(*args, **kwargs)
 

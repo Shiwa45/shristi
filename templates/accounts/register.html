@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Create Account — Shristi Printing{% endblock %}
+
+{% block extra_css %}
+<style>
+.auth-wrap {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 160px 16px 60px;
+    background: var(--bg);
+}
+.auth-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 40px rgba(112,0,254,.10);
+    padding: 48px 40px;
+    width: 100%;
+    max-width: 480px;
+}
+.auth-logo { text-align: center; margin-bottom: 28px; }
+.auth-logo img { height: 48px; }
+.auth-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--header);
+    text-align: center;
+    margin-bottom: 6px;
+}
+.auth-sub { color: #777; text-align: center; margin-bottom: 28px; font-size: .95rem; }
+.auth-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.auth-field { margin-bottom: 16px; }
+.auth-field label {
+    display: block;
+    font-size: .85rem;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 6px;
+}
+.auth-field input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color .2s;
+    outline: none;
+    box-sizing: border-box;
+}
+.auth-field input:focus { border-color: var(--theme); }
+.phone-wrap { position: relative; }
+.phone-prefix {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #555;
+    font-size: .95rem;
+    font-weight: 600;
+}
+.phone-wrap input { padding-left: 52px; }
+.auth-note {
+    background: #f6f0ff;
+    border: 1px solid #d4b8ff;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: .85rem;
+    color: #555;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+.auth-note i { color: var(--theme); margin-top: 1px; flex-shrink: 0; }
+.auth-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--theme);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity .2s;
+    margin-top: 6px;
+}
+.auth-btn:hover { opacity: .88; }
+.auth-login-link {
+    text-align: center;
+    margin-top: 18px;
+    font-size: .9rem;
+    color: #666;
+}
+.auth-login-link a { color: var(--theme); font-weight: 600; text-decoration: none; }
+.alert-err {
+    background: #fff0f0;
+    border: 1px solid #ffc0c0;
+    color: #c00;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 16px;
+    font-size: .9rem;
+}
+.field-hint { font-size: .78rem; color: #999; margin-top: 4px; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-wrap">
+    <div class="auth-card">
+        <div class="auth-logo">
+            {% if site_settings and site_settings.logo %}
+                <img src="{{ site_settings.logo.url }}" alt="Shristi Printing">
+            {% else %}
+                <h2 style="color:var(--theme);font-size:1.5rem;font-weight:800;">Shristi Printing</h2>
+            {% endif %}
+        </div>
+        <div class="auth-title">Create Account</div>
+        <div class="auth-sub">Register to get quotes &amp; track orders</div>
+
+        {% if messages %}
+            {% for msg in messages %}
+            <div class="alert-err">{{ msg }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST" action="{% url 'accounts:register' %}{% if next %}?next={{ next }}{% endif %}">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}">
+
+            <div class="auth-row">
+                <div class="auth-field">
+                    <label for="id_first_name">First Name *</label>
+                    <input type="text" name="first_name" id="id_first_name"
+                           value="{{ form_data.first_name|default:'' }}"
+                           placeholder="John" required autofocus>
+                </div>
+                <div class="auth-field">
+                    <label for="id_last_name">Last Name</label>
+                    <input type="text" name="last_name" id="id_last_name"
+                           value="{{ form_data.last_name|default:'' }}"
+                           placeholder="Doe">
+                </div>
+            </div>
+
+            <div class="auth-field">
+                <label for="id_email">Email Address *</label>
+                <input type="email" name="email" id="id_email"
+                       value="{{ form_data.email|default:'' }}"
+                       placeholder="your@email.com" required>
+            </div>
+
+            <div class="auth-field">
+                <label for="id_phone">Mobile Number *</label>
+                <div class="phone-wrap">
+                    <span class="phone-prefix">+91</span>
+                    <input type="tel" name="phone" id="id_phone"
+                           value="{{ form_data.phone|default:'' }}"
+                           placeholder="10-digit number" maxlength="10" required
+                           pattern="[0-9]{10}">
+                </div>
+                <div class="field-hint">OTP will be sent to this number for verification.</div>
+            </div>
+
+            <div class="auth-row">
+                <div class="auth-field">
+                    <label for="id_password">Password *</label>
+                    <input type="password" name="password" id="id_password"
+                           placeholder="Min. 8 characters" required minlength="8">
+                </div>
+                <div class="auth-field">
+                    <label for="id_password2">Confirm Password *</label>
+                    <input type="password" name="password2" id="id_password2"
+                           placeholder="Repeat password" required>
+                </div>
+            </div>
+
+            <div class="auth-note">
+                <i class="fas fa-shield-alt"></i>
+                <span>An OTP will be sent to your mobile number for verification before your account is created.</span>
+            </div>
+
+            <button type="submit" class="auth-btn">
+                <i class="fas fa-arrow-right"></i> Send OTP &amp; Continue
+            </button>
+        </form>
+
+        <div class="auth-login-link">
+            Already have an account? <a href="{% url 'accounts:login' %}{% if next %}?next={{ next }}{% endif %}">Login Here</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

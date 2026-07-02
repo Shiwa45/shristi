@@ -53,7 +53,7 @@
 .sf-select-native:focus { border-color: var(--theme, #7000fe); }
 </style>
 
-<div class="sf-wrap" data-field-name="{{ field.field_name }}">
+<div class="sf-wrap" data-field-name="{{ field.field_name }}"{% if field.show_condition %} data-show-condition="{{ field.show_condition }}"{% endif %}>
     <label class="sf-label">
         {{ field.field_label }}
         {% if field.is_required %}<span style="color:#ef4444;">*</span>{% endif %}

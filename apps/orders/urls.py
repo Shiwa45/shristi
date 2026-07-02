@@ -31,6 +31,7 @@ urlpatterns = [
     path('order/<str:order_number>/cancel/', views.cancel_order, name='cancel_order'),
     
     # Quote URLs
+    path('quote/submit/', views.submit_quote_view, name='submit_quote'),
     path('quote/request/', views.quote_request_view, name='quote_request'),
     path('quote/<str:quote_number>/', views.quote_detail, name='quote_detail'),
     path('quotes/', views.quotes_list, name='quotes_list'),

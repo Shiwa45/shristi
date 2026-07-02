@@ -1,5 +1,8 @@
 # Context processor to add cart count to all templates
 # apps/orders/context_processors.py
+from apps.orders.utils import CartManager
+
+
 def cart_context(request):
     """Add cart information to all template contexts"""
     cart_count = 0

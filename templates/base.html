@@ -40,121 +40,26 @@
             object-fit: contain;
         }
 
-        /* ══════════════════════════════════════════════════════
-           Services Mega Menu
-           #megaDropdown lives OUTSIDE the nav <ul> as a direct
-           child of .mega-menu-wrapper — no theme ul/li/a rules
-           can reach it. Pure div + a, no ul/li inside.
-           Hover managed by JS (.mega-open toggle).
-        ══════════════════════════════════════════════════════ */
-
-        .mega-menu-wrapper { position: relative; }
-
-        /* ── Mega panel ── */
-        #megaDropdown {
+        /* ── Cart badge: hide the theme's hardcoded "3" pseudo-badge,
+               replace with our live Django count ── */
+        .header-1 .header-right .menu-cart .cart-icon::before,
+        .header-2 .header-right .menu-cart .cart-icon::before {
+            content: none !important;
+        }
+        .cart-badge {
             position: absolute;
-            left: 0; right: 0; top: 100%;
-            display: flex;
-            flex-direction: row;
-            padding: 28px 36px 32px;
-            background: #fff;
-            border-top: 3px solid var(--theme, #7000fe);
-            box-shadow: 0 16px 48px rgba(0,0,0,.14);
-            border-radius: 0 0 14px 14px;
-            z-index: 99999;
-            visibility: hidden;
-            opacity: 0;
-            pointer-events: none;
-            transform: translateY(14px);
-            transition: opacity .22s ease, transform .22s ease, visibility .22s ease;
-        }
-        #megaDropdown.mega-open {
-            visibility: visible;
-            opacity: 1;
-            pointer-events: auto;
-            transform: translateY(0);
-        }
-
-        /* ── Category columns ── */
-        .mc {
-            flex: 1;
-            min-width: 155px;
-            padding: 0 22px;
-            border-right: 1px solid #f0f0f0;
-            display: flex;
-            flex-direction: column;
-        }
-        .mc:first-child { padding-left: 0; }
-        .mc:last-child  { border-right: none; padding-right: 0; }
-
-        /* ── Column heading link ── */
-        .mc-title {
-            display: block;
+            top: -8px;
+            right: -10px;
+            background: var(--theme);
+            color: #fff;
             font-size: 11px;
-            font-weight: 800;
-            color: var(--theme, #7000fe);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            padding-bottom: 10px;
-            margin-bottom: 10px;
-            border-bottom: 2px solid #f0f0f0;
-            text-decoration: none;
-            white-space: nowrap;
-        }
-        .mc-title:hover { color: #1f2937; }
-
-        /* ── Standalone product link inside a column ── */
-        .mc-link {
-            display: block;
-            font-size: 13.5px;
-            font-weight: 500;
-            color: #374151;
-            padding: 5px 0;
-            text-decoration: none;
-            white-space: nowrap;
-            transition: color .16s ease, padding-left .16s ease;
-        }
-        .mc-link:hover { color: var(--theme, #7000fe); padding-left: 6px; }
-
-        /* ── Group container ── */
-        .mg { margin-bottom: 4px; }
-
-        /* ── Group heading ── */
-        .mg-title {
-            display: block;
-            font-size: 10.5px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: .8px;
-            color: #9ca3af;
-            padding: 10px 0 5px;
-        }
-
-        /* ── Group product links ── */
-        .mg-link {
-            display: block;
-            font-size: 13px;
-            font-weight: 500;
-            color: #374151;
-            padding: 4px 0 4px 10px;
-            border-left: 2px solid #e5e7eb;
-            text-decoration: none;
-            white-space: nowrap;
-            margin-bottom: 1px;
-            transition: color .16s ease, border-color .16s ease, padding-left .16s ease;
-        }
-        .mg-link:hover {
-            color: var(--theme, #7000fe);
-            border-color: var(--theme, #7000fe);
-            padding-left: 14px;
-        }
-
-        /* ── Featured star ── */
-        .mc-star, .mg-star { color: var(--theme, #7000fe); font-size: 10px; }
-
-        /* ── Mobile: panel is outside the nav; hide it on small screens ── */
-        @media (max-width: 1199px) {
-            #megaDropdown { display: none !important; }
+            font-weight: 700;
+            width: 18px;
+            height: 18px;
+            line-height: 18px;
+            border-radius: 50%;
+            text-align: center;
+            display: inline-block;
         }
     </style>
 </head>
@@ -332,26 +237,16 @@
                         <div class="main-menu">
                             <nav id="mobile-menu">
                                 <ul>
-                                    <li>
-                                        <a href="{% url 'core:home' %}">Home</a>
-                                    </li>
-                                    <li>
-                                        <a href="{% url 'core:about' %}">About Us</a>
-                                    </li>
-                                    <!-- Services — dropdown lives outside nav as sibling of header-main -->
-                                    <li id="megaServicesLi">
-                                        <a href="{% url 'services:home' %}">Services</a>
-                                    </li>
+                                    {% for category in services_menu %}
                                     <li class="has-dropdown">
-                                        <a href="#">Pages</a>
+                                        <a href="{{ category.url }}">{{ category.name }}</a>
                                         <ul class="submenu">
-                                            <li><a href="{% url 'core:faq' %}">FAQ</a></li>
-                                            <li><a href="{% url 'core:about' %}">About Us</a></li>
+                                            {% for item in category.menu_items %}
+                                            <li><a href="{{ item.url }}">{{ item.name }}</a></li>
+                                            {% endfor %}
                                         </ul>
                                     </li>
-                                    <li>
-                                        <a href="{% url 'core:contact' %}">Contact</a>
-                                    </li>
+                                    {% endfor %}
                                 </ul>
                             </nav>
                         </div>
@@ -380,38 +275,6 @@
                         </div>
                     </div>
                 </div><!-- /header-main -->
-
-                <!-- Mega menu panel — outside nav so theme ul/li/a rules don't apply -->
-                <div id="megaDropdown">
-                    {% if services_menu %}
-                        {% for category in services_menu %}
-                        <div class="mc">
-                            <a href="{{ category.url }}" class="mc-title">{{ category.name }}</a>
-                            {% for item in category.menu_items %}
-                                {% if item.type == 'group' %}
-                                <div class="mg">
-                                    <span class="mg-title">{{ item.name }}</span>
-                                    {% for product in item.products %}
-                                    <a href="{{ product.url }}" class="mg-link">{{ product.name }}{% if product.is_featured %} <span class="mg-star">★</span>{% endif %}</a>
-                                    {% endfor %}
-                                </div>
-                                {% else %}
-                                <a href="{{ item.url }}" class="mc-link">{{ item.name }}{% if item.is_featured %} <span class="mc-star">★</span>{% endif %}</a>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                        {% endfor %}
-                    {% else %}
-                        <div class="mc">
-                            <a href="{% url 'services:home' %}" class="mc-title">Printing Services</a>
-                            <a href="{% url 'services:home' %}" class="mc-link">Book Printing</a>
-                            <a href="{% url 'services:home' %}" class="mc-link">Business Cards</a>
-                            <a href="{% url 'services:home' %}" class="mc-link">Brochures</a>
-                            <a href="{% url 'services:home' %}" class="mc-link">Stationery</a>
-                        </div>
-                    {% endif %}
-                </div><!-- /megaDropdown -->
-
             </div><!-- /mega-menu-wrapper -->
         </div><!-- /container-fluid -->
     </div><!-- /header-sticky -->
@@ -441,17 +304,26 @@
     <div class="container">
         <div class="footer-widgets-wrapper">
             <div class="row">
-                <!-- Brand Column -->
-                <div class="col-xl-3 col-sm-6 col-md-6 col-lg-4 wow fadeInUp" data-wow-delay=".2s">
+
+                <!-- ── Col 1: Brand ── -->
+                <div class="col-xl-3 col-sm-6 col-md-6 col-lg-3 wow fadeInUp" data-wow-delay=".2s">
                     <div class="single-footer-widget">
                         <div class="widget-head">
                             <a href="{% url 'core:home' %}">
-                                <img src="{% static 'img/logo.svg' %}" alt="Shirsti Printing">
+                                {% if site_settings and site_settings.logo %}
+                                    <img src="{{ site_settings.logo.url }}" alt="{{ site_settings.logo_alt_text }}">
+                                {% else %}
+                                    <img src="{% static 'img/logo.svg' %}" alt="Shirsti Printing">
+                                {% endif %}
                             </a>
                         </div>
                         <div class="footer-content">
                             <p>
-                                {% if site_settings %}{{ site_settings.footer_about_text }}{% else %}Professional printing solutions for businesses and individuals. Quality prints, fast turnaround.{% endif %}
+                                {% if site_settings %}
+                                    {{ site_settings.footer_about_text }}
+                                {% else %}
+                                    Professional printing solutions for businesses and individuals. Quality prints, fast turnaround.
+                                {% endif %}
                             </p>
                             <div class="social-icon style-2 d-flex align-items-center">
                                 {% if site_settings %}
@@ -471,49 +343,76 @@
                     </div>
                 </div>
 
-                <!-- Useful Links -->
-                <div class="col-xl-3 col-sm-6 col-md-6 col-lg-4 ps-lg-5 wow fadeInUp" data-wow-delay=".4s">
-                    <div class="single-footer-widget">
-                        <div class="widget-head"><h3>Useful Links</h3></div>
-                        <ul class="list-items">
-                            <li><a href="{% url 'core:home' %}">Home</a></li>
-                            <li><a href="{% url 'core:about' %}">About Us</a></li>
-                            <li><a href="{% url 'services:home' %}">Our Services</a></li>
-                            <li><a href="{% url 'core:faq' %}">FAQ</a></li>
-                            <li><a href="{% url 'core:contact' %}">Contact Us</a></li>
-                            <li><a href="{% url 'core:privacy_policy' %}">Privacy Policy</a></li>
-                        </ul>
-                    </div>
+                <!-- ── Col 2: Dynamic footer link groups (admin-managed) ── -->
+                <div class="col-xl-3 col-sm-6 col-md-6 col-lg-3 ps-lg-4 wow fadeInUp" data-wow-delay=".4s">
+                    {% if site_settings %}
+                        {% for group in site_settings.footer_link_groups.all %}
+                            {% if group.is_active %}
+                            <div class="single-footer-widget {% if not forloop.first %}mt-4{% endif %}">
+                                <div class="widget-head"><h3>{{ group.title }}</h3></div>
+                                <ul class="list-items">
+                                    {% for link in group.links.all %}
+                                        {% if link.is_active %}
+                                        <li><a href="{{ link.url }}">{{ link.label }}</a></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            {% endif %}
+                        {% empty %}
+                            <!-- fallback if no groups configured -->
+                            <div class="single-footer-widget">
+                                <div class="widget-head"><h3>Useful Links</h3></div>
+                                <ul class="list-items">
+                                    <li><a href="{% url 'core:home' %}">Home</a></li>
+                                    <li><a href="{% url 'core:about' %}">About Us</a></li>
+                                    <li><a href="{% url 'services:home' %}">Our Services</a></li>
+                                    <li><a href="{% url 'core:faq' %}">FAQ</a></li>
+                                    <li><a href="{% url 'core:contact' %}">Contact Us</a></li>
+                                    <li><a href="{% url 'core:privacy_policy' %}">Privacy Policy</a></li>
+                                </ul>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="single-footer-widget">
+                            <div class="widget-head"><h3>Useful Links</h3></div>
+                            <ul class="list-items">
+                                <li><a href="{% url 'core:home' %}">Home</a></li>
+                                <li><a href="{% url 'core:about' %}">About Us</a></li>
+                                <li><a href="{% url 'services:home' %}">Our Services</a></li>
+                                <li><a href="{% url 'core:faq' %}">FAQ</a></li>
+                                <li><a href="{% url 'core:contact' %}">Contact Us</a></li>
+                            </ul>
+                        </div>
+                    {% endif %}
                 </div>
 
-                <!-- Our Services -->
-                <div class="col-xl-3 col-sm-6 col-md-6 col-lg-4 wow fadeInUp" data-wow-delay=".6s">
+                <!-- ── Col 3: Our Services (from services_menu context) ── -->
+                <div class="col-xl-3 col-sm-6 col-md-6 col-lg-3 wow fadeInUp" data-wow-delay=".6s">
                     <div class="single-footer-widget">
                         <div class="widget-head"><h3>Our Services</h3></div>
                         <ul class="list-items">
                             {% if services_menu %}
                                 {% for category_data in services_menu %}
-                                    <li>
-                                        <a href="{{ category_data.category.get_absolute_url }}">
-                                            {{ category_data.category.name }}
-                                        </a>
-                                    </li>
+                                    <li><a href="{{ category_data.url }}">{{ category_data.name }}</a></li>
                                 {% endfor %}
                             {% else %}
                                 <li><a href="#">Book Printing</a></li>
-                                <li><a href="#">Business Card Printing</a></li>
+                                <li><a href="#">Business Cards</a></li>
                                 <li><a href="#">Brochure Printing</a></li>
-                                <li><a href="#">Stationery Printing</a></li>
-                                <li><a href="#">Digital Printing</a></li>
+                                <li><a href="#">Stationery</a></li>
+                                <li><a href="#">Paper Boxes</a></li>
                             {% endif %}
                         </ul>
                     </div>
                 </div>
 
-                <!-- Contact Info -->
-                <div class="col-xl-3 col-sm-6 col-md-6 col-lg-4 wow fadeInUp" data-wow-delay=".8s">
+                <!-- ── Col 4: Contact Info + Business Hours ── -->
+                <div class="col-xl-3 col-sm-6 col-md-6 col-lg-3 wow fadeInUp" data-wow-delay=".8s">
                     <div class="single-footer-widget">
-                        <div class="widget-head"><h3>Contact Shirsti</h3></div>
+                        <div class="widget-head">
+                            <h3>{% if site_settings %}{{ site_settings.contact_heading }}{% else %}Contact Shirsti{% endif %}</h3>
+                        </div>
                         <ul class="contact-list-2">
                             <li>
                                 <div class="icon">
@@ -522,8 +421,8 @@
                                 <div class="content">
                                     <span>Call Us</span>
                                     <h3>
-                                        <a href="tel:{% if site_settings %}{{ site_settings.phone }}{% else %}+911234567890{% endif %}">
-                                            {% if site_settings %}{{ site_settings.phone }}{% else %}+91 12345 67890{% endif %}
+                                        <a href="tel:{% if site_settings %}{{ site_settings.contact_phone }}{% else %}+911234567890{% endif %}">
+                                            {% if site_settings %}{{ site_settings.contact_phone }}{% else %}+91 12345 67890{% endif %}
                                         </a>
                                     </h3>
                                 </div>
@@ -535,8 +434,8 @@
                                 <div class="content">
                                     <span>Mail Us</span>
                                     <h3>
-                                        <a href="mailto:{% if site_settings %}{{ site_settings.email }}{% else %}info@shirsti.com{% endif %}" class="link">
-                                            {% if site_settings %}{{ site_settings.email }}{% else %}info@shirsti.com{% endif %}
+                                        <a href="mailto:{% if site_settings %}{{ site_settings.contact_email }}{% else %}info@shirsti.com{% endif %}">
+                                            {% if site_settings %}{{ site_settings.contact_email }}{% else %}info@shirsti.com{% endif %}
                                         </a>
                                     </h3>
                                 </div>
@@ -547,12 +446,24 @@
                                 </div>
                                 <div class="content">
                                     <span>Location</span>
-                                    <h3>{% if site_settings %}{{ site_settings.address }}{% else %}New Delhi, India{% endif %}</h3>
+                                    <h3>{% if site_settings %}{{ site_settings.contact_address|linebreaksbr }}{% else %}New Delhi, India{% endif %}</h3>
                                 </div>
                             </li>
+                            {% if site_settings and site_settings.business_hours %}
+                            <li>
+                                <div class="icon">
+                                    <i class="far fa-clock" style="font-size:18px; color:#fff;"></i>
+                                </div>
+                                <div class="content">
+                                    <span>{% if site_settings.business_hours_heading %}{{ site_settings.business_hours_heading }}{% else %}Business Hours{% endif %}</span>
+                                    <h3 style="font-size:13px; line-height:1.7; font-weight:500;">{{ site_settings.business_hours|linebreaksbr }}</h3>
+                                </div>
+                            </li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -562,9 +473,11 @@
         <div class="container">
             <div class="footer-bottom-wrapper justify-content-center">
                 <p class="wow fadeInUp" data-wow-delay=".3s">
-                    Copyright {% now "Y" %} &copy;
-                    {% if site_settings %}{{ site_settings.site_name }}{% else %}Shirsti Printing Company{% endif %}.
-                    All rights reserved.
+                    {% if site_settings and site_settings.copyright_text %}
+                        {{ site_settings.copyright_text|safe }}
+                    {% else %}
+                        Copyright {% now "Y" %} &copy; Shirsti Printing Company. All rights reserved.
+                    {% endif %}
                 </p>
             </div>
         </div>
@@ -589,38 +502,409 @@
 <script src="{% static 'assets/js/wow.min.js' %}"></script>
 <script src="{% static 'assets/js/main.js' %}"></script>
 
-<!-- ── Mega menu: JS-managed hover (avoids all CSS specificity fights) ── -->
+{% block extra_js %}{% endblock %}
+
+<!-- Modal input colour override — prevents theme from making text invisible -->
+<style>
+#quoteLoginModal input {
+    color: #111 !important;
+    background-color: #fff !important;
+    -webkit-text-fill-color: #111 !important;
+}
+#quoteLoginModal input:-webkit-autofill,
+#quoteLoginModal input:-webkit-autofill:hover,
+#quoteLoginModal input:-webkit-autofill:focus {
+    -webkit-text-fill-color: #111 !important;
+    -webkit-box-shadow: 0 0 0 1000px #fff inset !important;
+    background-color: #fff !important;
+}
+#quoteLoginModal input::placeholder { color: #9ca3af !important; }
+</style>
+
+<!-- ===== Quote Auth Modal (Login / Register / OTP) — available on all pages ===== -->
+<div id="quoteLoginModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(9,5,47,.65);backdrop-filter:blur(4px);align-items:center;justify-content:center;overflow-y:auto;">
+<div style="background:#fff;border-radius:16px;width:100%;max-width:440px;margin:16px auto;box-shadow:0 20px 60px rgba(0,0,0,.3);overflow:hidden;">
+
+    <!-- ── Gradient header ── -->
+    <div style="background:linear-gradient(135deg,#7000fe 0%,#09052F 100%);padding:20px 22px;display:flex;align-items:center;justify-content:space-between;">
+        <div>
+            <div id="qmTitle" style="color:#fff;font-size:1.05rem;font-weight:700;"><i class="fas fa-lock"></i> Sign in to Submit Quote</div>
+            <div id="qmSubtitle" style="color:rgba(255,255,255,.75);font-size:.8rem;margin-top:2px;">Your quote is saved — just sign in to send it</div>
+        </div>
+        <button onclick="closeQuoteModal()" style="background:rgba(255,255,255,.15);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1.1rem;line-height:32px;text-align:center;">&times;</button>
+    </div>
+
+    <!-- ── Tab bar ── -->
+    <div id="qmTabs" style="display:flex;border-bottom:2px solid #f0f0f0;">
+        <button id="tabLoginBtn" onclick="qmShowScreen('login')"
+            style="flex:1;padding:12px;border:none;background:#fff;font-weight:700;font-size:.92rem;cursor:pointer;color:#7000fe;border-bottom:2px solid #7000fe;margin-bottom:-2px;">
+            Login
+        </button>
+        <button id="tabRegBtn" onclick="qmShowScreen('register')"
+            style="flex:1;padding:12px;border:none;background:#fff;font-weight:700;font-size:.92rem;cursor:pointer;color:#9ca3af;border-bottom:2px solid transparent;margin-bottom:-2px;">
+            Register
+        </button>
+    </div>
+
+    <div style="padding:22px;">
+        <!-- ── Shared error box ── -->
+        <div id="qmError" style="display:none;background:#fff0f0;border:1px solid #fca5a5;border-radius:8px;padding:10px 14px;margin-bottom:14px;color:#b91c1c;font-size:.86rem;">
+            <i class="fas fa-exclamation-circle"></i> <span id="qmErrorText"></span>
+        </div>
+
+        <!-- ═══ SCREEN 1: Login ═══ -->
+        <div id="screenLogin">
+            <div style="margin-bottom:13px;">
+                <label style="display:block;font-size:.86rem;font-weight:600;color:#374151;margin-bottom:4px;">Email Address</label>
+                <input type="email" id="modalEmail" placeholder="your@email.com"
+                    style="width:100%;padding:10px 13px;border:1.5px solid #d1d5db;border-radius:8px;font-size:.93rem;outline:none;box-sizing:border-box;color:#111 !important;background:#fff !important;">
+            </div>
+            <div style="margin-bottom:18px;">
+                <label style="display:block;font-size:.86rem;font-weight:600;color:#374151;margin-bottom:4px;">Password</label>
+                <input type="password" id="modalPassword" placeholder="Your password"
+                    style="width:100%;padding:10px 13px;border:1.5px solid #d1d5db;border-radius:8px;font-size:.93rem;outline:none;box-sizing:border-box;color:#111 !important;background:#fff !important;">
+            </div>
+            <button id="modalLoginBtn" onclick="submitModalLogin()"
+                style="width:100%;padding:12px;background:linear-gradient(135deg,#7000fe 0%,#09052F 100%);color:#fff;border:none;border-radius:8px;font-size:.97rem;font-weight:700;cursor:pointer;">
+                <i class="fas fa-sign-in-alt"></i> Login &amp; Submit Quote
+            </button>
+        </div>
+
+        <!-- ═══ SCREEN 2: Register ═══ -->
+        <div id="screenRegister" style="display:none;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+                <div>
+                    <label style="display:block;font-size:.86rem;font-weight:600;color:#374151;margin-bottom:4px;">First Name <span style="color:red;">*</span></label>
+                    <input type="text" id="regFirstName" placeholder="Rahul"
+                        style="width:100%;padding:10px 13px;border:1.5px solid #d1d5db;border-radius:8px;font-size:.93rem;outline:none;box-sizing:border-box;color:#111 !important;background:#fff !important;">
+                </div>
+                <div>
+                    <label style="display:block;font-size:.86rem;font-weight:600;color:#374151;margin-bottom:4px;">Last Name</label>
+                    <input type="text" id="regLastName" placeholder="Sharma"
+                        style="width:100%;padding:10px 13px;border:1.5px solid #d1d5db;border-radius:8px;font-size:.93rem;outline:none;box-sizing:border-box;color:#111 !important;background:#fff !important;">
+                </div>
+            </div>
+            <div style="margin-bottom:12px;">
+                <label style="display:block;font-size:.86rem;font-weight:600;color:#374151;margin-bottom:4px;">Email Address <span style="color:red;">*</span></label>
+                <input type="email" id="regEmail" placeholder="your@email.com"
+                    style="width:100%;padding:10px 13px;border:1.5px solid #d1d5db;border-radius:8px;font-size:.93rem;outline:none;box-sizing:border-box;color:#111 !important;background:#fff !important;">
+            </div>
+            <div style="margin-bottom:12px;">
+                <label style="display:block;font-size:.86rem;font-weight:600;color:#374151;margin-bottom:4px;">Mobile Number <span style="color:red;">*</span></label>
+                <div style="display:flex;align-items:center;border:1.5px solid #d1d5db;border-radius:8px;overflow:hidden;background:#fff;">
+                    <span style="padding:10px 12px;background:#f9fafb;border-right:1px solid #e5e7eb;font-size:.9rem;color:#555;white-space:nowrap;">+91</span>
+                    <input type="tel" id="regPhone" maxlength="10" placeholder="9876543210"
+                        style="flex:1;padding:10px 12px;border:none;font-size:.93rem;outline:none;color:#111 !important;background:#fff !important;">
+                </div>
+                <div style="font-size:.76rem;color:#6b7280;margin-top:3px;"><i class="fas fa-shield-alt" style="color:#7000fe;"></i> OTP will be sent to verify your number</div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;">
+                <div>
+                    <label style="display:block;font-size:.86rem;font-weight:600;color:#374151;margin-bottom:4px;">Password <span style="color:red;">*</span></label>
+                    <input type="password" id="regPassword" placeholder="Min 8 chars"
+                        style="width:100%;padding:10px 13px;border:1.5px solid #d1d5db;border-radius:8px;font-size:.93rem;outline:none;box-sizing:border-box;color:#111 !important;background:#fff !important;">
+                </div>
+                <div>
+                    <label style="display:block;font-size:.86rem;font-weight:600;color:#374151;margin-bottom:4px;">Confirm <span style="color:red;">*</span></label>
+                    <input type="password" id="regPassword2" placeholder="Repeat"
+                        style="width:100%;padding:10px 13px;border:1.5px solid #d1d5db;border-radius:8px;font-size:.93rem;outline:none;box-sizing:border-box;color:#111 !important;background:#fff !important;">
+                </div>
+            </div>
+            <button id="modalRegisterBtn" onclick="submitModalRegister()"
+                style="width:100%;padding:12px;background:linear-gradient(135deg,#7000fe 0%,#09052F 100%);color:#fff;border:none;border-radius:8px;font-size:.97rem;font-weight:700;cursor:pointer;">
+                <i class="fas fa-user-plus"></i> Register &amp; Get OTP
+            </button>
+        </div>
+
+        <!-- ═══ SCREEN 3: OTP Verification ═══ -->
+        <div id="screenOtp" style="display:none;">
+            <div style="text-align:center;margin-bottom:18px;">
+                <div style="width:56px;height:56px;border-radius:50%;background:#f0e8ff;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;">
+                    <i class="fas fa-mobile-alt" style="color:#7000fe;font-size:1.4rem;"></i>
+                </div>
+                <div style="font-weight:700;color:#09052F;font-size:1rem;">Verify Your Mobile</div>
+                <div id="otpPhoneDisplay" style="color:#6b7280;font-size:.85rem;margin-top:4px;"></div>
+            </div>
+            <div style="margin-bottom:18px;">
+                <label style="display:block;font-size:.86rem;font-weight:600;color:#374151;margin-bottom:8px;text-align:center;">Enter the 6-digit OTP</label>
+                <input type="text" id="modalOtp" maxlength="6" placeholder="______"
+                    style="width:100%;padding:14px;border:2px solid #d1d5db;border-radius:10px;font-size:1.6rem;letter-spacing:.5rem;text-align:center;outline:none;box-sizing:border-box;font-weight:700;color:#111 !important;background:#fff !important;">
+            </div>
+            <button id="modalOtpBtn" onclick="submitModalOtp()"
+                style="width:100%;padding:12px;background:linear-gradient(135deg,#7000fe 0%,#09052F 100%);color:#fff;border:none;border-radius:8px;font-size:.97rem;font-weight:700;cursor:pointer;margin-bottom:12px;">
+                <i class="fas fa-check-circle"></i> Verify &amp; Submit Quote
+            </button>
+            <div style="text-align:center;font-size:.84rem;color:#6b7280;">
+                Didn't receive OTP?
+                <button onclick="resendModalOtp()" style="background:none;border:none;color:#7000fe;font-weight:600;cursor:pointer;font-size:.84rem;padding:0;">Resend OTP</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+
+<!-- Quote Success Toast -->
+<div id="quoteSuccessToast" style="display:none;position:fixed;bottom:28px;right:24px;z-index:10000;background:linear-gradient(135deg,#7000fe 0%,#09052F 100%);color:#fff;padding:16px 22px;border-radius:12px;box-shadow:0 8px 30px rgba(112,0,254,.35);max-width:340px;">
+    <div style="font-weight:700;margin-bottom:3px;"><i class="fas fa-check-circle"></i> Quote Submitted!</div>
+    <div id="quoteSuccessMsg" style="font-size:.88rem;opacity:.85;"></div>
+</div>
+
 <script>
-(function () {
-    var li     = document.getElementById('megaServicesLi');
-    var panel  = document.getElementById('megaDropdown');
-    if (!li || !panel) return;
+(function() {
+    var _pendingQuoteForm = null;
 
-    var timer;
-    var DELAY = 120; // ms before closing (lets mouse move from trigger into panel)
-
-    function open() {
-        clearTimeout(timer);
-        panel.classList.add('mega-open');
+    /* ── helpers ── */
+    function getCsrf() {
+        // Read from cookie — always current even after Django rotates on login
+        var match = document.cookie.match(/(?:^|;\s*)csrftoken=([^;]+)/);
+        if (match) return decodeURIComponent(match[1]);
+        // Fallback: form hidden input
+        var el = document.querySelector('[name=csrfmiddlewaretoken]');
+        return el ? el.value : '';
     }
-    function scheduleClose() {
-        timer = setTimeout(function () {
-            panel.classList.remove('mega-open');
-        }, DELAY);
+    function qmSetError(msg) {
+        document.getElementById('qmErrorText').textContent = msg;
+        document.getElementById('qmError').style.display = msg ? 'block' : 'none';
+    }
+    function qmSetBtn(id, html, disabled) {
+        var b = document.getElementById(id);
+        if (!b) return;
+        b.innerHTML = html;
+        b.disabled = !!disabled;
     }
 
-    li.addEventListener('mouseenter', open);
-    li.addEventListener('mouseleave', scheduleClose);
-    panel.addEventListener('mouseenter', open);
-    panel.addEventListener('mouseleave', scheduleClose);
+    /* ── screen switching ── */
+    window.qmShowScreen = function(screen) {
+        document.getElementById('screenLogin').style.display = screen === 'login' ? 'block' : 'none';
+        document.getElementById('screenRegister').style.display = screen === 'register' ? 'block' : 'none';
+        document.getElementById('screenOtp').style.display = screen === 'otp' ? 'block' : 'none';
+        document.getElementById('qmTabs').style.display = screen === 'otp' ? 'none' : 'flex';
+        qmSetError('');
 
-    // Close on Escape
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') panel.classList.remove('mega-open');
+        var loginTab = document.getElementById('tabLoginBtn');
+        var regTab   = document.getElementById('tabRegBtn');
+        if (screen === 'login') {
+            loginTab.style.color = '#7000fe'; loginTab.style.borderBottomColor = '#7000fe';
+            regTab.style.color   = '#9ca3af'; regTab.style.borderBottomColor   = 'transparent';
+            document.getElementById('qmTitle').innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign in to Submit Quote';
+            document.getElementById('qmSubtitle').textContent = 'Your quote is saved — just sign in to send it';
+            setTimeout(function() { var el = document.getElementById('modalEmail'); if (el) el.focus(); }, 80);
+        } else if (screen === 'register') {
+            regTab.style.color   = '#7000fe'; regTab.style.borderBottomColor   = '#7000fe';
+            loginTab.style.color = '#9ca3af'; loginTab.style.borderBottomColor = 'transparent';
+            document.getElementById('qmTitle').innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
+            document.getElementById('qmSubtitle').textContent = 'Register to save & track your quotes';
+            setTimeout(function() { var el = document.getElementById('regFirstName'); if (el) el.focus(); }, 80);
+        } else {
+            document.getElementById('qmTitle').innerHTML = '<i class="fas fa-mobile-alt"></i> Verify Mobile';
+            document.getElementById('qmSubtitle').textContent = 'Enter the OTP sent to your number';
+            setTimeout(function() { var el = document.getElementById('modalOtp'); if (el) el.focus(); }, 80);
+        }
+    };
+
+    /* ── open / close ── */
+    window.openQuoteModal = function(formEl) {
+        _pendingQuoteForm = formEl;
+        document.getElementById('quoteLoginModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        qmShowScreen('login');
+        document.getElementById('modalEmail').value = '';
+        document.getElementById('modalPassword').value = '';
+    };
+
+    window.closeQuoteModal = function() {
+        document.getElementById('quoteLoginModal').style.display = 'none';
+        document.body.style.overflow = '';
+    };
+
+    /* ── Login ── */
+    window.submitModalLogin = function() {
+        var email = document.getElementById('modalEmail').value.trim();
+        var pass  = document.getElementById('modalPassword').value;
+        if (!email || !pass) { qmSetError('Please enter your email and password.'); return; }
+
+        qmSetBtn('modalLoginBtn', '<i class="fas fa-spinner fa-spin"></i> Logging in…', true);
+        qmSetError('');
+
+        var fd = new FormData();
+        fd.append('email', email);
+        fd.append('password', pass);
+        fd.append('csrfmiddlewaretoken', getCsrf());
+
+        fetch('/accounts/ajax-login/', { method:'POST', headers:{'X-Requested-With':'XMLHttpRequest','X-CSRFToken':getCsrf()}, body:fd })
+        .then(function(r){ return r.json(); })
+        .then(function(d) {
+            if (d.success) {
+                closeQuoteModal();
+                if (_pendingQuoteForm) submitQuoteAjax(_pendingQuoteForm);
+            } else {
+                qmSetError(d.error || 'Login failed.');
+                qmSetBtn('modalLoginBtn', '<i class="fas fa-sign-in-alt"></i> Login & Submit Quote', false);
+            }
+        })
+        .catch(function() {
+            qmSetError('Network error. Please try again.');
+            qmSetBtn('modalLoginBtn', '<i class="fas fa-sign-in-alt"></i> Login & Submit Quote', false);
+        });
+    };
+
+    /* ── Register ── */
+    window.submitModalRegister = function() {
+        var firstName = document.getElementById('regFirstName').value.trim();
+        var lastName  = document.getElementById('regLastName').value.trim();
+        var email     = document.getElementById('regEmail').value.trim();
+        var phone     = document.getElementById('regPhone').value.trim();
+        var pass      = document.getElementById('regPassword').value;
+        var pass2     = document.getElementById('regPassword2').value;
+
+        if (!firstName || !email || !phone || !pass || !pass2) {
+            qmSetError('Please fill in all required fields.'); return;
+        }
+        if (pass !== pass2) { qmSetError('Passwords do not match.'); return; }
+        if (pass.length < 8) { qmSetError('Password must be at least 8 characters.'); return; }
+        if (!/^\d{10}$/.test(phone)) { qmSetError('Enter a valid 10-digit mobile number.'); return; }
+
+        qmSetBtn('modalRegisterBtn', '<i class="fas fa-spinner fa-spin"></i> Sending OTP…', true);
+        qmSetError('');
+
+        var fd = new FormData();
+        fd.append('first_name', firstName);
+        fd.append('last_name', lastName);
+        fd.append('email', email);
+        fd.append('phone', phone);
+        fd.append('password', pass);
+        fd.append('password2', pass2);
+        fd.append('csrfmiddlewaretoken', getCsrf());
+
+        fetch('/accounts/ajax-register/', { method:'POST', headers:{'X-Requested-With':'XMLHttpRequest','X-CSRFToken':getCsrf()}, body:fd })
+        .then(function(r){ return r.json(); })
+        .then(function(d) {
+            if (d.require_otp) {
+                document.getElementById('otpPhoneDisplay').textContent = 'OTP sent to +91-' + phone;
+                document.getElementById('modalOtp').value = '';
+                qmShowScreen('otp');
+            } else {
+                qmSetError(d.error || 'Registration failed.');
+                qmSetBtn('modalRegisterBtn', '<i class="fas fa-user-plus"></i> Register & Get OTP', false);
+            }
+        })
+        .catch(function() {
+            qmSetError('Network error. Please try again.');
+            qmSetBtn('modalRegisterBtn', '<i class="fas fa-user-plus"></i> Register & Get OTP', false);
+        });
+    };
+
+    /* ── OTP verify ── */
+    window.submitModalOtp = function() {
+        var otp = document.getElementById('modalOtp').value.trim();
+        if (otp.length !== 6) { qmSetError('Please enter the 6-digit OTP.'); return; }
+
+        qmSetBtn('modalOtpBtn', '<i class="fas fa-spinner fa-spin"></i> Verifying…', true);
+        qmSetError('');
+
+        var fd = new FormData();
+        fd.append('otp', otp);
+        fd.append('csrfmiddlewaretoken', getCsrf());
+
+        fetch('/accounts/ajax-verify-otp/', { method:'POST', headers:{'X-Requested-With':'XMLHttpRequest','X-CSRFToken':getCsrf()}, body:fd })
+        .then(function(r){ return r.json(); })
+        .then(function(d) {
+            if (d.success) {
+                closeQuoteModal();
+                if (_pendingQuoteForm) submitQuoteAjax(_pendingQuoteForm);
+            } else {
+                qmSetError(d.error || 'Invalid OTP.');
+                qmSetBtn('modalOtpBtn', '<i class="fas fa-check-circle"></i> Verify & Submit Quote', false);
+            }
+        })
+        .catch(function() {
+            qmSetError('Network error. Please try again.');
+            qmSetBtn('modalOtpBtn', '<i class="fas fa-check-circle"></i> Verify & Submit Quote', false);
+        });
+    };
+
+    /* ── Resend OTP ── */
+    window.resendModalOtp = function() {
+        qmSetError('');
+        var fd = new FormData();
+        fd.append('csrfmiddlewaretoken', getCsrf());
+        fetch('/accounts/ajax-resend-otp/', { method:'POST', headers:{'X-Requested-With':'XMLHttpRequest','X-CSRFToken':getCsrf()}, body:fd })
+        .then(function(r){ return r.json(); })
+        .then(function(d) {
+            if (d.success) {
+                qmSetError('');
+                document.getElementById('otpPhoneDisplay').textContent += ' (OTP resent)';
+            } else {
+                qmSetError(d.error || 'Could not resend OTP.');
+            }
+        });
+    };
+
+    /* ── Quote AJAX submit ── */
+    window.submitQuoteAjax = function(formEl) {
+        var formData = new FormData(formEl);
+        // Always use the fresh CSRF token from cookie — the form's hidden field
+        // may be stale after Django rotates the token on login/registration.
+        var csrf = getCsrf();
+        formData.set('csrfmiddlewaretoken', csrf);
+
+        fetch('/orders/quote/submit/', {
+            method: 'POST',
+            headers: { 'X-Requested-With': 'XMLHttpRequest', 'X-CSRFToken': csrf },
+            body: formData
+        })
+        .then(function(r) {
+            if (!r.ok && r.status !== 200) {
+                throw new Error('HTTP ' + r.status);
+            }
+            return r.json();
+        })
+        .then(function(d) {
+            if (d.require_login) {
+                openQuoteModal(formEl);
+            } else if (d.success) {
+                var msg = 'Quote ' + (d.quote_number || '') + ' submitted! Redirecting to your quote…';
+                showQuoteSuccess(msg);
+                if (d.redirect_url) {
+                    setTimeout(function() { window.location.href = d.redirect_url; }, 2200);
+                }
+            } else {
+                alert('Error: ' + (d.error || 'Something went wrong.'));
+            }
+        })
+        .catch(function(err) {
+            console.error('Quote submit error:', err);
+            alert('Something went wrong. Please try again or refresh the page.');
+        });
+    };
+
+    /* ── Success toast ── */
+    window.showQuoteSuccess = function(msg) {
+        var toast = document.getElementById('quoteSuccessToast');
+        document.getElementById('quoteSuccessMsg').textContent = msg;
+        toast.style.display = 'block';
+        setTimeout(function() { toast.style.display = 'none'; }, 5500);
+    };
+
+    /* ── Keyboard / backdrop close ── */
+    document.getElementById('quoteLoginModal').addEventListener('click', function(e) {
+        if (e.target === this) closeQuoteModal();
+    });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeQuoteModal();
+    });
+
+    /* ── Allow Enter key to submit in login screen ── */
+    document.addEventListener('keydown', function(e) {
+        if (e.key !== 'Enter') return;
+        if (document.getElementById('screenLogin').style.display !== 'none' &&
+            document.getElementById('quoteLoginModal').style.display !== 'none') {
+            submitModalLogin();
+        }
     });
 })();
 </script>
 
-{% block extra_js %}{% endblock %}
 </body>
 </html>

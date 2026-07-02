@@ -1,0 +1,51 @@
+{% extends 'pricing_manager/base.html' %}
+{% block pm_title %}Book Printing — Pricing{% endblock %}
+
+{% block pm_extra_css %}
+<style>
+    .grp-title { font-weight: 800; color: var(--header); font-size: 1rem; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+    .row {
+        display: flex; align-items: center; justify-content: space-between; gap: 14px;
+        padding: 9px 0; border-bottom: 1px dashed #eee;
+    }
+    .row:last-child { border-bottom: none; }
+    .row .lbl { font-weight: 600; font-size: .92rem; }
+    .save-bar {
+        position: sticky; bottom: 0; background: #fff; border-top: 1.5px solid #eee;
+        padding: 16px 24px; margin: 0 -24px -22px; border-radius: 0 0 14px 14px;
+        display: flex; align-items: center; justify-content: space-between;
+    }
+    .hint { font-size: .78rem; color: #6b7280; }
+</style>
+{% endblock %}
+
+{% block pm_content %}
+<div class="pm-breadcrumb"><a href="{% url 'services:pricing_home' %}">Pricing Home</a> / Book Printing</div>
+<h1 class="pm-h1">Book Printing Pricing</h1>
+<p class="pm-sub">These prices apply to <strong>all book printing products</strong>. "Per page" values are multiplied by the page count; "flat add-on" values are added once per book. Each product's own base price is set in the full admin.</p>
+
+<form method="POST">
+    {% csrf_token %}
+    {% for group in groups %}
+    <div class="pm-card">
+        <div class="grp-title"><i class="fas fa-sliders-h" style="color:var(--theme);"></i> {{ group.name }}</div>
+        {% for r in group.rows %}
+        <div class="row">
+            <span class="lbl">{{ r.label }}</span>
+            <div class="price-wrap">
+                <input type="number" step="0.01" class="price-input"
+                       name="{{ r.attr }}" value="{{ r.value|floatformat:2 }}">
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+
+    <div class="pm-card" style="padding:0;">
+        <div class="save-bar">
+            <span class="hint"><i class="fas fa-circle-info"></i> Changes go live immediately after saving.</span>
+            <button type="submit" class="pm-btn"><i class="fas fa-save"></i> Save Book Prices</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

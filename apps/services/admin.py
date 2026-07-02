@@ -13,6 +13,8 @@ from .models import (
     StaticProductSample,
     StaticProductTestimonial,
     ProductFormField,
+    ProductFieldOption,
+    BookPrintingPricing,
     ServiceInfoBlock,
 )
 
@@ -37,7 +39,9 @@ class ProductFormFieldForm(forms.ModelForm):
     options = forms.CharField(
         required=False,
         widget=forms.Textarea(attrs={'rows': 5, 'class': 'vLargeTextField'}),
-        help_text='JSON format: [{"value": "a4", "label": "A4", "price_modifier": 0}]'
+        help_text='LEGACY / ADVANCED — you normally do not need this. Manage options and '
+                  'their prices using the "Options & pricing" grid below. This raw JSON is '
+                  'only used as a fallback when no option rows exist.'
     )
     show_condition = forms.CharField(
         required=False,
@@ -312,20 +316,115 @@ class StaticProductTestimonialAdmin(admin.ModelAdmin):
         return ()
 
 
+class ProductFieldOptionInline(admin.TabularInline):
+    """Clean per-option grid: one row per choice, with an editable Price column."""
+    model = ProductFieldOption
+    extra = 1
+    fields = ('label', 'value', 'price_modifier', 'image_preview', 'image_url', 'order', 'is_active')
+    readonly_fields = ('image_preview',)
+    ordering = ('order', 'id')
+
+    def image_preview(self, obj):
+        if obj and obj.image_url:
+            return format_html('<img src="{}" style="max-height:40px;border:1px solid #eee;border-radius:4px;" />', obj.image_url)
+        return format_html('<span style="color:#aaa;">—</span>')
+    image_preview.short_description = 'Preview'
+
+
 @admin.register(ProductFormField)
 class ProductFormFieldAdmin(admin.ModelAdmin):
     form = ProductFormFieldForm
-    list_display = ('field_label', 'static_product', 'field_section', 'field_type', 'is_required', 'is_active')
+    inlines = [ProductFieldOptionInline]
+    list_display = (
+        'field_label', 'static_product', 'field_section', 'field_type',
+        'option_summary', 'is_required', 'is_active',
+    )
     list_filter = ('field_section', 'field_type', 'is_required', 'is_active', 'static_product__category')
     search_fields = ('field_label', 'field_name', 'static_product__name')
     ordering = ('static_product', 'section_order', 'order')
     autocomplete_fields = ('static_product',)
-    
+
+    fieldsets = (
+        ('Field', {
+            'fields': (
+                'static_product', 'field_label', 'field_name', 'field_type',
+                'field_section', 'is_required', 'help_text',
+            ),
+            'description': 'Edit the options and their prices in the "Options & pricing" grid at the bottom of this page.',
+        }),
+        ('Layout & ordering', {
+            'fields': ('order', 'section_order', 'grid_columns', 'placeholder', 'css_classes'),
+            'classes': ('collapse',),
+        }),
+        ('Number / range limits', {
+            'fields': ('default_value', 'min_value', 'max_value'),
+            'classes': ('collapse',),
+        }),
+        ('Conditional logic', {
+            'fields': ('show_condition', 'triggers_fields'),
+            'classes': ('collapse',),
+        }),
+        ('Advanced (legacy raw JSON — normally ignore)', {
+            'fields': ('options', 'is_price_affecting', 'price_modifier'),
+            'classes': ('collapse',),
+        }),
+        ('Status', {
+            'fields': ('is_active',),
+        }),
+    )
+
+    def option_summary(self, obj):
+        rows = obj.field_options.all()
+        if not rows:
+            return format_html('<span style="color:#aaa;">no options</span>')
+        parts = []
+        for o in rows:
+            if o.price_modifier and o.price_modifier != 0:
+                parts.append(format_html('{} <b style="color:#7000fe;">(+₹{})</b>', o.label, o.price_modifier))
+            else:
+                parts.append(format_html('{}', o.label))
+        return format_html(' &nbsp;·&nbsp; '.join(['{}'] * len(parts)), *parts)
+    option_summary.short_description = 'Options (price)'
+
     class Media:
         js = ('admin/js/json_editor.js',)
 
 
+@admin.register(ProductFieldOption)
+class ProductFieldOptionAdmin(admin.ModelAdmin):
+    """Flat, spreadsheet-style view of every option with inline-editable prices."""
+    list_display = ('label', 'field', 'product_name', 'price_modifier', 'order', 'is_active')
+    list_editable = ('price_modifier', 'order', 'is_active')
+    list_filter = ('field__static_product__category', 'field__static_product', 'field__field_section')
+    search_fields = ('label', 'value', 'field__field_label', 'field__static_product__name')
+    ordering = ('field__static_product', 'field', 'order')
+    list_per_page = 50
+    autocomplete_fields = ('field',)
+
+    def product_name(self, obj):
+        return obj.field.static_product.name if obj.field and obj.field.static_product else '—'
+    product_name.short_description = 'Product'
+    product_name.admin_order_field = 'field__static_product__name'
+
+
+@admin.register(BookPrintingPricing)
+class BookPrintingPricingAdmin(admin.ModelAdmin):
+    """Backup editor. The friendly editor lives at /services/manage/pricing/book-printing/."""
+
+    def changelist_view(self, request, extra_context=None):
+        from django.shortcuts import redirect
+        # Always jump straight to the single editable row.
+        obj = BookPrintingPricing.load()
+        return redirect(f'./{obj.pk}/change/')
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+
 # Custom admin site configuration
-admin.site.site_header = "Shirsti Printing Admin"
-admin.site.site_title = "Shirsti Printing"
-admin.site.index_title = "Welcome to Shirsti Printing Administration"
+admin.site.site_header = "Shristi Printing Admin"
+admin.site.site_title = "Shristi Printing"
+admin.site.index_title = "Welcome to Shristi Printing Administration"

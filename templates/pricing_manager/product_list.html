@@ -1,0 +1,45 @@
+{% extends 'pricing_manager/base.html' %}
+{% block pm_title %}Choose a Product{% endblock %}
+
+{% block pm_extra_css %}
+<style>
+    .cat-title { font-size: 1.05rem; font-weight: 800; color: var(--header); margin: 4px 0 12px; display: flex; align-items: center; gap: 8px; }
+    .prod-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px,1fr)); gap: 12px; margin-bottom: 26px; }
+    .prod {
+        display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit;
+        background: #fff; border: 1.5px solid #e5e7eb; border-radius: 10px; padding: 12px 14px; transition: all .18s;
+    }
+    .prod:hover { border-color: var(--theme); background: #faf7ff; }
+    .prod .thumb { width: 44px; height: 44px; border-radius: 8px; object-fit: cover; background: #f3f4f6; flex-shrink: 0; }
+    .prod .thumb.ph { display: flex; align-items: center; justify-content: center; color: #cbd5e1; }
+    .prod .nm { font-weight: 700; font-size: .9rem; line-height: 1.25; }
+    .prod .base { font-size: .76rem; color: #6b7280; }
+</style>
+{% endblock %}
+
+{% block pm_content %}
+<div class="pm-breadcrumb"><a href="{% url 'services:pricing_home' %}">Pricing Home</a> / Other Products</div>
+<h1 class="pm-h1">Choose a Product to Update</h1>
+<p class="pm-sub">Pick a product to edit the price of each of its options.</p>
+
+{% for group in categories %}
+<div class="cat-title"><i class="fas fa-folder-open" style="color:var(--theme);"></i> {{ group.category.name }}</div>
+<div class="prod-grid">
+    {% for product in group.products %}
+    <a class="prod" href="{% url 'services:pricing_product_edit' product.id %}">
+        {% if product.featured_image %}
+            <img class="thumb" src="{{ product.featured_image.url }}" alt="">
+        {% else %}
+            <div class="thumb ph"><i class="fas fa-image"></i></div>
+        {% endif %}
+        <div>
+            <div class="nm">{{ product.name }}</div>
+            <div class="base">Base ₹{{ product.base_price }}</div>
+        </div>
+    </a>
+    {% empty %}
+    <p class="pm-sub">No products in this category.</p>
+    {% endfor %}
+</div>
+{% endfor %}
+{% endblock %}

@@ -268,18 +268,211 @@ def quote_request_view(request):
     return render(request, 'orders/quote_request.html')
 
 
+def _to_int(value):
+    try:
+        return int(float(value))
+    except (TypeError, ValueError):
+        return 0
+
+
+def _calculate_book_item_pricing(item):
+    """Estimate pricing for a Book Printing quote item.
+
+    Mirrors the per-page engine in book_printing_detail.html exactly, reading the
+    editable rates from the BookPrintingPricing singleton:
+      cost_per_book = interior(per-page) + size + paper + binding + cover finish
+      subtotal      = cost_per_book * qty + cover-design + inner-page-design + ISBN
+      then bulk discount (>=100: 10%, >=50: 5%), then 18% GST.
+    """
+    from decimal import Decimal
+    from apps.services.models import BookPrintingPricing
+
+    bp = BookPrintingPricing.load()
+    specs = item.specifications or {}
+    qty = item.quantity or 1
+
+    page_count = _to_int(specs.get('page_count'))
+    bw_pages = _to_int(specs.get('bw_page_count'))
+    color_pages = _to_int(specs.get('color_page_count'))
+    total_pages = page_count if page_count else (bw_pages + color_pages)
+
+    components = []
+    interior = specs.get('interior_color')
+    interior_cost = Decimal('0')
+    if interior == 'bw_standard':
+        pages = bw_pages if bw_pages > 0 else total_pages
+        interior_cost = pages * bp.color_bw_standard_per_page
+        components.append({'label': f'Interior: B&W Standard — {pages} pg × ₹{bp.color_bw_standard_per_page}', 'amount': interior_cost})
+    elif interior == 'bw_premium':
+        pages = bw_pages if bw_pages > 0 else total_pages
+        interior_cost = pages * bp.color_bw_premium_per_page
+        components.append({'label': f'Interior: B&W Premium — {pages} pg × ₹{bp.color_bw_premium_per_page}', 'amount': interior_cost})
+    elif interior == 'color_standard':
+        pages = color_pages if color_pages > 0 else total_pages
+        interior_cost = pages * bp.color_standard_per_page
+        components.append({'label': f'Interior: Colour Standard — {pages} pg × ₹{bp.color_standard_per_page}', 'amount': interior_cost})
+    elif interior == 'color_premium':
+        pages = color_pages if color_pages > 0 else total_pages
+        interior_cost = pages * bp.color_premium_per_page
+        components.append({'label': f'Interior: Colour Premium — {pages} pg × ₹{bp.color_premium_per_page}', 'amount': interior_cost})
+    elif interior == 'combine_color':
+        interior_cost = (bw_pages * bp.combine_bw_per_page) + (color_pages * bp.combine_color_per_page)
+        components.append({'label': f'Interior: Combined — {bw_pages} B&W + {color_pages} colour pg', 'amount': interior_cost})
+
+    size_map = {'a4': bp.size_a4, 'letter': bp.size_letter, 'executive': bp.size_executive, 'a5': bp.size_a5}
+    paper_map = {'75gsm': bp.paper_75gsm, '100gsm': bp.paper_100gsm, '100gsm_art': bp.paper_100gsm_art, '130gsm_art': bp.paper_130gsm_art}
+    binding_map = {'saddle_stitch': bp.binding_saddle_stitch, 'spiral_binding': bp.binding_spiral, 'paperback_perfect': bp.binding_paperback_perfect, 'hardcover': bp.binding_hardcover}
+    finish_map = {'matte': bp.cover_matte, 'glossy': bp.cover_glossy}
+
+    def _add(label, mapping, key):
+        val = mapping.get(key)
+        if val is None:
+            return Decimal('0')
+        components.append({'label': label, 'amount': Decimal(val)})
+        return Decimal(val)
+
+    size_cost = _add(f"Size: {specs.get('book_size', '')}", size_map, specs.get('book_size'))
+    paper_cost = _add(f"Paper: {specs.get('paper_type', '')}", paper_map, specs.get('paper_type'))
+    binding_cost = _add(f"Binding: {specs.get('binding_type', '')}", binding_map, specs.get('binding_type'))
+    finish_cost = _add(f"Cover finish: {specs.get('cover_finish', '')}", finish_map, specs.get('cover_finish'))
+
+    cost_per_book = interior_cost + size_cost + paper_cost + binding_cost + finish_cost
+
+    design_cost = Decimal('0')
+    if specs.get('cover_page_design') == 'yes':
+        design_cost += bp.cover_design_price
+    if specs.get('inner_page_design') == 'yes':
+        design_cost += total_pages * bp.inner_page_design_per_page
+    isbn_cost = bp.isbn_price if specs.get('isbn_allocation') == 'assign_isbn' else Decimal('0')
+
+    books_subtotal = cost_per_book * qty
+    gross_subtotal = books_subtotal + design_cost + isbn_cost
+
+    if qty >= 100:
+        discount_pct = 10
+    elif qty >= 50:
+        discount_pct = 5
+    else:
+        discount_pct = 0
+    discount = gross_subtotal * Decimal(discount_pct) / Decimal(100)
+    after_discount = gross_subtotal - discount
+    tax = after_discount * Decimal('0.18')
+    total = after_discount + tax
+
+    q = lambda d: Decimal(d).quantize(Decimal('0.01'))
+    return {
+        'is_book': True,
+        'components': [{'label': c['label'], 'amount': q(c['amount'])} for c in components],
+        'cost_per_book': q(cost_per_book),
+        'quantity': qty,
+        'books_subtotal': q(books_subtotal),
+        'design_cost': q(design_cost),
+        'isbn_cost': q(isbn_cost),
+        'gross_subtotal': q(gross_subtotal),
+        'discount': q(discount),
+        'discount_pct': discount_pct,
+        'subtotal': q(after_discount),   # taxable base — used for grand totals
+        'tax': q(tax),
+        'total': q(total),
+    }
+
+
+def _calculate_item_pricing(item):
+    """Estimate pricing for a quote item.
+
+    Book Printing products use the per-page engine (_calculate_book_item_pricing).
+    All other products price off base price + the price modifiers of the selected
+    spec options, mirroring recalc() on the product pages: unit = base + Σ(modifiers),
+    total = unit * qty * 1.18. Returns None when there is no product to price against.
+    """
+    from decimal import Decimal
+
+    product = item.static_product
+    if not product:
+        return None
+
+    if product.category and product.category.slug == 'book-printing':
+        return _calculate_book_item_pricing(item)
+
+    base = Decimal(str(product.base_price or 0))
+    specs = item.specifications or {}
+
+    # Build a {field_name: {value: price_modifier}} lookup from the product's fields.
+    modifier_lookup = {}
+    for field in product.form_fields.filter(is_active=True):
+        opt_map = {}
+        for opt in field.get_options():
+            try:
+                opt_map[str(opt.get('value'))] = Decimal(str(opt.get('price_modifier', 0) or 0))
+            except (TypeError, ValueError):
+                opt_map[str(opt.get('value'))] = Decimal('0')
+        modifier_lookup[field.field_name] = opt_map
+
+    modifiers = []
+    modifier_total = Decimal('0')
+    for field_name, value in specs.items():
+        opt_map = modifier_lookup.get(field_name)
+        if not opt_map:
+            continue
+        mod = opt_map.get(str(value), Decimal('0'))
+        if mod:
+            modifiers.append({'label': str(value), 'amount': mod})
+            modifier_total += mod
+
+    qty = item.quantity or 1
+    unit_price = base + modifier_total
+    subtotal = unit_price * qty
+    tax = (subtotal * Decimal('0.18')).quantize(Decimal('0.01'))
+    total = (subtotal + tax).quantize(Decimal('0.01'))
+
+    return {
+        'base_price': base.quantize(Decimal('0.01')),
+        'modifiers': modifiers,
+        'unit_price': unit_price.quantize(Decimal('0.01')),
+        'quantity': qty,
+        'subtotal': subtotal.quantize(Decimal('0.01')),
+        'tax': tax,
+        'total': total,
+    }
+
+
 @login_required
 def quote_detail(request, quote_number):
     """Quote detail page"""
+    from decimal import Decimal
+
     quote = get_object_or_404(
-        QuoteRequest, 
-        quote_number=quote_number, 
+        QuoteRequest,
+        quote_number=quote_number,
         user=request.user
     )
-    
+
+    quote_items = quote.items.select_related(
+        'static_product', 'static_product__category'
+    ).prefetch_related('static_product__form_fields')
+
+    priced_items = []
+    grand_subtotal = Decimal('0')
+    grand_tax = Decimal('0')
+    grand_total = Decimal('0')
+    for item in quote_items:
+        pricing = _calculate_item_pricing(item)
+        priced_items.append({'item': item, 'pricing': pricing})
+        if pricing:
+            grand_subtotal += pricing['subtotal']
+            grand_tax += pricing['tax']
+            grand_total += pricing['total']
+
+    has_pricing = grand_total > 0
+
     context = {
         'quote': quote,
-        'quote_items': quote.items.select_related('static_product'),
+        'quote_items': quote_items,
+        'priced_items': priced_items,
+        'has_pricing': has_pricing,
+        'estimated_subtotal': grand_subtotal.quantize(Decimal('0.01')),
+        'estimated_tax': grand_tax.quantize(Decimal('0.01')),
+        'estimated_total': grand_total.quantize(Decimal('0.01')),
     }
     return render(request, 'orders/quote_detail.html', context)
 
@@ -305,6 +498,131 @@ def quotes_list(request):
         'quote_statuses': QuoteRequest.STATUS_CHOICES,
     }
     return render(request, 'orders/quotes_list.html', context)
+
+
+def submit_quote_view(request):
+    """Handle Get Quote submission from product pages."""
+    import logging
+    from django.urls import reverse
+    logger = logging.getLogger(__name__)
+
+    def _send_quote_email(quote):
+        try:
+            from django.core.mail import send_mail
+            from django.conf import settings
+            first_item = quote.items.select_related('static_product').first()
+            product_name = first_item.description if first_item else 'Custom Product'
+            specs = first_item.specifications if first_item else {}
+            specs_text = '\n'.join(
+                f"  • {k.replace('_', ' ').title()}: {v}" for k, v in specs.items()
+            ) if specs else '  No specifications provided'
+            subject = f'Quote Request Received — {quote.quote_number} | Shristi Printing'
+            message = (
+                f"Dear {quote.customer_name},\n\n"
+                f"Thank you for your quote request! We have received it and our team will review it shortly.\n\n"
+                f"QUOTE DETAILS\n"
+                f"{'='*44}\n"
+                f"Quote Number  : {quote.quote_number}\n"
+                f"Product       : {product_name}\n"
+                f"Quantity      : {quote.quantity}\n"
+                f"Status        : Pending Review\n\n"
+                f"SPECIFICATIONS\n"
+                f"{'='*44}\n"
+                f"{specs_text}\n\n"
+                f"WHAT HAPPENS NEXT?\n"
+                f"{'='*44}\n"
+                f"1. Our team will review your requirements (within 24 hours)\n"
+                f"2. We will send you a detailed quotation with pricing\n"
+                f"3. You can approve and proceed with the order\n\n"
+                f"Need to reach us? Email: quotes@shirsti.com | Phone: +91 98765 43210\n"
+                f"Business Hours: Mon–Sat, 9 AM – 6 PM\n\n"
+                f"Thank you for choosing Shristi Printing!\n"
+                f"— The Shristi Printing Team"
+            )
+            send_mail(
+                subject=subject,
+                message=message,
+                from_email=getattr(settings, 'DEFAULT_FROM_EMAIL', 'noreply@shirsti.com'),
+                recipient_list=[quote.customer_email],
+                fail_silently=True,
+            )
+        except Exception as e:
+            logger.warning('Quote email failed for %s: %s', quote.quote_number, e)
+
+    def _create_quote(user, data):
+        try:
+            specs = json.loads(data.get('specs', '{}'))
+        except (json.JSONDecodeError, TypeError):
+            specs = {}
+
+        product_name = data.get('product_name', 'Custom Product')
+        quantity = max(int(data.get('quantity') or 1), 1)
+        spec_lines = '\n'.join(f"{k}: {v}" for k, v in specs.items())
+        description = f"Quote for {product_name}\n\nSpecifications:\n{spec_lines}"
+
+        quote = QuoteRequest.objects.create(
+            user=user,
+            customer_name=(f"{user.first_name} {user.last_name}".strip() or user.email),
+            customer_email=user.email,
+            customer_phone=user.phone or '',
+            company_name=getattr(user, 'company_name', '') or '',
+            description=description,
+            quantity=quantity,
+        )
+
+        try:
+            product = StaticProduct.objects.get(id=data.get('product_id'))
+        except (StaticProduct.DoesNotExist, TypeError, ValueError):
+            product = None
+
+        from .models import QuoteRequestItem
+        QuoteRequestItem.objects.create(
+            quote_request=quote,
+            static_product=product,
+            description=product_name,
+            quantity=quantity,
+            specifications=specs,
+        )
+
+        _send_quote_email(quote)
+        return quote
+
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+
+    if request.method == 'POST':
+        if not request.user.is_authenticated:
+            request.session['pending_quote'] = {
+                'product_id': request.POST.get('product_id'),
+                'product_name': request.POST.get('product_name', ''),
+                'quantity': request.POST.get('quantity', '1'),
+                'specs': request.POST.get('specs', '{}'),
+            }
+            if is_ajax:
+                return JsonResponse({'require_login': True})
+            register_url = reverse('accounts:register')
+            submit_url = reverse('orders:submit_quote')
+            return redirect(f"{register_url}?next={submit_url}")
+
+        quote = _create_quote(request.user, request.POST)
+        quote_url = reverse('orders:quote_detail', kwargs={'quote_number': quote.quote_number})
+        if is_ajax:
+            return JsonResponse({
+                'success': True,
+                'quote_number': quote.quote_number,
+                'redirect_url': quote_url,
+            })
+        messages.success(request, f'Quote {quote.quote_number} submitted! Our team will contact you soon.')
+        return redirect(quote_url)
+
+    # GET — user returned after login/register
+    if request.user.is_authenticated:
+        pending = request.session.pop('pending_quote', None)
+        if pending:
+            quote = _create_quote(request.user, pending)
+            messages.success(request, f'Quote {quote.quote_number} submitted! Our team will contact you soon.')
+            return redirect('orders:quote_detail', quote_number=quote.quote_number)
+
+    return redirect('accounts:profile')
 
 
 # Cart count API for navbar

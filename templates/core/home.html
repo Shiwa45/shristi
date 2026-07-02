@@ -1,4 +1,4 @@
-﻿{% extends 'base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block title %}Home{% endblock %}
@@ -23,7 +23,7 @@
         .hero-3 { padding-top: 86px !important; }
     }
     .hero-3 .hero-image {
-        height: 348px !important;
+        height: 420px !important;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -31,7 +31,7 @@
     .hero-3 .hero-image img {
         width: 100% !important;
         height: auto !important;
-        max-height: 348px !important;
+        max-height: 420px !important;
         object-fit: contain !important;
     }
     /* Scale down text content proportionally */
@@ -61,48 +61,61 @@
         font-size: 19px !important;
     }
 
-    /* ── No Design section: white text on blue CTA background ── */
+    /* ── No Design section: dark text on light background ── */
     .no-design-banner .section-title .sub-title {
-        background: rgba(255,255,255,0.18);
-        border: 1px solid rgba(255,255,255,0.3);
+        background: rgba(112, 0, 254, 0.08) !important;
+        border: 1px solid rgba(112, 0, 254, 0.2) !important;
     }
     .no-design-banner .section-title .sub-title span {
-        color: #fff !important;
-        -webkit-text-fill-color: #fff !important;
+        color: var(--theme, #7000fe) !important;
+        -webkit-text-fill-color: var(--theme, #7000fe) !important;
         background: transparent !important;
         background-clip: initial !important;
         -webkit-background-clip: initial !important;
     }
     .no-design-banner .section-title h2 {
-        color: #fff;
+        color: #09052f !important;
     }
     .no-design-banner > p {
-        color: rgba(255,255,255,0.88);
+        color: #4b5563 !important;
     }
     .no-design-banner .list-item ul li {
-        color: #fff;
+        color: #374151 !important;
         font-weight: 500;
         font-size: 16px;
         margin-bottom: 14px;
     }
     .no-design-banner .list-item ul li i {
-        color: #ffe066;
+        color: var(--theme, #7000fe) !important;
         margin-right: 10px;
         font-size: 14px;
     }
     .no-design-banner .theme-btn {
-        background-color: #fff !important;
-        color: #3b2bbf !important;
+        background-color: var(--theme, #7000fe) !important;
+        color: #fff !important;
         font-weight: 700;
     }
     .no-design-banner .theme-btn:hover {
-        background-color: #ffe066 !important;
-        color: #3b2bbf !important;
+        background-color: #5b00cf !important;
+        color: #fff !important;
     }
     .no-design-banner .quality-image img {
         max-width: 100%;
         height: auto;
         filter: drop-shadow(0 20px 40px rgba(0,0,0,0.25));
+    }
+
+    /* ── Final CTA section: dark text on light background ── */
+    .cta-wrapper-3 .cta-content h2 {
+        color: #09052f !important;
+    }
+    .cta-wrapper-3 .cta-content .theme-btn {
+        background-color: var(--theme, #7000fe) !important;
+        color: #fff !important;
+    }
+    .cta-wrapper-3 .cta-content .theme-btn:hover {
+        background-color: #5b00cf !important;
+        color: #fff !important;
     }
 
     /* ── Shop banner product images ── */
@@ -439,7 +452,6 @@
                             <div class="shop-content">
                                 <h5><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h5>
                                 <ul class="price-list">
-                                    <li>From ₹{{ product.base_price }}</li>
                                 </ul>
                             </div>
                         </div>
@@ -466,7 +478,7 @@
                 </section>
 
 <!-- ===== No Design? No Problem! ===== -->
-<section class="good-quality-section fix section-padding bg-cover" style="background-image: url('{% static 'assets/img/cta-bg.png' %}');">
+<section class="good-quality-section fix section-padding bg-cover" style="background: linear-gradient(135deg, #fdf8f2 0%, #f7f0e6 100%); border-top: 1px solid #e8d9c4; border-bottom: 1px solid #e8d9c4;">
     <div class="container">
         <div class="good-quality-wrapper">
             <div class="row g-5 align-items-center">
@@ -573,7 +585,6 @@
                     <div class="shop-content">
                         <h5><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h5>
                         <ul class="price-list">
-                            <li>From ₹{{ product.base_price }}</li>
                         </ul>
                     </div>
                 </div>
@@ -810,7 +821,7 @@
                 <div class="col-lg-6">
                     <div class="faq-image-2">
                         <div class="faq-img reveal fix">
-                            <img src="{% static 'assets/img/faq/03.jpg' %}" alt="FAQ">
+                            <img src="/media/faq/faq_support.png" alt="FAQ Support">
                             {% if faq_video_url %}
                             <a href="{{ faq_video_url }}" class="video-btn ripple video-popup">
                                 <i class="fas fa-play"></i>
@@ -818,7 +829,7 @@
                             {% endif %}
                         </div>
                         <div class="faq-img-2 wow img-custom-anim-top" data-wow-duration="1.5s" data-wow-delay="0.1s">
-                            <img src="{% static 'assets/img/faq/04.jpg' %}" alt="FAQ">
+                            <img src="/media/faq/faq_production.png" alt="FAQ Production">
                         </div>
                     </div>
                 </div>
@@ -908,7 +919,7 @@
 <!-- ===== Final CTA ===== -->
 <section class="cta-section-3">
     <div class="container">
-        <div class="cta-wrapper-3 bg-cover" style="background-image: url('{% static 'assets/img/cta-bg-3.jpg' %}');">
+        <div class="cta-wrapper-3 bg-cover" style="background: linear-gradient(135deg, #f6f4fe 0%, #faf8ff 100%); border: 1px solid #ede9fe; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.03);">
             <div class="cta-content">
                 <h2 class="split-text right">
                     Ready to Create Some <br> Custom Print Products?
@@ -916,7 +927,7 @@
                 <a href="{% url 'core:contact' %}" class="theme-btn wow fadeInUp" data-wow-delay=".5s">Contact Us</a>
             </div>
             <div class="cta-shape reveal fix">
-                <img src="{% static 'assets/img/cta-2-shape2.png' %}" alt="">
+                <img src="/media/cta/cta_products.png" alt="Custom Print Products" style="max-height: 280px; width: auto; object-fit: contain;">
             </div>
         </div>
     </div>

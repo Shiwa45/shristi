@@ -229,15 +229,18 @@ def static_product_detail(request, category_slug, product_slug):
     
     # Add category-specific context
     if category.slug == 'book-printing':
+        from .models import BookPrintingPricing
+        bp = BookPrintingPricing.load()
         context.update({
             'hero_padding': 'padding: 60px 0 35px;',
             'min_quantity': 25,
             'min_pages': 4,
             'binding_page_limit': 30,
-            'design_service_price': 1500,
-            'inner_page_design_price': 50,
+            'design_service_price': bp.cover_design_price,
+            'inner_page_design_price': bp.inner_page_design_per_page,
             'isbn_delivery_days': '5-7',
             'gst_percentage': 18,
+            'book_pricing': bp,
         })
     elif category.slug == 'paper-boxes':
         context.update({

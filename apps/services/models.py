@@ -641,7 +641,17 @@ class ProductFormField(models.Model):
         return f"{product_name} - {self.field_label} ({self.field_name})"
 
     def get_options(self):
-        """Parse and return field options"""
+        """Return field options as a list of dicts.
+
+        Prefers the normalized ProductFieldOption rows (each option has its own
+        price, editable in the admin as a simple grid). Falls back to the legacy
+        JSON blob only when no rows exist, so older fields keep working.
+        """
+        rows = self.field_options.filter(is_active=True).order_by('order', 'id')
+        rows = list(rows)
+        if rows:
+            return [opt.as_dict() for opt in rows]
+
         if not self.options:
             return []
         try:
@@ -705,6 +715,134 @@ class ProductFormField(models.Model):
                 return modifier * quantity
 
         return self.price_modifier * quantity
+
+
+class ProductFieldOption(models.Model):
+    """A single selectable option for a ProductFormField, with its own price.
+
+    This replaces hand-edited JSON: admins manage one row per option in a clean
+    grid, and just type the extra charge in the Price column. `get_options()`
+    on ProductFormField reads these rows automatically.
+    """
+    field = models.ForeignKey(
+        ProductFormField, on_delete=models.CASCADE, related_name='field_options'
+    )
+    label = models.CharField(
+        max_length=200,
+        help_text="Text the customer sees, e.g. 'Front & Back' or 'Rounded Corners'"
+    )
+    value = models.CharField(
+        max_length=200, blank=True,
+        help_text="Internal value saved with the order. Leave blank to auto-fill from the label."
+    )
+    price_modifier = models.DecimalField(
+        max_digits=10, decimal_places=2, default=0,
+        help_text="Extra charge in ₹ added when this option is chosen. 0 = no change, negative = discount."
+    )
+    image_url = models.CharField(
+        max_length=500, blank=True,
+        help_text="Optional image path (used only by image-grid fields)."
+    )
+    description = models.CharField(max_length=300, blank=True)
+    width_mm = models.CharField(
+        max_length=20, blank=True,
+        help_text="Optional — canvas width in mm for the design tool."
+    )
+    height_mm = models.CharField(
+        max_length=20, blank=True,
+        help_text="Optional — canvas height in mm for the design tool."
+    )
+    order = models.IntegerField(default=0, help_text="Display order")
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['field', 'order', 'id']
+
+    def __str__(self):
+        return f"{self.label} (+₹{self.price_modifier})"
+
+    def save(self, *args, **kwargs):
+        if not self.value:
+            self.value = self.label
+        super().save(*args, **kwargs)
+
+    def as_dict(self):
+        """Serialize to the same dict shape the storefront templates expect."""
+        data = {
+            'value': self.value,
+            'label': self.label,
+            'price_modifier': self.price_modifier,
+        }
+        if self.image_url:
+            data['image_url'] = self.image_url
+        if self.description:
+            data['description'] = self.description
+        if self.width_mm:
+            data['width_mm'] = self.width_mm
+            data['height_mm'] = self.height_mm or ''
+        return data
+
+
+class BookPrintingPricing(models.Model):
+    """Single editable price sheet for all Book Printing products.
+
+    Book printing uses a per-page pricing engine (unlike other products which
+    price per option row). These values were previously hardcoded in the
+    template + view; storing them here lets a non-technical admin edit them
+    from the Pricing Manager. There is only ever one row (a singleton).
+    """
+    # Interior colour — charged PER PAGE
+    color_bw_standard_per_page = models.DecimalField('B&W Standard (per page)', max_digits=8, decimal_places=2, default=Decimal('1.50'))
+    color_bw_premium_per_page = models.DecimalField('B&W Premium (per page)', max_digits=8, decimal_places=2, default=Decimal('2.00'))
+    color_standard_per_page = models.DecimalField('Colour Standard (per page)', max_digits=8, decimal_places=2, default=Decimal('6.00'))
+    color_premium_per_page = models.DecimalField('Colour Premium (per page)', max_digits=8, decimal_places=2, default=Decimal('8.00'))
+    combine_bw_per_page = models.DecimalField('Combined: B&W pages (per page)', max_digits=8, decimal_places=2, default=Decimal('2.00'))
+    combine_color_per_page = models.DecimalField('Combined: Colour pages (per page)', max_digits=8, decimal_places=2, default=Decimal('6.00'))
+
+    # Book size — flat add-on per book
+    size_a4 = models.DecimalField('A4', max_digits=8, decimal_places=2, default=Decimal('0'))
+    size_letter = models.DecimalField('Letter', max_digits=8, decimal_places=2, default=Decimal('25'))
+    size_executive = models.DecimalField('Executive', max_digits=8, decimal_places=2, default=Decimal('50'))
+    size_a5 = models.DecimalField('A5', max_digits=8, decimal_places=2, default=Decimal('-25'))
+
+    # Paper type — flat add-on per book
+    paper_75gsm = models.DecimalField('75 GSM', max_digits=8, decimal_places=2, default=Decimal('0'))
+    paper_100gsm = models.DecimalField('100 GSM', max_digits=8, decimal_places=2, default=Decimal('50'))
+    paper_100gsm_art = models.DecimalField('100 GSM Art', max_digits=8, decimal_places=2, default=Decimal('100'))
+    paper_130gsm_art = models.DecimalField('130 GSM Art', max_digits=8, decimal_places=2, default=Decimal('150'))
+
+    # Binding — flat add-on per book
+    binding_saddle_stitch = models.DecimalField('Saddle Stitch', max_digits=8, decimal_places=2, default=Decimal('0'))
+    binding_spiral = models.DecimalField('Spiral Binding', max_digits=8, decimal_places=2, default=Decimal('100'))
+    binding_paperback_perfect = models.DecimalField('Paperback / Perfect', max_digits=8, decimal_places=2, default=Decimal('200'))
+    binding_hardcover = models.DecimalField('Hardcover', max_digits=8, decimal_places=2, default=Decimal('500'))
+
+    # Cover finish — flat add-on per book
+    cover_matte = models.DecimalField('Matte', max_digits=8, decimal_places=2, default=Decimal('0'))
+    cover_glossy = models.DecimalField('Glossy', max_digits=8, decimal_places=2, default=Decimal('50'))
+
+    # Extra services
+    cover_design_price = models.DecimalField('Cover page design (flat)', max_digits=8, decimal_places=2, default=Decimal('1500'))
+    inner_page_design_per_page = models.DecimalField('Inner page design (per page)', max_digits=8, decimal_places=2, default=Decimal('50'))
+    isbn_price = models.DecimalField('ISBN allocation (flat)', max_digits=8, decimal_places=2, default=Decimal('2000'))
+
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = 'Book Printing Pricing'
+        verbose_name_plural = 'Book Printing Pricing'
+
+    def __str__(self):
+        return 'Book Printing Price Sheet'
+
+    def save(self, *args, **kwargs):
+        self.pk = 1  # enforce singleton
+        super().save(*args, **kwargs)
+
+    @classmethod
+    def load(cls):
+        obj, _ = cls.objects.get_or_create(pk=1)
+        return obj
 
 
 class StaticProductImage(models.Model):

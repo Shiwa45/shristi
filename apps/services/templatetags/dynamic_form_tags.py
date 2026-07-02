@@ -47,9 +47,8 @@ def render_product_form_fields(product, form_data=None):
                 'fields': []
             }
 
-        # Check if field should be shown based on conditional logic
-        if field.should_show(form_data):
-            sections[section_key]['fields'].append(field)
+        # Always render all fields; client-side JS handles conditional show/hide
+        sections[section_key]['fields'].append(field)
 
     # Sort sections by order
     sorted_sections = sorted(sections.items(), key=lambda x: x[1]['order'])

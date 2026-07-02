@@ -398,28 +398,66 @@
 
                                 {% render_product_form_fields product %}
 
-                                <div class="st-price-section">
-                                    <div class="st-total-row">
-                                        <span class="st-total-label">Total (GST Incl.):</span>
-                                        <span class="st-total-amount" id="stTotal" data-base="{{ product.base_price }}">₹{{ product.base_price }}</span>
-                                    </div>
-                                    <div class="st-unit-row">Unit Price: <span id="stUnit">₹{{ product.base_price }}</span></div>
-                                </div>
+                                <!-- Hidden price trackers (JS still updates) -->
+                                <span id="stTotal" data-base="{{ product.base_price }}" style="display:none;">₹{{ product.base_price }}</span>
+                                <span id="stUnit" style="display:none;">₹{{ product.base_price }}</span>
 
                                 {% if product.design_tool_enabled %}
-                                <button type="button" class="st-btn-order" onclick="stOpenModal()">
-                                    <i class="fas fa-arrow-right"></i> Get Started
-                                </button>
-                                {% else %}
-                                <button type="button" class="st-btn-order" id="stAddCartBtn" onclick="stAddToCart()">
-                                    <i class="fas fa-shopping-cart"></i> Place Order
-                                </button>
+                                <!-- Select Design button -->
+                                <div style="margin-bottom:14px;">
+                                    <button type="button" onclick="stOpenModal()" id="stSelectDesignBtn"
+                                        style="display:flex;align-items:center;justify-content:space-between;width:100%;padding:13px 16px;border:2px dashed #d4b8ff;border-radius:10px;background:#faf7ff;cursor:pointer;transition:all .22s;"
+                                        onmouseover="this.style.borderColor='#7000fe';this.style.background='#f3ebff';"
+                                        onmouseout="this.style.borderColor='#d4b8ff';this.style.background='#faf7ff';">
+                                        <div style="display:flex;align-items:center;gap:10px;">
+                                            <div style="width:36px;height:36px;min-width:36px;border-radius:50%;background:linear-gradient(135deg,#7000fe,#a855f7);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                                                <i class="fas fa-paint-brush" style="color:#fff;font-size:.85rem;"></i>
+                                            </div>
+                                            <div style="text-align:left;">
+                                                <div style="font-weight:700;color:#1f2937;font-size:.92rem;line-height:1.2;">Select Design</div>
+                                                <div style="font-size:.74rem;color:#7b6a9b;margin-top:2px;">Upload your file or use our design tool</div>
+                                            </div>
+                                        </div>
+                                        <i class="fas fa-chevron-right" style="color:#7000fe;font-size:.8rem;flex-shrink:0;"></i>
+                                    </button>
+                                </div>
                                 {% endif %}
+
+                                <!-- Get Quote Box -->
+                                <div style="background:linear-gradient(135deg,#f6f0ff 0%,#ede9fe 100%);border:1.5px solid #d4b8ff;border-radius:12px;padding:16px;margin-bottom:14px;">
+                                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+                                        <div style="width:36px;height:36px;border-radius:50%;background:var(--theme);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                                            <i class="fas fa-file-invoice-dollar" style="color:#fff;font-size:.9rem;"></i>
+                                        </div>
+                                        <div>
+                                            <div style="font-weight:700;color:var(--header);font-size:.95rem;">Get Custom Quote</div>
+                                            <div style="font-size:.78rem;color:#777;">Price tailored to your specs — free &amp; fast</div>
+                                        </div>
+                                    </div>
+                                    <div style="font-size:.82rem;color:#555;margin-bottom:12px;line-height:1.5;">
+                                        <i class="fas fa-check" style="color:#22c55e;margin-right:5px;"></i>Response within 24 hrs &nbsp;
+                                        <i class="fas fa-check" style="color:#22c55e;margin-right:5px;"></i>Saved to your profile
+                                    </div>
+                                    <button type="button" class="st-btn-order" onclick="submitProductQuote()" style="width:100%;background:linear-gradient(135deg,#7000fe 0%,#09052F 100%);">
+                                        <i class="fas fa-file-invoice"></i> Get Quote
+                                    </button>
+                                </div>
+
                                 <div class="st-dispatch-note">
                                     <i class="fas fa-truck"></i>
                                     Estimated Dispatch in 3–5 Business Days
                                 </div>
 
+                            </form>
+
+                            <!-- Hidden quote submission form (outside stForm to avoid nesting) -->
+                            <form id="productQuoteForm" method="POST" action="{% url 'orders:submit_quote' %}" style="display:none;">
+                                {% csrf_token %}
+                                <input type="hidden" name="product_id" value="{{ product.id }}">
+                                <input type="hidden" name="product_name" value="{{ product.name }}">
+                                <input type="hidden" name="product_type" value="paper_boxes">
+                                <input type="hidden" name="quantity" id="productQuoteQty" value="1">
+                                <input type="hidden" name="specs" id="productQuoteSpecs" value="{}">
                             </form>
                         </div>
                     </div>
@@ -888,5 +926,46 @@ document.addEventListener('DOMContentLoaded', function () {
         $('.sf-wrap select').on('change', recalc);
     }
 });
+
+/* ── Conditional field visibility ── */
+function applyConditions() {
+    var form = document.getElementById('stForm');
+    if (!form) return;
+    form.querySelectorAll('.sf-wrap[data-show-condition]').forEach(function (wrap) {
+        try {
+            var cond = JSON.parse(wrap.getAttribute('data-show-condition'));
+            var triggerEl = form.querySelector('[name="' + cond.field + '"]');
+            if (!triggerEl) { wrap.style.display = 'none'; return; }
+            var val = triggerEl.value;
+            var show = cond.operator === 'in'
+                ? (!!val && cond.value.indexOf(val) !== -1)
+                : (!!val && val === cond.value);
+            wrap.style.display = show ? '' : 'none';
+        } catch (e) {}
+    });
+}
+applyConditions();
+(document.getElementById('stForm') || {}).addEventListener && document.getElementById('stForm').addEventListener('change', applyConditions);
+if (typeof $ !== 'undefined') { $(document).on('change', '#stForm select', applyConditions); }
+
+function submitProductQuote() {
+    var specs = {};
+    var form = document.getElementById('stForm');
+    if (form) {
+        form.querySelectorAll('input[type="radio"]:checked').forEach(function(r) { specs[r.name] = r.value; });
+        form.querySelectorAll('select').forEach(function(s) { if (s.value) specs[s.name] = s.value; });
+        form.querySelectorAll('input[type="number"]').forEach(function(n) { if (n.value) specs[n.name] = n.value; });
+    }
+    var qtyEl = (form && (form.querySelector('input[type="number"]') || form.querySelector('select[name*="qty"]') || form.querySelector('select[name*="quantity"]')));
+    var qty = qtyEl ? (parseInt(qtyEl.value) || 1) : 1;
+    document.getElementById('productQuoteQty').value = qty;
+    document.getElementById('productQuoteSpecs').value = JSON.stringify(specs);
+    var quoteFormEl = document.getElementById('productQuoteForm');
+    if (typeof submitQuoteAjax === 'function') {
+        submitQuoteAjax(quoteFormEl);
+    } else {
+        quoteFormEl.submit();
+    }
+}
 </script>
 {% endblock %}

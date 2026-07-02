@@ -1,0 +1,209 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Verify Mobile — Shristi Printing{% endblock %}
+
+{% block extra_css %}
+<style>
+.auth-wrap {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 160px 16px 60px;
+    background: var(--bg);
+}
+.auth-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 40px rgba(112,0,254,.10);
+    padding: 48px 40px;
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+}
+.otp-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--theme) 0%, #9b4dca 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+}
+.otp-icon i { color: #fff; font-size: 1.8rem; }
+.auth-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--header);
+    margin-bottom: 8px;
+}
+.auth-sub { color: #777; font-size: .95rem; margin-bottom: 8px; }
+.phone-badge {
+    display: inline-block;
+    background: #f0ebff;
+    color: var(--theme);
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: .95rem;
+    margin-bottom: 28px;
+}
+.otp-inputs {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 28px;
+}
+.otp-inputs input {
+    width: 52px;
+    height: 60px;
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: 700;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+    color: var(--header);
+}
+.otp-inputs input:focus {
+    border-color: var(--theme);
+    box-shadow: 0 0 0 3px rgba(112,0,254,.12);
+}
+.otp-hidden { display: none; }
+.auth-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--theme);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity .2s;
+}
+.auth-btn:hover { opacity: .88; }
+.resend-row { margin-top: 20px; font-size: .9rem; color: #777; }
+.resend-row a { color: var(--theme); font-weight: 600; text-decoration: none; }
+.resend-row a:hover { text-decoration: underline; }
+.back-link { margin-top: 14px; font-size: .85rem; }
+.back-link a { color: #999; text-decoration: none; }
+.back-link a:hover { color: var(--theme); }
+.alert-err {
+    background: #fff0f0;
+    border: 1px solid #ffc0c0;
+    color: #c00;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 16px;
+    font-size: .9rem;
+    text-align: left;
+}
+.alert-ok {
+    background: #f0fff4;
+    border: 1px solid #86efac;
+    color: #166534;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 16px;
+    font-size: .9rem;
+    text-align: left;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-wrap">
+    <div class="auth-card">
+        <div class="otp-icon">
+            <i class="fas fa-mobile-alt"></i>
+        </div>
+        <div class="auth-title">Verify Your Mobile</div>
+        <div class="auth-sub">Enter the 6-digit OTP sent to</div>
+        <div class="phone-badge">+91-{{ phone }}</div>
+
+        {% if messages %}
+            {% for msg in messages %}
+            <div class="{% if 'success' in msg.tags %}alert-ok{% else %}alert-err{% endif %}">{{ msg }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST" action="{% url 'accounts:verify_otp' %}{% if next %}?next={{ next }}{% endif %}" id="otpForm">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}">
+            <input type="hidden" name="otp" id="otpHidden">
+
+            <div class="otp-inputs">
+                <input type="text" class="otp-digit" maxlength="1" inputmode="numeric" pattern="[0-9]" autocomplete="one-time-code">
+                <input type="text" class="otp-digit" maxlength="1" inputmode="numeric" pattern="[0-9]">
+                <input type="text" class="otp-digit" maxlength="1" inputmode="numeric" pattern="[0-9]">
+                <input type="text" class="otp-digit" maxlength="1" inputmode="numeric" pattern="[0-9]">
+                <input type="text" class="otp-digit" maxlength="1" inputmode="numeric" pattern="[0-9]">
+                <input type="text" class="otp-digit" maxlength="1" inputmode="numeric" pattern="[0-9]">
+            </div>
+
+            <button type="submit" class="auth-btn" id="verifyBtn">
+                <i class="fas fa-check-circle"></i> Verify &amp; Create Account
+            </button>
+        </form>
+
+        <div class="resend-row">
+            Didn't receive OTP?
+            <a href="{% url 'accounts:resend_otp' %}{% if next %}?next={{ next }}{% endif %}">Resend OTP</a>
+        </div>
+        <div class="back-link">
+            <a href="{% url 'accounts:register' %}{% if next %}?next={{ next }}{% endif %}">
+                &larr; Back to Registration
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+(function() {
+    const digits = document.querySelectorAll('.otp-digit');
+    const hidden = document.getElementById('otpHidden');
+    const form = document.getElementById('otpForm');
+
+    digits.forEach((inp, idx) => {
+        inp.addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '').slice(-1);
+            if (this.value && idx < digits.length - 1) digits[idx + 1].focus();
+            syncHidden();
+        });
+        inp.addEventListener('keydown', function(e) {
+            if (e.key === 'Backspace' && !this.value && idx > 0) {
+                digits[idx - 1].focus();
+                digits[idx - 1].value = '';
+                syncHidden();
+            }
+        });
+        inp.addEventListener('paste', function(e) {
+            e.preventDefault();
+            const text = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '');
+            text.split('').forEach((ch, i) => { if (digits[i]) digits[i].value = ch; });
+            syncHidden();
+            const lastFilled = Math.min(text.length, digits.length) - 1;
+            if (digits[lastFilled]) digits[lastFilled].focus();
+        });
+    });
+
+    function syncHidden() {
+        hidden.value = Array.from(digits).map(d => d.value).join('');
+    }
+
+    form.addEventListener('submit', function(e) {
+        syncHidden();
+        if (hidden.value.length !== 6) {
+            e.preventDefault();
+            alert('Please enter all 6 digits of the OTP.');
+        }
+    });
+
+    digits[0].focus();
+})();
+</script>
+{% endblock %}

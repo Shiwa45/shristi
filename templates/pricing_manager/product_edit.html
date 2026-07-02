@@ -1,0 +1,71 @@
+{% extends 'pricing_manager/base.html' %}
+{% block pm_title %}{{ product.name }} — Pricing{% endblock %}
+
+{% block pm_extra_css %}
+<style>
+    .field-block { margin-bottom: 8px; }
+    .field-name { font-weight: 800; color: var(--header); font-size: 1rem; margin: 0 0 4px; }
+    .field-meta { font-size: .78rem; color: #9ca3af; margin-bottom: 12px; }
+    .opt-row {
+        display: flex; align-items: center; justify-content: space-between; gap: 14px;
+        padding: 10px 0; border-bottom: 1px dashed #eee;
+    }
+    .opt-row:last-child { border-bottom: none; }
+    .opt-left { display: flex; align-items: center; gap: 12px; }
+    .opt-thumb { width: 40px; height: 40px; border-radius: 6px; object-fit: contain; border: 1px solid #eee; background: #fff; }
+    .opt-label { font-weight: 600; font-size: .92rem; }
+    .save-bar {
+        position: sticky; bottom: 0; background: #fff; border-top: 1.5px solid #eee;
+        padding: 16px 24px; margin: 0 -24px -22px; border-radius: 0 0 14px 14px;
+        display: flex; align-items: center; justify-content: space-between;
+    }
+    .hint { font-size: .78rem; color: #6b7280; }
+</style>
+{% endblock %}
+
+{% block pm_content %}
+<div class="pm-breadcrumb">
+    <a href="{% url 'services:pricing_home' %}">Pricing Home</a> /
+    <a href="{% url 'services:pricing_products' %}">Other Products</a> /
+    {{ product.name }}
+</div>
+<h1 class="pm-h1">{{ product.name }}</h1>
+<p class="pm-sub">Base price: <strong>₹{{ product.base_price }}</strong>. The number you type is the <strong>extra charge added</strong> when a customer picks that option. Use <strong>0</strong> for no extra charge; a negative number gives a discount.</p>
+
+{% if field_rows %}
+<form method="POST">
+    {% csrf_token %}
+    <div class="pm-card">
+        {% for row in field_rows %}
+        <div class="field-block">
+            <div class="field-name">{{ row.field.field_label }}</div>
+            <div class="field-meta">{{ row.field.get_field_type_display }} · {{ row.options|length }} option(s)</div>
+            {% for opt in row.options %}
+            <div class="opt-row">
+                <div class="opt-left">
+                    {% if opt.image_url %}<img class="opt-thumb" src="{{ opt.image_url }}" alt="">{% endif %}
+                    <span class="opt-label">{{ opt.label }}</span>
+                </div>
+                <div class="price-wrap">
+                    <input type="number" step="0.01" class="price-input"
+                           name="price_{{ opt.id }}" value="{{ opt.price_modifier|floatformat:2 }}">
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <hr style="border:none;border-top:1px solid #f0f0f0;margin:16px 0;">
+        {% endfor %}
+
+        <div class="save-bar">
+            <span class="hint"><i class="fas fa-circle-info"></i> Changes go live immediately after saving.</span>
+            <button type="submit" class="pm-btn"><i class="fas fa-save"></i> Save Prices</button>
+        </div>
+    </div>
+</form>
+{% else %}
+<div class="pm-card">
+    <p style="margin:0;color:#6b7280;">This product has no configurable options with pricing. You can still set its base price in the
+        <a href="/admin/services/staticproduct/{{ product.id }}/change/" style="color:var(--theme);">full admin</a>.</p>
+</div>
+{% endif %}
+{% endblock %}

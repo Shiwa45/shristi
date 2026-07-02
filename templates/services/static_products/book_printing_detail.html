@@ -1187,11 +1187,11 @@
                     <div class="book-size-dropdown">
                         <select name="book_size" id="book_size" class="book-size-select" required>
                             <option value="">Select Book Size</option>
-                            <option value="a4" data-price-modifier="0">A4 - 8.27 x 11.69 in (210 x 297 mm)</option>
-                            <option value="letter" data-price-modifier="25">Letter - 8.5 x 11 in (216 x 279 mm)</option>
-                            <option value="executive" data-price-modifier="50">Executive - 7 x 10 in (178 x 254 mm)
+                            <option value="a4" data-price-modifier="{{ book_pricing.size_a4|default:0 }}">A4 - 8.27 x 11.69 in (210 x 297 mm)</option>
+                            <option value="letter" data-price-modifier="{{ book_pricing.size_letter|default:25 }}">Letter - 8.5 x 11 in (216 x 279 mm)</option>
+                            <option value="executive" data-price-modifier="{{ book_pricing.size_executive|default:50 }}">Executive - 7 x 10 in (178 x 254 mm)
                             </option>
-                            <option value="a5" data-price-modifier="-25">A5 - 5.83 x 8.27 in (148 x 210 mm)</option>
+                            <option value="a5" data-price-modifier="{{ book_pricing.size_a5|default:'-25' }}">A5 - 5.83 x 8.27 in (148 x 210 mm)</option>
                         </select>
                     </div>
                 </div>
@@ -1237,7 +1237,7 @@
 
             <div class="paper-grid">
                 <div class="paper-option" data-value="75gsm">
-                    <input type="radio" name="paper_type" value="75gsm" data-price-modifier="0" required>
+                    <input type="radio" name="paper_type" value="75gsm" data-price-modifier="{{ book_pricing.paper_75gsm|default:0 }}" required>
                     <div class="paper-icon">
                         <img src="{% static 'img/paper/70gsm.jpg' %}" alt="75 GSM Standard Paper">
                     </div>
@@ -1245,7 +1245,7 @@
                 </div>
 
                 <div class="paper-option" data-value="100gsm">
-                    <input type="radio" name="paper_type" value="100gsm" data-price-modifier="50" required>
+                    <input type="radio" name="paper_type" value="100gsm" data-price-modifier="{{ book_pricing.paper_100gsm|default:50 }}" required>
                     <div class="paper-icon">
                         <img src="{% static 'img/paper/100gsm.jpg' %}" alt="100 GSM Premium Paper">
                     </div>
@@ -1253,7 +1253,7 @@
                 </div>
 
                 <div class="paper-option" data-value="100gsm_art">
-                    <input type="radio" name="paper_type" value="100gsm_art" data-price-modifier="100" required>
+                    <input type="radio" name="paper_type" value="100gsm_art" data-price-modifier="{{ book_pricing.paper_100gsm_art|default:100 }}" required>
                     <div class="paper-icon">
                         <img src="{% static 'img/paper/100gsm.jpg' %}" alt="100 GSM Art Paper">
                     </div>
@@ -1261,7 +1261,7 @@
                 </div>
 
                 <div class="paper-option" data-value="130gsm_art">
-                    <input type="radio" name="paper_type" value="130gsm_art" data-price-modifier="150" required>
+                    <input type="radio" name="paper_type" value="130gsm_art" data-price-modifier="{{ book_pricing.paper_130gsm_art|default:150 }}" required>
                     <div class="paper-icon">
                         <img src="{% static 'img/paper/100gsm.jpg' %}" alt="130 GSM Art Paper">
                     </div>
@@ -1283,7 +1283,7 @@
 
             <div class="binding-grid">
                 <div class="binding-option" data-value="saddle_stitch">
-                    <input type="radio" name="binding_type" value="saddle_stitch" data-price-modifier="0" required>
+                    <input type="radio" name="binding_type" value="saddle_stitch" data-price-modifier="{{ book_pricing.binding_saddle_stitch|default:0 }}" required>
                     <div class="binding-icon">
                         <img src="{% static 'img/binding/saddle.jpg' %}" alt="Saddle Stitch Binding">
                     </div>
@@ -1291,7 +1291,7 @@
                 </div>
 
                 <div class="binding-option" data-value="spiral_binding">
-                    <input type="radio" name="binding_type" value="spiral_binding" data-price-modifier="100" required>
+                    <input type="radio" name="binding_type" value="spiral_binding" data-price-modifier="{{ book_pricing.binding_spiral|default:100 }}" required>
                     <div class="binding-icon">
                         <img src="{% static 'img/binding/saddle.jpg' %}" alt="Spiral Binding">
                     </div>
@@ -1299,7 +1299,7 @@
                 </div>
 
                 <div class="binding-option" data-value="paperback_perfect" data-min-pages="30">
-                    <input type="radio" name="binding_type" value="paperback_perfect" data-price-modifier="200"
+                    <input type="radio" name="binding_type" value="paperback_perfect" data-price-modifier="{{ book_pricing.binding_paperback_perfect|default:200 }}"
                         required>
                     <div class="lock-icon">
                         <i class="fas fa-lock"></i>
@@ -1311,7 +1311,7 @@
                 </div>
 
                 <div class="binding-option" data-value="hardcover" data-min-pages="30">
-                    <input type="radio" name="binding_type" value="hardcover" data-price-modifier="500" required>
+                    <input type="radio" name="binding_type" value="hardcover" data-price-modifier="{{ book_pricing.binding_hardcover|default:500 }}" required>
                     <div class="lock-icon">
                         <i class="fas fa-lock"></i>
                     </div>
@@ -1336,7 +1336,7 @@
 
             <div class="finish-options">
                 <div class="finish-option" data-value="glossy">
-                    <input type="radio" name="cover_finish" value="glossy" data-price-modifier="50" required>
+                    <input type="radio" name="cover_finish" value="glossy" data-price-modifier="{{ book_pricing.cover_glossy|default:50 }}" required>
                     <div class="finish-icon">
                         <!-- Image placeholder - replace src with actual image path -->
                         <img src="{% static 'img/finish/gloss.jpg' %}" alt="Glossy Finish">
@@ -1345,7 +1345,7 @@
                 </div>
 
                 <div class="finish-option" data-value="matte">
-                    <input type="radio" name="cover_finish" value="matte" data-price-modifier="0" required>
+                    <input type="radio" name="cover_finish" value="matte" data-price-modifier="{{ book_pricing.cover_matte|default:0 }}" required>
                     <div class="finish-icon">
                         <!-- Image placeholder - replace src with actual image path -->
                         <img src="{% static 'img/finish/matte.jpg' %}" alt="Matte Finish">
@@ -1486,62 +1486,57 @@
 {% endblock %}
 
 {% block pricing_calculator %}
-<div class="pricing-calculator" style="max-width: 600px; width: 100%; margin: 0 auto; padding: 20px;">
+<div style="max-width:600px;width:100%;margin:0 auto;padding:20px;">
 
-    <h3 style="font-size: 18px; font-weight: 600; color: #333; margin-bottom: 20px; text-align: center;">
-        Pricing Calculator
-    </h3>
+    <!-- Price span elements kept hidden for JS calculations -->
+    <span id="cost-per-unit" style="display:none;"></span>
+    <span id="subtotal" style="display:none;"></span>
+    <span id="discount-amount" style="display:none;"></span>
+    <span id="gst-amount" style="display:none;"></span>
+    <span id="total-price" style="display:none;"></span>
+    <div id="discount-row" style="display:none;"></div>
 
-    <div class="pricing-breakdown"
-        style="border: 1px solid #ddd; border-radius: 4px; padding: 20px; background: #f8f9fa;">
-        <!-- Dynamic specifications will be added here by JavaScript -->
-        <div id="book-specifications">
-            <div
-                style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
-                <span style="color: #666; font-size: 14px;">Product:</span>
-                <span style="color: #333; font-size: 14px; font-weight: 500;">{{ product.name }}</span>
+    <!-- Get Quote Card -->
+    <div style="border:2px solid #e8d5ff;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(112,0,254,.10);">
+        <div style="background:linear-gradient(135deg,#7000fe 0%,#09052F 100%);padding:18px 20px;text-align:center;">
+            <div style="color:#fff;font-size:1.2rem;font-weight:700;"><i class="fas fa-file-invoice-dollar"></i> Get a Custom Quote</div>
+            <div style="color:rgba(255,255,255,.8);font-size:.85rem;margin-top:4px;">Prices tailored to your specifications</div>
+        </div>
+        <div style="padding:20px;background:#fff;">
+
+            <!-- Spec summary — visible, JS-populated -->
+            <div id="book-specifications" style="margin-bottom:14px;background:#f6f0ff;border-radius:8px;padding:12px 14px;font-size:.88rem;"></div>
+
+            <!-- Info hint — shown until specs start filling -->
+            <div id="quoteInfoBox" style="display:flex;align-items:center;gap:10px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px 14px;margin-bottom:14px;">
+                <i class="fas fa-info-circle" style="color:#16a34a;font-size:1.1rem;flex-shrink:0;"></i>
+                <span style="font-size:.88rem;color:#444;line-height:1.4;">Complete all sections above, then click <strong>Get Quote</strong> to receive a personalised price.</span>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;font-size:.85rem;color:#555;">
+                <div><i class="fas fa-check" style="color:#22c55e;margin-right:6px;"></i>Free quote within 24 hours</div>
+                <div><i class="fas fa-check" style="color:#22c55e;margin-right:6px;"></i>Volume discounts available</div>
+                <div><i class="fas fa-check" style="color:#22c55e;margin-right:6px;"></i>Quote saved to your profile</div>
+            </div>
+
+            <!-- Hidden quote form -->
+            <form id="quoteForm" method="POST" action="{% url 'orders:submit_quote' %}">
+                {% csrf_token %}
+                <input type="hidden" name="product_id" value="{{ product.id }}">
+                <input type="hidden" name="product_name" value="{{ product.name }}">
+                <input type="hidden" name="product_type" value="book_printing">
+                <input type="hidden" name="quantity" id="quoteQuantity" value="1">
+                <input type="hidden" name="specs" id="quoteSpecs" value="{}">
+            </form>
+
+            <button id="order-button" onclick="submitBookQuote()" disabled
+                style="width:100%;padding:14px;background:linear-gradient(135deg,#7000fe 0%,#09052F 100%);color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;transition:opacity .2s;opacity:.5;">
+                <i class="fas fa-file-invoice"></i> Get Quote
+            </button>
+            <div id="quoteStatusMsg" style="text-align:center;font-size:.82rem;color:#888;margin-top:8px;">
+                Complete all steps above to unlock
             </div>
         </div>
-
-        <div
-            style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
-            <span style="color: #666; font-size: 14px;">Cost Per Book:</span>
-            <span style="color: #333; font-size: 14px; font-weight: 500;" id="cost-per-unit">₹ N/A</span>
-        </div>
-
-        <div
-            style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
-            <span style="color: #666; font-size: 14px;">Subtotal:</span>
-            <span style="color: #333; font-size: 14px; font-weight: 500;" id="subtotal">₹ N/A</span>
-        </div>
-
-        <div id="discount-row" style="display: none; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span style="color: #28a745; font-size: 14px;">Volume Discount:</span>
-                <span style="color: #28a745; font-size: 14px; font-weight: 500;" id="discount-amount">- ₹ 0</span>
-            </div>
-        </div>
-
-        <div
-            style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #e0e0e0;">
-            <span style="color: #666; font-size: 14px;">GST (18%):</span>
-            <span style="color: #333; font-size: 14px; font-weight: 500;" id="gst-amount">₹ N/A</span>
-        </div>
-
-        <div
-            style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; margin-top: 8px; border-top: 2px solid #333;">
-            <span style="color: #333; font-size: 16px; font-weight: 600;">Total:</span>
-            <span style="color: #333; font-size: 18px; font-weight: 700;" id="total-price">₹ N/A</span>
-        </div>
-    </div>
-
-    <div style="margin-top: 20px;">
-        <button
-            style="width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: 500; cursor: pointer; transition: background-color 0.2s;"
-            onmouseover="this.style.backgroundColor='#0056b3'" onmouseout="this.style.backgroundColor='#007bff'"
-            id="order-button" disabled>
-            Order Your Book Now
-        </button>
     </div>
 </div>
 <!-- Related Products -->
@@ -1826,8 +1821,11 @@
             const orderButton = document.getElementById('order-button');
             if (orderButton) {
                 orderButton.disabled = false;
-                orderButton.classList.add('pulse');
-                console.log('🎉 All sections completed! Order button enabled.');
+                orderButton.style.opacity = '1';
+                orderButton.style.cursor = 'pointer';
+                const msg = document.getElementById('quoteStatusMsg');
+                if (msg) msg.textContent = 'Ready! Click to submit your quote request.';
+                console.log('All sections completed — Get Quote button enabled.');
             }
         }
 
@@ -1992,15 +1990,15 @@
                 if (interiorColor) {
                     const colorValue = interiorColor.value;
                     if (colorValue === 'bw_standard') {
-                        costPerBook += bwPages > 0 ? bwPages * 1.5 : totalPages * 1.5;
+                        costPerBook += (bwPages > 0 ? bwPages : totalPages) * {{ book_pricing.color_bw_standard_per_page|default:'1.5' }};
                     } else if (colorValue === 'bw_premium') {
-                        costPerBook += bwPages > 0 ? bwPages * 2 : totalPages * 2;
+                        costPerBook += (bwPages > 0 ? bwPages : totalPages) * {{ book_pricing.color_bw_premium_per_page|default:'2' }};
                     } else if (colorValue === 'color_standard') {
-                        costPerBook += colorPages > 0 ? colorPages * 6 : totalPages * 6;
+                        costPerBook += (colorPages > 0 ? colorPages : totalPages) * {{ book_pricing.color_standard_per_page|default:'6' }};
                     } else if (colorValue === 'color_premium') {
-                        costPerBook += colorPages > 0 ? colorPages * 8 : totalPages * 8;
+                        costPerBook += (colorPages > 0 ? colorPages : totalPages) * {{ book_pricing.color_premium_per_page|default:'8' }};
                     } else if (colorValue === 'combine_color') {
-                        costPerBook += (bwPages * 2) + (colorPages * 6);
+                        costPerBook += (bwPages * {{ book_pricing.combine_bw_per_page|default:'2' }}) + (colorPages * {{ book_pricing.combine_color_per_page|default:'6' }});
                     }
                 }
 
@@ -2037,18 +2035,18 @@
                 const innerPageDesign = document.querySelector('input[name="inner_page_design"]:checked');
 
                 if (coverPageDesign) {
-                    designCost += 1500; // Cover page design
+                    designCost += {{ book_pricing.cover_design_price|default:'1500' }}; // Cover page design
                 }
 
                 if (innerPageDesign) {
-                    const innerPageCost = totalPages * 50; // ₹50 per page
+                    const innerPageCost = totalPages * {{ book_pricing.inner_page_design_per_page|default:'50' }}; // per page
                     designCost += innerPageCost;
                 }
 
                 // ISBN allocation pricing (fixed cost)
                 let isbnCost = 0;
                 if (isbnAllocation && isbnAllocation.value === 'assign_isbn') {
-                    isbnCost = 2000;
+                    isbnCost = {{ book_pricing.isbn_price|default:'2000' }};
                 }
 
                 // Get quantity
@@ -2263,6 +2261,12 @@
             }
 
             specificationsDiv.innerHTML = specificationsHTML;
+
+            // Hide info box once any spec is selected
+            var infoBox = document.getElementById('quoteInfoBox');
+            if (infoBox) {
+                infoBox.style.display = specificationsHTML.includes('Interior Color') || specificationsHTML.includes('Size:') ? 'none' : 'flex';
+            }
         }
 
         // Design section is always optional, so enable next section automatically
@@ -2564,5 +2568,56 @@
         });
     });
 
+</script>
+
+<script>
+function submitBookQuote() {
+    const data = {};
+
+    // Collect radio values
+    document.querySelectorAll('input[type="radio"]:checked').forEach(r => {
+        data[r.name] = r.value;
+    });
+    // Collect checkbox values
+    document.querySelectorAll('input[type="checkbox"]:checked').forEach(c => {
+        data[c.name] = c.value;
+    });
+    // Collect select values
+    document.querySelectorAll('select').forEach(s => {
+        if (s.value) data[s.name] = s.value;
+    });
+
+    // Page counts
+    const pageCount = document.getElementById('page_count');
+    const bwCount = document.getElementById('bw_page_count');
+    const colorCount = document.getElementById('color_page_count');
+    if (pageCount && pageCount.value) data.page_count = pageCount.value;
+    if (bwCount && bwCount.value) data.bw_page_count = bwCount.value;
+    if (colorCount && colorCount.value) data.color_page_count = colorCount.value;
+
+    // Quantity
+    const qty = document.getElementById('quantity-input');
+    const quantity = qty ? (parseInt(qty.value) || 25) : 25;
+
+    document.getElementById('quoteQuantity').value = quantity;
+    document.getElementById('quoteSpecs').value = JSON.stringify(data);
+
+    // Submit via AJAX (shows login modal if not authenticated)
+    const btn = document.getElementById('order-button');
+    const origText = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+    btn.disabled = true;
+
+    const formEl = document.getElementById('quoteForm');
+    if (typeof submitQuoteAjax === 'function') {
+        submitQuoteAjax(formEl);
+        setTimeout(() => {
+            btn.innerHTML = origText;
+            btn.disabled = false;
+        }, 2000);
+    } else {
+        formEl.submit();
+    }
+}
 </script>
 {% endblock %}

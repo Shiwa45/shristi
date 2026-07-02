@@ -110,7 +110,7 @@
                         </h4>
                         <table class="spec-table">
                             <tbody>
-                                <tr><td class="spec-label">Starting Price</td><td class="spec-value">₹{{ product.base_price }}</td></tr>
+                                <tr><td class="spec-label">Pricing</td><td class="spec-value"><span style="color:var(--theme,#7000fe);font-weight:600;">Get Quote</span></td></tr>
                                 <tr><td class="spec-label">Price Unit</td><td class="spec-value">{{ product.price_unit }}</td></tr>
                                 {% if product.minimum_quantity %}<tr><td class="spec-label">Min Quantity</td><td class="spec-value">{{ product.minimum_quantity }}</td></tr>{% endif %}
                                 {% if product.turnaround_time %}<tr><td class="spec-label">Turnaround</td><td class="spec-value">{{ product.turnaround_time }}</td></tr>{% endif %}
@@ -133,7 +133,9 @@
                         <table class="spec-table">
                             <tbody>
                                 {% for k,v in product.specifications.items %}
+                                {% if k != "Starting Price" and k != "Price" and k != "Base Price" %}
                                 <tr><td class="spec-label">{{ k }}</td><td class="spec-value">{{ v }}</td></tr>
+                                {% endif %}
                                 {% endfor %}
                             </tbody>
                         </table>

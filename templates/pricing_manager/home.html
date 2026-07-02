@@ -1,0 +1,47 @@
+{% extends 'pricing_manager/base.html' %}
+{% block pm_title %}Pricing Manager{% endblock %}
+
+{% block pm_extra_css %}
+<style>
+    .choice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .choice {
+        display: block; text-decoration: none; color: inherit; background: #fff;
+        border: 2px solid #e5e7eb; border-radius: 16px; padding: 30px 28px; transition: all .22s;
+    }
+    .choice:hover { border-color: var(--theme); box-shadow: 0 10px 30px rgba(112,0,254,.14); transform: translateY(-3px); }
+    .choice .ic {
+        width: 62px; height: 62px; border-radius: 14px; display: flex; align-items: center; justify-content: center;
+        font-size: 1.6rem; color: #fff; margin-bottom: 18px;
+    }
+    .choice.book .ic  { background: linear-gradient(135deg,#7000fe,#a855f7); }
+    .choice.other .ic { background: linear-gradient(135deg,#0ea5e9,#2563eb); }
+    .choice h2 { font-size: 1.2rem; font-weight: 800; color: var(--header); margin: 0 0 8px; }
+    .choice p  { color: #6b7280; font-size: .9rem; margin: 0 0 14px; line-height: 1.55; }
+    .choice .count { font-size: .8rem; color: var(--theme); font-weight: 700; }
+    .choice .go { margin-top: 16px; font-weight: 700; color: var(--theme); font-size: .9rem; }
+    @media (max-width: 720px) { .choice-grid { grid-template-columns: 1fr; } }
+</style>
+{% endblock %}
+
+{% block pm_content %}
+<h1 class="pm-h1">Update Product Pricing</h1>
+<p class="pm-sub">Choose which pricing you want to update. Changes go live immediately on the website.</p>
+
+<div class="choice-grid">
+    <a class="choice book" href="{% url 'services:pricing_book' %}">
+        <div class="ic"><i class="fas fa-book"></i></div>
+        <h2>Book Printing Pricing</h2>
+        <p>Set per-page rates and add-on charges for books — interior colour, size, paper, binding, cover finish, design service and ISBN.</p>
+        <div class="count"><i class="fas fa-layer-group"></i> {{ book_count }} book product(s)</div>
+        <div class="go">Edit book prices <i class="fas fa-arrow-right"></i></div>
+    </a>
+
+    <a class="choice other" href="{% url 'services:pricing_products' %}">
+        <div class="ic"><i class="fas fa-box-open"></i></div>
+        <h2>Other Products Pricing</h2>
+        <p>Set the price of each option (printing side, corners, lamination, paper, finishes, etc.) for Stationery, Marketing Material and Paper Boxes.</p>
+        <div class="count"><i class="fas fa-layer-group"></i> {{ other_count }} product(s)</div>
+        <div class="go">Edit product prices <i class="fas fa-arrow-right"></i></div>
+    </a>
+</div>
+{% endblock %}

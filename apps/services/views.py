@@ -123,10 +123,16 @@ def category_detail(request, slug):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
+    # Sibling categories for the "Explore Other Categories" section
+    service_categories = ServiceCategory.objects.filter(
+        is_active=True
+    ).exclude(id=category.id).order_by('order', 'name')
+
     context = {
         'category': category,
         'products': page_obj,
         'page_obj': page_obj,
+        'service_categories': service_categories,
         'page_title': f'{category.name} - Shirsti Printing'
     }
     return render(request, 'services/category_detail.html', context)

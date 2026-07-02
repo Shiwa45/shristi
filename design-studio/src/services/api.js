@@ -66,9 +66,26 @@ export const api = {
     return MOCK.fonts; // extend later to call Django font library
   },
 
-  // ---- STOCK IMAGES (search) ----
+  // ---- STOCK IMAGES (search) — Pixabay via Django proxy ----
   async searchImages(query, page = 1) {
-    // Fallback to Picsum placeholders — wire to Django Pixabay/Unsplash proxy later
+    try {
+      const params = new URLSearchParams({
+        q: query || 'business',
+        page: String(page),
+        per_page: '18',
+      });
+      const data = await request(`/design-tool/api/pixabay/images/?${params}`);
+      if (data && data.success && Array.isArray(data.images) && data.images.length) {
+        return data.images.map((img) => ({
+          id: img.id,
+          thumb: img.thumbnail_url || img.preview_url,
+          full: img.large_url || img.preview_url || img.thumbnail_url,
+        }));
+      }
+    } catch (e) {
+      console.warn('[searchImages] Pixabay proxy unavailable, using placeholders:', e.message);
+    }
+    // Graceful fallback (proxy down or Pixabay key missing/invalid)
     return Array.from({ length: 12 }).map((_, i) => ({
       id: `${query}-${page}-${i}`,
       thumb: `https://picsum.photos/seed/${encodeURIComponent(query)}${page}${i}/200/200`,

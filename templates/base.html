@@ -207,8 +207,10 @@
                         </a>
                     </li>
                     <li>
-                        <i class="fas fa-map-marker-alt"></i>
-                        {% if site_settings %}{{ site_settings.contact_address }}{% else %}New Delhi, India{% endif %}
+                        <i class="fas fa-phone-alt"></i>
+                        <a href="tel:{% if site_settings %}{{ site_settings.contact_phone }}{% else %}+91 123 456 7890{% endif %}" class="link">
+                            {% if site_settings %}{{ site_settings.contact_phone }}{% else %}+91 123 456 7890{% endif %}
+                        </a>
                     </li>
                 </ul>
             </div>

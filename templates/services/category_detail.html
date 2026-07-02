@@ -1,755 +1,251 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{{ category.name }} - Professional {{ category.name }} Services | Shirsti Printing{% endblock %}
+{% block title %}{{ category.name }} - Professional {{ category.name }} Services | Shristi Printing{% endblock %}
 
 {% block meta_description %}Professional {{ category.name|lower }} printing services. {{ category.description|truncatewords:20 }} Quality guaranteed with fast delivery.{% endblock %}
 
 {% block extra_css %}
 <style>
-/* Hero Section with Modern Gradient */
-.category-hero {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    position: relative;
-    overflow: hidden;
-    padding: 6rem 0 4rem;
-}
+/* ══════════════════════════════════════════════
+   Category Detail — Home Page Theme
+   --theme:#7000fe  --header:#09052F  --bg:#f3f5ff
+══════════════════════════════════════════════ */
 
-.category-hero::before {
+/* ── This page has a white body, so make the style-3 nav a solid bar ── */
+.header-section-3 { background: #fff; box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+.header-1.style-3 .header-main .main-menu ul li > a { color: var(--header, #09052F) !important; }
+.header-1.style-3 .header-main .main-menu ul li:hover > a { color: var(--theme, #7000fe) !important; }
+.header-1.style-3 .mean-toggle-btn .bar { background: var(--header, #09052F); }
+
+.cat-page { background: #fff; }
+
+/* ── Breadcrumb ── */
+.cat-bc { padding: 16px 0 4px; font-size: .82rem; color: #9ca3af; }
+.cat-bc a { color: #9ca3af; text-decoration: none; transition: color .2s; }
+.cat-bc a:hover { color: var(--theme, #7000fe); }
+.cat-bc .sep { color: #d1d5db; margin: 0 6px; }
+.cat-bc .cur { color: #374151; font-weight: 600; }
+
+/* ── Hero ── */
+.cat-hero {
+    position: relative;
+    background: linear-gradient(135deg, #7000fe 0%, #09052F 100%);
+    border-radius: 22px;
+    padding: 54px 30px;
+    text-align: center;
+    overflow: hidden;
+    margin-top: 12px;
+}
+.cat-hero::before {
     content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3Ccircle cx='10' cy='10' r='4'/%3E%3Ccircle cx='50' cy='10' r='4'/%3E%3Ccircle cx='10' cy='50' r='4'/%3E%3Ccircle cx='50' cy='50' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-}
-
-.category-hero-content {
-    position: relative;
-    z-index: 2;
-}
-
-.category-icon-wrapper {
-    width: 120px;
-    height: 120px;
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 2rem;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.category-icon-wrapper i {
-    font-size: 3.5rem;
-    color: white;
-}
-
-.category-title {
-    font-size: 3.5rem;
-    font-weight: 800;
-    color: white;
-    margin-bottom: 1.5rem;
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.category-description {
-    font-size: 1.25rem;
-    color: rgba(255, 255, 255, 0.9);
-    max-width: 600px;
-    margin: 0 auto 3rem;
-    line-height: 1.6;
-}
-
-.category-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 2rem;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.stat-item {
-    text-align: center;
-    color: white;
-}
-
-.stat-number {
-    display: block;
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: #fbbf24;
-    margin-bottom: 0.5rem;
-}
-
-.stat-label {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.8);
-    font-weight: 500;
-}
-
-/* Breadcrumb */
-.breadcrumb-nav {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    padding: 1rem 0;
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.breadcrumb {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-size: 0.9rem;
-}
-
-.breadcrumb a {
-    color: #6b7280;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    transition: color 0.3s ease;
-}
-
-.breadcrumb a:hover {
-    color: #667eea;
-}
-
-.breadcrumb-separator {
-    color: #9ca3af;
-}
-
-.breadcrumb-current {
-    color: #1f2937;
-    font-weight: 600;
-}
-
-/* Products Grid using Home Page Card Style */
-.products-section {
-    padding: 4rem 0;
-    background: #f8fafc;
-}
-
-.section-header {
-    text-align: center;
-    margin-bottom: 3rem;
-}
-
-.section-header h2 {
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: #1f2937;
-    margin-bottom: 1rem;
-}
-
-.section-header p {
-    font-size: 1.1rem;
-    color: #6b7280;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 2rem;
-    max-width: 1260px;
-    margin: 0 auto;
-}
-
-/* Elevated Product Card */
-.product-card {
-    display: block;
-    background: #ffffff;
-    border-radius: 18px;
-    overflow: hidden;
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
-    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-    border: 1px solid #e5e7eb;
-}
-
-.product-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 50px rgba(102, 126, 234, 0.16);
-    border-color: rgba(102, 126, 234, 0.25);
-}
-
-.product-image-container {
-    position: relative;
-    aspect-ratio: 4 / 3;
-    overflow: hidden;
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-}
-
-.product-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.product-card:hover .product-image {
-    transform: scale(1.05);
-}
-
-.product-image-fallback {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    font-size: 3rem;
-}
-
-.design-badge {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    color: white;
-    padding: 8px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
-    z-index: 3;
-}
-
-.product-content {
-    padding: 1.25rem 1.5rem 1.5rem;
-}
-
-.product-title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #1f2937;
-    transition: color 0.2s ease;
-    margin: 0;
-}
-
-.product-card:hover .product-title {
-    color: #667eea;
-}
-
-.product-subtext {
-    font-size: 0.9rem;
-    color: #6b7280;
-    margin-top: 0.3rem;
-}
-
-.action-btn {
-    flex: 1;
-    padding: 12px 16px;
-    border-radius: 12px;
-    font-weight: 600;
-    text-decoration: none;
-    text-align: center;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-}
-
-.action-btn-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-}
-
-.action-btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-    color: white;
-    text-decoration: none;
-}
-
-.action-btn-secondary {
-    background: #f8fafc;
-    color: #374151;
-    border: 1px solid #e5e7eb;
-}
-
-.action-btn-secondary:hover {
-    background: #e2e8f0;
-    transform: translateY(-1px);
-    color: #374151;
-    text-decoration: none;
-}
-
-/* Filter Section */
-.filters-section {
-    background: white;
-    border-radius: 20px;
-    padding: 2rem;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-    margin-bottom: 3rem;
-    border: 1px solid #e5e7eb;
-}
-
-.filters-header {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.filters-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #1f2937;
-    margin-bottom: 0.5rem;
-}
-
-.filters-subtitle {
-    color: #6b7280;
-    font-size: 0.9rem;
-}
-
-.filter-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-.filter-group {
-    background: #f8fafc;
-    padding: 1.5rem;
-    border-radius: 12px;
-    border: 1px solid #e5e7eb;
-}
-
-.filter-group-title {
-    font-weight: 600;
-    color: #1f2937;
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.filter-option {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 0.75rem;
-}
-
-.filter-option input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    border: 2px solid #d1d5db;
-    border-radius: 4px;
-    accent-color: #667eea;
-}
-
-.filter-option label {
-    color: #374151;
-    font-size: 0.9rem;
-    cursor: pointer;
-}
-
-.filter-actions {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-}
-
-.filter-btn {
-    padding: 12px 24px;
-    border-radius: 12px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.filter-btn-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-}
-
-.filter-btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-}
-
-.filter-btn-secondary {
-    background: #f8fafc;
-    color: #374151;
-    border: 1px solid #e5e7eb;
-}
-
-.filter-btn-secondary:hover {
-    background: #e2e8f0;
-    transform: translateY(-1px);
-}
-
-/* Empty State */
-.empty-state {
-    text-align: center;
-    padding: 4rem 2rem;
-    color: #6b7280;
-}
-
-.empty-state i {
-    font-size: 4rem;
-    color: #d1d5db;
-    margin-bottom: 1.5rem;
-}
-
-.empty-state h3 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #374151;
-    margin-bottom: 1rem;
-}
-
-/* Related Categories */
-.related-categories {
-    padding: 4rem 0;
-    background: white;
-}
-
-.related-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    max-width: 1000px;
-    margin: 0 auto;
-}
-
-.related-card {
-    background: white;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
-    border: 1px solid #e5e7eb;
-    text-decoration: none;
-}
-
-.related-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-    text-decoration: none;
-}
-
-.related-card-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 2rem;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-}
-
-.related-card-header::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
-    animation: shimmer 3s ease-in-out infinite;
-}
-
-@keyframes shimmer {
-    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-}
-
-.related-icon {
-    width: 60px;
-    height: 60px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1rem;
-    color: white;
-    font-size: 1.5rem;
-    backdrop-filter: blur(10px);
-    position: relative;
-    z-index: 2;
-}
-
-.related-card-title {
-    color: white;
-    font-size: 1.25rem;
-    font-weight: 700;
-    position: relative;
-    z-index: 2;
-}
-
-.related-card-body {
-    padding: 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.related-count {
-    color: #6b7280;
-    font-size: 0.9rem;
-}
-
-.related-arrow {
-    color: #667eea;
-    transition: transform 0.3s ease;
-}
-
-.related-card:hover .related-arrow {
-    transform: translateX(4px);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .category-title {
-        font-size: 2.5rem;
-    }
-
-    .category-stats {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-    }
-
-    .stat-number {
-        font-size: 2rem;
-    }
-
-    .products-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-
-    .filter-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .filter-actions {
-        flex-direction: column;
-    }
-
-    .related-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* Loading Animation */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.product-card {
-    animation: fadeInUp 0.6s ease-out;
-}
-
-.product-card:nth-child(1) { animation-delay: 0.1s; }
-.product-card:nth-child(2) { animation-delay: 0.2s; }
-.product-card:nth-child(3) { animation-delay: 0.3s; }
-.product-card:nth-child(4) { animation-delay: 0.4s; }
-.product-card:nth-child(5) { animation-delay: 0.5s; }
-.product-card:nth-child(6) { animation-delay: 0.6s; }
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.06'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3Ccircle cx='10' cy='10' r='4'/%3E%3Ccircle cx='50' cy='10' r='4'/%3E%3Ccircle cx='10' cy='50' r='4'/%3E%3Ccircle cx='50' cy='50' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.cat-hero-inner { position: relative; z-index: 2; }
+.cat-hero-icon {
+    width: 92px; height: 92px; margin: 0 auto 20px;
+    background: rgba(255,255,255,.14);
+    border: 1px solid rgba(255,255,255,.22);
+    border-radius: 24px;
+    display: flex; align-items: center; justify-content: center;
+    backdrop-filter: blur(8px);
+}
+.cat-hero-icon i { font-size: 2.4rem; color: #fff; }
+.cat-hero h1 {
+    color: #fff; font-weight: 800; font-size: clamp(2rem, 4vw, 3rem);
+    margin: 0 0 14px; text-shadow: 0 4px 12px rgba(0,0,0,.18);
+}
+.cat-hero p {
+    color: rgba(255,255,255,.9); font-size: 1.05rem; line-height: 1.6;
+    max-width: 640px; margin: 0 auto 30px;
+}
+.cat-stats {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 40px;
+}
+.cat-stat .num { display: block; font-size: 2.1rem; font-weight: 800; color: #ffd15c; line-height: 1; }
+.cat-stat .lbl { font-size: .82rem; color: rgba(255,255,255,.8); margin-top: 6px; }
+
+/* ── Shop cards: square images (matches home page) ── */
+.shop-items .shop-image {
+    position: relative; width: 100%; aspect-ratio: 1 / 1; overflow: hidden;
+}
+.shop-items .shop-image img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; object-position: center; display: block;
+}
+/* Whole image is clickable → product detail */
+.shop-items .shop-image .shop-image-link { position: absolute; inset: 0; z-index: 1; display: block; }
+.shop-items .shop-image .product-icon { z-index: 3; }
+
+.cat-empty { text-align: center; padding: 60px 20px; color: #6b7280; }
+.cat-empty i { font-size: 3.4rem; color: #d1d5db; margin-bottom: 16px; }
+.cat-empty h3 { font-weight: 700; color: #374151; margin-bottom: 8px; }
+
+/* ── Pagination ── */
+.cat-pagination { display: flex; justify-content: center; gap: 8px; margin-top: 44px; flex-wrap: wrap; }
+.cat-pagination a, .cat-pagination span {
+    min-width: 42px; height: 42px; padding: 0 12px; border-radius: 10px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: .9rem; font-weight: 700; text-decoration: none;
+    border: 1.5px solid #e5e7eb; color: #374151; background: #fff; transition: all .2s;
+}
+.cat-pagination a:hover { border-color: var(--theme, #7000fe); color: var(--theme, #7000fe); }
+.cat-pagination .active { background: var(--theme, #7000fe); border-color: var(--theme, #7000fe); color: #fff; }
+
+/* ── Related categories ── */
+.cat-related { padding: 56px 0; background: var(--bg, #f3f5ff); border-top: 1px solid #eceafd; }
+.rel-card {
+    display: block; text-decoration: none; background: #fff; border-radius: 16px;
+    overflow: hidden; border: 1px solid #ece9fb; transition: all .25s;
+    box-shadow: 0 4px 18px rgba(9,5,47,.05);
+}
+.rel-card:hover { transform: translateY(-6px); box-shadow: 0 16px 36px rgba(112,0,254,.16); }
+.rel-head {
+    background: linear-gradient(135deg, #7000fe 0%, #09052F 100%);
+    padding: 26px; text-align: center;
+}
+.rel-icon {
+    width: 58px; height: 58px; margin: 0 auto 12px; border-radius: 14px;
+    background: rgba(255,255,255,.18); display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 1.4rem; backdrop-filter: blur(8px);
+}
+.rel-head h3 { color: #fff; font-size: 1.15rem; font-weight: 700; margin: 0; }
+.rel-body { padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; }
+.rel-count { color: #6b7280; font-size: .88rem; }
+.rel-arrow { color: var(--theme, #7000fe); transition: transform .25s; }
+.rel-card:hover .rel-arrow { transform: translateX(5px); }
 </style>
 {% endblock %}
 
 {% block content %}
-<!-- Breadcrumb Navigation -->
-<nav class="breadcrumb-nav">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="breadcrumb">
-            <a href="{% url 'core:home' %}">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
-                </svg>
-                Home
-            </a>
-            <span class="breadcrumb-separator">/</span>
+<div class="cat-page">
+
+    <!-- ═══ Breadcrumb ═══ -->
+    <div class="container">
+        <nav class="cat-bc">
+            <a href="{% url 'core:home' %}">Home</a>
+            <span class="sep">›</span>
             <a href="{% url 'services:home' %}">Services</a>
-            <span class="breadcrumb-separator">/</span>
-            <span class="breadcrumb-current">{{ category.name }}</span>
-        </div>
+            <span class="sep">›</span>
+            <span class="cur">{{ category.name }}</span>
+        </nav>
     </div>
-</nav>
 
-<!-- Hero Section -->
-<section class="category-hero">
-    <div class="category-hero-content">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div class="category-icon-wrapper">
-                <i class="{{ category.icon|default:'fas fa-print' }}"></i>
-            </div>
-            <h1 class="category-title">{{ category.name }}</h1>
-            <p class="category-description">
-                {{ category.description|default:"Professional printing solutions tailored for your business needs. Quality guaranteed, delivered fast." }}
-            </p>
-
-            <div class="category-stats">
-                <div class="stat-item">
-                    <span class="stat-number">{{ products.count }}</span>
-                    <div class="stat-label">Products Available</div>
+    <!-- ═══ Hero ═══ -->
+    <div class="container">
+        <section class="cat-hero">
+            <div class="cat-hero-inner">
+                <div class="cat-hero-icon">
+                    <i class="{{ category.icon|default:'fas fa-print' }}"></i>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-number">100%</span>
-                    <div class="stat-label">Quality Guarantee</div>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">24h</span>
-                    <div class="stat-label">Fast Delivery</div>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">5★</span>
-                    <div class="stat-label">Customer Rating</div>
+                <h1>{{ category.name }}</h1>
+                <p>{{ category.description|default:"Professional printing solutions tailored for your business needs. Quality guaranteed, delivered fast." }}</p>
+                <div class="cat-stats">
+                    <div class="cat-stat"><span class="num">{{ page_obj.paginator.count }}</span><div class="lbl">Products</div></div>
+                    <div class="cat-stat"><span class="num">100%</span><div class="lbl">Quality Guarantee</div></div>
+                    <div class="cat-stat"><span class="num">24h</span><div class="lbl">Fast Response</div></div>
+                    <div class="cat-stat"><span class="num">5★</span><div class="lbl">Customer Rating</div></div>
                 </div>
             </div>
-        </div>
+        </section>
     </div>
-</section>
 
-<br>
-<br>
+    <!-- ═══ Products ═══ -->
+    <section class="shop-section fix section-padding">
+        <div class="container">
+            <div class="section-title text-center">
+                <div class="sub-title"><span>Our Products</span></div>
+                <h2 class="split-text right">Browse {{ category.name }}</h2>
+            </div>
 
-        <!-- Products Grid -->
-        <div class="section-header">
-            <h2>{{ category.name }} Products</h2>
-            <p>Showing {{ products.count }} professional printing solutions</p>
-        </div>
-
-        <div class="products-grid">
-            {% for product in products %}
-            <a class="product-card" href="{% url 'services:static_product_detail' product.category.slug product.slug %}">
-                <div class="product-image-container">
-                    {% if product.hero_image %}
-                    <img src="{{ product.hero_image.url }}" alt="{{ product.name }}" class="product-image">
-                    {% elif product.featured_image %}
-                    <img src="{{ product.featured_image.url }}" alt="{{ product.name }}" class="product-image">
-                    {% else %}
-                    <div class="product-image-fallback">
-                        <i class="fas fa-image"></i>
+            <div class="row g-4 mt-2">
+                {% for product in products %}
+                <div class="col-xl-3 col-lg-4 col-md-6">
+                    <div class="shop-items style-2">
+                        <div class="shop-image">
+                            <a href="{{ product.get_absolute_url }}" class="shop-image-link" aria-label="View {{ product.name }}">
+                                {% if product.featured_image %}
+                                    <img src="{{ product.featured_image.url }}" alt="{{ product.name }}">
+                                {% elif product.hero_image %}
+                                    <img src="{{ product.hero_image.url }}" alt="{{ product.name }}">
+                                {% else %}
+                                    <img src="{% static 'assets/img/shop/01.jpg' %}" alt="{{ product.name }}">
+                                {% endif %}
+                            </a>
+                            <ul class="product-icon d-grid justify-content-center align-items-center">
+                                <li><a href="#"><i class="far fa-heart"></i></a></li>
+                                <li><a href="{{ product.get_absolute_url }}"><i class="far fa-exchange"></i></a></li>
+                                <li><a href="{{ product.get_absolute_url }}"><i class="far fa-eye"></i></a></li>
+                                <li><a href="{{ product.get_absolute_url }}"><i class="fal fa-cart-plus"></i></a></li>
+                            </ul>
+                            {% if product.is_featured %}<div class="offer-text">Featured</div>{% endif %}
+                        </div>
+                        <div class="shop-content">
+                            <h5><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h5>
+                            <span style="font-size:.85rem;color:#6b7280;">Starts at ₹{{ product.base_price }}</span>
+                        </div>
                     </div>
-                    {% endif %}
                 </div>
+                {% empty %}
+                <div class="col-12">
+                    <div class="cat-empty">
+                        <i class="fas fa-box-open"></i>
+                        <h3>No Products Found</h3>
+                        <p>We're adding products to this category soon. Please check back later.</p>
+                        <a href="{% url 'services:all_products' %}" class="theme-btn mt-3">View All Products</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
 
-                <div class="product-content">
-                    <h3 class="product-title">{{ product.name }}</h3>
-                    <p class="product-subtext">Starts at ₹{{ product.base_price }}</p>
-                </div>
-            </a>
-            {% empty %}
-            <div class="empty-state">
-                <i class="fas fa-box-open"></i>
-                <h3>No Products Found</h3>
-                <p>We couldn't find any products matching your criteria. Try adjusting your filters.</p>
-                <a href="{% url 'services:category' category.slug %}" class="filter-btn filter-btn-primary" style="margin-top: 1rem;">
-                    <i class="fas fa-refresh"></i>
-                    Clear Filters
+            {% if page_obj.paginator.num_pages > 1 %}
+            <div class="cat-pagination">
+                {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}"><i class="fas fa-chevron-left"></i></a>
+                {% endif %}
+                {% for num in page_obj.paginator.page_range %}
+                    {% if num == page_obj.number %}
+                        <span class="active">{{ num }}</span>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <a href="?page={{ num }}">{{ num }}</a>
+                    {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}"><i class="fas fa-chevron-right"></i></a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </section>
+
+</div><!-- /cat-page -->
+
+<!-- ═══ Related Categories ═══ -->
+{% if service_categories %}
+<section class="cat-related">
+    <div class="container">
+        <div class="section-title text-center">
+            <div class="sub-title"><span>Explore More</span></div>
+            <h2 class="split-text right">Other Printing Services</h2>
+        </div>
+        <div class="row g-4 mt-2">
+            {% for rc in service_categories %}
+            <div class="col-lg-3 col-md-6">
+                <a href="{% url 'services:category' rc.slug %}" class="rel-card">
+                    <div class="rel-head">
+                        <div class="rel-icon"><i class="{{ rc.icon|default:'fas fa-print' }}"></i></div>
+                        <h3>{{ rc.name }}</h3>
+                    </div>
+                    <div class="rel-body">
+                        <span class="rel-count">{{ rc.static_products.count }} products</span>
+                        <i class="fas fa-arrow-right rel-arrow"></i>
+                    </div>
                 </a>
             </div>
             {% endfor %}
         </div>
     </div>
 </section>
-
-<!-- Related Categories -->
-{% if service_categories %}
-<section class="related-categories">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="section-header">
-            <h2>Explore Other Categories</h2>
-            <p>Discover more printing services to meet all your needs</p>
-        </div>
-
-        <div class="related-grid">
-            {% for related_category in service_categories %}
-            {% if related_category != category %}
-            <a href="{% url 'services:category' related_category.slug %}" class="related-card">
-                <div class="related-card-header">
-                    <div class="related-icon">
-                        <i class="{{ related_category.icon|default:'fas fa-print' }}"></i>
-                    </div>
-                    <h3 class="related-card-title">{{ related_category.name }}</h3>
-                </div>
-                <div class="related-card-body">
-                    <span class="related-count">{{ related_category.static_products.count }} products</span>
-                    <i class="fas fa-arrow-right related-arrow"></i>
-                </div>
-            </a>
-            {% endif %}
-            {% endfor %}
-        </div>
-    </div>
-</section>
-
 {% endif %}
-{% endblock %}
-
-{% block extra_js %}
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Auto-submit form when certain filters change
-    const autoSubmitElements = document.querySelectorAll('input[type="checkbox"]');
-    autoSubmitElements.forEach(element => {
-        element.addEventListener('change', function() {
-            // Add a small delay for better UX
-            setTimeout(() => {
-                this.closest('form').submit();
-            }, 300);
-        });
-    });
-
-    // Intersection Observer for staggered animations
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, observerOptions);
-
-    // Observe product cards for entrance animations
-    document.querySelectorAll('.product-card').forEach((card, index) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(30px)';
-        card.style.transition = `all 0.6s ease ${index * 0.1}s`;
-        observer.observe(card);
-    });
-
-    // Smooth scrolling for internal links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-});
-</script>
 {% endblock %}

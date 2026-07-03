@@ -119,10 +119,21 @@
     }
 
     /* ── Shop banner product images ── */
+    .shop-banner-section-2 .container {
+        max-width: 1440px;
+    }
+    .shop-banner-section-2 .shop-banner-items {
+        min-height: 340px;
+        display: flex;
+        align-items: center;
+    }
+    .shop-banner-section-2 .shop-banner-items > .row {
+        width: 100%;
+    }
     .product-right-img,
     .product-right-img-2 {
         width: 100%;
-        height: 220px;
+        height: 280px;
         overflow: hidden;
         border-radius: 8px;
     }
@@ -138,6 +149,24 @@
     .product-right-img-shape,
     .product-right-img-shape-2 {
         pointer-events: none;
+    }
+    @media (max-width: 991px) {
+        .shop-banner-section-2 .shop-banner-items {
+            min-height: 310px;
+        }
+        .product-right-img,
+        .product-right-img-2 {
+            height: 250px;
+        }
+    }
+    @media (max-width: 767px) {
+        .shop-banner-section-2 .shop-banner-items {
+            min-height: auto;
+        }
+        .product-right-img,
+        .product-right-img-2 {
+            height: 230px;
+        }
     }
 
     /* ── Shop product card images — square like theme's 300×300 samples ── */

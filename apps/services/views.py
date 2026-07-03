@@ -502,3 +502,40 @@ def category_pricing_api(request):
         return JsonResponse({'error': f'Invalid parameter: {str(e)}'}, status=400)
     except Exception as e:
         return JsonResponse({'error': 'Internal server error'}, status=500)
+
+
+@require_http_methods(["GET"])
+def price_quote_api(request):
+    """Canonical server-side price calculation.
+
+    GET params: product_id, quantity, specs (URL-encoded JSON of selected options).
+    Returns the same breakdown used on quote pages — one pricing source of truth.
+    """
+    from .pricing import calculate_product_pricing, serialize_pricing
+
+    try:
+        product = StaticProduct.objects.select_related('category').get(
+            id=request.GET.get('product_id'), is_active=True
+        )
+    except (StaticProduct.DoesNotExist, TypeError, ValueError):
+        return JsonResponse({'success': False, 'error': 'Product not found'}, status=404)
+
+    try:
+        quantity = max(int(request.GET.get('quantity', 1)), 1)
+    except (TypeError, ValueError):
+        quantity = 1
+
+    try:
+        specs = json.loads(request.GET.get('specs', '{}'))
+        if not isinstance(specs, dict):
+            specs = {}
+    except (json.JSONDecodeError, TypeError):
+        specs = {}
+
+    pricing = calculate_product_pricing(product, specs, quantity)
+    return JsonResponse({
+        'success': True,
+        'product_id': product.id,
+        'product_name': product.name,
+        'pricing': serialize_pricing(pricing),
+    })

@@ -19,6 +19,7 @@ from .models import (
     ProductFormField,
     ProductFieldOption,
     BookPrintingPricing,
+    QuantityTier,
 )
 
 # Categories handled by the option-row system (everything except book printing)
@@ -74,7 +75,45 @@ def pricing_product_edit(request, product_id):
                         opt.price_modifier = new_val
                         opt.save(update_fields=['price_modifier'])
                         updated += 1
-        messages.success(request, f'Saved. {updated} price(s) updated for {product.name}.')
+
+        # Quantity discount tiers — update / delete existing rows
+        for tier in list(product.qty_tiers.all()):
+            if request.POST.get(f'tier_del_{tier.id}'):
+                tier.delete()
+                updated += 1
+                continue
+            q_raw = request.POST.get(f'tier_qty_{tier.id}')
+            d_raw = request.POST.get(f'tier_disc_{tier.id}')
+            if q_raw is None and d_raw is None:
+                continue
+            try:
+                new_qty = max(int(float(q_raw or tier.min_quantity)), 1)
+                new_disc = Decimal((d_raw or '0').strip() or '0')
+            except (InvalidOperation, ValueError):
+                continue
+            if new_qty != tier.min_quantity or new_disc != tier.discount_percent:
+                tier.min_quantity = new_qty
+                tier.discount_percent = new_disc
+                tier.save()
+                updated += 1
+
+        # New tier rows (blank inputs at the bottom of the card)
+        for i in range(1, 4):
+            q_raw = (request.POST.get(f'new_tier_qty_{i}') or '').strip()
+            d_raw = (request.POST.get(f'new_tier_disc_{i}') or '').strip()
+            if not q_raw:
+                continue
+            try:
+                QuantityTier.objects.update_or_create(
+                    product=product,
+                    min_quantity=max(int(float(q_raw)), 1),
+                    defaults={'discount_percent': Decimal(d_raw or '0'), 'is_active': True},
+                )
+                updated += 1
+            except (InvalidOperation, ValueError):
+                continue
+
+        messages.success(request, f'Saved. {updated} change(s) applied for {product.name}.')
         return redirect('services:pricing_product_edit', product_id=product.id)
 
     # Build a render-friendly structure
@@ -85,9 +124,12 @@ def pricing_product_edit(request, product_id):
             continue
         field_rows.append({'field': field, 'options': opts})
 
+    tiers = product.qty_tiers.all().order_by('min_quantity')
+
     return render(request, 'pricing_manager/product_edit.html', {
         'product': product,
         'field_rows': field_rows,
+        'tiers': tiers,
     })
 
 
@@ -128,7 +170,22 @@ BOOK_PRICE_GROUPS = [
         ('inner_page_design_per_page', 'Inner page design (per page)'),
         ('isbn_price', 'ISBN allocation (flat)'),
     ]),
+    ('Bulk Discounts — % off the subtotal at these quantities', [
+        ('bulk_qty_1', 'Tier 1 — minimum quantity'),
+        ('bulk_disc_1', 'Tier 1 — discount (%)'),
+        ('bulk_qty_2', 'Tier 2 — minimum quantity'),
+        ('bulk_disc_2', 'Tier 2 — discount (%)'),
+    ]),
 ]
+
+
+def _book_row_kind(attr):
+    """Input adornment: rupee prefix for money, plain for qty, %-suffix for percent."""
+    if attr.startswith('bulk_qty'):
+        return 'qty'
+    if attr.startswith('bulk_disc'):
+        return 'pct'
+    return 'money'
 
 
 @staff_member_required
@@ -157,7 +214,11 @@ def pricing_book(request):
     for group_name, rows in BOOK_PRICE_GROUPS:
         groups.append({
             'name': group_name,
-            'rows': [{'attr': attr, 'label': label, 'value': getattr(pricing, attr)} for attr, label in rows],
+            'rows': [
+                {'attr': attr, 'label': label, 'value': getattr(pricing, attr),
+                 'kind': _book_row_kind(attr)}
+                for attr, label in rows
+            ],
         })
 
     return render(request, 'pricing_manager/book_edit.html', {

@@ -15,8 +15,15 @@ from .models import (
     ProductFormField,
     ProductFieldOption,
     BookPrintingPricing,
+    QuantityTier,
     ServiceInfoBlock,
 )
+
+
+class QuantityTierInline(admin.TabularInline):
+    model = QuantityTier
+    extra = 0
+    fields = ('min_quantity', 'discount_percent', 'is_active')
 
 # apps/services/admin.py - Updated for Static Products
 
@@ -243,6 +250,7 @@ class StaticProductAdmin(admin.ModelAdmin):
     
     inlines = [
         ProductFormFieldInline,
+        QuantityTierInline,
         ProductImageInline,
         ProductFAQInline,
         ProductSampleInline,

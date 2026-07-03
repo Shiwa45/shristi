@@ -32,9 +32,10 @@
 <h1 class="pm-h1">{{ product.name }}</h1>
 <p class="pm-sub">Base price: <strong>₹{{ product.base_price }}</strong>. The number you type is the <strong>extra charge added</strong> when a customer picks that option. Use <strong>0</strong> for no extra charge; a negative number gives a discount.</p>
 
-{% if field_rows %}
 <form method="POST">
     {% csrf_token %}
+
+    {% if field_rows %}
     <div class="pm-card">
         {% for row in field_rows %}
         <div class="field-block">
@@ -53,19 +54,67 @@
             </div>
             {% endfor %}
         </div>
-        <hr style="border:none;border-top:1px solid #f0f0f0;margin:16px 0;">
+        {% if not forloop.last %}<hr style="border:none;border-top:1px solid #f0f0f0;margin:16px 0;">{% endif %}
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="pm-card">
+        <p style="margin:0;color:#6b7280;">This product has no configurable options with pricing. You can still set its base price in the
+            <a href="/admin/services/staticproduct/{{ product.id }}/change/" style="color:var(--theme);">full admin</a>.</p>
+    </div>
+    {% endif %}
+
+    <!-- Quantity Discounts (bulk pricing) -->
+    <div class="pm-card">
+        <div class="field-name"><i class="fas fa-percent me-1" style="color:var(--theme);font-size:.85rem;"></i> Quantity Discounts</div>
+        <div class="field-meta">Give a percentage off the subtotal when the customer orders at least this many. The highest matching tier applies. Example: 500 &rarr; 10 means "10% off on 500 or more".</div>
+
+        {% for tier in tiers %}
+        <div class="opt-row">
+            <div class="opt-left" style="gap:10px;">
+                <span style="font-size:.8rem;color:#6b7280;">At least</span>
+                <input type="number" step="1" min="1" class="price-input" style="padding-left:12px;width:110px;"
+                       name="tier_qty_{{ tier.id }}" value="{{ tier.min_quantity }}">
+                <span style="font-size:.8rem;color:#6b7280;">pcs &rarr;</span>
+                <div style="position:relative;display:inline-block;">
+                    <input type="number" step="0.5" min="0" max="90" class="price-input" style="padding-left:12px;padding-right:26px;width:100px;"
+                           name="tier_disc_{{ tier.id }}" value="{{ tier.discount_percent|floatformat:'-2' }}">
+                    <span style="position:absolute;right:10px;top:50%;transform:translateY(-50%);color:#9ca3af;font-weight:700;font-size:.85rem;">%</span>
+                </div>
+                <span style="font-size:.8rem;color:#6b7280;">off</span>
+            </div>
+            <label style="font-size:.78rem;color:#dc2626;display:flex;align-items:center;gap:5px;cursor:pointer;">
+                <input type="checkbox" name="tier_del_{{ tier.id }}" value="1"> remove
+            </label>
+        </div>
+        {% empty %}
+        <p style="font-size:.85rem;color:#9ca3af;margin:6px 0 10px;">No quantity discounts yet — add one below.</p>
         {% endfor %}
 
-        <div class="save-bar">
+        <!-- Add new tiers -->
+        {% for i in '12'|make_list %}
+        <div class="opt-row" style="border-bottom:none;">
+            <div class="opt-left" style="gap:10px;">
+                <span style="font-size:.8rem;color:#9ca3af;">At least</span>
+                <input type="number" step="1" min="1" class="price-input" style="padding-left:12px;width:110px;"
+                       name="new_tier_qty_{{ forloop.counter }}" placeholder="e.g. 500">
+                <span style="font-size:.8rem;color:#9ca3af;">pcs &rarr;</span>
+                <div style="position:relative;display:inline-block;">
+                    <input type="number" step="0.5" min="0" max="90" class="price-input" style="padding-left:12px;padding-right:26px;width:100px;"
+                           name="new_tier_disc_{{ forloop.counter }}" placeholder="e.g. 10">
+                    <span style="position:absolute;right:10px;top:50%;transform:translateY(-50%);color:#9ca3af;font-weight:700;font-size:.85rem;">%</span>
+                </div>
+                <span style="font-size:.8rem;color:#9ca3af;">off</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="pm-card" style="padding:0;">
+        <div class="save-bar" style="margin:0;border-radius:14px;">
             <span class="hint"><i class="fas fa-circle-info"></i> Changes go live immediately after saving.</span>
             <button type="submit" class="pm-btn"><i class="fas fa-save"></i> Save Prices</button>
         </div>
     </div>
 </form>
-{% else %}
-<div class="pm-card">
-    <p style="margin:0;color:#6b7280;">This product has no configurable options with pricing. You can still set its base price in the
-        <a href="/admin/services/staticproduct/{{ product.id }}/change/" style="color:var(--theme);">full admin</a>.</p>
-</div>
-{% endif %}
 {% endblock %}

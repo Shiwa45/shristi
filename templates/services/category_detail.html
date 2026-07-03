@@ -27,16 +27,20 @@
 .cat-bc .sep { color: #d1d5db; margin: 0 6px; }
 .cat-bc .cur { color: #374151; font-weight: 600; }
 
-/* ── Hero ── */
+/* ── Hero (full-bleed, matches book printing product hero) ── */
 .cat-hero {
     position: relative;
     background: linear-gradient(135deg, #7000fe 0%, #09052F 100%);
-    border-radius: 22px;
-    padding: 54px 30px;
+    padding: 130px 0 70px;
     text-align: center;
     overflow: hidden;
-    margin-top: 12px;
 }
+/* Breadcrumb sitting inside the dark hero */
+.cat-bc-hero { padding: 0 0 22px; text-align: center; font-size: .82rem; }
+.cat-bc-hero a { color: rgba(255,255,255,.75); }
+.cat-bc-hero a:hover { color: #fff; }
+.cat-bc-hero .sep { color: rgba(255,255,255,.45); }
+.cat-bc-hero .cur { color: #fff; font-weight: 600; }
 .cat-hero::before {
     content: '';
     position: absolute; inset: 0;
@@ -121,20 +125,16 @@
 {% block content %}
 <div class="cat-page">
 
-    <!-- ═══ Breadcrumb ═══ -->
-    <div class="container">
-        <nav class="cat-bc">
-            <a href="{% url 'core:home' %}">Home</a>
-            <span class="sep">›</span>
-            <a href="{% url 'services:home' %}">Services</a>
-            <span class="sep">›</span>
-            <span class="cur">{{ category.name }}</span>
-        </nav>
-    </div>
-
-    <!-- ═══ Hero ═══ -->
-    <div class="container">
-        <section class="cat-hero">
+    <!-- ═══ Hero (full-bleed) ═══ -->
+    <section class="cat-hero">
+        <div class="container">
+            <nav class="cat-bc cat-bc-hero">
+                <a href="{% url 'core:home' %}">Home</a>
+                <span class="sep">›</span>
+                <a href="{% url 'services:home' %}">Services</a>
+                <span class="sep">›</span>
+                <span class="cur">{{ category.name }}</span>
+            </nav>
             <div class="cat-hero-inner">
                 <div class="cat-hero-icon">
                     <i class="{{ category.icon|default:'fas fa-print' }}"></i>
@@ -148,8 +148,8 @@
                     <div class="cat-stat"><span class="num">5★</span><div class="lbl">Customer Rating</div></div>
                 </div>
             </div>
-        </section>
-    </div>
+        </div>
+    </section>
 
     <!-- ═══ Products ═══ -->
     <section class="shop-section fix section-padding">
@@ -183,7 +183,6 @@
                         </div>
                         <div class="shop-content">
                             <h5><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h5>
-                            <span style="font-size:.85rem;color:#6b7280;">Starts at ₹{{ product.base_price }}</span>
                         </div>
                     </div>
                 </div>

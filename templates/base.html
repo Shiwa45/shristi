@@ -61,6 +61,142 @@
             text-align: center;
             display: inline-block;
         }
+
+        /* Footer layout cleanup */
+        .footer-section {
+            background: #f4f6ff;
+        }
+        .footer-section .container {
+            max-width: 1620px;
+        }
+        .footer-section .footer-widgets-wrapper {
+            padding: 150px 0 130px;
+        }
+        .footer-section .footer-widgets-wrapper > .row {
+            display: grid;
+            grid-template-columns: minmax(330px, 1.15fr) minmax(230px, .85fr) minmax(350px, 1.15fr) minmax(300px, .95fr);
+            gap: 78px;
+            align-items: start;
+        }
+        .footer-section .footer-widgets-wrapper > .row > [class*="col-"] {
+            width: auto;
+            max-width: none;
+            padding-left: 12px;
+            padding-right: 12px;
+        }
+        .footer-section .footer-widgets-wrapper > .row > [class*="col-"]:nth-child(3) {
+            order: 4;
+        }
+        .footer-section .footer-widgets-wrapper > .row > [class*="col-"]:nth-child(4) {
+            order: 3;
+        }
+        .footer-section .single-footer-widget {
+            margin-top: 0;
+        }
+        .footer-section .single-footer-widget .widget-head {
+            margin-bottom: 32px;
+        }
+        .footer-section .single-footer-widget .widget-head img {
+            height: 56px;
+            max-width: 280px;
+        }
+        .footer-section .single-footer-widget .widget-head h3 {
+            margin: 0;
+            font-size: 28px;
+            line-height: 1.25;
+        }
+        .footer-section .single-footer-widget .footer-content p {
+            max-width: 370px;
+            margin: 0;
+            font-size: 21px;
+            line-height: 1.65;
+        }
+        .footer-section .single-footer-widget .footer-content .social-icon.style-2 {
+            margin-top: 34px;
+            gap: 20px;
+        }
+        .footer-section .single-footer-widget .footer-content .social-icon.style-2 a {
+            color: var(--header);
+            font-size: 22px;
+        }
+        .footer-section .single-footer-widget .list-items li:not(:last-child) {
+            margin-bottom: 22px;
+        }
+        .footer-section .single-footer-widget .list-items li a {
+            font-size: 24px;
+            line-height: 1.25;
+        }
+        .footer-section .single-footer-widget.mt-4 {
+            margin-top: 34px !important;
+        }
+        .footer-section .contact-list-2 {
+            margin: 0;
+        }
+        .footer-section .contact-list-2 li {
+            align-items: flex-start;
+            gap: 20px;
+        }
+        .footer-section .contact-list-2 li:not(:last-child) {
+            margin-bottom: 40px;
+        }
+        .footer-section .contact-list-2 li .icon {
+            flex: 0 0 52px;
+            width: 52px;
+            height: 52px;
+            line-height: 49px;
+            margin-top: 2px;
+        }
+        .footer-section .contact-list-2 li .content span {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 20px;
+            line-height: 1.2;
+        }
+        .footer-section .contact-list-2 li .content h3 {
+            margin: 0;
+            font-size: 24px;
+            line-height: 1.35;
+            word-break: break-word;
+        }
+        .footer-section .contact-list-2 li .content h3[style] {
+            font-size: 18px !important;
+            line-height: 1.65 !important;
+        }
+        .footer-section .footer-bottom {
+            padding: 42px 0;
+        }
+        .footer-section .footer-bottom .footer-bottom-wrapper p {
+            margin: 0;
+            font-size: 22px;
+            line-height: 1.4;
+            text-transform: none;
+        }
+        @media (max-width: 1199px) {
+            .footer-section .footer-widgets-wrapper > .row {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 36px 28px;
+            }
+        }
+        @media (max-width: 767px) {
+            .footer-section .footer-widgets-wrapper {
+                padding: 54px 0 48px;
+            }
+            .footer-section .footer-widgets-wrapper > .row {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .footer-section .footer-widgets-wrapper > .row > [class*="col-"]:nth-child(3),
+            .footer-section .footer-widgets-wrapper > .row > [class*="col-"]:nth-child(4) {
+                order: initial;
+            }
+            .footer-section .footer-widgets-wrapper > .row > [class*="col-"] {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+            .footer-section .single-footer-widget .footer-content p {
+                max-width: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -161,7 +297,7 @@
                         {% if site_settings %}
                             {% for social in site_settings.social_links.all %}
                                 {% if social.is_active %}
-                                    <a href="{{ social.url }}" aria-label="{{ social.label }}">{{ social.icon_svg|safe }}</a>
+                                    <a href="{{ social.url }}" aria-label="{{ social.display_label }}">{% if social.icon_class %}<i class="{{ social.icon_class }}"></i>{% else %}{{ social.icon_svg|safe }}{% endif %}</a>
                                 {% endif %}
                             {% endfor %}
                         {% else %}
@@ -188,7 +324,7 @@
                         {% if site_settings %}
                             {% for social in site_settings.social_links.all %}
                                 {% if social.is_active %}
-                                    <a href="{{ social.url }}" aria-label="{{ social.label }}">{{ social.icon_svg|safe }}</a>
+                                    <a href="{{ social.url }}" aria-label="{{ social.display_label }}">{% if social.icon_class %}<i class="{{ social.icon_class }}"></i>{% else %}{{ social.icon_svg|safe }}{% endif %}</a>
                                 {% endif %}
                             {% endfor %}
                         {% else %}
@@ -331,7 +467,7 @@
                                 {% if site_settings %}
                                     {% for social in site_settings.social_links.all %}
                                         {% if social.is_active %}
-                                            <a href="{{ social.url }}" aria-label="{{ social.label }}">{{ social.icon_svg|safe }}</a>
+                                            <a href="{{ social.url }}" aria-label="{{ social.display_label }}">{% if social.icon_class %}<i class="{{ social.icon_class }}"></i>{% else %}{{ social.icon_svg|safe }}{% endif %}</a>
                                         {% endif %}
                                     {% endfor %}
                                 {% else %}
@@ -345,12 +481,12 @@
                     </div>
                 </div>
 
-                <!-- ── Col 2: Dynamic footer link groups (admin-managed) ── -->
+                <!-- ── Col 2: First footer link group (e.g. Quick Links) ── -->
                 <div class="col-xl-3 col-sm-6 col-md-6 col-lg-3 ps-lg-4 wow fadeInUp" data-wow-delay=".4s">
                     {% if site_settings %}
                         {% for group in site_settings.footer_link_groups.all %}
-                            {% if group.is_active %}
-                            <div class="single-footer-widget {% if not forloop.first %}mt-4{% endif %}">
+                            {% if group.is_active and forloop.first %}
+                            <div class="single-footer-widget">
                                 <div class="widget-head"><h3>{{ group.title }}</h3></div>
                                 <ul class="list-items">
                                     {% for link in group.links.all %}
@@ -409,61 +545,34 @@
                     </div>
                 </div>
 
-                <!-- ── Col 4: Contact Info + Business Hours ── -->
+                <!-- ── Col 4: Legal (remaining footer link groups) ── -->
                 <div class="col-xl-3 col-sm-6 col-md-6 col-lg-3 wow fadeInUp" data-wow-delay=".8s">
-                    <div class="single-footer-widget">
-                        <div class="widget-head">
-                            <h3>{% if site_settings %}{{ site_settings.contact_heading }}{% else %}Contact Shirsti{% endif %}</h3>
-                        </div>
-                        <ul class="contact-list-2">
-                            <li>
-                                <div class="icon">
-                                    <i class="far fa-phone" style="font-size:18px; color:#fff;"></i>
-                                </div>
-                                <div class="content">
-                                    <span>Call Us</span>
-                                    <h3>
-                                        <a href="tel:{% if site_settings %}{{ site_settings.contact_phone }}{% else %}+911234567890{% endif %}">
-                                            {% if site_settings %}{{ site_settings.contact_phone }}{% else %}+91 12345 67890{% endif %}
-                                        </a>
-                                    </h3>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="icon">
-                                    <i class="far fa-envelope" style="font-size:18px; color:#fff;"></i>
-                                </div>
-                                <div class="content">
-                                    <span>Mail Us</span>
-                                    <h3>
-                                        <a href="mailto:{% if site_settings %}{{ site_settings.contact_email }}{% else %}info@shirsti.com{% endif %}">
-                                            {% if site_settings %}{{ site_settings.contact_email }}{% else %}info@shirsti.com{% endif %}
-                                        </a>
-                                    </h3>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="icon">
-                                    <i class="fas fa-map-marker-alt" style="font-size:18px; color:#fff;"></i>
-                                </div>
-                                <div class="content">
-                                    <span>Location</span>
-                                    <h3>{% if site_settings %}{{ site_settings.contact_address|linebreaksbr }}{% else %}New Delhi, India{% endif %}</h3>
-                                </div>
-                            </li>
-                            {% if site_settings and site_settings.business_hours %}
-                            <li>
-                                <div class="icon">
-                                    <i class="far fa-clock" style="font-size:18px; color:#fff;"></i>
-                                </div>
-                                <div class="content">
-                                    <span>{% if site_settings.business_hours_heading %}{{ site_settings.business_hours_heading }}{% else %}Business Hours{% endif %}</span>
-                                    <h3 style="font-size:13px; line-height:1.7; font-weight:500;">{{ site_settings.business_hours|linebreaksbr }}</h3>
-                                </div>
-                            </li>
+                    {% if site_settings %}
+                        {% for group in site_settings.footer_link_groups.all %}
+                            {% if group.is_active and not forloop.first %}
+                            <div class="single-footer-widget {% if forloop.counter0 > 1 %}mt-4{% endif %}">
+                                <div class="widget-head"><h3>{{ group.title }}</h3></div>
+                                <ul class="list-items">
+                                    {% for link in group.links.all %}
+                                        {% if link.is_active %}
+                                        <li><a href="{{ link.url }}">{{ link.label }}</a></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
                             {% endif %}
-                        </ul>
-                    </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="single-footer-widget">
+                            <div class="widget-head"><h3>Legal</h3></div>
+                            <ul class="list-items">
+                                <li><a href="{% url 'core:privacy_policy' %}">Privacy Policy</a></li>
+                                <li><a href="{% url 'core:terms_conditions' %}">Terms &amp; Conditions</a></li>
+                                <li><a href="{% url 'core:refund_policy' %}">Refund Policy</a></li>
+                                <li><a href="{% url 'core:cancellation_policy' %}">Cancellation Policy</a></li>
+                            </ul>
+                        </div>
+                    {% endif %}
                 </div>
 
             </div>

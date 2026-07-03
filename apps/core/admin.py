@@ -199,7 +199,9 @@ class SiteNavLinkInline(admin.TabularInline):
 class SocialLinkInline(admin.TabularInline):
     model = SocialLink
     extra = 1
-    fields = ('label', 'url', 'icon_svg', 'is_active', 'order')
+    fields = ('platform', 'url', 'label', 'is_active', 'order', 'icon_svg')
+    verbose_name = "Social Media Link"
+    verbose_name_plural = "Social Media Links — pick a platform and paste the link"
 
 
 @admin.register(SiteSetting)

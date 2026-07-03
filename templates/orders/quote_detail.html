@@ -238,6 +238,20 @@
                             <td>Quantity</td>
                             <td>&times; {{ pricing.quantity }}</td>
                         </tr>
+                        {% if pricing.discount_pct %}
+                        <tr>
+                            <td>Subtotal</td>
+                            <td>&#8377;{{ pricing.gross_subtotal }}</td>
+                        </tr>
+                        <tr>
+                            <td>Bulk discount ({{ pricing.discount_pct }}%)</td>
+                            <td style="color:#059669;">-&#8377;{{ pricing.discount }}</td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <td>GST (18%)</td>
+                            <td>&#8377;{{ pricing.tax }}</td>
+                        </tr>
                         <tr>
                             <td><strong>Item Total (incl. 18% GST)</strong></td>
                             <td><strong style="color:#7000fe;">&#8377;{{ pricing.total }}</strong></td>

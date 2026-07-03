@@ -23,6 +23,9 @@ urlpatterns = [
     path('all-products/', views.all_products, name='all_products'),
     path('search/', views.product_search, name='search'),
 
+    # Canonical price calculation API (must be before the slug catch-alls)
+    path('api/price-quote/', views.price_quote_api, name='price_quote_api'),
+
     # Pricing Manager (staff-only, clean UI for updating prices)
     path('manage/pricing/', pricing_admin_views.pricing_home, name='pricing_home'),
     path('manage/pricing/products/', pricing_admin_views.pricing_products, name='pricing_products'),

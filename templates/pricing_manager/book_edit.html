@@ -32,10 +32,21 @@
         {% for r in group.rows %}
         <div class="row">
             <span class="lbl">{{ r.label }}</span>
+            {% if r.kind == 'qty' %}
+            <input type="number" step="1" min="1" class="price-input" style="padding-left:12px;"
+                   name="{{ r.attr }}" value="{{ r.value|floatformat:'0' }}">
+            {% elif r.kind == 'pct' %}
+            <div style="position:relative;display:inline-block;">
+                <input type="number" step="0.5" min="0" max="90" class="price-input" style="padding-left:12px;padding-right:26px;"
+                       name="{{ r.attr }}" value="{{ r.value|floatformat:'-2' }}">
+                <span style="position:absolute;right:10px;top:50%;transform:translateY(-50%);color:#9ca3af;font-weight:700;font-size:.9rem;">%</span>
+            </div>
+            {% else %}
             <div class="price-wrap">
                 <input type="number" step="0.01" class="price-input"
                        name="{{ r.attr }}" value="{{ r.value|floatformat:2 }}">
             </div>
+            {% endif %}
         </div>
         {% endfor %}
     </div>

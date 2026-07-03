@@ -783,6 +783,33 @@ class ProductFieldOption(models.Model):
         return data
 
 
+class QuantityTier(models.Model):
+    """Bulk-discount slab for a product.
+
+    When the order quantity is at least `min_quantity`, `discount_percent`
+    is taken off the pre-tax subtotal. The highest satisfied tier wins.
+    Editable per product in the Pricing Manager.
+    """
+    product = models.ForeignKey(
+        StaticProduct, on_delete=models.CASCADE, related_name='qty_tiers'
+    )
+    min_quantity = models.PositiveIntegerField(
+        help_text="Discount applies when order quantity is at least this"
+    )
+    discount_percent = models.DecimalField(
+        max_digits=5, decimal_places=2,
+        help_text="Percent off the subtotal, e.g. 10 = 10% off"
+    )
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['product', 'min_quantity']
+        unique_together = ('product', 'min_quantity')
+
+    def __str__(self):
+        return f"{self.product.name}: {self.min_quantity}+ → {self.discount_percent}% off"
+
+
 class BookPrintingPricing(models.Model):
     """Single editable price sheet for all Book Printing products.
 
@@ -825,6 +852,12 @@ class BookPrintingPricing(models.Model):
     cover_design_price = models.DecimalField('Cover page design (flat)', max_digits=8, decimal_places=2, default=Decimal('1500'))
     inner_page_design_per_page = models.DecimalField('Inner page design (per page)', max_digits=8, decimal_places=2, default=Decimal('50'))
     isbn_price = models.DecimalField('ISBN allocation (flat)', max_digits=8, decimal_places=2, default=Decimal('2000'))
+
+    # Bulk discounts — previously hardcoded (>=50: 5%, >=100: 10%), now editable
+    bulk_qty_1 = models.PositiveIntegerField('Bulk tier 1 — minimum qty', default=50)
+    bulk_disc_1 = models.DecimalField('Bulk tier 1 — discount %', max_digits=5, decimal_places=2, default=Decimal('5'))
+    bulk_qty_2 = models.PositiveIntegerField('Bulk tier 2 — minimum qty', default=100)
+    bulk_disc_2 = models.DecimalField('Bulk tier 2 — discount %', max_digits=5, decimal_places=2, default=Decimal('10'))
 
     updated_at = models.DateTimeField(auto_now=True)
 

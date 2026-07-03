@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block hero_section %}
-<section class="pd-hero" style="background-image: url('{% static 'assets/img/hero/hero-bg-1.jpg' %}'); padding: 60px 0 35px;">
+<section class="pd-hero bp-hero" style="padding: 135px 0 70px;">
     <div class="container">
         <div class="row g-4 align-items-center">
             <div class="col-lg-6">
@@ -11,16 +11,13 @@
                 {% endif %}
                 <h1>{{ product.name }}</h1>
                 <p>{{ product.description|default:product.short_description }}</p>
-
-
-        
             </div>
             <div class="col-lg-6">
-                <div class="p" style="min-height: 140px;">
+                <div class="pd-image-wrap">
                     {% if product.hero_image %}
-                        <img src="{{ product.hero_image.url }}" alt="{{ product.name }}" width="400px" height="400px">
+                        <img src="{{ product.hero_image.url }}" alt="{{ product.name }}">
                     {% elif product.featured_image %}
-                        <img src="{{ product.featured_image.url }}" alt="{{ product.name }}" width="100px" height="100px">
+                        <img src="{{ product.featured_image.url }}" alt="{{ product.name }}">
                     {% else %}
                         <div class="pd-image-placeholder">
                             <i class="fas fa-print"></i>
@@ -37,6 +34,21 @@
 {% block extra_css %}
 {{ block.super }}
 <style>
+    /* ── Hero: match home-page theme (purple gradient, clears the navbar) ── */
+    .bp-hero {
+        background: linear-gradient(135deg, #7000fe 0%, #09052F 100%);
+    }
+    .bp-hero::before { background: transparent; }
+    .bp-hero .pd-image-wrap {
+        background: transparent;
+        min-height: auto;
+    }
+    .bp-hero .pd-image-wrap img {
+        border-radius: 16px;
+        max-width: 460px;
+        margin: 0 auto;
+    }
+
     /* Lulu.com Inspired Book Printing Styles */
     .book-options-container {
         background: #ffffff;
@@ -173,14 +185,14 @@
 
     @media (min-width: 1024px) {
         .interior-color-options {
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
         }
     }
 
     .color-option {
         border: 1px solid #d1d5db;
         border-radius: 8px;
-        padding: 1.25rem;
+        padding: 0.85rem 1rem;
         cursor: pointer;
         transition: all 0.2s ease;
         position: relative;
@@ -204,18 +216,21 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-bottom: 0.75rem;
-        height: 80px;
+        margin-bottom: 0.5rem;
+        height: 72px;
         width: 100%;
-        background: #f3f4f6;
+        background: #f8fafc;
         border-radius: 6px;
         overflow: hidden;
+        padding: 5px;
     }
 
     .option-icon img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: contain;
     }
 
     .option-icon svg {
@@ -1476,7 +1491,7 @@
                     </div>
                     <div class="text-xs text-gray-500 mt-2">
                         <i class="fas fa-info-circle text-blue-500"></i>
-                        Volume discounts: 5% off for 50+ books, 10% off for 100+ books
+                        Volume discounts: {{ book_pricing.bulk_disc_1|floatformat:"-2"|default:"5" }}% off for {{ book_pricing.bulk_qty_1|default:"50" }}+ books, {{ book_pricing.bulk_disc_2|floatformat:"-2"|default:"10" }}% off for {{ book_pricing.bulk_qty_2|default:"100" }}+ books
                     </div>
                 </div>
             </div>
@@ -2066,11 +2081,11 @@
                     document.getElementById('cost-per-unit').textContent = `₹ ${costPerBook.toFixed(2)}`;
                     const subtotal = (costPerBook * quantity) + designCost + isbnCost;
 
-                    if (quantity >= 100) {
-                        discount = subtotal * 0.10; // 10% discount
+                    if (quantity >= {{ book_pricing.bulk_qty_2|default:100 }}) {
+                        discount = subtotal * {{ book_pricing.bulk_disc_2|default:10 }} / 100; // tier 2 discount (editable in Pricing Manager)
                         discountRow.style.display = 'flex';
-                    } else if (quantity >= 50) {
-                        discount = subtotal * 0.05; // 5% discount
+                    } else if (quantity >= {{ book_pricing.bulk_qty_1|default:50 }}) {
+                        discount = subtotal * {{ book_pricing.bulk_disc_1|default:5 }} / 100; // tier 1 discount (editable in Pricing Manager)
                         discountRow.style.display = 'flex';
                     } else if (discountRow) {
                         discountRow.style.display = 'none';
@@ -2276,46 +2291,8 @@
             // Design section interaction handled
         }
 
-        // Handle order button click
-        document.getElementById('order-button').addEventListener('click', function () {
-            if (this.disabled) return;
-
-            // Collect all form data
-            const formData = collectFormData();
-
-            // Show confirmation and submit order
-            submitBookOrder(formData);
-        });
-
-        function collectFormData() {
-            const data = {};
-
-            // Collect all form inputs
-            document.querySelectorAll('input[type="radio"]:checked, input[type="checkbox"]:checked, input[type="number"], input[type="file"]').forEach(input => {
-                if (input.type === 'file' && input.files.length > 0) {
-                    data[input.name] = input.files[0].name;
-                } else if (input.value) {
-                    data[input.name] = input.value;
-                }
-            });
-
-            // Collect select dropdown values
-            document.querySelectorAll('select').forEach(select => {
-                if (select.value) {
-                    data[select.name] = select.value;
-                }
-            });
-
-            // Add quantity (minimum 25 for book printing)
-            data.quantity = Math.max(parseInt(data.page_count) || 25, 25);
-
-            // Add product information
-            data.product_id = window.bookPrintingConfig.productId;
-            data.product_name = window.bookPrintingConfig.productName;
-            data.category = window.bookPrintingConfig.categoryName;
-
-            return data;
-        }
+        // NOTE: the order button submits via submitBookQuote() (inline onclick) —
+        // the legacy add-to-cart listener that raced it was removed.
 
         function updateProgressIndicator(completedStep, activeStep) {
             // Mark completed step
@@ -2334,120 +2311,6 @@
                 });
                 activeStepElement.classList.add('active');
             }
-        }
-
-        function submitBookOrder(formData) {
-            // Show loading state
-            const orderButton = document.getElementById('order-button');
-            const originalText = orderButton.innerHTML;
-            orderButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
-            orderButton.disabled = true;
-
-            // Submit directly to backend without confirmation dialog
-            submitOrderToBackend(formData, orderButton, originalText);
-        }
-
-        function submitOrderToBackend(formData, orderButton, originalText) {
-            // Get CSRF token
-            const csrfTokenElement = document.querySelector('[name=csrfmiddlewaretoken]');
-            const metaCsrfElement = document.querySelector('meta[name="csrf-token"]');
-            const csrfToken = (csrfTokenElement && csrfTokenElement.value) ||
-                (metaCsrfElement && metaCsrfElement.getAttribute('content'));
-
-            // Add customer info if available
-            const customerInfo = {
-                name: formData.customer_name || '',
-                email: formData.customer_email || '',
-                phone: formData.customer_phone || ''
-            };
-
-            // Prepare JSON data for submission
-            const submitData = {
-                form_data: formData,
-                customer_info: customerInfo
-            };
-
-            // Get product ID from the page
-            const productId = window.bookPrintingConfig.productId;
-
-            // Submit to backend
-            fetch(`/orders/api/book-printing/submit/${productId}/`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrfToken,
-                },
-                body: JSON.stringify(submitData)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Redirect directly to order/checkout page without alert
-                        if (data.redirect_url) {
-                            window.location.href = data.redirect_url;
-                        } else if (data.order_number) {
-                            window.location.href = `/orders/order/${data.order_number}/`;
-                        } else {
-                            window.location.href = '/orders/';
-                        }
-                    } else {
-                        // Show error message
-                        alert(`❌ Error: ${data.message}`);
-
-                        // Reset button
-                        orderButton.innerHTML = originalText;
-                        orderButton.disabled = false;
-                    }
-                })
-                .catch(error => {
-                    console.error('Order submission error:', error);
-                    alert('❌ There was an error submitting your order. Please try again.');
-
-                    // Reset button
-                    orderButton.innerHTML = originalText;
-                    orderButton.disabled = false;
-                });
-        }
-
-        function createOrderSummary(data) {
-            let summary = `Product: ${data.product_name}\n`;
-            summary += `Category: ${data.category}\n\n`;
-
-            if (data.interior_color) {
-                summary += `Interior Color: ${getDisplayValue('interior_color', data.interior_color)}\n`;
-            }
-            if (data.book_size) {
-                summary += `Book Size: ${getDisplayValue('book_size', data.book_size)}\n`;
-            }
-            if (data.page_count) {
-                summary += `Page Count: ${data.page_count}\n`;
-            }
-            if (data.bw_page_count && data.color_page_count) {
-                summary += `B&W Pages: ${data.bw_page_count}, Color Pages: ${data.color_page_count}\n`;
-            }
-            if (data.paper_type) {
-                summary += `Paper Type: ${getDisplayValue('paper_type', data.paper_type)}\n`;
-            }
-            if (data.binding_type) {
-                summary += `Binding: ${getDisplayValue('binding_type', data.binding_type)}\n`;
-            }
-            if (data.cover_finish) {
-                summary += `Cover Finish: ${getDisplayValue('cover_finish', data.cover_finish)}\n`;
-            }
-            if (data.cover_page_design || data.inner_page_design) {
-                let designServices = [];
-                if (data.cover_page_design) designServices.push('Cover Page');
-                if (data.inner_page_design) designServices.push('Inner Pages');
-                summary += `Design Service: ${designServices.join(', ')}\n`;
-            }
-            if (data.isbn_allocation) {
-                summary += `ISBN: ${getDisplayValue('isbn_allocation', data.isbn_allocation)}\n`;
-            }
-
-            const totalPrice = document.getElementById('total-price').textContent;
-            summary += `\nTotal Price: ${totalPrice}`;
-
-            return summary;
         }
 
         function getDisplayValue(fieldName, value) {

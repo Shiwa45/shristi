@@ -298,11 +298,48 @@ class FooterLink(models.Model):
 
 
 class SocialLink(models.Model):
-    """Social links shown in the footer"""
+    """Social media links shown in the header top bar and footer."""
+
+    PLATFORM_CHOICES = [
+        ('facebook', 'Facebook'),
+        ('instagram', 'Instagram'),
+        ('twitter', 'X (Twitter)'),
+        ('linkedin', 'LinkedIn'),
+        ('youtube', 'YouTube'),
+        ('pinterest', 'Pinterest'),
+        ('whatsapp', 'WhatsApp'),
+        ('telegram', 'Telegram'),
+        ('tiktok', 'TikTok'),
+        ('custom', 'Custom (paste SVG below)'),
+    ]
+
+    # Font Awesome class per platform (site already bundles Font Awesome)
+    ICON_CLASSES = {
+        'facebook': 'fab fa-facebook-f',
+        'instagram': 'fab fa-instagram',
+        'twitter': 'fab fa-x-twitter',
+        'linkedin': 'fab fa-linkedin-in',
+        'youtube': 'fab fa-youtube',
+        'pinterest': 'fab fa-pinterest-p',
+        'whatsapp': 'fab fa-whatsapp',
+        'telegram': 'fab fa-telegram-plane',
+        'tiktok': 'fab fa-tiktok',
+    }
+
     site_settings = models.ForeignKey(SiteSetting, on_delete=models.CASCADE, related_name='social_links')
-    label = models.CharField(max_length=100)
-    url = models.CharField(max_length=200, default="#")
-    icon_svg = models.TextField()
+    platform = models.CharField(
+        max_length=20, choices=PLATFORM_CHOICES, default='facebook',
+        help_text="Pick a platform — the icon is set automatically."
+    )
+    label = models.CharField(
+        max_length=100, blank=True,
+        help_text="Optional. Leave blank to use the platform name."
+    )
+    url = models.CharField(max_length=200, default="#", help_text="Full link, e.g. https://facebook.com/yourpage")
+    icon_svg = models.TextField(
+        blank=True,
+        help_text="Only needed when platform is 'Custom' — paste raw SVG markup here."
+    )
     is_active = models.BooleanField(default=True)
     order = models.IntegerField(default=0)
 
@@ -312,4 +349,13 @@ class SocialLink(models.Model):
         verbose_name_plural = "Social Links"
 
     def __str__(self):
-        return self.label
+        return self.label or self.get_platform_display()
+
+    @property
+    def icon_class(self):
+        """Font Awesome class for the chosen platform ('' for custom → uses icon_svg)."""
+        return self.ICON_CLASSES.get(self.platform, '')
+
+    @property
+    def display_label(self):
+        return self.label or self.get_platform_display()

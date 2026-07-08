@@ -40,6 +40,12 @@
             object-fit: contain;
         }
 
+        /* ── Nav dropdown: widen so longer category items (e.g. "Coffee Table
+               Book Printing") fit on one line instead of wrapping to two ── */
+        .header-main .main-menu ul li .submenu {
+            min-width: 300px;
+        }
+
         /* ── Cart badge: hide the theme's hardcoded "3" pseudo-badge,
                replace with our live Django count ── */
         .header-1 .header-right .menu-cart .cart-icon::before,

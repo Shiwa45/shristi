@@ -190,8 +190,8 @@
                 </div>
                 {% endblock %}
 
-                {% include 'services/static_products/partials/product_tabs.html' %}
             </div>
+            
 
             <!-- Right: Calculator + Help -->
             <div class="col-lg-4">
@@ -214,38 +214,6 @@
         </div>
     </div>
 </div>
-
-<!-- ===== Why Choose Us ===== -->
-<section class="pd-features">
-    <div class="container">
-        <div class="text-center mb-5">
-            <h2 style="font-weight:800;color:var(--header);">Why Choose Our {{ product.name }}?</h2>
-            <p class="text-muted">Premium quality, advanced technology, and expert support at every step.</p>
-        </div>
-        <div class="row g-4 text-center">
-            <div class="col-lg-3 col-md-6">
-                <div class="pd-feature-icon"><i class="fas fa-award"></i></div>
-                <div class="pd-feature-title">Premium Quality</div>
-                <p class="pd-feature-desc">25+ years of printing excellence with state-of-the-art equipment.</p>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="pd-feature-icon"><i class="fas fa-shipping-fast"></i></div>
-                <div class="pd-feature-title">Fast Delivery</div>
-                <p class="pd-feature-desc">Quick turnaround times with reliable shipping nationwide.</p>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="pd-feature-icon"><i class="fas fa-palette"></i></div>
-                <div class="pd-feature-title">Custom Design</div>
-                <p class="pd-feature-desc">Professional design services and unlimited customisation options.</p>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="pd-feature-icon"><i class="fas fa-headset"></i></div>
-                <div class="pd-feature-title">Expert Support</div>
-                <p class="pd-feature-desc">Dedicated customer support to guide you through every step.</p>
-            </div>
-        </div>
-    </div>
-</section>
 
 <!-- ===== Related Products ===== -->
 {% if related_products %}

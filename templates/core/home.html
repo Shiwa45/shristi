@@ -7,6 +7,35 @@
 {% block content %}
 
 <style>
+    /* ── FAQ section images: the second (smaller) image had no width limit and was
+       rendering at its full natural size, overlapping the main image messily.
+       Constrain it to a proper "framed thumbnail" tucked into the corner. ── */
+    .faq-wrapper .faq-image-2 .faq-img-2 {
+        max-width: 220px;
+        bottom: -12%;
+        right: -6%;
+        border: 6px solid #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(9, 5, 47, .18);
+    }
+    .faq-wrapper .faq-image-2 .faq-img-2 img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        border-radius: 6px;
+    }
+    .faq-wrapper .faq-image-2 .faq-img img {
+        border-radius: 16px;
+        object-fit: cover;
+    }
+    @media (max-width: 575px) {
+        .faq-wrapper .faq-image-2 .faq-img-2 {
+            max-width: 150px;
+        }
+    }
+
     /* ── Hero section: ~25% smaller than original ── */
     .hero-section-3 .swiper-dot-2 {
         position: absolute;
@@ -863,7 +892,7 @@
                 <div class="col-lg-6">
                     <div class="faq-image-2">
                         <div class="faq-img reveal fix">
-                            <img src="/media/faq/faq_support.png" alt="FAQ Support">
+                            <img src="/media/faq/faq_production.png" alt="FAQ Production">
                             {% if faq_video_url %}
                             <a href="{{ faq_video_url }}" class="video-btn ripple video-popup">
                                 <i class="fas fa-play"></i>
@@ -871,7 +900,7 @@
                             {% endif %}
                         </div>
                         <div class="faq-img-2 wow img-custom-anim-top" data-wow-duration="1.5s" data-wow-delay="0.1s">
-                            <img src="/media/faq/faq_production.png" alt="FAQ Production">
+                            <img src="/media/faq/faq_support.png" alt="FAQ Support">
                         </div>
                     </div>
                 </div>
@@ -953,23 +982,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ===== Final CTA ===== -->
-<section class="cta-section-3">
-    <div class="container">
-        <div class="cta-wrapper-3 bg-cover" style="background: linear-gradient(135deg, #f6f4fe 0%, #faf8ff 100%); border: 1px solid #ede9fe; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.03);">
-            <div class="cta-content">
-                <h2 class="split-text right">
-                    Ready to Create Some <br> Custom Print Products?
-                </h2>
-                <a href="{% url 'core:contact' %}" class="theme-btn wow fadeInUp" data-wow-delay=".5s">Contact Us</a>
-            </div>
-            <div class="cta-shape reveal fix">
-                <img src="/media/cta/cta_products.png" alt="Custom Print Products" style="max-height: 280px; width: auto; object-fit: contain;">
             </div>
         </div>
     </div>

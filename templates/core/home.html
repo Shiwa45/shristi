@@ -7,6 +7,18 @@
 {% block content %}
 
 <style>
+    /* ── Shop Banners: increase box height ── */
+    .shop-banner-items {
+        min-height: 420px;
+        display: flex;
+        align-items: center;
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+    .shop-banner-items .row {
+        width: 100%;
+    }
+
     /* ── FAQ section images: the second (smaller) image had no width limit and was
        rendering at its full natural size, overlapping the main image messily.
        Constrain it to a proper "framed thumbnail" tucked into the corner. ── */

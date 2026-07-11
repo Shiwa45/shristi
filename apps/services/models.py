@@ -853,11 +853,14 @@ class BookPrintingPricing(models.Model):
     inner_page_design_per_page = models.DecimalField('Inner page design (per page)', max_digits=8, decimal_places=2, default=Decimal('50'))
     isbn_price = models.DecimalField('ISBN allocation (flat)', max_digits=8, decimal_places=2, default=Decimal('2000'))
 
-    # Bulk discounts — previously hardcoded (>=50: 5%, >=100: 10%), now editable
-    bulk_qty_1 = models.PositiveIntegerField('Bulk tier 1 — minimum qty', default=50)
-    bulk_disc_1 = models.DecimalField('Bulk tier 1 — discount %', max_digits=5, decimal_places=2, default=Decimal('5'))
-    bulk_qty_2 = models.PositiveIntegerField('Bulk tier 2 — minimum qty', default=100)
-    bulk_disc_2 = models.DecimalField('Bulk tier 2 — discount %', max_digits=5, decimal_places=2, default=Decimal('10'))
+    # Bulk discounts — editable, 3 tiers. Each tier's effective range runs up to the
+    # next tier's threshold (e.g. 200/10%, 250/12% → 200-249 books get 10% off).
+    bulk_qty_1 = models.PositiveIntegerField('Bulk tier 1 — minimum qty', default=200)
+    bulk_disc_1 = models.DecimalField('Bulk tier 1 — discount %', max_digits=5, decimal_places=2, default=Decimal('10'))
+    bulk_qty_2 = models.PositiveIntegerField('Bulk tier 2 — minimum qty', default=250)
+    bulk_disc_2 = models.DecimalField('Bulk tier 2 — discount %', max_digits=5, decimal_places=2, default=Decimal('12'))
+    bulk_qty_3 = models.PositiveIntegerField('Bulk tier 3 — minimum qty', default=300)
+    bulk_disc_3 = models.DecimalField('Bulk tier 3 — discount %', max_digits=5, decimal_places=2, default=Decimal('14'))
 
     updated_at = models.DateTimeField(auto_now=True)
 

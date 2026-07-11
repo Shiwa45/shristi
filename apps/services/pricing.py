@@ -15,7 +15,7 @@ Two engines, dispatched by category:
   Book printing (per-page engine, rates from the BookPrintingPricing sheet):
     cost/book = interior(per-page) + size + paper + binding + cover finish
     gross     = cost/book × qty + design services + ISBN
-    discount  = editable bulk slabs (bulk_qty_1/2, bulk_disc_1/2)
+    discount  = editable bulk slabs (bulk_qty_1/2/3, bulk_disc_1/2/3)
     total     = (gross − discount) × 1.18 (GST)
 
 All rates are editable in the Pricing Manager (/services/manage/pricing/).
@@ -176,7 +176,11 @@ def calculate_book_pricing(product, specs, quantity):
     gross_subtotal = books_subtotal + design_cost + isbn_cost
 
     # Editable bulk slabs — highest satisfied threshold wins
-    slabs = [(bp.bulk_qty_1, bp.bulk_disc_1), (bp.bulk_qty_2, bp.bulk_disc_2)]
+    slabs = [
+        (bp.bulk_qty_1, bp.bulk_disc_1),
+        (bp.bulk_qty_2, bp.bulk_disc_2),
+        (bp.bulk_qty_3, bp.bulk_disc_3),
+    ]
     satisfied = [(q_, d_) for q_, d_ in slabs if q_ and qty >= q_]
     discount_pct = Decimal(max(satisfied, key=lambda t: t[0])[1]) if satisfied else Decimal('0')
 

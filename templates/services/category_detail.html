@@ -27,48 +27,44 @@
 .cat-bc .sep { color: #d1d5db; margin: 0 6px; }
 .cat-bc .cur { color: #374151; font-weight: 600; }
 
-/* ── Hero (full-bleed, matches book printing product hero) ── */
+/* ── Hero (full-bleed, same soft pink-white as the book printing product hero) ── */
 .cat-hero {
     position: relative;
-    background: linear-gradient(135deg, #7000fe 0%, #09052F 100%);
+    background: radial-gradient(ellipse at center, #f9eaf1 0%, #fdf7fb 100%);
     padding: 130px 0 70px;
     text-align: center;
     overflow: hidden;
 }
-/* Breadcrumb sitting inside the dark hero */
+/* Breadcrumb sitting inside the light hero */
 .cat-bc-hero { padding: 0 0 22px; text-align: center; font-size: .82rem; }
-.cat-bc-hero a { color: rgba(255,255,255,.75); }
-.cat-bc-hero a:hover { color: #fff; }
-.cat-bc-hero .sep { color: rgba(255,255,255,.45); }
-.cat-bc-hero .cur { color: #fff; font-weight: 600; }
-.cat-hero::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.06'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3Ccircle cx='10' cy='10' r='4'/%3E%3Ccircle cx='50' cy='10' r='4'/%3E%3Ccircle cx='10' cy='50' r='4'/%3E%3Ccircle cx='50' cy='50' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-}
+.cat-bc-hero a { color: #9ca3af; }
+.cat-bc-hero a:hover { color: var(--theme, #7000fe); }
+.cat-bc-hero .sep { color: #d1d5db; }
+.cat-bc-hero .cur { color: #374151; font-weight: 600; }
+.cat-hero::before { content: none; }
 .cat-hero-inner { position: relative; z-index: 2; }
 .cat-hero-icon {
     width: 92px; height: 92px; margin: 0 auto 20px;
-    background: rgba(255,255,255,.14);
-    border: 1px solid rgba(255,255,255,.22);
+    background: linear-gradient(135deg, #7000fe 0%, #5b0fd6 100%);
+    border: none;
     border-radius: 24px;
     display: flex; align-items: center; justify-content: center;
-    backdrop-filter: blur(8px);
+    box-shadow: 0 10px 26px rgba(112,0,254,.25);
 }
 .cat-hero-icon i { font-size: 2.4rem; color: #fff; }
 .cat-hero h1 {
-    color: #fff; font-weight: 800; font-size: clamp(2rem, 4vw, 3rem);
-    margin: 0 0 14px; text-shadow: 0 4px 12px rgba(0,0,0,.18);
+    color: #1f2937; font-weight: 800; font-size: clamp(2rem, 4vw, 3rem);
+    margin: 0 0 14px;
 }
 .cat-hero p {
-    color: rgba(255,255,255,.9); font-size: 1.05rem; line-height: 1.6;
+    color: #4b5563; font-size: 1.05rem; line-height: 1.6;
     max-width: 640px; margin: 0 auto 30px;
 }
 .cat-stats {
     display: flex; flex-wrap: wrap; justify-content: center; gap: 40px;
 }
-.cat-stat .num { display: block; font-size: 2.1rem; font-weight: 800; color: #ffd15c; line-height: 1; }
-.cat-stat .lbl { font-size: .82rem; color: rgba(255,255,255,.8); margin-top: 6px; }
+.cat-stat .num { display: block; font-size: 2.1rem; font-weight: 800; color: #7000fe; line-height: 1; }
+.cat-stat .lbl { font-size: .82rem; color: #6b7280; margin-top: 6px; }
 
 /* ── Shop cards: square images (matches home page) ── */
 .shop-items .shop-image {
@@ -128,24 +124,13 @@
     <!-- ═══ Hero (full-bleed) ═══ -->
     <section class="cat-hero">
         <div class="container">
-            <nav class="cat-bc cat-bc-hero">
-                <a href="{% url 'core:home' %}">Home</a>
-                <span class="sep">›</span>
-                <a href="{% url 'services:home' %}">Services</a>
-                <span class="sep">›</span>
-                <span class="cur">{{ category.name }}</span>
-            </nav>
             <div class="cat-hero-inner">
-                <div class="cat-hero-icon">
-                    <i class="{{ category.icon|default:'fas fa-print' }}"></i>
-                </div>
+                <br>
+                <br>
+               
                 <h1>{{ category.name }}</h1>
                 <p>{{ category.description|default:"Professional printing solutions tailored for your business needs. Quality guaranteed, delivered fast." }}</p>
                 <div class="cat-stats">
-                    <div class="cat-stat"><span class="num">{{ page_obj.paginator.count }}</span><div class="lbl">Products</div></div>
-                    <div class="cat-stat"><span class="num">100%</span><div class="lbl">Quality Guarantee</div></div>
-                    <div class="cat-stat"><span class="num">24h</span><div class="lbl">Fast Response</div></div>
-                    <div class="cat-stat"><span class="num">5★</span><div class="lbl">Customer Rating</div></div>
                 </div>
             </div>
         </div>
@@ -220,31 +205,4 @@
 
 </div><!-- /cat-page -->
 
-<!-- ═══ Related Categories ═══ -->
-{% if service_categories %}
-<section class="cat-related">
-    <div class="container">
-        <div class="section-title text-center">
-            <div class="sub-title"><span>Explore More</span></div>
-            <h2 class="split-text right">Other Printing Services</h2>
-        </div>
-        <div class="row g-4 mt-2">
-            {% for rc in service_categories %}
-            <div class="col-lg-3 col-md-6">
-                <a href="{% url 'services:category' rc.slug %}" class="rel-card">
-                    <div class="rel-head">
-                        <div class="rel-icon"><i class="{{ rc.icon|default:'fas fa-print' }}"></i></div>
-                        <h3>{{ rc.name }}</h3>
-                    </div>
-                    <div class="rel-body">
-                        <span class="rel-count">{{ rc.static_products.count }} products</span>
-                        <i class="fas fa-arrow-right rel-arrow"></i>
-                    </div>
-                </a>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-{% endif %}
 {% endblock %}

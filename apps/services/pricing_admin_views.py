@@ -175,6 +175,8 @@ BOOK_PRICE_GROUPS = [
         ('bulk_disc_1', 'Tier 1 — discount (%)'),
         ('bulk_qty_2', 'Tier 2 — minimum quantity'),
         ('bulk_disc_2', 'Tier 2 — discount (%)'),
+        ('bulk_qty_3', 'Tier 3 — minimum quantity'),
+        ('bulk_disc_3', 'Tier 3 — discount (%)'),
     ]),
 ]
 

@@ -41,9 +41,9 @@
     .header-1.style-3 .header-main .main-menu ul li:hover > a { color: var(--theme, #7000fe) !important; }
     .header-1.style-3 .mean-toggle-btn .bar { background: var(--header, #1f2937); }
 
-    /* ── Hero: cream background, dark text for contrast ── */
+    /* ── Hero: same soft pink-white as the About page hero banner ── */
     .bp-hero {
-        background: linear-gradient(135deg, #fdf6e9 0%, #f5ecd9 55%, #efe2c8 100%);
+        background: radial-gradient(ellipse at center, #f9eaf1 0%, #fdf7fb 100%);
     }
     .bp-hero::before { background: transparent; }
     .bp-hero .pd-badge {
@@ -56,10 +56,18 @@
     .bp-hero .pd-image-wrap {
         background: transparent;
         min-height: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 70px 0 40px;
     }
     .bp-hero .pd-image-wrap img {
         border-radius: 16px;
-        max-width: 460px;
+        max-width: 420px;
+        max-height: 420px;
+        width: 100%;
+        height: auto;
+        object-fit: contain;
         margin: 0 auto;
         box-shadow: 0 12px 32px rgba(31, 41, 55, .14);
     }
@@ -1006,6 +1014,44 @@
         background: #ffffff !important;
     }
 
+    /* Bulk Discount Levels table (next to the quantity input) */
+    .quantity-with-bulk {
+        display: grid;
+        grid-template-columns: minmax(240px, 400px) 1fr;
+        gap: 2.5rem;
+        align-items: start;
+    }
+    @media (max-width: 900px) {
+        .quantity-with-bulk { grid-template-columns: 1fr; gap: 1.75rem; }
+    }
+    .bulk-discount-box { width: 100%; }
+    .bulk-discount-title {
+        font-size: .95rem; font-weight: 800; letter-spacing: .03em;
+        text-transform: uppercase; color: #1a1a1a; text-align: center;
+        margin-bottom: 14px;
+    }
+    .bulk-table {
+        width: 100%; border-collapse: collapse; border: 1px solid #e5e7eb;
+        border-radius: 8px; overflow: hidden;
+    }
+    .bulk-table th {
+        background: #f8fafc; color: #1a1a1a; font-size: .85rem; font-weight: 800;
+        text-align: center; padding: 12px 16px; border-bottom: 1px solid #e5e7eb;
+    }
+    .bulk-table td {
+        text-align: center; padding: 14px 16px; font-size: .92rem; font-weight: 600;
+        color: #1f2937; border-bottom: 1px solid #f0f0f0;
+    }
+    .bulk-table tr:last-child td { border-bottom: none; }
+    .bulk-discount-badge {
+        display: inline-flex; align-items: center; gap: 6px;
+        background: rgba(112, 0, 254, .10); color: #5b0fd6;
+        border-radius: 20px; padding: 5px 14px; font-size: .82rem; font-weight: 700;
+    }
+    .bulk-discount-note {
+        font-size: .78rem; color: #9ca3af; font-style: italic; margin: 10px 2px 0;
+    }
+
     /* Design checkbox options styling */
     .design-checkbox-option:hover {
         border-color: #3b82f6 !important;
@@ -1638,17 +1684,46 @@
             </p>
 
             <div class="quantity-input-container">
-                <div class="page-input-group" style="max-width: 400px;">
-                    <label for="quantity-input" class="field-label">Number of Books</label>
-                    <div style="display: flex; align-items: center; gap: 1rem;">
-                        <input type="number" id="quantity-input" name="quantity" class="page-input"
-                            value="" min="{{ min_quantity|default:25 }}"
-                            placeholder="Minimum 25 books" required style="flex: 1;">
-                        <span class="text-sm text-gray-600 font-medium">books</span>
+                <div class="quantity-with-bulk">
+                    <div class="page-input-group">
+                        <label for="quantity-input" class="field-label">Number of Books (Minimum {{ min_quantity|default:25 }})</label>
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <input type="number" id="quantity-input" name="quantity" class="page-input"
+                                value="" min="{{ min_quantity|default:25 }}"
+                                placeholder="Minimum {{ min_quantity|default:25 }} books" required style="flex: 1;">
+                            <span class="text-sm text-gray-600 font-medium">books</span>
+                        </div>
+                        <div class="text-xs text-gray-500 mt-2">
+                            <i class="fas fa-info-circle text-blue-500"></i>
+                            Volume discounts: {{ book_pricing.bulk_disc_1|floatformat:"-2"|default:"10" }}% off for {{ book_pricing.bulk_qty_1|default:"200" }}+ books, {{ book_pricing.bulk_disc_2|floatformat:"-2"|default:"12" }}% off for {{ book_pricing.bulk_qty_2|default:"250" }}+ books, {{ book_pricing.bulk_disc_3|floatformat:"-2"|default:"14" }}% off for {{ book_pricing.bulk_qty_3|default:"300" }}+ books
+                        </div>
                     </div>
-                    <div class="text-xs text-gray-500 mt-2">
-                        <i class="fas fa-info-circle text-blue-500"></i>
-                        Volume discounts: {{ book_pricing.bulk_disc_1|floatformat:"-2"|default:"5" }}% off for {{ book_pricing.bulk_qty_1|default:"50" }}+ books, {{ book_pricing.bulk_disc_2|floatformat:"-2"|default:"10" }}% off for {{ book_pricing.bulk_qty_2|default:"100" }}+ books
+
+                    <div class="bulk-discount-box">
+                        <div class="bulk-discount-title">Bulk Discount Levels</div>
+                        <table class="bulk-table">
+                            <thead>
+                                <tr>
+                                    <th>Book Quantity</th>
+                                    <th>Discounted Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{ book_pricing.bulk_qty_1|default:200 }}-{{ book_pricing.bulk_qty_2|default:250|add:"-1" }} copies</td>
+                                    <td><span class="bulk-discount-badge"><i class="fas fa-tag"></i> {{ book_pricing.bulk_disc_1|floatformat:"-2"|default:"10" }}% OFF</span></td>
+                                </tr>
+                                <tr>
+                                    <td>{{ book_pricing.bulk_qty_2|default:250 }}-{{ book_pricing.bulk_qty_3|default:300|add:"-1" }} copies</td>
+                                    <td><span class="bulk-discount-badge"><i class="fas fa-tag"></i> {{ book_pricing.bulk_disc_2|floatformat:"-2"|default:"12" }}% OFF</span></td>
+                                </tr>
+                                <tr>
+                                    <td>{{ book_pricing.bulk_qty_3|default:300 }}+ copies</td>
+                                    <td><span class="bulk-discount-badge"><i class="fas fa-tag"></i> {{ book_pricing.bulk_disc_3|floatformat:"-2"|default:"14" }}% OFF</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="bulk-discount-note">*Discounts are applied automatically in your quote.</p>
                     </div>
                 </div>
             </div>
@@ -1722,7 +1797,7 @@
                         </div>
                         <div>
                             <div class="faq-q-text">What is the minimum order quantity?</div>
-                            <p class="faq-a-text">Minimum {{ min_quantity|default:25 }} books per order. Bulk discounts apply automatically — {{ book_pricing.bulk_disc_1|floatformat:"-2"|default:"5" }}% off {{ book_pricing.bulk_qty_1|default:"50" }}+ books, {{ book_pricing.bulk_disc_2|floatformat:"-2"|default:"10" }}% off {{ book_pricing.bulk_qty_2|default:"100" }}+ books.</p>
+                            <p class="faq-a-text">Minimum {{ min_quantity|default:25 }} books per order. Bulk discounts apply automatically — {{ book_pricing.bulk_disc_1|floatformat:"-2"|default:"10" }}% off {{ book_pricing.bulk_qty_1|default:"200" }}+ books, {{ book_pricing.bulk_disc_2|floatformat:"-2"|default:"12" }}% off {{ book_pricing.bulk_qty_2|default:"250" }}+ books, {{ book_pricing.bulk_disc_3|floatformat:"-2"|default:"14" }}% off {{ book_pricing.bulk_qty_3|default:"300" }}+ books.</p>
                         </div>
                         <div>
                             <div class="faq-q-text">Can I get an ISBN for my book?</div>
@@ -2330,11 +2405,14 @@
                     document.getElementById('cost-per-unit').textContent = `₹ ${costPerBook.toFixed(2)}`;
                     const subtotal = (costPerBook * quantity) + designCost + isbnCost;
 
-                    if (quantity >= {{ book_pricing.bulk_qty_2|default:100 }}) {
-                        discount = subtotal * {{ book_pricing.bulk_disc_2|default:10 }} / 100; // tier 2 discount (editable in Pricing Manager)
+                    if (quantity >= {{ book_pricing.bulk_qty_3|default:300 }}) {
+                        discount = subtotal * {{ book_pricing.bulk_disc_3|default:14 }} / 100; // tier 3 discount (editable in Pricing Manager)
                         discountRow.style.display = 'flex';
-                    } else if (quantity >= {{ book_pricing.bulk_qty_1|default:50 }}) {
-                        discount = subtotal * {{ book_pricing.bulk_disc_1|default:5 }} / 100; // tier 1 discount (editable in Pricing Manager)
+                    } else if (quantity >= {{ book_pricing.bulk_qty_2|default:250 }}) {
+                        discount = subtotal * {{ book_pricing.bulk_disc_2|default:12 }} / 100; // tier 2 discount (editable in Pricing Manager)
+                        discountRow.style.display = 'flex';
+                    } else if (quantity >= {{ book_pricing.bulk_qty_1|default:200 }}) {
+                        discount = subtotal * {{ book_pricing.bulk_disc_1|default:10 }} / 100; // tier 1 discount (editable in Pricing Manager)
                         discountRow.style.display = 'flex';
                     } else if (discountRow) {
                         discountRow.style.display = 'none';

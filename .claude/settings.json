@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(awk '{ printf \"%d: %d chars\\\\n\", NR, length\\($0\\) }' index.html)",
+      "Bash(sort -t: -k2 -rn)",
+      "Bash(python drive.py)",
+      "Bash(python -c ' *)",
+      "Bash(python manage.py migrate services)",
+      "Bash(python manage.py runserver 8077 --noreload)",
+      "Bash(python price.py)",
+      "Bash(PYTHONIOENCODING=utf-8 python price.py)",
+      "PowerShell(Get-Process python -ErrorAction SilentlyContinue)",
+      "PowerShell(Stop-Process -Force)",
+      "PowerShell(\"dev server stopped\")",
+      "PowerShell(\"stopped\")"
+    ]
+  }
+}

@@ -810,6 +810,43 @@ class QuantityTier(models.Model):
         return f"{self.product.name}: {self.min_quantity}+ → {self.discount_percent}% off"
 
 
+def default_page_price_matrix():
+    """Per-page print price for every Interior Colour × Book Size × Paper combo.
+
+    Sourced from the supplied ``book.xlsx`` price sheet: each value is that
+    sheet's printing cost (col E) plus paper cost (col F) for the combination.
+    The A5 rows are roughly half the larger-format rate, so this matrix
+    replaces the old "flat per-colour rate + flat size/paper add-on" approach
+    with the exact figure for each combination. Multiplied by the page count.
+    """
+    return {
+        'bw_premium': {
+            'a4':        {'75gsm': 1.40, '100gsm': 1.68, '100gsm_art': 2.13, '130gsm_art': 2.47},
+            'letter':    {'75gsm': 1.40, '100gsm': 1.68, '100gsm_art': 2.13, '130gsm_art': 2.47},
+            'executive': {'75gsm': 1.40, '100gsm': 1.68, '100gsm_art': 2.13, '130gsm_art': 2.47},
+            'a5':        {'75gsm': 0.80, '100gsm': 0.97, '100gsm_art': 1.17, '130gsm_art': 1.34},
+        },
+        'bw_standard': {
+            'a4':        {'75gsm': 1.20, '100gsm': 1.48, '100gsm_art': 1.93, '130gsm_art': 2.27},
+            'letter':    {'75gsm': 1.20, '100gsm': 1.48, '100gsm_art': 1.93, '130gsm_art': 2.27},
+            'executive': {'75gsm': 1.20, '100gsm': 1.48, '100gsm_art': 1.93, '130gsm_art': 2.27},
+            'a5':        {'75gsm': 0.65, '100gsm': 0.82, '100gsm_art': 0.97, '130gsm_art': 1.19},
+        },
+        'color_premium': {
+            'a4':        {'75gsm': 2.80, '100gsm': 3.03, '100gsm_art': 3.23, '130gsm_art': 3.47},
+            'letter':    {'75gsm': 2.80, '100gsm': 3.03, '100gsm_art': 3.23, '130gsm_art': 3.47},
+            'executive': {'75gsm': 2.80, '100gsm': 3.03, '100gsm_art': 3.23, '130gsm_art': 3.47},
+            'a5':        {'75gsm': 1.40, '100gsm': 1.52, '100gsm_art': 1.67, '130gsm_art': 1.84},
+        },
+        'color_standard': {
+            'a4':        {'75gsm': 2.60, '100gsm': 2.83, '100gsm_art': 3.03, '130gsm_art': 3.32},
+            'letter':    {'75gsm': 2.60, '100gsm': 2.83, '100gsm_art': 3.03, '130gsm_art': 3.32},
+            'executive': {'75gsm': 2.60, '100gsm': 2.83, '100gsm_art': 3.03, '130gsm_art': 3.32},
+            'a5':        {'75gsm': 1.30, '100gsm': 1.42, '100gsm_art': 1.52, '130gsm_art': 1.67},
+        },
+    }
+
+
 class BookPrintingPricing(models.Model):
     """Single editable price sheet for all Book Printing products.
 
@@ -818,7 +855,14 @@ class BookPrintingPricing(models.Model):
     template + view; storing them here lets a non-technical admin edit them
     from the Pricing Manager. There is only ever one row (a singleton).
     """
-    # Interior colour — charged PER PAGE
+    # Per-page print price for every Interior Colour × Book Size × Paper combo.
+    # This matrix (from book.xlsx) is the live per-page base cost; it supersedes
+    # the flat per-colour rate + flat size/paper add-on fields kept below.
+    page_price_matrix = models.JSONField('Per-page price matrix', default=default_page_price_matrix)
+
+    # ── Legacy per-page / add-on fields ──
+    # No longer used by the live calculator (the matrix above replaced them),
+    # retained so historical data and any other callers keep working.
     color_bw_standard_per_page = models.DecimalField('B&W Standard (per page)', max_digits=8, decimal_places=2, default=Decimal('1.50'))
     color_bw_premium_per_page = models.DecimalField('B&W Premium (per page)', max_digits=8, decimal_places=2, default=Decimal('2.00'))
     color_standard_per_page = models.DecimalField('Colour Standard (per page)', max_digits=8, decimal_places=2, default=Decimal('6.00'))
@@ -826,13 +870,13 @@ class BookPrintingPricing(models.Model):
     combine_bw_per_page = models.DecimalField('Combined: B&W pages (per page)', max_digits=8, decimal_places=2, default=Decimal('2.00'))
     combine_color_per_page = models.DecimalField('Combined: Colour pages (per page)', max_digits=8, decimal_places=2, default=Decimal('6.00'))
 
-    # Book size — flat add-on per book
+    # Book size — legacy flat add-on per book (superseded by the matrix)
     size_a4 = models.DecimalField('A4', max_digits=8, decimal_places=2, default=Decimal('0'))
     size_letter = models.DecimalField('Letter', max_digits=8, decimal_places=2, default=Decimal('25'))
     size_executive = models.DecimalField('Executive', max_digits=8, decimal_places=2, default=Decimal('50'))
     size_a5 = models.DecimalField('A5', max_digits=8, decimal_places=2, default=Decimal('-25'))
 
-    # Paper type — flat add-on per book
+    # Paper type — legacy flat add-on per book (superseded by the matrix)
     paper_75gsm = models.DecimalField('75 GSM', max_digits=8, decimal_places=2, default=Decimal('0'))
     paper_100gsm = models.DecimalField('100 GSM', max_digits=8, decimal_places=2, default=Decimal('50'))
     paper_100gsm_art = models.DecimalField('100 GSM Art', max_digits=8, decimal_places=2, default=Decimal('100'))

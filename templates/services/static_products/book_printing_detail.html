@@ -33,1277 +33,870 @@
 
 {% block extra_css %}
 {{ block.super }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
 <style>
-    /* ── Nav: this page has a light hero + white body, so make the style-3
-       white-text nav a solid white bar with dark text ── */
-    .header-section-3 { background: #fff; box-shadow: 0 2px 12px rgba(0,0,0,.08); }
-    .header-1.style-3 .header-main .main-menu ul li > a { color: var(--header, #1f2937) !important; }
-    .header-1.style-3 .header-main .main-menu ul li:hover > a { color: var(--theme, #7000fe) !important; }
-    .header-1.style-3 .mean-toggle-btn .bar { background: var(--header, #1f2937); }
+    /* ═══════════════════════════════════════════════════════════════
+       Book Printing — "The Bindery" theme
+       Warm paper + clay palette, serif step headings, and a live 3D
+       book preview in the sticky sidebar that reacts to every choice.
+       All original markup, ids, names and JS behaviour are unchanged.
+       ═══════════════════════════════════════════════════════════════ */
+    :root {
+        --paper: #F5F1E7;
+        --paper2: #EFE9DA;
+        --card: #FFFFFF;
+        --bink: #2C2823;
+        --bink2: #5A544A;
+        --bmuted: #938B7C;
+        --bline: #E6DECF;
+        --bline2: #D8CEBB;
+        --clay: #BE6B47;
+        --clay-d: #A55736;
+        --clay-soft: #F3E1D5;
+        --sage: #7E9270;
+        --sage-soft: #E4EADD;
+    }
 
-    /* ── Hero: same soft pink-white as the About page hero banner ── */
+    /* ── Nav: white bar with dark text over the light paper page ── */
+    .header-section-3 { background: #fff; box-shadow: 0 2px 12px rgba(44, 40, 35, .08); }
+    .header-1.style-3 .header-main .main-menu ul li > a { color: var(--bink) !important; }
+    .header-1.style-3 .header-main .main-menu ul li:hover > a { color: var(--clay) !important; }
+    .header-1.style-3 .mean-toggle-btn .bar { background: var(--bink); }
+
+    /* ── Page canvas ── */
+    .pd-body {
+        background: var(--paper);
+        padding: 0 0 90px;
+        font-family: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+        color: var(--bink);
+    }
+    .pd-body ::selection { background: var(--clay-soft); }
+
+    /* ── Hero ──
+       The hero renders OUTSIDE .pd-body, so it does not inherit the theme
+       body font. Set the theme families explicitly here (with !important to
+       beat the site-wide default heading/body fonts) so the hero matches the
+       rest of the page: Newsreader serif title, Hanken Grotesk body. */
     .bp-hero {
-        background: radial-gradient(ellipse at center, #f9eaf1 0%, #fdf7fb 100%);
+        background: var(--paper);
+        border-bottom: 1px solid var(--bline);
+        font-family: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
     }
     .bp-hero::before { background: transparent; }
     .bp-hero .pd-badge {
-        background: rgba(112, 0, 254, .10);
-        border-color: rgba(112, 0, 254, .28);
-        color: #5b0fd6;
+        display: inline-flex; align-items: center; gap: 8px;
+        background: var(--card);
+        border: 1px solid var(--bline2);
+        border-radius: 100px;
+        padding: 8px 14px;
+        color: var(--bink2);
+        font-family: 'Hanken Grotesk', sans-serif;
+        font-size: .72rem; font-weight: 700;
+        letter-spacing: .1em; text-transform: uppercase;
     }
-    .bp-hero h1 { color: #1f2937; }
-    .bp-hero p { color: #4b5563; }
+    .bp-hero .pd-badge i { color: var(--clay); }
+    .bp-hero h1 {
+        font-family: 'Newsreader', serif !important;
+        font-weight: 500;
+        font-size: clamp(2.4rem, 4.6vw, 3.4rem);
+        letter-spacing: -.02em;
+        line-height: 1.03;
+        color: var(--bink);
+        margin-top: 16px;
+    }
+    .bp-hero p {
+        font-family: 'Hanken Grotesk', sans-serif !important;
+        color: var(--bink2);
+        font-size: 1.05rem;
+        font-weight: 400;
+        line-height: 1.6;
+        max-width: 48ch;
+        margin-top: 16px;
+    }
     .bp-hero .pd-image-wrap {
         background: transparent;
         min-height: auto;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 70px 0 40px;
+        display: flex; align-items: center; justify-content: center;
+        padding: 40px 0 20px;
     }
     .bp-hero .pd-image-wrap img {
-        border-radius: 16px;
-        max-width: 420px;
-        max-height: 420px;
-        width: 100%;
-        height: auto;
-        object-fit: contain;
-        margin: 0 auto;
-        box-shadow: 0 12px 32px rgba(31, 41, 55, .14);
+        border-radius: 14px;
+        max-width: 420px; max-height: 420px;
+        width: 100%; height: auto;
+        object-fit: contain; margin: 0 auto;
+        box-shadow: 0 18px 44px rgba(44, 40, 35, .18);
     }
-    .bp-hero .pd-image-placeholder { color: rgba(31, 41, 55, .5); }
+    .bp-hero .pd-image-placeholder { color: var(--bmuted); }
 
-    /* Lulu.com Inspired Book Printing Styles */
+    /* ── Options column ── */
     .book-options-container {
-        background: #ffffff;
-        padding: 2rem 1.5rem;
-        box-shadow: none;
-        border: none;
-        margin-top: 0;
-        margin-left: 0;
-        width: 100%;
-        max-width: 1600px;
-        flex: 1;
-        min-width: 0;
+        background: transparent;
+        padding: 8px 0 0;
+        box-shadow: none; border: none;
+        margin: 0; width: 100%; max-width: none;
     }
 
-    /* Give the options column much more of the screen width, and the quote
-       sidebar less, so the 5-across option grids can be wide and short
-       instead of narrow and tall. Scoped to this page only. */
+    /* Wide options column, narrower sticky ticket */
     @media (min-width: 1200px) {
-        .pd-body .row.g-5 > .col-lg-8 {
-            flex: 0 0 auto;
-            width: 71%;
-            max-width: 71%;
-        }
-        .pd-body .row.g-5 > .col-lg-4 {
-            flex: 0 0 auto;
-            width: 29%;
-            max-width: 29%;
-        }
+        .pd-body .row.g-5 > .col-lg-8 { flex: 0 0 auto; width: 68%; max-width: 68%; }
+        .pd-body .row.g-5 > .col-lg-4 { flex: 0 0 auto; width: 32%; max-width: 32%; }
     }
 
     .book-options-header {
-        color: #1a1a1a;
-        padding: 0 0 2rem 0;
-        border-radius: 0;
-        margin-bottom: 3rem;
+        padding: 0 0 26px;
+        margin-bottom: 8px;
+        border-bottom: 1px solid var(--bline);
         text-align: left;
-        border-bottom: 2px solid #e5e7eb;
-    }
-
-    .book-options-title {
-        font-size: 2.25rem;
-        font-weight: 700;
-        margin-bottom: 0.75rem;
-        color: #1a1a1a;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    }
-
-    .book-options-subtitle {
-        opacity: 0.8;
-        font-size: 1.125rem;
-        color: #666666;
-        font-weight: 400;
-        line-height: 1.6;
-    }
-
-    /* Form Sections - Lulu.com Style */
-    .form-section {
-        margin-bottom: 2rem;
-        padding: 1.5rem 0;
+        color: var(--bink);
         border-radius: 0;
-        border: none;
-        border-bottom: 1px solid #e5e7eb;
-        transition: all 0.3s ease;
-        position: relative;
-        background: transparent;
-        box-shadow: none;
+    }
+    .book-options-title {
+        font-family: 'Newsreader', serif;
+        font-size: 2.5rem;
+        font-weight: 500;
+        letter-spacing: -.02em;
+        color: var(--bink);
+        margin-bottom: .5rem;
+    }
+    .book-options-subtitle {
+        font-size: .98rem;
+        color: var(--bink2);
+        line-height: 1.6;
+        max-width: 56ch;
+        margin: 0;
     }
 
-    .form-section.enabled {
-        border-bottom: 1px solid #e5e7eb;
+    /* ── Steps ── */
+    .form-section {
+        padding: 30px 0;
+        border-bottom: 1px solid var(--bline);
         background: transparent;
-        box-shadow: none;
+        border-radius: 0;
+        transition: opacity .25s ease;
     }
-
-    .form-section.disabled {
-        opacity: 0.5;
-        pointer-events: none;
-        background: transparent;
-        border-bottom: 1px solid #e5e7eb;
-    }
-
-    .form-section.completed {
-        border-bottom: 1px solid #e5e7eb;
-        background: transparent;
-        box-shadow: none;
-    }
+    .form-section + .form-section { margin-top: 0; }
+    .form-section:last-child { border-bottom: none; }
+    .form-section.disabled { opacity: .38; pointer-events: none; }
+    .form-section.enabled,
+    .form-section.completed { opacity: 1; pointer-events: auto; }
 
     .section-header {
         display: flex;
-        align-items: flex-start;
-        gap: 1.25rem;
-        margin-bottom: 1.25rem;
-        padding-bottom: 0;
+        align-items: baseline;
+        gap: 14px;
+        margin-bottom: 6px;
     }
-
     .section-number {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        background: #f3f4f6;
-        color: #9ca3af;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 600;
-        font-size: 0.95rem;
-        flex-shrink: 0;
-        margin-top: 0;
-        border: none;
-        box-shadow: none;
+        font-family: 'Newsreader', serif;
+        font-size: 1rem;
+        font-weight: 500;
+        color: var(--bmuted);
+        width: 30px; flex-shrink: 0;
+        font-variant-numeric: tabular-nums;
+        background: transparent;
+        border: none; border-radius: 0;
+        height: auto; line-height: 1;
+        display: block; text-align: left;
     }
-
-    .form-section.enabled .section-number {
-        background: #3b82f6;
-        color: white;
-        border: none;
-        box-shadow: none;
-    }
-
-    .form-section.completed .section-number {
-        background: #10b981;
-        color: white;
-        border: none;
-        box-shadow: none;
-    }
-
+    .form-section.enabled .section-number { color: var(--clay); }
+    .form-section.completed .section-number { color: var(--sage); }
     .section-title {
-        font-size: 1.625rem;
-        font-weight: 700;
-        color: #1a1a1a;
+        font-family: 'Newsreader', serif;
+        font-size: 1.65rem;
+        font-weight: 500;
+        letter-spacing: -.01em;
+        color: var(--bink);
         margin: 0;
-        line-height: 1.3;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
-
+    .section-subtitle {
+        font-size: .82rem;
+        color: var(--clay);
+        font-weight: 600;
+        margin: 4px 0 0;
+    }
     .section-description {
-        color: #6b7280;
-        margin-bottom: 1.5rem;
-        line-height: 1.6;
-        font-size: 0.9375rem;
-        margin-top: 0.5rem;
+        color: var(--bink2);
+        font-size: .9rem;
+        line-height: 1.62;
+        margin: 0 0 20px 44px;
+        max-width: 62ch;
     }
-
-    /* Interior Color Options - image on top, radio + label below (same pattern as every other
-       option grid on this page). Uses CSS Grid named areas so existing HTML/JS is untouched:
-       whichever child gets grid-area:img/radio/title is placed there regardless of DOM order. */
-    .interior-color-options {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        gap: 0.65rem;
-    }
-
-    .color-option {
-        display: grid;
-        grid-template-columns: auto 1fr;
-        grid-template-areas:
-            "img img"
-            "radio title";
-        column-gap: 6px;
-        row-gap: 8px;
-        border: 1.5px solid #e5e7eb;
-        border-radius: 8px;
-        padding: 8px 8px 10px;
-        cursor: pointer;
-        transition: border-color 0.2s ease, box-shadow 0.2s ease;
-        position: relative;
-        overflow: hidden;
-        background: #ffffff;
-    }
-
-    .color-option:hover {
-        border-color: #3b82f6;
-        box-shadow: 0 4px 14px rgba(59, 130, 246, 0.15);
-    }
-
-    .color-option.selected,
-    .color-option:has(input:checked) {
-        border-color: #3b82f6;
-        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.35);
-    }
-
-    .color-option input[type="radio"] {
-        grid-area: radio;
-        display: block;
-        width: 17px;
-        height: 17px;
-        margin: 0;
-        align-self: center;
-        cursor: pointer;
-        accent-color: #3b82f6;
-    }
-
-    /* Image, contained at the top of the card (not edge-to-edge) */
-    .option-icon {
-        grid-area: img;
-        width: 100%;
-        aspect-ratio: 4 / 3;
-        margin: 0;
-        background: #f3f4f6;
-        border-radius: 6px;
-        overflow: hidden;
-    }
-
-    .option-icon img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.3s ease;
-    }
-
-    .color-option:hover .option-icon img {
-        transform: scale(1.04);
-    }
-
-    .option-icon svg {
-        transition: none;
-        width: 48px;
-        height: 48px;
-    }
-
-    /* Name as plain text next to the radio, below the image */
-    .color-option-title {
-        grid-area: title;
-        align-self: center;
-        margin: 0;
-        font-weight: 600;
-        color: #1f2937;
-        font-size: 0.78rem;
-        line-height: 1.25;
-    }
-
-    .premium-badge {
-        position: absolute;
-        top: 8px;
-        right: 8px;
-        z-index: 2;
-        background: #f59e0b;
-        color: white;
-        padding: 2px 6px;
-        border-radius: 4px;
-        font-size: 0.65rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.025em;
-    }
-
-    /* Book Size and Page Count - Lulu.com Style */
-    .size-page-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 3rem;
-    }
-
-    .book-size-dropdown {
-        width: 100%;
-    }
-
-    .book-size-select {
-        width: 100%;
-        padding: 12px 16px;
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        font-size: 1rem;
-        font-weight: 400;
-        background: #ffffff;
-        color: #1a1a1a;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        appearance: none;
-        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
-        background-position: right 12px center;
-        background-repeat: no-repeat;
-        background-size: 16px;
-        padding-right: 40px;
-    }
-
-    .book-size-select:focus {
-        outline: none;
-        border-color: #3b82f6;
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-    }
-
-    .book-size-select:hover {
-        border-color: #9ca3af;
-    }
-
-    .page-count-section {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    .page-input-group {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-
-    .page-input-group label {
-        font-size: 0.875rem;
-        font-weight: 500;
-        color: #374151;
-    }
-
-    .page-input {
-        padding: 12px 16px;
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        font-size: 1rem;
-        font-weight: 400;
-        text-align: left;
-        background: #ffffff !important;
-        color: #1f2937 !important;
-    }
-
-    .page-input:focus {
-        outline: none;
-        border-color: #3b82f6;
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-    }
-
-    .conditional-page-inputs {
-        display: none;
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-    }
-
-    .conditional-page-inputs.show {
-        display: grid;
-    }
-
-    /* Paper Type Options - same image-on-top / radio-below pattern as Interior Color */
-    .paper-grid {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        gap: 0.65rem;
-    }
-
-    .paper-option {
-        display: grid;
-        grid-template-columns: auto 1fr;
-        grid-template-areas:
-            "img img"
-            "radio title";
-        column-gap: 6px;
-        row-gap: 8px;
-        border: 1.5px solid #e5e7eb;
-        border-radius: 8px;
-        padding: 8px 8px 10px;
-        cursor: pointer;
-        transition: border-color 0.2s ease, box-shadow 0.2s ease;
-        position: relative;
-        overflow: hidden;
-        background: #ffffff;
-    }
-
-    .paper-option:hover {
-        border-color: #3b82f6;
-        box-shadow: 0 4px 14px rgba(59, 130, 246, 0.15);
-    }
-
-    .paper-option.selected,
-    .paper-option:has(input:checked) {
-        border-color: #3b82f6;
-        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.35);
-    }
-
-    .paper-option input[type="radio"] {
-        grid-area: radio;
-        display: block;
-        width: 17px;
-        height: 17px;
-        margin: 0;
-        align-self: center;
-        cursor: pointer;
-        accent-color: #3b82f6;
-    }
-
-    .paper-icon {
-        grid-area: img;
-        width: 100%;
-        aspect-ratio: 4 / 3;
-        margin: 0;
-        background: #f3f4f6;
-        border-radius: 6px;
-        overflow: hidden;
-    }
-
-    .paper-icon img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.3s ease;
-    }
-
-    .paper-option:hover .paper-icon img {
-        transform: scale(1.04);
-    }
-
-    .paper-icon svg {
-        transition: none;
-        width: 48px;
-        height: 48px;
-    }
-
-    .paper-option.disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-        background: #f9fafb;
-    }
-
-    .paper-option.disabled::before {
-        content: 'Not Available';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 2;
-        background: #ef4444;
-        color: white;
-        padding: 4px 8px;
-        border-radius: 4px;
-        font-size: 0.7rem;
-        font-weight: 500;
-        white-space: nowrap;
-    }
-
-    /* Name as plain text next to the radio, below the image */
-    .paper-weight {
-        grid-area: title;
-        align-self: center;
-        margin: 0;
-        font-size: 0.78rem;
-        font-weight: 600;
-        color: #1f2937;
-        line-height: 1.25;
-    }
-
-    /* Binding Type Options - same image-on-top / radio-below pattern as Interior Color */
-    .binding-grid {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        gap: 0.65rem;
-    }
-
-    .binding-option {
-        display: grid;
-        grid-template-columns: auto 1fr;
-        grid-template-areas:
-            "img img"
-            "radio title";
-        column-gap: 6px;
-        row-gap: 8px;
-        border: 1.5px solid #e5e7eb;
-        border-radius: 8px;
-        padding: 8px 8px 10px;
-        cursor: pointer;
-        transition: border-color 0.2s ease, box-shadow 0.2s ease;
-        position: relative;
-        overflow: hidden;
-        background: #ffffff;
-    }
-
-    .binding-option:hover {
-        border-color: #3b82f6;
-        box-shadow: 0 4px 14px rgba(59, 130, 246, 0.15);
-    }
-
-    .binding-option.selected,
-    .binding-option:has(input:checked) {
-        border-color: #3b82f6;
-        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.35);
-    }
-
-    .binding-option input[type="radio"] {
-        grid-area: radio;
-        display: block;
-        width: 17px;
-        height: 17px;
-        margin: 0;
-        align-self: center;
-        cursor: pointer;
-        accent-color: #3b82f6;
-    }
-
-    .binding-option.disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-        background: #f9fafb;
-    }
-
-    .binding-option.disabled::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        border-radius: 8px;
-        background: rgba(255, 255, 255, 0.85);
-        z-index: 2;
-    }
-
-    .binding-option.disabled::after {
-        content: 'Not Available';
-        position: absolute;
-        top: 40%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: rgba(255, 255, 255, 0.95);
-        color: #666;
-        padding: 4px 8px;
-        border-radius: 4px;
-        font-size: 0.68rem;
-        font-weight: 500;
-        white-space: normal;
-        word-break: break-word;
-        z-index: 3;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        border: 1px solid #e5e7eb;
-        width: 82%;
-        text-align: center;
-    }
-
-    .lock-icon {
-        position: absolute;
-        top: 8px;
-        right: 8px;
-        color: #9ca3af;
-        font-size: 1rem;
-        z-index: 4;
-        display: none;
-    }
-
-    .binding-option.disabled .lock-icon {
-        display: block;
-    }
-
-    /* Image, contained at the top of the card (not edge-to-edge) */
-    .binding-icon {
-        grid-area: img;
-        width: 100%;
-        aspect-ratio: 4 / 3;
-        margin: 0;
-        background: #f3f4f6;
-        border-radius: 6px;
-        overflow: hidden;
-    }
-
-    .binding-icon img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.3s ease;
-    }
-
-    .binding-option:hover .binding-icon img {
-        transform: scale(1.04);
-    }
-
-    .binding-icon svg {
-        transition: none;
-        width: 48px;
-        height: 48px;
-    }
-
-    /* Name as plain text next to the radio, below the image */
-    .binding-name {
-        grid-area: title;
-        align-self: center;
-        margin: 0;
-        font-weight: 600;
-        color: #1f2937;
-        font-size: 0.78rem;
-        line-height: 1.25;
-    }
-
-    .binding-description {
-        font-size: 0.75rem;
-        color: #666666;
-        line-height: 1.3;
-    }
-
-    /* Cover Finish Options - same image-on-top / radio-below pattern as Interior Color.
-       Only 2 options so they occupy 2 of the 5 columns, same box size as the other grids. */
-    .finish-options {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        gap: 0.65rem;
-        max-width: 100%;
-    }
-
-    .finish-option {
-        display: grid;
-        grid-template-columns: auto 1fr;
-        grid-template-areas:
-            "img img"
-            "radio title";
-        column-gap: 6px;
-        row-gap: 8px;
-        border: 1.5px solid #e5e7eb;
-        border-radius: 8px;
-        padding: 8px 8px 10px;
-        cursor: pointer;
-        transition: border-color 0.2s ease, box-shadow 0.2s ease;
-        position: relative;
-        overflow: hidden;
-        background: #ffffff;
-    }
-
-    .finish-option:hover {
-        border-color: #3b82f6;
-        box-shadow: 0 4px 14px rgba(59, 130, 246, 0.15);
-    }
-
-    .finish-option.selected,
-    .finish-option:has(input:checked) {
-        border-color: #3b82f6;
-        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.35);
-    }
-
-    .finish-option input[type="radio"] {
-        grid-area: radio;
-        display: block;
-        width: 17px;
-        height: 17px;
-        margin: 0;
-        align-self: center;
-        cursor: pointer;
-        accent-color: #3b82f6;
-    }
-
-    .finish-icon {
-        grid-area: img;
-        width: 100%;
-        aspect-ratio: 4 / 3;
-        margin: 0;
-        background: #f3f4f6;
-        border-radius: 6px;
-        overflow: hidden;
-    }
-
-    .finish-icon img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.3s ease;
-    }
-
-    .finish-option:hover .finish-icon img {
-        transform: scale(1.04);
-    }
-
-    .finish-icon svg {
-        transition: none;
-        width: 48px;
-        height: 48px;
-    }
-
-    /* Name as plain text next to the radio, below the image */
-    .finish-name {
-        grid-area: title;
-        align-self: center;
-        margin: 0;
-        font-size: 0.78rem;
-        font-weight: 600;
-        color: #1f2937;
-        line-height: 1.25;
-    }
-
-    /* Designing and Formatting - Lulu.com Style */
-    .design-service-card {
-        background: #f8fafc;
-        border: 1px solid #e2e8f0;
-        border-radius: 8px;
-        padding: 1.5rem;
-        margin-bottom: 2rem;
-    }
-
-    .design-pricing {
-        background: white;
-        border-radius: 6px;
-        padding: 1rem;
-        margin-bottom: 1rem;
-        border: 1px solid #e5e7eb;
-    }
-
-    .pricing-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 0.5rem;
-        font-size: 0.875rem;
-    }
-
-    .pricing-item:last-child {
-        margin-bottom: 0;
-        padding-top: 0.5rem;
-        border-top: 1px solid #f3f4f6;
-        font-weight: 600;
-    }
-
-    .design-toggle {
-        display: flex;
-        gap: 0.75rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .toggle-option {
-        flex: 1;
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        padding: 0.75rem;
-        text-align: center;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        background: #ffffff;
-        font-size: 0.875rem;
-    }
-
-    .toggle-option:hover {
-        border-color: #3b82f6;
-        box-shadow: 0 1px 4px rgba(59, 130, 246, 0.15);
-    }
-
-    .toggle-option.selected {
-        border-color: #3b82f6;
-        background: #eff6ff;
-        box-shadow: 0 0 0 1px #3b82f6;
-    }
-
-    .file-upload-section {
-        display: none;
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-        margin-top: 1rem;
-    }
-
-    .file-upload-section.show {
-        display: grid;
-    }
-
-    .file-upload-area {
-        border: 2px dashed #d1d5db;
-        border-radius: 8px;
-        padding: 1.5rem;
-        text-align: center;
-        transition: all 0.2s ease;
-        cursor: pointer;
-        background: #ffffff;
-    }
-
-    .file-upload-area:hover {
-        border-color: #3b82f6;
-        background: #f8fafc;
-    }
-
-
-
-    .upload-icon {
-        font-size: 2rem;
-        color: #9ca3af;
-        margin-bottom: 0.75rem;
-    }
-
-    .upload-text {
-        color: #374151;
-        font-weight: 500;
-        margin-bottom: 0.25rem;
-        font-size: 0.875rem;
-    }
-
-    .upload-hint {
-        color: #6b7280;
-        font-size: 0.75rem;
-    }
-
-    /* ISBN Allocation - Lulu.com Style */
-    .isbn-info {
-        background: #fef3c7;
-        border: 1px solid #f59e0b;
-        border-radius: 8px;
-        padding: 1rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .isbn-warning {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        color: #92400e;
-        font-weight: 500;
-        margin-bottom: 0.75rem;
-        font-size: 0.875rem;
-    }
-
-    .isbn-description {
-        color: #78350f;
-        font-size: 0.75rem;
-        line-height: 1.4;
-    }
-
-    /* .isbn-options / .isbn-option / caption styling are defined together with
-       .design-option-box further below (shared image-card rules). */
-
-    /* Progress Indicator - Lulu.com Style */
-    .progress-indicator {
-        margin-bottom: 3rem;
-        padding: 1.5rem 0;
-        border-bottom: 1px solid #e5e7eb;
-    }
-
-    .progress-steps {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        max-width: 100%;
-        overflow-x: auto;
-        padding: 0 1rem;
-    }
-
-    .progress-step {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.5rem;
-        min-width: 80px;
-        opacity: 0.4;
-        transition: opacity 0.3s ease;
-    }
-
-    .progress-step.active {
-        opacity: 1;
-    }
-
-    .progress-step.completed {
-        opacity: 0.8;
-    }
-
-    .step-number {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        background: #f3f4f6;
-        color: #9ca3af;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.875rem;
-        font-weight: 600;
-        transition: all 0.3s ease;
-    }
-
-    .progress-step.active .step-number {
-        background: #3b82f6;
-        color: white;
-    }
-
-    .progress-step.completed .step-number {
-        background: #10b981;
-        color: white;
-    }
-
-    .step-label {
-        font-size: 0.75rem;
-        font-weight: 500;
-        color: #666666;
-        text-align: center;
-        white-space: nowrap;
-    }
-
-    .progress-step.active .step-label {
-        color: #1a1a1a;
-        font-weight: 600;
-    }
-
-    /* Additional Lulu.com Style Improvements */
     .field-label {
-        font-size: 0.875rem;
-        font-weight: 500;
-        color: #374151;
-        margin-bottom: 0.5rem;
+        display: block;
+        font-size: .72rem;
+        font-weight: 700;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        color: var(--bink2);
+        margin-bottom: 8px;
     }
 
-    /* Order Button Styling */
-    #order-button {
-        background: #3b82f6;
-        color: white;
-        border: none;
-        border-radius: 6px;
-        padding: 0.875rem 2rem;
-        font-size: 1rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        width: 100%;
-        margin-top: 1rem;
-    }
-
-    #order-button:hover:not(:disabled) {
-        background: #2563eb;
-        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
-    }
-
-    #order-button:disabled {
-        background: #9ca3af;
-        cursor: not-allowed;
-        box-shadow: none;
-    }
-
-    /* Input styling improvements */
-    input[type="radio"] {
-        display: none;
-    }
-
-    /* Section spacing improvements */
-    .form-section+.form-section {
-        margin-top: 1.5rem;
-    }
-
-    /* Typography improvements */
-    h4 {
-        font-size: 1rem;
-        font-weight: 600;
-        color: #1a1a1a;
-        margin-bottom: 1rem;
-    }
-
-    /* Quantity section styling */
-    .quantity-input-container {
-        padding: 1rem 0;
-    }
-
-    .quantity-input-container .page-input-group {
-        width: 100%;
-    }
-
-    .quantity-input-container input[type="number"] {
-        font-size: 1.125rem;
-        font-weight: 500;
-        color: #1f2937 !important;
-        background: #ffffff !important;
-    }
-
-    /* Bulk Discount Levels table (next to the quantity input) */
-    .quantity-with-bulk {
-        display: grid;
-        grid-template-columns: minmax(240px, 400px) 1fr;
-        gap: 2.5rem;
-        align-items: start;
-    }
-    @media (max-width: 900px) {
-        .quantity-with-bulk { grid-template-columns: 1fr; gap: 1.75rem; }
-    }
-    .bulk-discount-box { width: 100%; }
-    .bulk-discount-title {
-        font-size: .95rem; font-weight: 800; letter-spacing: .03em;
-        text-transform: uppercase; color: #1a1a1a; text-align: center;
-        margin-bottom: 14px;
-    }
-    .bulk-table {
-        width: 100%; border-collapse: collapse; border: 1px solid #e5e7eb;
-        border-radius: 8px; overflow: hidden;
-    }
-    .bulk-table th {
-        background: #f8fafc; color: #1a1a1a; font-size: .85rem; font-weight: 800;
-        text-align: center; padding: 12px 16px; border-bottom: 1px solid #e5e7eb;
-    }
-    .bulk-table td {
-        text-align: center; padding: 14px 16px; font-size: .92rem; font-weight: 600;
-        color: #1f2937; border-bottom: 1px solid #f0f0f0;
-    }
-    .bulk-table tr:last-child td { border-bottom: none; }
-    .bulk-discount-badge {
-        display: inline-flex; align-items: center; gap: 6px;
-        background: rgba(112, 0, 254, .10); color: #5b0fd6;
-        border-radius: 20px; padding: 5px 14px; font-size: .82rem; font-weight: 700;
-    }
-    .bulk-discount-note {
-        font-size: .78rem; color: #9ca3af; font-style: italic; margin: 10px 2px 0;
-    }
-
-    /* Design checkbox options styling */
-    .design-checkbox-option:hover {
-        border-color: #3b82f6 !important;
-        box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
-    }
-
-    .design-checkbox-option:has(input:checked) {
-        border-color: #3b82f6 !important;
-        background: #eff6ff !important;
-        box-shadow: 0 0 0 1px #3b82f6;
-    }
-
-    /* Design Service & ISBN Allocation options - same image-on-top / radio-below pattern
-       as the sections above. Images are placeholders (product-placeholder.png) — swap the
-       <img src> for real artwork. */
+    /* ── Option grids ── */
+    .interior-color-options,
+    .paper-grid,
+    .binding-grid,
+    .finish-options,
     .design-options-grid,
     .isbn-options {
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        gap: 0.65rem;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 14px;
+        margin-left: 44px;
+    }
+    .finish-options,
+    .design-options-grid,
+    .isbn-options {
+        grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
     }
 
+    /* ── Shared option tile ── */
+    .color-option,
+    .paper-option,
+    .binding-option,
+    .finish-option,
     .design-option-box,
-    .isbn-option {
-        display: grid;
-        grid-template-columns: auto 1fr;
-        grid-template-areas:
-            "img img"
-            "radio title";
-        column-gap: 6px;
-        row-gap: 8px;
-        border: 1.5px solid #e5e7eb;
-        border-radius: 8px;
-        padding: 8px 8px 10px;
-        cursor: pointer;
-        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    .isbn-option,
+    .toggle-option {
         position: relative;
-        overflow: hidden;
-        background: #ffffff;
-        text-align: left;
-    }
-
-    .design-option-box:hover,
-    .isbn-option:hover {
-        border-color: #3b82f6;
-        box-shadow: 0 4px 14px rgba(59, 130, 246, 0.15);
-    }
-
-    .design-option-box.selected,
-    .design-option-box:has(input:checked),
-    .isbn-option.selected,
-    .isbn-option:has(input:checked) {
-        border-color: #3b82f6;
-        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.35);
-    }
-
-    .design-option-box input[type="radio"],
-    .design-option-box input[type="checkbox"],
-    .isbn-option input[type="radio"] {
-        grid-area: radio;
-        display: block;
-        width: 17px;
-        height: 17px;
-        margin: 0;
-        align-self: center;
+        background: var(--card);
+        border: 1px solid var(--bline2);
+        border-radius: 14px;
+        padding: 9px;
         cursor: pointer;
-        accent-color: #3b82f6;
+        text-align: left;
+        transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+    .color-option:hover,
+    .paper-option:hover,
+    .binding-option:hover,
+    .finish-option:hover,
+    .design-option-box:hover,
+    .isbn-option:hover,
+    .toggle-option:hover {
+        transform: translateY(-3px);
+        border-color: var(--clay);
+        box-shadow: 0 10px 24px rgba(44, 40, 35, .08);
+    }
+    .color-option.selected, .color-option:has(input:checked),
+    .paper-option.selected, .paper-option:has(input:checked),
+    .binding-option.selected, .binding-option:has(input:checked),
+    .finish-option.selected, .finish-option:has(input:checked),
+    .design-option-box.selected, .design-option-box:has(input:checked),
+    .isbn-option.selected, .isbn-option:has(input:checked),
+    .toggle-option.selected, .toggle-option:has(input:checked) {
+        border-color: var(--clay);
+        box-shadow: 0 0 0 2px var(--clay), 0 12px 26px rgba(190, 107, 71, .16);
     }
 
-    /* Image, contained at the top of the card (not edge-to-edge) */
+    /* Tick badge on the selected tile (CSS-only, no extra markup) */
+    .color-option::after,
+    .paper-option::after,
+    .binding-option::after,
+    .finish-option::after,
+    .design-option-box::after,
+    .isbn-option::after {
+        content: "✓";
+        position: absolute;
+        top: 15px; right: 15px;
+        width: 22px; height: 22px;
+        border-radius: 50%;
+        background: var(--clay);
+        color: #fff;
+        font-size: 12px; font-weight: 800;
+        display: none;
+        align-items: center; justify-content: center;
+        box-shadow: 0 3px 8px rgba(190, 107, 71, .4);
+        z-index: 3;
+    }
+    .color-option.selected::after, .color-option:has(input:checked)::after,
+    .paper-option.selected::after, .paper-option:has(input:checked)::after,
+    .binding-option.selected::after, .binding-option:has(input:checked)::after,
+    .finish-option.selected::after, .finish-option:has(input:checked)::after,
+    .design-option-box.selected::after, .design-option-box:has(input:checked)::after,
+    .isbn-option.selected::after, .isbn-option:has(input:checked)::after {
+        display: flex;
+    }
+
+    /* Hide the native inputs — the tiles are the control surface */
+    .color-option input[type="radio"],
+    .paper-option input[type="radio"],
+    .binding-option input[type="radio"],
+    .finish-option input[type="radio"],
+    .isbn-option input[type="radio"],
+    .toggle-option input[type="radio"],
+    .design-option-box input[type="radio"],
+    .design-option-box input[type="checkbox"] {
+        position: absolute;
+        opacity: 0;
+        width: 1px; height: 1px;
+        pointer-events: none;
+    }
+
+    /* Swatch / image area */
+    .option-icon,
+    .paper-icon,
+    .binding-icon,
+    .finish-icon,
     .opt-image {
-        grid-area: img;
-        width: 100%;
         aspect-ratio: 4 / 3;
-        margin: 0;
-        background: #f3f4f6;
-        border-radius: 6px;
+        border-radius: 8px;
         overflow: hidden;
+        position: relative;
+        background: linear-gradient(135deg, #efe9db, #e2dac8);
+        box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .04);
+        display: flex; align-items: center; justify-content: center;
+        margin: 0;
     }
-
+    .option-icon img,
+    .paper-icon img,
+    .binding-icon img,
+    .finish-icon img,
     .opt-image img {
-        width: 100%;
-        height: 100%;
+        width: 100%; height: 100%;
         object-fit: cover;
-        transition: transform 0.3s ease;
+        display: block;
+        transition: transform .35s ease;
     }
-
+    .color-option:hover .option-icon img,
+    .paper-option:hover .paper-icon img,
+    .binding-option:hover .binding-icon img,
+    .finish-option:hover .finish-icon img,
     .design-option-box:hover .opt-image img,
     .isbn-option:hover .opt-image img {
-        transform: scale(1.04);
+        transform: scale(1.05);
     }
 
-    /* Name as plain text next to the radio/checkbox, below the image */
+    /* Labels */
+    .color-option-title,
+    .paper-weight,
+    .binding-name,
+    .finish-name,
     .opt-caption {
-        grid-area: title;
-        align-self: center;
-        margin: 0;
+        padding: 9px 4px 3px;
+        font-size: .84rem;
+        font-weight: 700;
+        line-height: 1.2;
+        color: var(--bink);
+        text-align: left;
+    }
+    .binding-description {
+        padding: 0 4px 3px;
+        font-size: .72rem;
+        color: var(--bmuted);
+        font-weight: 500;
+    }
+
+    /* The two design checkboxes are revealed by JS with display:flex, so this
+       tile stacks as a column to stay identical to the radio tiles beside it */
+    .design-option-box { display: flex; flex-direction: column; }
+    .design-option-box .opt-image { width: 100%; }
+
+    .premium-badge {
+        position: absolute;
+        top: 15px; left: 15px;
+        background: rgba(44, 40, 35, .82);
+        color: #fff;
+        font-size: .58rem;
+        font-weight: 700;
+        letter-spacing: .09em;
+        text-transform: uppercase;
+        padding: 3px 7px;
+        border-radius: 5px;
+        backdrop-filter: blur(2px);
+        z-index: 2;
+    }
+
+    /* ── Locked / disabled tiles (page-count rules) ── */
+    .binding-option.disabled,
+    .paper-option.disabled {
+        opacity: .5;
+        cursor: not-allowed;
+        pointer-events: none;
+        filter: grayscale(.5);
+    }
+    .binding-option.disabled:hover,
+    .paper-option.disabled:hover { transform: none; box-shadow: none; border-color: var(--bline2); }
+    .lock-icon {
+        position: absolute;
+        top: 15px; right: 15px;
+        width: 24px; height: 24px;
+        border-radius: 50%;
+        background: rgba(44, 40, 35, .82);
+        color: #fff;
+        display: none;
+        align-items: center; justify-content: center;
+        font-size: .62rem;
+        z-index: 4;
+    }
+    .binding-option.disabled .lock-icon { display: flex !important; }
+
+    /* ── Inputs ── */
+    .page-input,
+    .book-size-select,
+    .quantity-input-container input[type="number"] {
+        width: 100%;
+        padding: 13px 16px;
+        border: 1px solid var(--bline2);
+        border-radius: 11px;
+        background: var(--card);
+        font-family: 'Hanken Grotesk', sans-serif;
+        font-size: 1rem;
         font-weight: 600;
-        color: #1f2937;
-        font-size: 0.78rem;
-        line-height: 1.25;
+        color: var(--bink);
+        outline: none;
+        transition: border-color .18s, box-shadow .18s;
+    }
+    .page-input::placeholder { color: var(--bmuted); font-weight: 500; }
+    .page-input:focus,
+    .book-size-select:focus,
+    .quantity-input-container input[type="number"]:focus {
+        border-color: var(--clay);
+        box-shadow: 0 0 0 3px var(--clay-soft);
+    }
+    .book-size-select:hover { border-color: var(--clay); }
+    .book-size-select { cursor: pointer; }
+    .book-size-dropdown { position: relative; }
+
+    /* The site's nice-select plugin swaps the <select> for a div that
+       inherits .book-size-select — style its popup to match the theme */
+    .nice-select.book-size-select { line-height: 1.4; height: auto; }
+    .nice-select.book-size-select .current { font-weight: 600; }
+    .nice-select.book-size-select.open { border-color: var(--clay); box-shadow: 0 0 0 3px var(--clay-soft); }
+    .nice-select.book-size-select .list {
+        width: 100%;
+        border: 1px solid var(--bline2);
+        border-radius: 11px;
+        box-shadow: 0 14px 32px rgba(44, 40, 35, .14);
+        background: var(--card);
+        margin-top: 6px;
+    }
+    .nice-select.book-size-select .option {
+        font-size: .9rem;
+        font-weight: 600;
+        color: var(--bink);
+        padding-left: 16px; padding-right: 16px;
+    }
+    .nice-select.book-size-select .option:hover,
+    .nice-select.book-size-select .option.focus,
+    .nice-select.book-size-select .option.selected.focus {
+        background: var(--clay-soft);
+        color: var(--clay-d);
+    }
+    .page-input-group { display: flex; flex-direction: column; }
+    .page-input-group label { color: var(--bink2); }
+
+    /* Steps 2, 8 field rows sit under the step number like the option grids */
+    .form-section[data-section="book_size_pages"] > div:not(.section-header):not(.section-description),
+    .quantity-input-container { margin-left: 44px; }
+    .conditional-page-inputs.show { display: grid !important; }
+
+    /* ── Quantity + bulk discounts ── */
+    .quantity-with-bulk {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 22px;
+        align-items: start;
+    }
+    .bulk-discount-box {
+        background: var(--card);
+        border: 1px solid var(--bline2);
+        border-radius: 14px;
+        padding: 16px 18px;
+    }
+    .bulk-discount-title {
+        font-family: 'Newsreader', serif;
+        font-size: 1.05rem;
+        font-weight: 500;
+        color: var(--bink);
+        margin-bottom: 10px;
+    }
+    .bulk-table { width: 100%; border-collapse: collapse; }
+    .bulk-table th {
+        font-size: .66rem;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        color: var(--bmuted);
+        font-weight: 700;
+        text-align: left;
+        padding-bottom: 7px;
+        border-bottom: 1px solid var(--bline);
+    }
+    .bulk-table td {
+        font-size: .82rem;
+        color: var(--bink);
+        font-weight: 600;
+        padding: 9px 0;
+        border-bottom: 1px dotted var(--bline);
+    }
+    .bulk-table tr:last-child td { border-bottom: none; }
+    .bulk-discount-badge {
+        display: inline-flex;
+        align-items: center; gap: 5px;
+        background: var(--sage-soft);
+        color: #4c6141;
+        font-size: .72rem;
+        font-weight: 700;
+        padding: 3px 9px;
+        border-radius: 100px;
+    }
+    .bulk-discount-note {
+        font-size: .72rem;
+        color: var(--bmuted);
+        margin: 10px 0 0;
     }
 
-    /* Responsive Design - Lulu.com Style */
-    @media (max-width: 1200px) {
-        .interior-color-options,
-        .paper-grid,
-        .binding-grid,
-        .finish-options,
-        .design-options-grid,
-        .isbn-options {
-            grid-template-columns: repeat(5, 1fr);
-            gap: 0.5rem;
-        }
+    /* ── ISBN notice ── */
+    .isbn-info { margin: 0 0 18px 44px; max-width: 62ch; }
+    .isbn-warning {
+        display: inline-flex;
+        align-items: center; gap: 8px;
+        background: var(--clay-soft);
+        color: var(--clay-d);
+        border-radius: 100px;
+        padding: 7px 14px;
+        font-size: .78rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+    .isbn-description {
+        color: var(--bink2);
+        font-size: .88rem;
+        line-height: 1.62;
     }
 
-    @media (max-width: 992px) {
-        .interior-color-options,
-        .paper-grid,
-        .binding-grid,
-        .finish-options,
-        .design-options-grid,
-        .isbn-options {
-            grid-template-columns: repeat(5, 1fr);
-            gap: 0.4rem;
-        }
+    /* ═══ Sidebar: spec ticket + live book preview ═══ */
+    .ticket {
+        background: var(--card);
+        border: 1px solid var(--bline2);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 18px 50px rgba(44, 40, 35, .10);
+        font-family: 'Hanken Grotesk', sans-serif;
+    }
+    .bookstage {
+        background: linear-gradient(160deg, #efe9db 0%, #e6ddcb 100%);
+        padding: 40px 20px 34px;
+        display: flex; align-items: center; justify-content: center;
+        perspective: 1500px;
+        position: relative;
+        min-height: 260px;
+    }
+    .bookstage::after {
+        content: "";
+        position: absolute;
+        left: 50%; bottom: 22px;
+        transform: translateX(-50%);
+        width: 150px; height: 14px;
+        border-radius: 50%;
+        background: rgba(44, 40, 35, .16);
+        filter: blur(7px);
+    }
+    .book {
+        position: relative;
+        transform: rotateY(-26deg) rotateX(5deg);
+        transform-style: preserve-3d;
+        transition: .55s cubic-bezier(.4, 0, .2, 1);
+        width: 140px; height: 190px;
+    }
+    .book .cover {
+        position: relative;
+        height: 100%;
+        border-radius: 2px 7px 7px 2px;
+        overflow: hidden;
+        box-shadow: 6px 8px 20px rgba(44, 40, 35, .28);
+        transition: background .45s ease;
+    }
+    .book .cin {
+        position: absolute; inset: 0;
+        display: flex; flex-direction: column;
+        align-items: center; justify-content: center;
+        gap: 8px; padding: 14px;
+        color: rgba(255, 255, 255, .96);
+        text-align: center;
+    }
+    .book .crule { width: 26px; height: 1.5px; background: rgba(255, 255, 255, .7); }
+    .book .ck {
+        font-size: 8px;
+        letter-spacing: .22em;
+        text-transform: uppercase;
+        font-weight: 700;
+        opacity: .85;
+    }
+    .book .ct {
+        font-family: 'Newsreader', serif;
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1.15;
+    }
+    .book .gloss {
+        position: absolute; inset: 0;
+        background: linear-gradient(118deg, transparent 34%, rgba(255, 255, 255, .42) 48%, transparent 60%);
+        opacity: 0;
+        transition: opacity .4s;
+    }
+    .book .pages {
+        position: absolute;
+        top: 2px; bottom: 2px; right: -1px;
+        width: 10px;
+        transform: translateX(100%);
+        transform-origin: left center;
+        border-radius: 0 2px 2px 0;
+        box-shadow: 2px 3px 8px rgba(44, 40, 35, .2);
+        transition: width .45s cubic-bezier(.4, 0, .2, 1), background .45s ease;
+    }
+    .book .spine {
+        position: absolute;
+        top: 0; bottom: 0; left: 0;
+        width: 5px;
+        border-radius: 2px 0 0 2px;
+        z-index: 3;
+        transition: width .45s ease, background .45s ease;
+    }
+    .book .spiral {
+        position: absolute;
+        top: 6px; bottom: 6px; left: -3px;
+        width: 12px;
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        z-index: 4;
+    }
+    .book .spiral i {
+        display: block;
+        height: 5px;
+        border: 1.5px solid rgba(125, 116, 100, .13);
+        border-radius: 50%;
+        background: linear-gradient(#cfc6b4, #a99f8b);
+        box-shadow: 0 1px 1px rgba(0, 0, 0, .15);
+    }
+    .book .stitch {
+        position: absolute;
+        top: 14px; bottom: 14px; left: 1px;
+        width: 3px;
+        display: none;
+        flex-direction: column;
+        justify-content: space-around;
+        z-index: 4;
+    }
+    .book .stitch i {
+        display: block;
+        height: 10px;
+        border-radius: 2px;
+        background: rgba(255, 255, 255, .55);
     }
 
-    @media (max-width: 768px) {
-        .progress-steps {
-            padding: 0 0.5rem;
-            gap: 0.5rem;
-        }
-
-        .progress-step {
-            min-width: 60px;
-        }
-
-        .step-number {
-            width: 28px;
-            height: 28px;
-            font-size: 0.75rem;
-        }
-
-        .step-label {
-            font-size: 0.625rem;
-        }
-
-        .book-options-title {
-            font-size: 1.5rem;
-        }
-
-        .section-title {
-            font-size: 1.25rem;
-        }
-
-        .interior-color-options,
-        .paper-grid,
-        .binding-grid,
-        .finish-options,
-        .design-options-grid,
-        .isbn-options {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.5rem;
-        }
-
-        .book-size-select {
-            font-size: 0.875rem;
-        }
-
-        .conditional-page-inputs {
-            grid-template-columns: 1fr;
-        }
-
-        .file-upload-section {
-            grid-template-columns: 1fr;
-        }
-
-        .design-toggle {
-            flex-direction: column;
-        }
-
-        .section-header {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 0.75rem;
-        }
-
-        .section-number {
-            align-self: flex-start;
-        }
+    .thead {
+        display: flex;
+        align-items: center; justify-content: space-between;
+        padding: 18px 22px 12px;
+        border-bottom: 1px dashed var(--bline2);
     }
-
-    @media (max-width: 480px) {
-        .book-options-container {
-            padding: 0;
-        }
-
-        .book-options-header {
-            padding: 1rem 0;
-        }
-
-        .color-option-title,
-        .paper-weight,
-        .binding-name,
-        .finish-name,
-        .opt-caption {
-            font-size: 0.7rem;
-            padding: 8px 6px 6px;
-        }
+    .tkr {
+        font-family: 'Newsreader', serif;
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: var(--bink);
     }
+    .tprog {
+        font-size: .68rem;
+        font-weight: 700;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        color: var(--clay);
+        background: var(--clay-soft);
+        padding: 5px 10px;
+        border-radius: 100px;
+        white-space: nowrap;
+    }
+    .specs { padding: 8px 22px 6px; }
+    .srow {
+        display: flex;
+        align-items: baseline; justify-content: space-between;
+        gap: 12px;
+        padding: 9px 0;
+        border-bottom: 1px dotted var(--bline);
+    }
+    .srow:last-child { border-bottom: none; }
+    .sk {
+        font-size: .7rem;
+        letter-spacing: .05em;
+        text-transform: uppercase;
+        color: var(--bmuted);
+        font-weight: 600;
+        white-space: nowrap;
+    }
+    .sv {
+        font-size: .82rem;
+        font-weight: 700;
+        text-align: right;
+        color: var(--bink);
+    }
+    .sv small {
+        display: block;
+        font-weight: 500;
+        font-size: .7rem;
+        color: var(--sage);
+        letter-spacing: 0;
+        text-transform: none;
+    }
+    .tempty {
+        padding: 22px 22px 26px;
+        color: var(--bmuted);
+        font-size: .84rem;
+        line-height: 1.6;
+        text-align: center;
+    }
+    .cta { padding: 16px 22px 22px; background: var(--paper2); }
+    .perks { display: flex; flex-direction: column; gap: 7px; margin-bottom: 15px; }
+    .perk {
+        display: flex;
+        align-items: center; gap: 9px;
+        font-size: .78rem;
+        color: var(--bink2);
+        font-weight: 500;
+    }
+    .perk i {
+        width: 15px; height: 15px;
+        border-radius: 50%;
+        background: var(--sage);
+        color: #fff;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 8px;
+        font-weight: 800;
+        flex-shrink: 0;
+        font-style: normal;
+    }
+    .qbtn {
+        width: 100%;
+        padding: 16px;
+        border: none;
+        border-radius: 12px;
+        background: var(--clay);
+        color: #fff;
+        font-size: .95rem;
+        font-weight: 700;
+        letter-spacing: .03em;
+        cursor: pointer;
+        font-family: 'Hanken Grotesk', sans-serif;
+        transition: background .2s, transform .1s, opacity .2s;
+        box-shadow: 0 8px 20px rgba(190, 107, 71, .28);
+    }
+    .qbtn:hover:not(:disabled) { background: var(--clay-d); }
+    .qbtn:active:not(:disabled) { transform: translateY(1px); }
+    .qbtn:disabled {
+        background: #cabfad;
+        box-shadow: none;
+        cursor: not-allowed;
+        opacity: .9;
+    }
+    .qmsg {
+        text-align: center;
+        font-size: .76rem;
+        color: var(--bmuted);
+        margin-top: 11px;
+        line-height: 1.5;
+    }
+    .qmsg.ok { color: var(--sage); font-weight: 700; }
 
-    /* ── How to Order / FAQ accordion (same pattern used on the other product pages) ── */
-    .st-faq { padding: 28px 0 8px; background: #fff; }
-    .st-faq-box { border: 1px solid #e0e0e0; border-radius: 10px; overflow: hidden; }
-    .st-faq-item { border-bottom: 1px solid #e0e0e0; }
+    /* Shared "Need Help?" box from the parent template — re-toned for this page */
+    .pd-help-box {
+        background: var(--card) !important;
+        border: 1px solid var(--bline2);
+        border-radius: 20px;
+        color: var(--bink) !important;
+        box-shadow: 0 10px 30px rgba(44, 40, 35, .06);
+    }
+    .pd-help-box h5 { color: var(--bink) !important; font-family: 'Newsreader', serif; font-weight: 500; }
+    .pd-help-box h5 i,
+    .pd-help-box .help-row i { color: var(--clay) !important; }
+    .pd-help-box .help-row { color: var(--bink2) !important; }
+
+    /* ═══ How to Order / FAQ ═══ */
+    .st-faq { margin-top: 56px; }
+    .st-faq-box {
+        background: var(--card);
+        border: 1px solid var(--bline2);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(44, 40, 35, .06);
+    }
+    .st-faq-item { border-bottom: 1px solid var(--bline); }
     .st-faq-item:last-child { border-bottom: none; }
     .st-faq-trigger {
-        width: 100%; background: #fff; border: none; text-align: left;
-        padding: 17px 20px; cursor: pointer;
-        display: flex; align-items: center; justify-content: space-between; gap: 16px;
-        font-size: .93rem; font-weight: 600; color: #1f2937; transition: background .2s;
+        width: 100%;
+        display: flex;
+        align-items: center; justify-content: space-between;
+        gap: 16px;
+        padding: 20px 24px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        text-align: left;
+        font-family: 'Newsreader', serif;
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: var(--bink);
     }
-    .st-faq-trigger:hover { background: #f9fafb; }
+    .st-faq-trigger:hover { background: var(--paper2); }
     .st-faq-plus {
-        width: 26px; height: 26px; min-width: 26px; border-radius: 50%;
-        border: 1.5px solid #9ca3af; background: #fff;
+        flex-shrink: 0;
+        width: 26px; height: 26px;
+        border-radius: 50%;
+        background: var(--clay-soft);
+        color: var(--clay);
         display: flex; align-items: center; justify-content: center;
-        font-size: .78rem; font-weight: 700; color: #6b7280; transition: all .25s; line-height: 1;
+        font-size: .8rem;
+        transition: transform .25s ease;
     }
-    .st-faq-item.open .st-faq-plus {
-        border-color: var(--theme, #7000fe); color: var(--theme, #7000fe); transform: rotate(45deg);
-    }
-    .st-faq-body { max-height: 0; overflow: hidden; transition: max-height .38s ease; }
-    .st-faq-item.open .st-faq-body { max-height: 900px; }
-    .st-faq-inner { padding: 2px 20px 20px; }
+    .st-faq-item.open .st-faq-plus { transform: rotate(45deg); }
+    .st-faq-body { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
+    .st-faq-item.open .st-faq-body { max-height: 1400px; }
+    .st-faq-inner { padding: 0 24px 24px; }
 
-    .how-steps { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
-    .how-step { display: flex; align-items: flex-start; gap: 12px; }
+    .how-steps { display: flex; flex-direction: column; gap: 16px; }
+    .how-step { display: flex; gap: 12px; align-items: flex-start; }
     .how-num {
-        width: 24px; height: 24px; min-width: 24px; border-radius: 50%;
-        background: var(--theme, #7000fe); color: #fff;
+        width: 22px; height: 22px;
+        border-radius: 50%;
+        background: var(--clay);
+        color: #fff;
         display: flex; align-items: center; justify-content: center;
-        font-size: .68rem; font-weight: 800; margin-top: 2px; flex-shrink: 0;
+        font-size: .66rem;
+        font-weight: 800;
+        margin-top: 2px;
+        flex-shrink: 0;
     }
-    .how-text strong { font-size: .85rem; color: #1f2937; display: block; margin-bottom: 2px; }
-    .how-text span { font-size: .82rem; color: #6b7280; line-height: 1.55; }
+    .how-text strong { font-size: .88rem; color: var(--bink); display: block; margin-bottom: 3px; }
+    .how-text span { font-size: .84rem; color: var(--bink2); line-height: 1.6; }
 
-    .faq-qas { display: flex; flex-direction: column; gap: 14px; }
-    .faq-q-text { font-weight: 700; font-size: .87rem; color: #1f2937; margin-bottom: 3px; }
-    .faq-a-text { font-size: .83rem; color: #4b5563; line-height: 1.65; margin: 0; }
+    .faq-qas { display: flex; flex-direction: column; gap: 16px; }
+    .faq-q-text { font-weight: 700; font-size: .9rem; color: var(--bink); margin-bottom: 4px; }
+    .faq-a-text { font-size: .86rem; color: var(--bink2); line-height: 1.65; margin: 0; }
 
+    /* ── Responsive ── */
+    @media (max-width: 991px) {
+        .book-options-title { font-size: 2rem; }
+        .section-description,
+        .interior-color-options, .paper-grid, .binding-grid,
+        .finish-options, .design-options-grid, .isbn-options,
+        .isbn-info, .quantity-input-container,
+        .form-section[data-section="book_size_pages"] > div:not(.section-header):not(.section-description) {
+            margin-left: 0;
+        }
+        .section-header { gap: 10px; }
+        .section-number { width: 24px; }
+        .quantity-with-bulk { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 575px) {
+        .interior-color-options, .paper-grid, .binding-grid {
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        }
+        .form-section[data-section="book_size_pages"] > div[style*="display: flex"] {
+            flex-direction: column;
+        }
+    }
 </style>
 {% endblock %}
 
@@ -1825,57 +1418,67 @@
 {% endblock %}
 
 {% block pricing_calculator %}
-<div style="max-width:600px;width:100%;margin:0 auto;padding:16px 10px;">
 
-    <!-- Price span elements kept hidden for JS calculations -->
-    <span id="cost-per-unit" style="display:none;"></span>
-    <span id="subtotal" style="display:none;"></span>
-    <span id="discount-amount" style="display:none;"></span>
-    <span id="gst-amount" style="display:none;"></span>
-    <span id="total-price" style="display:none;"></span>
-    <div id="discount-row" style="display:none;"></div>
+<!-- Price span elements kept hidden for JS calculations -->
+<span id="cost-per-unit" style="display:none;"></span>
+<span id="subtotal" style="display:none;"></span>
+<span id="discount-amount" style="display:none;"></span>
+<span id="gst-amount" style="display:none;"></span>
+<span id="total-price" style="display:none;"></span>
+<div id="discount-row" style="display:none;"></div>
 
-    <!-- Get Quote Card -->
-    <div style="border:2px solid #e8d5ff;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(112,0,254,.10);">
-        <div style="background:linear-gradient(135deg,#7000fe 0%,#09052F 100%);padding:16px 14px;text-align:center;">
-            <div style="color:#fff;font-size:1.05rem;font-weight:700;line-height:1.3;"><i class="fas fa-file-invoice-dollar"></i> Get a Custom Quote</div>
-            <div style="color:rgba(255,255,255,.8);font-size:.8rem;margin-top:4px;">Prices tailored to your specifications</div>
-        </div>
-        <div style="padding:16px 14px;background:#fff;">
+<div class="ticket">
 
-            <!-- Spec summary — visible, JS-populated -->
-            <div id="book-specifications" style="margin-bottom:14px;background:#f6f0ff;border-radius:8px;padding:12px 12px;font-size:.85rem;"></div>
-
-            <!-- Info hint — shown until specs start filling -->
-            <div id="quoteInfoBox" style="display:flex;align-items:center;gap:8px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px 12px;margin-bottom:14px;">
-                <i class="fas fa-info-circle" style="color:#16a34a;font-size:1rem;flex-shrink:0;"></i>
-                <span style="font-size:.82rem;color:#444;line-height:1.4;">Complete all sections above, then click <strong>Get Quote</strong> to receive a personalised price.</span>
-            </div>
-
-            <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;font-size:.8rem;color:#555;">
-                <div><i class="fas fa-check" style="color:#22c55e;margin-right:6px;"></i>Free quote within 24 hours</div>
-                <div><i class="fas fa-check" style="color:#22c55e;margin-right:6px;"></i>Volume discounts available</div>
-                <div><i class="fas fa-check" style="color:#22c55e;margin-right:6px;"></i>Quote saved to your profile</div>
-            </div>
-
-            <!-- Hidden quote form -->
-            <form id="quoteForm" method="POST" action="{% url 'orders:submit_quote' %}">
-                {% csrf_token %}
-                <input type="hidden" name="product_id" value="{{ product.id }}">
-                <input type="hidden" name="product_name" value="{{ product.name }}">
-                <input type="hidden" name="product_type" value="book_printing">
-                <input type="hidden" name="quantity" id="quoteQuantity" value="1">
-                <input type="hidden" name="specs" id="quoteSpecs" value="{}">
-            </form>
-
-            <button id="order-button" onclick="submitBookQuote()" disabled
-                style="width:100%;padding:14px;background:linear-gradient(135deg,#7000fe 0%,#09052F 100%);color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;transition:opacity .2s;opacity:.5;">
-                <i class="fas fa-file-invoice"></i> Get Quote
-            </button>
-            <div id="quoteStatusMsg" style="text-align:center;font-size:.82rem;color:#888;margin-top:8px;">
-                Complete all steps above to unlock
+    <!-- Live book preview — every element below is driven by updateBookPreview() -->
+    <div class="bookstage">
+        <div class="book" id="bookPreview">
+            <div class="spiral" id="bookSpiral"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="pages" id="bookPages"></div>
+            <div class="cover" id="bookCover">
+                <div class="spine" id="bookSpine"></div>
+                <div class="stitch" id="bookStitch"><i></i><i></i><i></i></div>
+                <div class="cin">
+                    <span class="ck">A Custom Edition</span>
+                    <div class="crule"></div>
+                    <div class="ct" id="bookTitle">Your Book</div>
+                </div>
+                <div class="gloss" id="bookGloss"></div>
             </div>
         </div>
+    </div>
+
+    <div class="thead">
+        <span class="tkr">Spec Sheet</span>
+        <span class="tprog" id="specProgress">0 of 8 chosen</span>
+    </div>
+
+    <!-- Spec summary — JS-populated by updateSpecificationsSummary() -->
+    <div id="book-specifications" class="specs"></div>
+
+    <!-- Shown until the first spec is chosen -->
+    <div id="quoteInfoBox" class="tempty">
+        Your selections will appear here as you build your book.
+    </div>
+
+    <div class="cta">
+        <div class="perks">
+            <div class="perk"><i>✓</i>Free personalised quote within 24 hours</div>
+            <div class="perk"><i>✓</i>Digital proof before we print a single page</div>
+            <div class="perk"><i>✓</i>Volume discounts applied automatically</div>
+        </div>
+
+        <!-- Hidden quote form -->
+        <form id="quoteForm" method="POST" action="{% url 'orders:submit_quote' %}">
+            {% csrf_token %}
+            <input type="hidden" name="product_id" value="{{ product.id }}">
+            <input type="hidden" name="product_name" value="{{ product.name }}">
+            <input type="hidden" name="product_type" value="book_printing">
+            <input type="hidden" name="quantity" id="quoteQuantity" value="1">
+            <input type="hidden" name="specs" id="quoteSpecs" value="{}">
+        </form>
+
+        <button id="order-button" class="qbtn" onclick="submitBookQuote()" disabled>Get my quote</button>
+        <div id="quoteStatusMsg" class="qmsg">Complete all steps above to unlock</div>
     </div>
 </div>
 <!-- Related Products -->
@@ -1917,6 +1520,127 @@
     window.bookPrintingConfig = JSON.parse(document.getElementById('book-printing-config').textContent);
 </script>
 
+<!-- Per-page price matrix (Interior Colour × Book Size × Paper), from the price sheet -->
+{{ book_pricing.page_price_matrix|json_script:"book-page-prices" }}
+<script>
+    // Live per-page base cost lookup. Returns Rs/page for a colour+size+paper
+    // combination, or null when the combination isn't priced / not yet chosen.
+    window.bookPagePrices = JSON.parse(document.getElementById('book-page-prices').textContent);
+    window.bookPagePrice = function (interior, size, paper) {
+        const m = window.bookPagePrices || {};
+        if (m[interior] && m[interior][size] && m[interior][size][paper] != null) {
+            return parseFloat(m[interior][size][paper]);
+        }
+        return null;
+    };
+</script>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   Live book preview — redraws the 3D book in the sidebar from the
+   current form state. Read-only: it never changes a form value, so it
+   cannot interfere with the sequential-unlock or availability rules.
+   ═══════════════════════════════════════════════════════════════════ */
+(function () {
+    const SIZE_RATIO = { a4: 0.707, letter: 0.774, executive: 0.701, a5: 0.705 };
+
+    const COVER_BG = {
+        bw_premium:     'linear-gradient(150deg,#3a3833,#1c1a17)',
+        bw_standard:    'linear-gradient(150deg,#847d72,#57514a)',
+        color_premium:  'linear-gradient(150deg,#c96a49,#9a4d33)',
+        color_standard: 'linear-gradient(150deg,#cf8266,#a5614a)',
+        combine_color:  'linear-gradient(150deg,#b98a5f,#8a6142)',
+    };
+
+    // Heavier stock makes a visibly thicker block of pages
+    const PAPER_BULK = { '75gsm': 1, '100gsm': 1.15, '100gsm_art': 1.2, '130gsm_art': 1.4 };
+
+    // Page-edge striping: art papers read brighter/whiter at the edge
+    const PAPER_EDGE = {
+        '75gsm':      ['#f0eade', '#ddd5c5'],
+        '100gsm':     ['#f4efe4', '#e2dac9'],
+        '100gsm_art': ['#faf6ee', '#e8e1d2'],
+        '130gsm_art': ['#fdfbf6', '#eee7d9'],
+    };
+
+    function el(id) { return document.getElementById(id); }
+
+    window.updateBookPreview = function () {
+        const book = el('bookPreview');
+        if (!book) return;
+
+        const interior = document.querySelector('input[name="interior_color"]:checked');
+        const paper = document.querySelector('input[name="paper_type"]:checked');
+        const binding = document.querySelector('input[name="binding_type"]:checked');
+        const finish = document.querySelector('input[name="cover_finish"]:checked');
+        const size = el('book_size') ? el('book_size').value : '';
+        const qty = el('quantity-input') ? el('quantity-input').value : '';
+
+        // Total pages — mirrors the same standard/combine split the form uses
+        const pageCountInput = el('page_count');
+        const bwInput = el('bw_page_count');
+        const colorInput = el('color_page_count');
+        let totalPages = 0;
+        if (pageCountInput && pageCountInput.style.display !== 'none' && pageCountInput.value) {
+            totalPages = parseInt(pageCountInput.value) || 0;
+        } else if (bwInput && colorInput) {
+            totalPages = (parseInt(bwInput.value) || 0) + (parseInt(colorInput.value) || 0);
+        }
+
+        // ── Trim size → the book's proportions ──
+        const H = 190;
+        const ratio = SIZE_RATIO[size] || 0.72;
+        book.style.width = Math.round(H * ratio) + 'px';
+        book.style.height = H + 'px';
+
+        // ── Interior colour → cover artwork ──
+        const cover = el('bookCover');
+        cover.style.background = interior
+            ? COVER_BG[interior.value]
+            : 'linear-gradient(150deg,#c07a5b,#9a583d)';
+
+        // ── Page count + paper stock → thickness and edge of the page block ──
+        const bulk = paper ? (PAPER_BULK[paper.value] || 1) : 1;
+        const thickness = Math.max(7, Math.min(46, Math.round(totalPages * 0.16 * bulk)));
+        const edge = paper ? (PAPER_EDGE[paper.value] || PAPER_EDGE['75gsm']) : PAPER_EDGE['75gsm'];
+        const isColour = interior && (interior.value.indexOf('color') === 0 || interior.value === 'combine_color');
+        const edgeDark = isColour ? '#e6cdb8' : edge[1];
+        const pages = el('bookPages');
+        pages.style.width = thickness + 'px';
+        pages.style.background =
+            `repeating-linear-gradient(90deg,${edge[0]},${edge[0]} 1px,${edgeDark} 1px,${edgeDark} 2px)`;
+
+        // ── Binding → spine, spiral coil, saddle stitches ──
+        let spineW = 5, spineBg = 'rgba(0,0,0,.22)', spiral = false, stitch = false;
+        if (binding) {
+            switch (binding.value) {
+                case 'hardcover':        spineW = 13; spineBg = 'rgba(0,0,0,.34)'; break;
+                case 'paperback_perfect': spineW = 9; spineBg = 'rgba(0,0,0,.26)'; break;
+                case 'saddle_stitch':    spineW = 3;  spineBg = 'rgba(0,0,0,.16)'; stitch = true; break;
+                case 'spiral_binding':   spineW = 0;  spineBg = 'transparent';     spiral = true; break;
+            }
+        }
+        const spine = el('bookSpine');
+        spine.style.width = spineW + 'px';
+        spine.style.background = spineBg;
+        el('bookSpiral').style.display = spiral ? 'flex' : 'none';
+        el('bookStitch').style.display = stitch ? 'flex' : 'none';
+
+        // ── Cover finish → the sheen sweeping across the cover ──
+        el('bookGloss').style.opacity = (finish && finish.value === 'glossy') ? '1' : '0';
+
+        // ── Title placeholder wakes up once the book starts taking shape ──
+        el('bookTitle').textContent = (interior || binding || finish) ? 'Your Title Here' : 'Your Book';
+
+        // ── Progress badge ──
+        const chosen = [interior, size, totalPages > 0, paper, binding, finish,
+            document.querySelector('input[name="isbn_allocation"]:checked'), qty].filter(Boolean).length;
+        const prog = el('specProgress');
+        if (prog) prog.textContent = chosen + ' of 8 chosen';
+    };
+})();
+</script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         console.log('🚀 Book printing form initialized');
@@ -1931,6 +1655,9 @@
 
         // Initialize binding options based on current page count
         updateBindingOptions();
+
+        // Draw the empty-state book and spec sheet
+        updateSpecificationsSummary();
 
         // Book printing specific JavaScript for product detail page
 
@@ -2025,6 +1752,7 @@
         document.getElementById('page_count').addEventListener('input', function () {
             updateBindingOptions();
             calculatePrice();
+            updateSpecificationsSummary();
 
             // Check if section is complete and unlock next section
             const currentSection = this.closest('.form-section');
@@ -2036,6 +1764,7 @@
         document.getElementById('bw_page_count').addEventListener('input', function () {
             updateBindingOptions();
             calculatePrice();
+            updateSpecificationsSummary();
 
             // Check if section is complete and unlock next section
             const currentSection = this.closest('.form-section');
@@ -2047,6 +1776,7 @@
         document.getElementById('color_page_count').addEventListener('input', function () {
             updateBindingOptions();
             calculatePrice();
+            updateSpecificationsSummary();
 
             // Check if section is complete and unlock next section
             const currentSection = this.closest('.form-section');
@@ -2194,10 +1924,23 @@
                     });
 
                     // Remove selected classes
-                    const options = section.querySelectorAll('.color-option, .paper-option, .binding-option, .finish-option, .toggle-option, .isbn-option');
+                    const options = section.querySelectorAll('.color-option, .paper-option, .binding-option, .finish-option, .toggle-option, .isbn-option, .design-option-box');
                     options.forEach(option => option.classList.remove('selected'));
                 }
             });
+
+            // Cleared selections must drop out of the spec sheet and the preview,
+            // and re-lock the quote button — the spec is no longer complete.
+            updateSpecificationsSummary();
+
+            const orderButton = document.getElementById('order-button');
+            if (orderButton) {
+                orderButton.disabled = true;
+                orderButton.style.opacity = '';
+                orderButton.style.cursor = '';
+                const msg = document.getElementById('quoteStatusMsg');
+                if (msg) msg.textContent = 'Complete all steps above to unlock';
+            }
         }
 
         // Handle option selection styling and form progression
@@ -2281,6 +2024,7 @@
         if (quantityInput) {
             quantityInput.addEventListener('input', function () {
                 calculatePrice();
+                updateSpecificationsSummary();
 
                 // Check if section is complete and unlock next section
                 const currentSection = this.closest('.form-section');
@@ -2325,35 +2069,21 @@
             let costPerBook = 0;
 
             if (totalPages > 0) {
-                // Interior color pricing
-                if (interiorColor) {
+                // ── Interior + size + paper base cost, from the price-sheet matrix ──
+                // The per-page rate already encodes colour × book size × paper, so
+                // there are no separate size/paper add-ons any more. Combine Color
+                // prices B&W pages and colour pages at their Premium rates.
+                if (interiorColor && bookSize && paperType) {
                     const colorValue = interiorColor.value;
-                    if (colorValue === 'bw_standard') {
-                        costPerBook += (bwPages > 0 ? bwPages : totalPages) * {{ book_pricing.color_bw_standard_per_page|default:'1.5' }};
-                    } else if (colorValue === 'bw_premium') {
-                        costPerBook += (bwPages > 0 ? bwPages : totalPages) * {{ book_pricing.color_bw_premium_per_page|default:'2' }};
-                    } else if (colorValue === 'color_standard') {
-                        costPerBook += (colorPages > 0 ? colorPages : totalPages) * {{ book_pricing.color_standard_per_page|default:'6' }};
-                    } else if (colorValue === 'color_premium') {
-                        costPerBook += (colorPages > 0 ? colorPages : totalPages) * {{ book_pricing.color_premium_per_page|default:'8' }};
-                    } else if (colorValue === 'combine_color') {
-                        costPerBook += (bwPages * {{ book_pricing.combine_bw_per_page|default:'2' }}) + (colorPages * {{ book_pricing.combine_color_per_page|default:'6' }});
+                    const paperValue = paperType.value;
+                    if (colorValue === 'combine_color') {
+                        const bwRate = bookPagePrice('bw_premium', bookSize, paperValue) || 0;
+                        const colRate = bookPagePrice('color_premium', bookSize, paperValue) || 0;
+                        costPerBook += (bwPages * bwRate) + (colorPages * colRate);
+                    } else {
+                        const rate = bookPagePrice(colorValue, bookSize, paperValue);
+                        if (rate != null) costPerBook += totalPages * rate;
                     }
-                }
-
-                // Book size pricing
-                if (bookSize) {
-                    const sizeOption = document.querySelector(`#book_size option[value="${bookSize}"]`);
-                    if (sizeOption) {
-                        const sizeModifier = parseFloat(sizeOption.dataset.priceModifier) || 0;
-                        costPerBook += sizeModifier;
-                    }
-                }
-
-                // Paper type pricing
-                if (paperType) {
-                    const paperModifier = parseFloat(paperType.dataset.priceModifier) || 0;
-                    costPerBook += paperModifier;
                 }
 
                 // Binding type pricing
@@ -2464,40 +2194,30 @@
                 document.getElementById('gst-amount').textContent = '₹ N/A';
                 document.getElementById('total-price').textContent = '₹ N/A';
             }
+
+            // Keep the sidebar book in step with every change
+            updateBookPreview();
         }
 
-        // Update specifications summary
+        // Update specifications summary — renders the sidebar spec sheet
         function updateSpecificationsSummary() {
             const specificationsDiv = document.getElementById('book-specifications');
-            let specificationsHTML = `
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
-                    <span style="color: #666; font-size: 14px;">Product:</span>
-                    <span style="color: #333; font-size: 14px; font-weight: 500;">{{ product.name }}</span>
-                </div>
-            `;
+            const rows = [];
+            const row = (k, v, note) => rows.push(
+                `<div class="srow"><span class="sk">${k}</span><span class="sv">${v}` +
+                (note ? `<small>${note}</small>` : '') + `</span></div>`
+            );
 
             // Interior Color
             const interiorColor = document.querySelector('input[name="interior_color"]:checked');
-            if (interiorColor) {
-                const colorLabel = getDisplayValue('interior_color', interiorColor.value);
-                specificationsHTML += `
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
-                        <span style="color: #666; font-size: 14px;">Interior Color:</span>
-                        <span style="color: #333; font-size: 14px; font-weight: 500;">${colorLabel}</span>
-                    </div>
-                `;
-            }
+            if (interiorColor) row('Interior', getDisplayValue('interior_color', interiorColor.value));
 
             // Book Size
             const bookSize = document.getElementById('book_size').value;
             if (bookSize) {
                 const sizeLabel = document.querySelector(`#book_size option[value="${bookSize}"]`).textContent;
-                specificationsHTML += `
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
-                        <span style="color: #666; font-size: 14px;">Size:</span>
-                        <span style="color: #333; font-size: 14px; font-weight: 500;">${sizeLabel.split('-')[0].trim()}</span>
-                    </div>
-                `;
+                const parts = sizeLabel.split('-');
+                row('Trim size', parts[0].trim(), parts.slice(1).join('-').trim() || null);
             }
 
             // Page Count
@@ -2506,109 +2226,50 @@
             const colorPageCountInput = document.getElementById('color_page_count');
 
             if (pageCountInput.style.display !== 'none' && pageCountInput.value) {
-                specificationsHTML += `
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
-                        <span style="color: #666; font-size: 14px;">Pages:</span>
-                        <span style="color: #333; font-size: 14px; font-weight: 500;">${pageCountInput.value}</span>
-                    </div>
-                `;
+                row('Pages', `${pageCountInput.value} pp`);
             } else if (bwPageCountInput.value || colorPageCountInput.value) {
-                const totalPages = (parseInt(bwPageCountInput.value) || 0) + (parseInt(colorPageCountInput.value) || 0);
-                specificationsHTML += `
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
-                        <span style="color: #666; font-size: 14px;">Total Pages:</span>
-                        <span style="color: #333; font-size: 14px; font-weight: 500;">${totalPages} (${bwPageCountInput.value || 0} B&W, ${colorPageCountInput.value || 0} Color)</span>
-                    </div>
-                `;
+                const bw = parseInt(bwPageCountInput.value) || 0;
+                const col = parseInt(colorPageCountInput.value) || 0;
+                row('Pages', `${bw + col} pp`, `${bw} B&W · ${col} colour`);
             }
 
             // Paper Type
             const paperType = document.querySelector('input[name="paper_type"]:checked');
-            if (paperType) {
-                const paperLabel = getDisplayValue('paper_type', paperType.value);
-                specificationsHTML += `
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
-                        <span style="color: #666; font-size: 14px;">Paper:</span>
-                        <span style="color: #333; font-size: 14px; font-weight: 500;">${paperLabel}</span>
-                    </div>
-                `;
-            }
+            if (paperType) row('Paper', getDisplayValue('paper_type', paperType.value));
 
             // Binding Type
             const bindingType = document.querySelector('input[name="binding_type"]:checked');
-            if (bindingType) {
-                const bindingLabel = getDisplayValue('binding_type', bindingType.value);
-                specificationsHTML += `
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
-                        <span style="color: #666; font-size: 14px;">Binding:</span>
-                        <span style="color: #333; font-size: 14px; font-weight: 500;">${bindingLabel}</span>
-                    </div>
-                `;
-            }
+            if (bindingType) row('Binding', getDisplayValue('binding_type', bindingType.value));
 
             // Cover Finish
             const coverFinish = document.querySelector('input[name="cover_finish"]:checked');
-            if (coverFinish) {
-                const finishLabel = getDisplayValue('cover_finish', coverFinish.value);
-                specificationsHTML += `
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
-                        <span style="color: #666; font-size: 14px;">Finish:</span>
-                        <span style="color: #333; font-size: 14px; font-weight: 500;">${finishLabel}</span>
-                    </div>
-                `;
-            }
-
-            // Quantity
-            const quantity = document.getElementById('quantity-input').value;
-            if (quantity) {
-                specificationsHTML += `
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
-                        <span style="color: #666; font-size: 14px;">Quantity:</span>
-                        <span style="color: #333; font-size: 14px; font-weight: 500;">${quantity} books</span>
-                    </div>
-                `;
-            }
+            if (coverFinish) row('Cover finish', getDisplayValue('cover_finish', coverFinish.value));
 
             // Design Services
             const coverPageDesign = document.querySelector('input[name="cover_page_design"]:checked');
             const innerPageDesign = document.querySelector('input[name="inner_page_design"]:checked');
-
-            if (coverPageDesign) {
-                specificationsHTML += `
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
-                        <span style="color: #28a745; font-size: 14px;">Cover Design:</span>
-                        <span style="color: #28a745; font-size: 14px; font-weight: 500;">✓ Yes</span>
-                    </div>
-                `;
-            }
-
-            if (innerPageDesign) {
-                specificationsHTML += `
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
-                        <span style="color: #28a745; font-size: 14px;">Inner Page Design:</span>
-                        <span style="color: #28a745; font-size: 14px; font-weight: 500;">✓ Yes</span>
-                    </div>
-                `;
-            }
+            if (coverPageDesign && innerPageDesign) row('Design', 'Cover + inner pages');
+            else if (coverPageDesign) row('Design', 'Cover page');
+            else if (innerPageDesign) row('Design', 'Inner pages');
 
             // ISBN
             const isbn = document.querySelector('input[name="isbn_allocation"]:checked');
-            if (isbn && isbn.value === 'assign_isbn') {
-                specificationsHTML += `
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
-                        <span style="color: #28a745; font-size: 14px;">ISBN:</span>
-                        <span style="color: #28a745; font-size: 14px; font-weight: 500;">✓ Yes</span>
-                    </div>
-                `;
+            if (isbn) {
+                row('ISBN', getDisplayValue('isbn_allocation', isbn.value),
+                    isbn.value === 'assign_isbn' ? '+5–7 working days' : null);
             }
 
-            specificationsDiv.innerHTML = specificationsHTML;
+            // Quantity
+            const quantity = document.getElementById('quantity-input').value;
+            if (quantity) row('Quantity', `${quantity} copies`);
 
-            // Hide info box once any spec is selected
-            var infoBox = document.getElementById('quoteInfoBox');
-            if (infoBox) {
-                infoBox.style.display = specificationsHTML.includes('Interior Color') || specificationsHTML.includes('Size:') ? 'none' : 'flex';
-            }
+            specificationsDiv.innerHTML = rows.join('');
+
+            // Show the empty-state hint only while nothing has been chosen
+            const infoBox = document.getElementById('quoteInfoBox');
+            if (infoBox) infoBox.style.display = rows.length ? 'none' : 'block';
+
+            updateBookPreview();
         }
 
         // Design section is always optional, so enable next section automatically

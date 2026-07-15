@@ -134,27 +134,10 @@ def pricing_product_edit(request, product_id):
 
 
 # Grouping used to render the book pricing form in neat sections
+# Interior colour, book size and paper are now priced together by the
+# per-page matrix (edited as a grid, see BOOK_MATRIX_* below), so they are no
+# longer listed as flat scalar rows here.
 BOOK_PRICE_GROUPS = [
-    ('Interior Colour — charged per page', [
-        ('color_bw_standard_per_page', 'B&W Standard'),
-        ('color_bw_premium_per_page', 'B&W Premium'),
-        ('color_standard_per_page', 'Colour Standard'),
-        ('color_premium_per_page', 'Colour Premium'),
-        ('combine_bw_per_page', 'Combined: B&W pages'),
-        ('combine_color_per_page', 'Combined: Colour pages'),
-    ]),
-    ('Book Size — flat add-on', [
-        ('size_a4', 'A4'),
-        ('size_letter', 'Letter'),
-        ('size_executive', 'Executive'),
-        ('size_a5', 'A5'),
-    ]),
-    ('Paper Type — flat add-on', [
-        ('paper_75gsm', '75 GSM'),
-        ('paper_100gsm', '100 GSM'),
-        ('paper_100gsm_art', '100 GSM Art'),
-        ('paper_130gsm_art', '130 GSM Art'),
-    ]),
     ('Binding — flat add-on', [
         ('binding_saddle_stitch', 'Saddle Stitch'),
         ('binding_spiral', 'Spiral Binding'),
@@ -190,6 +173,46 @@ def _book_row_kind(attr):
     return 'money'
 
 
+# Axis labels for the per-page price matrix (interior × size × paper).
+# Codes must match the values used on the product page + in the JSON matrix.
+BOOK_MATRIX_INTERIORS = [
+    ('bw_premium', 'Black & White Premium'),
+    ('bw_standard', 'Black & White Standard'),
+    ('color_premium', 'Colour Premium'),
+    ('color_standard', 'Colour Standard'),
+]
+BOOK_MATRIX_SIZES = [
+    ('a4', 'A4'), ('letter', 'Letter'), ('executive', 'Executive'), ('a5', 'A5'),
+]
+BOOK_MATRIX_PAPERS = [
+    ('75gsm', '75 GSM'), ('100gsm', '100 GSM'),
+    ('100gsm_art', '100 GSM Art'), ('130gsm_art', '130 GSM Art'),
+]
+
+
+def _build_matrix_view(matrix):
+    """Shape the stored matrix into interior→rows(size)→cells(paper) for the UI."""
+    tables = []
+    for icode, ilabel in BOOK_MATRIX_INTERIORS:
+        rows = []
+        for scode, slabel in BOOK_MATRIX_SIZES:
+            cells = []
+            for pcode, _plabel in BOOK_MATRIX_PAPERS:
+                val = (matrix.get(icode, {}).get(scode, {}) or {}).get(pcode, 0)
+                cells.append({
+                    'name': f'm__{icode}__{scode}__{pcode}',
+                    'value': val,
+                })
+            rows.append({'label': slabel, 'cells': cells})
+        tables.append({
+            'code': icode,
+            'label': ilabel,
+            'papers': [pl for _pc, pl in BOOK_MATRIX_PAPERS],
+            'rows': rows,
+        })
+    return tables
+
+
 @staff_member_required
 def pricing_book(request):
     """Edit the Book Printing price sheet (singleton)."""
@@ -197,6 +220,7 @@ def pricing_book(request):
 
     if request.method == 'POST':
         updated = 0
+        # Scalar rows (binding, cover finish, extras, bulk discounts)
         for _group_name, rows in BOOK_PRICE_GROUPS:
             for attr, _label in rows:
                 if attr in request.POST:
@@ -208,6 +232,26 @@ def pricing_book(request):
                     if getattr(pricing, attr) != new_val:
                         setattr(pricing, attr, new_val)
                         updated += 1
+
+        # Per-page price matrix (interior × size × paper)
+        matrix = {}
+        for icode, _il in BOOK_MATRIX_INTERIORS:
+            for scode, _sl in BOOK_MATRIX_SIZES:
+                for pcode, _pl in BOOK_MATRIX_PAPERS:
+                    field = f'm__{icode}__{scode}__{pcode}'
+                    if field not in request.POST:
+                        continue
+                    raw = request.POST.get(field, '').strip() or '0'
+                    try:
+                        val = round(float(raw), 2)
+                    except (TypeError, ValueError):
+                        continue
+                    matrix.setdefault(icode, {}).setdefault(scode, {})[pcode] = val
+        if matrix:
+            if matrix != pricing.page_price_matrix:
+                updated += 1
+            pricing.page_price_matrix = matrix
+
         pricing.save()
         messages.success(request, f'Book printing prices saved. {updated} value(s) updated.')
         return redirect('services:pricing_book')
@@ -226,4 +270,5 @@ def pricing_book(request):
     return render(request, 'pricing_manager/book_edit.html', {
         'pricing': pricing,
         'groups': groups,
+        'matrix_tables': _build_matrix_view(pricing.page_price_matrix or {}),
     })

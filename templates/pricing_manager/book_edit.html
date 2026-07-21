@@ -4,104 +4,58 @@
 {% block pm_extra_css %}
 <style>
     .grp-title { font-weight: 800; color: var(--header); font-size: 1rem; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
-    .row {
-        display: flex; align-items: center; justify-content: space-between; gap: 14px;
-        padding: 9px 0; border-bottom: 1px dashed #eee;
-    }
+    .row { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 9px 0; border-bottom: 1px dashed #eee; }
     .row:last-child { border-bottom: none; }
     .row .lbl { font-weight: 600; font-size: .92rem; }
-    .save-bar {
-        position: sticky; bottom: 0; background: #fff; border-top: 1.5px solid #eee;
-        padding: 16px 24px; margin: 0 -24px -22px; border-radius: 0 0 14px 14px;
-        display: flex; align-items: center; justify-content: space-between;
-    }
+    .save-bar { position: sticky; bottom: 0; background: #fff; border-top: 1.5px solid #eee; padding: 16px 24px; margin: 0 -24px -22px; border-radius: 0 0 14px 14px; display: flex; align-items: center; justify-content: space-between; }
     .hint { font-size: .78rem; color: #6b7280; }
-
-    /* Per-page price matrix grid */
-    .mtx-wrap { overflow-x: auto; }
-    .mtx { width: 100%; border-collapse: collapse; min-width: 460px; }
-    .mtx th, .mtx td { padding: 8px 10px; text-align: center; border-bottom: 1px dashed #eee; }
-    .mtx thead th { font-size: .72rem; text-transform: uppercase; letter-spacing: .04em; color: #6b7280; }
-    .mtx tbody th { text-align: left; font-weight: 700; font-size: .9rem; white-space: nowrap; }
-    .mtx .mtx-in {
-        width: 84px; padding: 7px 8px 7px 22px; border: 1px solid #e5e7eb; border-radius: 8px;
-        font-weight: 600; font-size: .9rem; text-align: right;
-    }
-    .mtx .mtx-cell { position: relative; }
-    .mtx .mtx-cell::before {
-        content: '₹'; position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
-        color: #9ca3af; font-weight: 700; font-size: .85rem; pointer-events: none;
-    }
-    .mtx-sub { font-size: .78rem; color: #6b7280; font-weight: 600; margin: 0 0 10px; }
+    .sheet-wrap { overflow-x: auto; }
+    .sheet { width: 100%; min-width: 840px; border-collapse: collapse; }
+    .sheet th, .sheet td { padding: 9px 10px; text-align: left; border-bottom: 1px solid #eef0f3; }
+    .sheet thead th { background: #f8fafc; color: #4b5563; font-size: .72rem; text-transform: uppercase; letter-spacing: .04em; }
+    .sheet tbody tr:hover { background: #fffaf9; }
+    .sheet .num { text-align: right; }
+    .sheet .rate-input { width: 88px; padding: 7px 8px; border: 1px solid #e5e7eb; border-radius: 7px; text-align: right; font-weight: 600; }
+    .sheet .total { font-weight: 800; color: var(--header); }
+    .status-active { display: inline-block; padding: 3px 8px; border-radius: 99px; background: #dcfce7; color: #166534; font-size: .74rem; font-weight: 800; }
+    .sheet-sub { font-size: .78rem; color: #6b7280; font-weight: 600; margin: 0 0 10px; }
 </style>
 {% endblock %}
 
 {% block pm_content %}
 <div class="pm-breadcrumb"><a href="{% url 'services:pricing_home' %}">Pricing Home</a> / Book Printing</div>
 <h1 class="pm-h1">Book Printing Pricing</h1>
-<p class="pm-sub">These prices apply to <strong>all book printing products</strong>. The per-page matrix below is multiplied by the page count; "flat add-on" values are added once per book. Each product's own base price is set in the full admin.</p>
+<p class="pm-sub">Update the book-printing prices exactly as they appear in the supplied Excel sheet.</p>
 
 <form method="POST">
     {% csrf_token %}
 
     <div class="pm-card">
-        <div class="grp-title"><i class="fas fa-table-cells" style="color:var(--theme);"></i> Per-Page Price — Interior Colour × Size × Paper</div>
-        <p class="mtx-sub">Rupees per page. This rate already covers the interior colour, book size and paper together, and is multiplied by the number of pages.</p>
-        {% for t in matrix_tables %}
-        <div style="margin-bottom:18px;">
-            <div class="lbl" style="font-weight:800;margin-bottom:8px;">{{ t.label }}</div>
-            <div class="mtx-wrap">
-                <table class="mtx">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            {% for p in t.papers %}<th>{{ p }}</th>{% endfor %}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for row in t.rows %}
-                        <tr>
-                            <th>{{ row.label }}</th>
-                            {% for cell in row.cells %}
-                            <td class="mtx-cell">
-                                <input type="number" step="0.01" min="0" class="mtx-in"
-                                       name="{{ cell.name }}" value="{{ cell.value|floatformat:2 }}">
-                            </td>
-                            {% endfor %}
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+        <div class="grp-title"><i class="fas fa-table-cells" style="color:var(--theme);"></i> Per-Page Price Sheet</div>
+        <p class="sheet-sub">Matches <strong>book.xlsx</strong>: printing and paper costs remain separate, and the total is calculated per page.</p>
+        <div class="sheet-wrap">
+            <table class="sheet" id="book-price-sheet">
+                <thead>
+                    <tr>
+                        <th>#</th><th>Interior Colour</th><th>Book Size</th><th>Paper Type</th>
+                        <th class="num">Printing (₹)</th><th class="num">Paper (₹)</th>
+                        <th class="num">Total / page (₹)</th><th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in spreadsheet_rows %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td><td>{{ row.interior }}</td><td>{{ row.size }}</td><td>{{ row.paper }}</td>
+                        <td class="num"><input type="number" step="0.01" min="0" class="rate-input" name="{{ row.printing_name }}" value="{{ row.printing|floatformat:2 }}"></td>
+                        <td class="num"><input type="number" step="0.01" min="0" class="rate-input" name="{{ row.paper_name }}" value="{{ row.paper_cost|floatformat:2 }}"></td>
+                        <td class="num total" data-total>₹{{ row.printing|add:row.paper_cost|floatformat:2 }}</td>
+                        <td><span class="status-active">Active</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
-        {% endfor %}
     </div>
-
-    {% for group in groups %}
-    <div class="pm-card">
-        <div class="grp-title"><i class="fas fa-sliders-h" style="color:var(--theme);"></i> {{ group.name }}</div>
-        {% for r in group.rows %}
-        <div class="row">
-            <span class="lbl">{{ r.label }}</span>
-            {% if r.kind == 'qty' %}
-            <input type="number" step="1" min="1" class="price-input" style="padding-left:12px;"
-                   name="{{ r.attr }}" value="{{ r.value|floatformat:'0' }}">
-            {% elif r.kind == 'pct' %}
-            <div style="position:relative;display:inline-block;">
-                <input type="number" step="0.5" min="0" max="90" class="price-input" style="padding-left:12px;padding-right:26px;"
-                       name="{{ r.attr }}" value="{{ r.value|floatformat:'-2' }}">
-                <span style="position:absolute;right:10px;top:50%;transform:translateY(-50%);color:#9ca3af;font-weight:700;font-size:.9rem;">%</span>
-            </div>
-            {% else %}
-            <div class="price-wrap">
-                <input type="number" step="0.01" class="price-input"
-                       name="{{ r.attr }}" value="{{ r.value|floatformat:2 }}">
-            </div>
-            {% endif %}
-        </div>
-        {% endfor %}
-    </div>
-    {% endfor %}
 
     <div class="pm-card" style="padding:0;">
         <div class="save-bar">
@@ -110,4 +64,18 @@
         </div>
     </div>
 </form>
+{% endblock %}
+
+{% block pm_extra_js %}
+<script>
+document.querySelectorAll('#book-price-sheet tbody tr').forEach(function (row) {
+    const inputs = row.querySelectorAll('.rate-input');
+    const total = row.querySelector('[data-total]');
+    const update = function () {
+        const value = (parseFloat(inputs[0].value) || 0) + (parseFloat(inputs[1].value) || 0);
+        total.textContent = '₹' + value.toFixed(2);
+    };
+    inputs.forEach(function (input) { input.addEventListener('input', update); });
+});
+</script>
 {% endblock %}

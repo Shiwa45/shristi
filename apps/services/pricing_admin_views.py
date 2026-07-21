@@ -213,6 +213,26 @@ def _build_matrix_view(matrix):
     return tables
 
 
+def _build_spreadsheet_rows(components):
+    """Render the price sheet one workbook record at a time."""
+    rows = []
+    for icode, ilabel in BOOK_MATRIX_INTERIORS:
+        for scode, slabel in BOOK_MATRIX_SIZES:
+            for pcode, plabel in BOOK_MATRIX_PAPERS:
+                cell = (components.get(icode, {}).get(scode, {}) or {}).get(pcode, {})
+                rows.append({
+                    'interior': ilabel,
+                    'size': slabel,
+                    'paper': plabel,
+                    'printing_name': f'print__{icode}__{scode}__{pcode}',
+                    'paper_name': f'paper__{icode}__{scode}__{pcode}',
+                    'printing': cell.get('printing', 0),
+                    'paper_cost': cell.get('paper', 0),
+                    'active': cell.get('active', True),
+                })
+    return rows
+
+
 @staff_member_required
 def pricing_book(request):
     """Edit the Book Printing price sheet (singleton)."""
@@ -220,55 +240,41 @@ def pricing_book(request):
 
     if request.method == 'POST':
         updated = 0
-        # Scalar rows (binding, cover finish, extras, bulk discounts)
-        for _group_name, rows in BOOK_PRICE_GROUPS:
-            for attr, _label in rows:
-                if attr in request.POST:
-                    raw = request.POST.get(attr, '').strip() or '0'
-                    try:
-                        new_val = Decimal(raw)
-                    except (InvalidOperation, ValueError):
-                        continue
-                    if getattr(pricing, attr) != new_val:
-                        setattr(pricing, attr, new_val)
-                        updated += 1
-
-        # Per-page price matrix (interior × size × paper)
+        # The client-facing page is deliberately limited to the spreadsheet
+        # rates supplied in book.xlsx.  Legacy add-ons are not shown here.
         matrix = {}
+        components = {}
         for icode, _il in BOOK_MATRIX_INTERIORS:
             for scode, _sl in BOOK_MATRIX_SIZES:
                 for pcode, _pl in BOOK_MATRIX_PAPERS:
-                    field = f'm__{icode}__{scode}__{pcode}'
-                    if field not in request.POST:
+                    printing_field = f'print__{icode}__{scode}__{pcode}'
+                    paper_field = f'paper__{icode}__{scode}__{pcode}'
+                    if printing_field not in request.POST or paper_field not in request.POST:
                         continue
-                    raw = request.POST.get(field, '').strip() or '0'
                     try:
-                        val = round(float(raw), 2)
-                    except (TypeError, ValueError):
+                        printing = Decimal(request.POST.get(printing_field, '').strip() or '0')
+                        paper_cost = Decimal(request.POST.get(paper_field, '').strip() or '0')
+                    except (InvalidOperation, TypeError, ValueError):
                         continue
-                    matrix.setdefault(icode, {}).setdefault(scode, {})[pcode] = val
+                    components.setdefault(icode, {}).setdefault(scode, {})[pcode] = {
+                        'printing': float(printing),
+                        'paper': float(paper_cost),
+                        'active': True,
+                    }
+                    matrix.setdefault(icode, {}).setdefault(scode, {})[pcode] = float(printing + paper_cost)
         if matrix:
             if matrix != pricing.page_price_matrix:
                 updated += 1
             pricing.page_price_matrix = matrix
+            if components != pricing.page_price_components:
+                updated += 1
+            pricing.page_price_components = components
 
         pricing.save()
         messages.success(request, f'Book printing prices saved. {updated} value(s) updated.')
         return redirect('services:pricing_book')
 
-    groups = []
-    for group_name, rows in BOOK_PRICE_GROUPS:
-        groups.append({
-            'name': group_name,
-            'rows': [
-                {'attr': attr, 'label': label, 'value': getattr(pricing, attr),
-                 'kind': _book_row_kind(attr)}
-                for attr, label in rows
-            ],
-        })
-
     return render(request, 'pricing_manager/book_edit.html', {
         'pricing': pricing,
-        'groups': groups,
-        'matrix_tables': _build_matrix_view(pricing.page_price_matrix or {}),
+        'spreadsheet_rows': _build_spreadsheet_rows(pricing.page_price_components or {}),
     })

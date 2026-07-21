@@ -151,6 +151,53 @@ def calculate_book_pricing(product, specs, quantity):
     binding_map = {'saddle_stitch': bp.binding_saddle_stitch, 'spiral_binding': bp.binding_spiral, 'paperback_perfect': bp.binding_paperback_perfect, 'hardcover': bp.binding_hardcover}
     finish_map = {'matte': bp.cover_matte, 'glossy': bp.cover_glossy}
 
+    # The spreadsheet rate is a dependent value selected by the complete
+    # interior-colour × size × paper combination.  It must therefore replace
+    # the old flat interior, size and paper modifiers as one unit.
+    matrix = bp.page_price_matrix or {}
+    size = specs.get('book_size')
+    paper = specs.get('paper_type')
+
+    def page_rate(interior_code):
+        component = (bp.page_price_components or {}).get(interior_code, {}).get(size, {}).get(paper, {})
+        if component:
+            try:
+                return Decimal(str(component.get('printing', 0))) + Decimal(str(component.get('paper', 0)))
+            except (InvalidOperation, TypeError, ValueError):
+                pass
+        value = matrix.get(interior_code, {}).get(size, {}).get(paper)
+        try:
+            return Decimal(str(value)) if value is not None else Decimal('0')
+        except (InvalidOperation, TypeError, ValueError):
+            return Decimal('0')
+
+    components = []
+    interior_cost = Decimal('0')
+    if interior in {'bw_standard', 'bw_premium', 'color_standard', 'color_premium'}:
+        # Standard selections normally provide page_count.  Using the matching
+        # split count when present keeps previously saved quotes valid too.
+        split_pages = bw_pages if interior.startswith('bw_') else color_pages
+        pages = split_pages if split_pages > 0 else total_pages
+        rate = page_rate(interior)
+        interior_cost = pages * rate
+        components.append({
+            'label': f'Interior: {interior.replace("_", " ").title()} — {pages} pg × ₹{rate}',
+            'amount': interior_cost,
+        })
+    elif interior == 'combine_color':
+        # The sheet has no separate combined-colour rows: B&W pages use its
+        # Premium B&W rate and colour pages use its Premium Colour rate.
+        bw_rate = page_rate('bw_premium')
+        color_rate = page_rate('color_premium')
+        interior_cost = (bw_pages * bw_rate) + (color_pages * color_rate)
+        components.append({
+            'label': (
+                f'Interior: Combined — {bw_pages} B&W pg × ₹{bw_rate}; '
+                f'{color_pages} colour pg × ₹{color_rate}'
+            ),
+            'amount': interior_cost,
+        })
+
     def _add(label, mapping, key):
         val = mapping.get(key)
         if val is None:
@@ -158,12 +205,10 @@ def calculate_book_pricing(product, specs, quantity):
         components.append({'label': label, 'amount': Decimal(val)})
         return Decimal(val)
 
-    size_cost = _add(f"Size: {specs.get('book_size', '')}", size_map, specs.get('book_size'))
-    paper_cost = _add(f"Paper: {specs.get('paper_type', '')}", paper_map, specs.get('paper_type'))
     binding_cost = _add(f"Binding: {specs.get('binding_type', '')}", binding_map, specs.get('binding_type'))
     finish_cost = _add(f"Cover finish: {specs.get('cover_finish', '')}", finish_map, specs.get('cover_finish'))
 
-    cost_per_book = interior_cost + size_cost + paper_cost + binding_cost + finish_cost
+    cost_per_book = interior_cost + binding_cost + finish_cost
 
     design_cost = Decimal('0')
     if specs.get('cover_page_design') == 'yes':

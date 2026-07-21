@@ -4,13 +4,26 @@
 {% block hero_section %}
 <section class="pd-hero bp-hero" style="padding: 135px 0 70px;">
     <div class="container">
+        <!-- Breadcrumb -->
+        <nav class="bp-bc">
+            <a href="{% url 'core:home' %}">Home</a>
+            <span style="color:var(--bline2);margin:0 4px;">›</span>
+            <a href="{% url 'services:home' %}">Services</a>
+            {% if product.category %}
+            <span style="color:var(--bline2);margin:0 4px;">›</span>
+            <a href="{{ product.category.get_absolute_url }}">{{ product.category.name }}</a>
+            {% endif %}
+            <span style="color:var(--bline2);margin:0 4px;">›</span>
+            <span class="bc-cur">{{ product.name }}</span>
+        </nav>
+
         <div class="row g-4 align-items-center">
             <div class="col-lg-6">
                 {% if product.is_featured %}
                 <div class="pd-badge"><i class="fas fa-star"></i> Featured Product</div>
                 {% endif %}
-                <h1>{{ product.name }}</h1>
-                <p>{{ product.description|default:product.short_description }}</p>
+                <h1>Design a book that's <span class="accent">entirely yours</span>.</h1>
+                <p>Pick the specs below — tap any option to select it. Your choices appear on the spec sheet, and the book preview updates as you go.</p>
             </div>
             <div class="col-lg-6">
                 <div class="pd-image-wrap">
@@ -31,11 +44,12 @@
 </section>
 {% endblock hero_section %}
 
+
 {% block extra_css %}
 {{ block.super }}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
     /* ═══════════════════════════════════════════════════════════════
        Book Printing — "The Bindery" theme
@@ -100,20 +114,31 @@
     .bp-hero h1 {
         font-family: 'Newsreader', serif !important;
         font-weight: 500;
-        font-size: clamp(2.4rem, 4.6vw, 3.4rem);
+        font-size: clamp(2.8rem, 5vw, 4.2rem);
         letter-spacing: -.02em;
-        line-height: 1.03;
+        line-height: 1.05;
         color: var(--bink);
         margin-top: 16px;
+        margin-bottom: 16px;
+    }
+    .bp-hero h1 .accent {
+        color: var(--clay);
+        font-style: italic;
+    }
+    .bp-outlined {
+        -webkit-text-stroke: 4px var(--bink);
+        text-stroke: 4px var(--bink);
+        color: transparent;
     }
     .bp-hero p {
         font-family: 'Hanken Grotesk', sans-serif !important;
         color: var(--bink2);
-        font-size: 1.05rem;
+        font-size: 1.15rem;
         font-weight: 400;
-        line-height: 1.6;
-        max-width: 48ch;
-        margin-top: 16px;
+        line-height: 1.7;
+        max-width: 52ch;
+        margin-top: 0;
+        text-align: left;
     }
     .bp-hero .pd-image-wrap {
         background: transparent;
@@ -129,6 +154,12 @@
         box-shadow: 0 18px 44px rgba(44, 40, 35, .18);
     }
     .bp-hero .pd-image-placeholder { color: var(--bmuted); }
+
+    /* ── Breadcrumb ── */
+    .bp-bc { padding: 0 0 16px; font-size: .82rem; color: var(--bmuted); }
+    .bp-bc a { color: var(--bmuted); text-decoration: none; transition: color .2s; }
+    .bp-bc a:hover { color: var(--clay); }
+    .bp-bc .bc-cur { color: var(--bink); }
 
     /* ── Options column ── */
     .book-options-container {
@@ -444,7 +475,7 @@
         font-family: 'Hanken Grotesk', sans-serif;
         font-size: 1rem;
         font-weight: 600;
-        color: var(--bink);
+        color: var(--bink) !important;
         outline: none;
         transition: border-color .18s, box-shadow .18s;
     }
@@ -454,6 +485,7 @@
     .quantity-input-container input[type="number"]:focus {
         border-color: var(--clay);
         box-shadow: 0 0 0 3px var(--clay-soft);
+        color: var(--bink) !important;
     }
     .book-size-select:hover { border-color: var(--clay); }
     .book-size-select { cursor: pointer; }
@@ -900,9 +932,15 @@
 </style>
 {% endblock %}
 
+
 {% block product_options_panel %}
 <!-- Replace the generic options panel with book printing specific form -->
 <div class="book-options-container">
+
+<br>
+<br>
+<br>
+    
     <!-- Book Options Header -->
     <div class="book-options-header">
         <h2 class="book-options-title">Customize Your Book</h2>
@@ -927,15 +965,15 @@
             </p>
 
             <div class="interior-color-options">
-                <div class="color-option" data-value="bw_premium">
+            <!--    <div class="color-option" data-value="bw_premium">
                     <input type="radio" name="interior_color" value="bw_premium" data-price-modifier="0" required>
                     <div class="option-icon">
-                        <!-- Image placeholder - replace src with actual image path -->
+                        <!-- Image placeholder - replace src with actual image path
                         <img src="{% static 'img/finish/black_and_white.png' %}" alt="Black & White Premium">
                     </div>
                     <div class="color-option-title">Black & White Premium</div>
                     <div class="premium-badge">Premium</div>
-                </div>
+                </div> -->
 
                 <div class="color-option" data-value="bw_standard">
                     <input type="radio" name="interior_color" value="bw_standard" data-price-modifier="-50" required>
@@ -946,15 +984,15 @@
                     <div class="color-option-title">Black & White Standard</div>
                 </div>
 
-                <div class="color-option" data-value="color_premium">
+              <!--    <div class="color-option" data-value="color_premium">
                     <input type="radio" name="interior_color" value="color_premium" data-price-modifier="300" required>
                     <div class="option-icon">
-                        <!-- Image placeholder - replace src with actual image path -->
+                        <!-- Image placeholder - replace src with actual image path 
                         <img src="{% static 'img/finish/color_premium.png' %}" alt="Color Premium">
                     </div>
                     <div class="color-option-title">Color Premium</div>
                     <div class="premium-badge">Premium</div>
-                </div>
+                </div> -->
 
                 <div class="color-option" data-value="color_standard">
                     <input type="radio" name="interior_color" value="color_standard" data-price-modifier="200" required>
@@ -1009,7 +1047,8 @@
                     <label for="page_count" class="field-label" style="display: block; margin-bottom: 0.5rem;">Page
                         Count</label>
                     <input type="number" id="page_count" name="page_count" class="page-input"
-                        placeholder="Please Enter Qty." min="4" required>
+                        placeholder="Please Enter Qty." min="8" max="800" required>
+                    <div style="font-size: 0.75rem; color: var(--clay); font-weight: 600; margin-top: 0.5rem;">MIN-MAX: 8-800</div>
                 </div>
             </div>
 
@@ -1019,13 +1058,15 @@
                 <div class="page-input-group">
                     <label for="bw_page_count" class="field-label">B/W Page Count</label>
                     <input type="number" id="bw_page_count" name="bw_page_count" class="page-input"
-                        placeholder="Please enter Qty." min="0">
+                        placeholder="Please enter Qty." min="8" max="800">
+                    <div style="font-size: 0.75rem; color: var(--clay); font-weight: 600; margin-top: 0.5rem;">MIN-MAX: 8-800</div>
                 </div>
 
                 <div class="page-input-group">
                     <label for="color_page_count" class="field-label">Color Page Count</label>
                     <input type="number" id="color_page_count" name="color_page_count" class="page-input"
-                        placeholder="Please enter Qty." min="0">
+                        placeholder="Please enter Qty." min="8" max="800">
+                    <div style="font-size: 0.75rem; color: var(--clay); font-weight: 600; margin-top: 0.5rem;">MIN-MAX: 8-800</div>
                 </div>
             </div>
         </div>
@@ -1051,6 +1092,14 @@
                     </div>
                     <div class="paper-weight">75 GSM Standard Paper</div>
                 </div>
+                <div class="paper-option" data-value="75gsm">
+                    <input type="radio" name="paper_type" value="75gsm" data-price-modifier="{{ book_pricing.paper_75gsm|default:0 }}" required>
+                    <div class="paper-icon">
+                        <img src="{% static 'img/paper/70gsm.png' %}" alt="75 GSM Standard Paper">
+                    </div>
+                    <div class="paper-weight">80 GSM NS Paper</div>
+                </div>
+
 
                 <div class="paper-option" data-value="100gsm">
                     <input type="radio" name="paper_type" value="100gsm" data-price-modifier="{{ book_pricing.paper_100gsm|default:50 }}" required>
@@ -1075,6 +1124,7 @@
                     </div>
                     <div class="paper-weight">130 GSM Art Paper</div>
                 </div>
+
             </div>
         </div>
 
@@ -1273,7 +1323,6 @@
             </div>
 
             <p class="section-description">
-                Enter the number of books you want to order. Minimum order quantity is 25 books.
             </p>
 
             <div class="quantity-input-container">
@@ -1284,12 +1333,8 @@
                             <input type="number" id="quantity-input" name="quantity" class="page-input"
                                 value="" min="{{ min_quantity|default:25 }}"
                                 placeholder="Minimum {{ min_quantity|default:25 }} books" required style="flex: 1;">
-                            <span class="text-sm text-gray-600 font-medium">books</span>
                         </div>
-                        <div class="text-xs text-gray-500 mt-2">
-                            <i class="fas fa-info-circle text-blue-500"></i>
-                            Volume discounts: {{ book_pricing.bulk_disc_1|floatformat:"-2"|default:"10" }}% off for {{ book_pricing.bulk_qty_1|default:"200" }}+ books, {{ book_pricing.bulk_disc_2|floatformat:"-2"|default:"12" }}% off for {{ book_pricing.bulk_qty_2|default:"250" }}+ books, {{ book_pricing.bulk_disc_3|floatformat:"-2"|default:"14" }}% off for {{ book_pricing.bulk_qty_3|default:"300" }}+ books
-                        </div>
+                   
                     </div>
 
                     <div class="bulk-discount-box">
@@ -1417,8 +1462,12 @@
 </section>
 {% endblock %}
 
+
 {% block pricing_calculator %}
 
+<br>
+<br>
+<br>
 <!-- Price span elements kept hidden for JS calculations -->
 <span id="cost-per-unit" style="display:none;"></span>
 <span id="subtotal" style="display:none;"></span>
@@ -1447,6 +1496,7 @@
         </div>
     </div>
 
+
     <div class="thead">
         <span class="tkr">Spec Sheet</span>
         <span class="tprog" id="specProgress">0 of 8 chosen</span>
@@ -1461,11 +1511,6 @@
     </div>
 
     <div class="cta">
-        <div class="perks">
-            <div class="perk"><i>✓</i>Free personalised quote within 24 hours</div>
-            <div class="perk"><i>✓</i>Digital proof before we print a single page</div>
-            <div class="perk"><i>✓</i>Volume discounts applied automatically</div>
-        </div>
 
         <!-- Hidden quote form -->
         <form id="quoteForm" method="POST" action="{% url 'orders:submit_quote' %}">

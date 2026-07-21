@@ -847,6 +847,34 @@ def default_page_price_matrix():
     }
 
 
+def default_page_price_components():
+    """Workbook-style source rates for every book-printing combination.
+
+    ``book.xlsx`` stores the printing and paper costs in separate columns.
+    Keeping those values separately lets the Pricing Manager mirror the sheet
+    while the public calculator consumes their combined per-page rate.
+    """
+    paper_costs = {
+        'a4':        {'75gsm': 0.10, '100gsm': 0.13, '100gsm_art': 0.13, '130gsm_art': 0.17},
+        'letter':    {'75gsm': 0.10, '100gsm': 0.13, '100gsm_art': 0.13, '130gsm_art': 0.17},
+        'executive': {'75gsm': 0.10, '100gsm': 0.13, '100gsm_art': 0.13, '130gsm_art': 0.17},
+        'a5':        {'75gsm': 0.05, '100gsm': 0.07, '100gsm_art': 0.07, '130gsm_art': 0.09},
+    }
+    components = {}
+    for interior, sizes in default_page_price_matrix().items():
+        components[interior] = {}
+        for size, papers in sizes.items():
+            components[interior][size] = {}
+            for paper, total in papers.items():
+                paper_cost = paper_costs[size][paper]
+                components[interior][size][paper] = {
+                    'printing': round(total - paper_cost, 2),
+                    'paper': paper_cost,
+                    'active': True,
+                }
+    return components
+
+
 class BookPrintingPricing(models.Model):
     """Single editable price sheet for all Book Printing products.
 
@@ -859,6 +887,10 @@ class BookPrintingPricing(models.Model):
     # This matrix (from book.xlsx) is the live per-page base cost; it supersedes
     # the flat per-colour rate + flat size/paper add-on fields kept below.
     page_price_matrix = models.JSONField('Per-page price matrix', default=default_page_price_matrix)
+    page_price_components = models.JSONField(
+        'Workbook price components', default=default_page_price_components,
+        help_text='Printing and paper costs that make up each per-page matrix rate.',
+    )
 
     # ── Legacy per-page / add-on fields ──
     # No longer used by the live calculator (the matrix above replaced them),

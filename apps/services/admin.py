@@ -417,13 +417,15 @@ class ProductFieldOptionAdmin(admin.ModelAdmin):
 
 @admin.register(BookPrintingPricing)
 class BookPrintingPricingAdmin(admin.ModelAdmin):
-    """Backup editor. The friendly editor lives at /services/manage/pricing/book-printing/."""
+    """Always send staff to the client-friendly spreadsheet editor."""
 
     def changelist_view(self, request, extra_context=None):
         from django.shortcuts import redirect
-        # Always jump straight to the single editable row.
-        obj = BookPrintingPricing.load()
-        return redirect(f'./{obj.pk}/change/')
+        return redirect('services:pricing_book')
+
+    def change_view(self, request, object_id, form_url='', extra_context=None):
+        from django.shortcuts import redirect
+        return redirect('services:pricing_book')
 
     def has_add_permission(self, request):
         return False

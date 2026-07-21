@@ -119,47 +119,9 @@
 
 <!-- ===== Hero ===== -->
 {% block hero_section %}
-<section class="pd-hero" style="background-image: url('{% static 'assets/img/hero/hero-bg-1.jpg' %}'); {{ hero_padding }}">
-    <div class="container">
-        <div class="row g-4 align-items-center">
-            <div class="col-lg-6">
-                {% if product.is_featured %}
-                <div class="pd-badge"><i class="fas fa-star"></i> Featured Product</div>
-                {% endif %}
-                <h1>{{ product.name }}</h1>
-                <p>{{ product.description|default:product.short_description }}</p>
-
-                <div class="pd-price-box">
-                    <div class="big-price" style="font-size:1.4rem;display:flex;align-items:center;gap:10px;">
-                        <i class="fas fa-file-invoice-dollar"></i> Get a Custom Quote
-                    </div>
-                    <div class="price-label">Configure your specs below &amp; request a free quote</div>
-                </div>
-
-                <div class="pd-trust">
-                    <div class="pd-trust-item"><i class="fas fa-shipping-fast"></i> Pan India Delivery</div>
-                    <div class="pd-trust-item"><i class="fas fa-medal"></i> Premium Quality</div>
-                    <div class="pd-trust-item"><i class="fas fa-clock"></i> 3–5 Day Turnaround</div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="pd-image-wrap">
-                    {% if product.hero_image %}
-                        <img src="{{ product.hero_image.url }}" alt="{{ product.name }}">
-                    {% elif product.featured_image %}
-                        <img src="{{ product.featured_image.url }}" alt="{{ product.name }}">
-                    {% else %}
-                        <div class="pd-image-placeholder">
-                            <i class="fas fa-print"></i>
-                            <p>{{ product.name }}</p>
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 {% endblock hero_section %}
+
+
 
 <!-- ===== Main Content ===== -->
 <div class="pd-body">
@@ -197,9 +159,14 @@
             <div class="col-lg-4">
                 <div style="position:sticky; top:100px;">
                     {% block pricing_calculator %}
+                    <br>
+<br>
+<br>
+
                     {% include 'services/static_products/partials/pricing_calculator.html' %}
                     {% endblock %}
 
+                    
                     <div class="pd-help-box mt-4">
                         <h5><i class="fas fa-headset me-2"></i>Need Help?</h5>
                         <div class="help-row"><i class="fas fa-phone"></i> +91 98765 43210</div>
